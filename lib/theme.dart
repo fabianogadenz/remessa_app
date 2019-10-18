@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  ThemeData get theme => ThemeData.dark().copyWith(
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.black,
-        ),
+  ThemeData get theme => ThemeData.light().copyWith(
+        primaryColor: Colors.black,
       );
 }
