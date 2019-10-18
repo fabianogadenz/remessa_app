@@ -1,7 +1,7 @@
-import 'package:remessa_app/screens/calculator/calculator_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:remessa_app/theme.dart';
+import 'package:remessa_app/widgets/widgets.dart';
 
 class App extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class App extends StatelessWidget {
       title: 'Calculadora de compra internacional',
       debugShowCheckedModeBanner: false,
       theme: AppTheme().theme,
-      home: CalculatorScreen(),
+      home: TabControllerWidget(),
     );
   }
 }

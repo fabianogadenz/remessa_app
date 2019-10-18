@@ -326,6 +326,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  package_info:
+    dependency: transitive
+    description:
+      name: package_info
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0+8"
   package_resolver:
     dependency: transitive
     description:
@@ -506,5 +513,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  zendesk_chat:
+    dependency: "direct main"
+    description:
+      name: zendesk_chat
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
+  zendesk_flutter_plugin:
+    dependency: transitive
+    description:
+      name: zendesk_flutter_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
 sdks:
   dart: ">=2.3.0 <3.0.0"
+  flutter: ">=1.6.7 <2.0.0"
