@@ -80,7 +80,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             suffixIcon: IconButton(
                               icon: Icon(Icons.attach_money),
                               onPressed: () {
-                                _calculatorBloc.dispatch(
+                                _calculatorBloc.add(
                                   LoadPtaxDollar(dateTime: DateTime.now()),
                                 );
                               },
