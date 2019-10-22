@@ -1,0 +1,6 @@
+{
+    "greetTo": "Hello {name}",
+    "help": "Help",
+    "dashboard": "Dashboard",
+    "chat": "Chat"
+}
