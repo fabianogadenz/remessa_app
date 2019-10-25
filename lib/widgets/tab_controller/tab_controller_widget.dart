@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intercom_flutter/intercom_flutter.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 
 import 'package:remessa_app/screens/calculator/calculator_screen.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
-import 'package:zendesk_chat/zendesk_chat.dart';
 
 class TabContent {
   final String title;
@@ -27,9 +27,6 @@ class TabControllerWidget extends StatefulWidget {
 
 class _TabControllerWidgetState extends State<TabControllerWidget> {
   final _tabControllerBloc = TabControllerBloc();
-
-  final _zendeskChat =
-      ZendeskChat(accountKey: 'MyqHVBcMtviH16mTlMyl0AlpYYsJLS2i');
 
   @override
   Widget build(BuildContext context) {
@@ -78,14 +75,10 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
     );
   }
 
-  void onTabTapped(BuildContext context, int index) {
+  Future onTabTapped(BuildContext context, int index) async {
     if (index == 2) {
-      _zendeskChat.openChatScreen(
-        context,
-        ChatSettings(
-          visitor: Visitor(name: ''),
-        ),
-      );
+      await Intercom.registerIdentifiedUser(email: 'zeucxb@gmail.com');
+      await Intercom.displayMessenger();
       return;
     }
 
