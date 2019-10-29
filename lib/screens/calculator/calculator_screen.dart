@@ -1,6 +1,8 @@
+import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:remessa_app/screens/calculator/bloc/bloc.dart';
 
@@ -80,6 +82,9 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             suffixIcon: IconButton(
                               icon: Icon(Icons.attach_money),
                               onPressed: () {
+                                GetIt.I<AmplitudeFlutter>()
+                                    ?.logEvent(name: 'get_dollar_ptax');
+
                                 _calculatorBloc.add(
                                   LoadPtaxDollar(dateTime: DateTime.now()),
                                 );
