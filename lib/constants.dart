@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:remessa_app/utils/enviroment_model.dart';
+import 'package:remessa_app/helpers/enviroment_model.dart';
 
 const Map<String, String> intercom = {
   'appId': 'nucbuzqn',

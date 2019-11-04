@@ -31,6 +31,9 @@ dependencies:
   http: ^0.12.0+2
   json_annotation: ^3.0.0
   get_it: ^3.0.3
+  hive: ^1.1.1
+  hive_flutter: ^0.2.1
+  path_provider: ^1.4.0
 
   # Plugins
   intercom_flutter: ^2.0.5+2
@@ -45,6 +48,7 @@ dev_dependencies:
   json_serializable: ^3.2.2
   flutter_native_splash: ^0.1.9
   flutter_launcher_icons: ^0.7.4
+  hive_generator: ^0.5.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
