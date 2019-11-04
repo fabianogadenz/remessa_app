@@ -5,7 +5,7 @@ import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/utils/enviroment_model.dart';
 
 void main() async {
-  await SetUp(Environment.DEV).init();
+  await SetUp(Environment.PROD).init();
 
   runApp(App());
 }
