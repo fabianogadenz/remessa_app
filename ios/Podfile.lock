@@ -13,6 +13,8 @@ PODS:
     - Intercom (~> 5.5.1)
   - package_info (0.0.1):
     - Flutter
+  - path_provider (0.0.1):
+    - Flutter
   - share (0.5.2):
     - Flutter
   - sqflite (0.0.1):
@@ -27,6 +29,7 @@ DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - intercom_flutter (from `.symlinks/plugins/intercom_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
@@ -47,6 +50,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/intercom_flutter/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   sqflite:
@@ -62,6 +67,7 @@ SPEC CHECKSUMS:
   Intercom: 1151a15e5e7931d8e401671a4357239d44325159
   intercom_flutter: bfadb1c7e3d0af65b91cef2a53a29f5a9abc32c1
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
+  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   share: bae0a282aab4483288913fc4dc0b935d4b491f2e
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
