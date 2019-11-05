@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/screens/initial/initial_screen.dart';
+import 'package:remessa_app/theme.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
 
 import 'bloc/bloc.dart';
@@ -13,12 +14,12 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Remessa Online',
       localizationsDelegates: [
-        const I18nDelegate(),
+        I18nDelegate(locales: ['pt']),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [
-        const Locale('en', ''),
+        // const Locale('en', ''),
         const Locale('pt', ''),
       ],
       localeResolutionCallback:
@@ -34,6 +35,7 @@ class App extends StatelessWidget {
 
         return supportedLocales.first;
       },
+      theme: AppTheme().theme,
       home: BlocBuilder<AppBloc, AppState>(
         bloc: AppBloc(),
         builder: (BuildContext context, AppState state) =>

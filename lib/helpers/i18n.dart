@@ -29,15 +29,17 @@ class I18n {
   }
 
   String trans(String key) {
-    return this._sentences[key];
+    return this._sentences[key] ?? '';
   }
 }
 
 class I18nDelegate extends LocalizationsDelegate<I18n> {
-  const I18nDelegate();
+  List<String> locales = ['en', 'pt'];
+
+  I18nDelegate({this.locales}) : assert(locales != null && locales.isNotEmpty);
 
   @override
-  bool isSupported(Locale locale) => ['en', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => locales.contains(locale.languageCode);
 
   @override
   Future<I18n> load(Locale locale) async {

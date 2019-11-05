@@ -1,6 +1,8 @@
 {
-    "greetTo": "Olá, {name}",
-    "help": "Ajuda",
+    "greetTo": "Hello {name}",
+    "help": "Help",
     "dashboard": "Dashboard",
-    "chat": "Chat"
+    "chat": "Chat",
+    "enter": "Entrar",
+    "initial_page:title": "Transferências internacionais para todos"
 }
