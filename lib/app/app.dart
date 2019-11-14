@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/screens/initial/initial_screen.dart';
 import 'package:remessa_app/theme.dart';
@@ -17,6 +19,8 @@ class App extends StatelessWidget {
         I18nDelegate(locales: ['pt']),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
         // const Locale('en', ''),
@@ -35,9 +39,10 @@ class App extends StatelessWidget {
 
         return supportedLocales.first;
       },
-      theme: AppTheme().theme,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.theme(),
       home: BlocBuilder<AppBloc, AppState>(
-        bloc: AppBloc(),
+        bloc: GetIt.I<AppBloc>(),
         builder: (BuildContext context, AppState state) =>
             state.isLoggedIn ? TabControllerWidget() : InitialScreen(),
       ),

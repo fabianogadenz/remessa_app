@@ -14,26 +14,36 @@ const Map<String, String> prod_amplitude = {
   'apiKey': '',
 };
 
+const Map<String, dynamic> api = {
+  'url': 'https://dev-bff.beetech.global/v1/app',
+  'timeout': 5000, // 5s
+};
+
 final Map<Environment, Constants> constantsMap = {
   Environment.DEV: Constants(
     intercom: intercom,
     amplitude: dev_amplitude,
+    api: api,
   ),
   Environment.PROD: Constants(
     intercom: intercom,
     amplitude: prod_amplitude,
+    api: api,
   ),
 };
 
 class Constants {
   final Map<String, String> intercom;
   final Map<String, String> amplitude;
+  final Map<String, dynamic> api;
 
   Constants({
     @required this.intercom,
     @required this.amplitude,
+    @required this.api,
   })  : assert(intercom != null),
-        assert(amplitude != null);
+        assert(amplitude != null),
+        assert(api != null);
 
   static Constants get(Environment env) => constantsMap[env];
 }

@@ -14,6 +14,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Stream<AppState> mapEventToState(
     AppEvent event,
   ) async* {
-    // TODO: Add Logic
+    if (event is RefreshLoginEvent) {
+      yield AppState(isLoggedIn: _authService.isLoggedIn);
+    }
   }
 }
