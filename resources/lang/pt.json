@@ -4,5 +4,27 @@
     "dashboard": "Dashboard",
     "chat": "Chat",
     "enter": "Entrar",
-    "initial_page:title": "Transferências internacionais para todos"
+    "continue": "Continuar",
+    "requiredField": "Campo obrigatório.",
+    "document": {
+        "cpf": {
+            "label": "CPF",
+            "mask": "000.000.000-00"
+        }
+    },
+    "password": "Password",
+    "forgotMyPassword": "Esqueci minha senha",
+    "initial_screen": {
+        "title": "Transferências internacionais para todos"
+    },
+    "login_screen": {
+        "title": "Faça seu login",
+        "privacyBanner": {
+            "intro": "Ao logar você concorda com nossa\n",
+            "privacyPolicy": "Política de Privacidade",
+            "and": " e nossos ",
+            "useTerms": "Termos de Uso"
+        },
+        "invalidCPF": "CPF incorreto, confira e tente novamente."
+    }
 }

@@ -13,23 +13,26 @@ class I18n {
     return Localizations.of<I18n>(context, I18n);
   }
 
-  Map<String, String> _sentences;
+  Map<String, dynamic> _sentences;
 
   Future<bool> load() async {
     String data = await rootBundle
         .loadString('resources/lang/${this.locale.languageCode}.json');
-    Map<String, dynamic> _result = json.decode(data);
-
-    this._sentences = new Map();
-    _result.forEach((String key, dynamic value) {
-      this._sentences[key] = value.toString();
-    });
+    this._sentences = json.decode(data);
 
     return true;
   }
 
-  String trans(String key) {
-    return this._sentences[key] ?? '';
+  String trans(String key, [List<String> subKeys]) {
+    var item = this._sentences[key] ?? '';
+
+    if (item is Map && (subKeys != null && subKeys.isNotEmpty)) {
+      subKeys.forEach(
+        (String subKey) => item = item[subKey] ?? '',
+      );
+    }
+
+    return item.toString();
   }
 }
 

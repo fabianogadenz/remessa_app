@@ -12,34 +12,58 @@ class InitialScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenWidget(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Image.asset(
-              'images/full_icon.png',
-              width: 250,
-            ),
-            Text(
-              I18n.of(context).trans('initial_page:title'),
-              style: Theme.of(context).textTheme.title,
-              textAlign: TextAlign.center,
-            ),
-            Image.asset('images/initial_screen.png'),
-            Container(
-              width: double.infinity,
-              child: RaisedButton(
-                child: Text(
-                  I18n.of(context).trans('enter'),
-                  style: Theme.of(context).textTheme.button,
-                ),
-                onPressed: () => _openLogin(context),
-              ),
-            )
-          ],
+      appBarText: 'lalala',
+      isStatic: true,
+      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Image.asset(
+            'images/full_icon.png',
+            width: 250,
+          ),
+          Text(
+            I18n.of(context).trans('initial_screen', ['title']),
+            style: Theme.of(context).textTheme.title,
+            textAlign: TextAlign.center,
+          ),
+          Image.asset('images/initial_screen.png'),
+          BigButton(
+            onPressed: () => _openLogin(context),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BigButton extends StatelessWidget {
+  final Function onPressed;
+
+  const BigButton({
+    Key key,
+    @required this.onPressed,
+  })  : assert(onPressed != null),
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      width: double.infinity,
+      child: RaisedButton(
+        color: Colors.white,
+        padding: EdgeInsets.all(20),
+        child: Text(
+          I18n.of(context).trans('enter'),
+          style: theme.textTheme.button.copyWith(
+            fontSize: 20,
+            color: theme.primaryColor,
+          ),
         ),
+        onPressed: onPressed,
       ),
     );
   }
