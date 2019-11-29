@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:intercom_flutter/intercom_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:remessa_app/app/bloc/app_bloc.dart';
 import 'package:remessa_app/constants.dart';
@@ -38,6 +39,19 @@ class SetUp {
         constants.amplitude['apiKey'],
       ),
     );
+  }
+
+  _registerOneSignal() async {
+    await OneSignal.shared.init(
+      constants.onesignal['appId'],
+      iOSSettings: {
+        OSiOSSettings.autoPrompt: false,
+        OSiOSSettings.inAppLaunchUrl: true
+      },
+    );
+
+    await OneSignal.shared
+        .setInFocusDisplayType(OSNotificationDisplayType.notification);
   }
 
   _registerServices() async {
@@ -85,6 +99,8 @@ class SetUp {
     await _initializeIntercom();
 
     await _initializeHive();
+
+    await _registerOneSignal();
 
     // GetIt registers
     _registerAmplitude();

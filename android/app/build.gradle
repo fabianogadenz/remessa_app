@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
+    }
+    dependencies {
+        // OneSignal-Gradle-Plugin
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.2, 0.99.99]'
+    }
+}
+
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -58,6 +70,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    configurations.all {
+         resolutionStrategy {
+             force 'com.google.firebase:firebase-common:16.1.0'
+             force 'com.google.firebase:firebase-iid:17.1.2'
+             force 'com.google.firebase:firebase-messaging:17.6.0'
+         }
+     }
 }
 
 flutter {
@@ -65,6 +85,7 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
