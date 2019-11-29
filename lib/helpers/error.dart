@@ -3,11 +3,18 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:remessa_app/app/bloc/bloc.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 
 class ErrorHelper {
+  static const statusToLogout = [
+    HttpStatus.unauthorized,
+    HttpStatus.forbidden,
+    HttpStatus.internalServerError,
+  ];
+
   static List<ErrorResponseModel> parseErrorResponse(DioError error) =>
       hasListResponseData(error)
           ? error.response.data
@@ -92,6 +99,14 @@ class ErrorHelper {
 
       return DioError(
         error: i18n.trans('error', ['request_timeout']),
+      );
+    }
+
+    if (statusToLogout.contains(dioError.response?.statusCode)) {
+      GetIt.I<AppBloc>().add(LogoutEvent());
+
+      return DioError(
+        error: i18n.trans('error', ['auth_expired']),
       );
     }
 
