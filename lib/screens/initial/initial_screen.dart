@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 
 class InitialScreen extends StatelessWidget {
+  final i18n = GetIt.I<I18n>();
+
   _openLogin(BuildContext context) {
     NavigatorHelper.push(context, LoginScreen());
   }
@@ -24,12 +27,13 @@ class InitialScreen extends StatelessWidget {
             width: 250,
           ),
           Text(
-            I18n.of(context).trans('initial_screen', ['title']),
+            i18n.trans('initial_screen', ['title']),
             style: Theme.of(context).textTheme.title,
             textAlign: TextAlign.center,
           ),
           Image.asset('images/initial_screen.png'),
           BigButton(
+            text: i18n.trans('enter'),
             onPressed: () => _openLogin(context),
           ),
         ],
@@ -40,11 +44,14 @@ class InitialScreen extends StatelessWidget {
 
 class BigButton extends StatelessWidget {
   final Function onPressed;
+  final String text;
 
   const BigButton({
     Key key,
+    @required this.text,
     @required this.onPressed,
-  })  : assert(onPressed != null),
+  })  : assert(text != null),
+        assert(onPressed != null),
         super(key: key);
 
   @override
@@ -57,7 +64,7 @@ class BigButton extends StatelessWidget {
         color: Colors.white,
         padding: EdgeInsets.all(20),
         child: Text(
-          I18n.of(context).trans('enter'),
+          text,
           style: theme.textTheme.button.copyWith(
             fontSize: 20,
             color: theme.primaryColor,

@@ -6,3 +6,8 @@ class RefreshLoginEvent extends AppEvent {
   @override
   String toString() => 'RefreshLoginEvent';
 }
+
+class LogoutEvent extends AppEvent {
+  @override
+  String toString() => 'LogoutEvent';
+}

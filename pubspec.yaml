@@ -26,7 +26,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
-  equatable: ^0.6.1
+  equatable: ^1.0.0
   flutter_bloc: ^2.0.0
   http: ^0.12.0+2
   json_annotation: ^3.0.0
@@ -38,6 +38,7 @@ dependencies:
   flutter_statusbarcolor: ^0.2.2
   dio: ^3.0.4
   cpf_cnpj_validator: ^1.0.5
+  tuple: ^1.0.3
 
   # Plugins
   intercom_flutter: ^2.0.5+2
@@ -73,6 +74,7 @@ flutter:
   - resources/lang/en.json
   - images/initial_screen.png
   - images/full_icon.png
+  - images/wallet.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -1,13 +1,15 @@
-import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class TabControllerState extends Equatable {
+class TabControllerState {
+  final bool success;
+  final String errorMessage;
+  final bool isLoading;
   final int currentTabIndex;
 
   TabControllerState({
+    this.success = false,
+    this.errorMessage,
+    this.isLoading = false,
     @required this.currentTabIndex,
   }) : assert(currentTabIndex != null);
-
-  @override
-  List<Object> get props => [currentTabIndex];
 }

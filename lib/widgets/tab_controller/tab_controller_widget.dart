@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intercom_flutter/intercom_flutter.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 
-import 'package:remessa_app/screens/calculator/calculator_screen.dart';
+import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
+import 'package:remessa_app/services/auth_service.dart';
+import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
+import 'package:remessa_app/widgets/widgets.dart';
 
 class TabContent {
   final String title;
@@ -26,25 +30,19 @@ class TabControllerWidget extends StatefulWidget {
 }
 
 class _TabControllerWidgetState extends State<TabControllerWidget> {
-  final _tabControllerBloc = TabControllerBloc();
+  final i18n = GetIt.I<I18n>();
+  final _tabControllerBloc = GetIt.I<TabControllerBloc>();
 
   @override
   Widget build(BuildContext context) {
-    final i18n = I18n.of(context);
-
     final _tabs = <TabContent>[
       TabContent(
-        title: i18n.trans('help'),
-        iconData: Icons.help,
-        widget: CalculatorScreen(),
-      ),
-      TabContent(
         title: i18n.trans('dashboard'),
-        iconData: Icons.dashboard,
-        widget: CalculatorScreen(),
+        iconData: Icons.home,
+        widget: DashboardScreen(),
       ),
       TabContent(
-        title: i18n.trans('chat'),
+        title: i18n.trans('help'),
         iconData: Icons.chat,
         widget: Container(),
       ),
@@ -52,12 +50,15 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
 
     return BlocBuilder<TabControllerBloc, TabControllerState>(
       bloc: _tabControllerBloc,
-      builder: (context, state) => Scaffold(
-        appBar: AppBar(
-          title: Text(_tabs[state.currentTabIndex].title),
-        ),
-        body: _tabs[state.currentTabIndex].widget,
+      builder: (context, state) => ScreenWidget(
+        isStatic: true,
+        child: _tabs[state.currentTabIndex].widget,
         bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: StyleColors.SUPPORT_NEUTRAL_10,
+          unselectedItemColor: StyleColors.SUPPORT_NEUTRAL_40,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 100,
+          iconSize: 30,
           currentIndex: state.currentTabIndex,
           onTap: (int index) {
             onTabTapped(context, index);
@@ -71,13 +72,16 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
               )
               .toList(),
         ),
-      ),
+      )
+        ..errorStreamController.add(state.errorMessage)
+        ..loaderStreamController.add(state.isLoading),
     );
   }
 
   Future onTabTapped(BuildContext context, int index) async {
-    if (index == 2) {
-      await Intercom.registerIdentifiedUser(email: 'zeucxb@gmail.com');
+    if (index == 1) {
+      await Intercom.registerIdentifiedUser(
+          userId: GetIt.I<AuthService>().userId?.toString());
       await Intercom.displayMessenger();
       return;
     }
