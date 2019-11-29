@@ -20,10 +20,14 @@ class AuthService {
   }
 
   String get token => _box.get('token');
+  int get userId => _box.get('userId');
 
-  void saveToken(String token) => _box.put('token', token);
+  void saveUser(String token, int userId) {
+    _box.put('token', token);
+    _box.put('userId', userId);
+  }
 
-  void removeToken() => _box.delete('token');
+  void logout() => _box.clear();
 
   bool get isLoggedIn => (token != null);
 
@@ -39,7 +43,7 @@ class AuthService {
 
       final loginResponse = LoginResponseModel.fromJson(response.data);
 
-      saveToken(loginResponse.token);
+      saveUser(loginResponse.token, loginResponse.customerId);
     } on DioError catch (e) {
       ErrorHelper.throwFormattedErrorResponse(e);
     } catch (e) {

@@ -1,11 +1,15 @@
 {
     "greetTo": "Hello {name}",
-    "help": "Help",
-    "dashboard": "Dashboard",
+    "help": "Ajuda",
+    "dashboard": "Início",
     "chat": "Chat",
     "enter": "Entrar",
     "continue": "Continuar",
     "requiredField": "Campo obrigatório.",
+    "error": {
+        "network_connection": "Ops... Você está offline.",
+        "request_timeout": "Ops... A conexão está lenta."
+    },
     "document": {
         "cpf": {
             "label": "CPF",
@@ -26,5 +30,8 @@
             "useTerms": "Termos de Uso"
         },
         "invalidCPF": "CPF incorreto, confira e tente novamente."
+    },
+    "dashboard_screen": {
+        "empty_state": "Você ainda não possui\ntransferências em andamento"
     }
 }

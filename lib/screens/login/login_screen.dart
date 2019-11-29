@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/screens/login/bloc/bloc.dart';
 import 'package:remessa_app/screens/login/keys.dart';
@@ -13,6 +14,7 @@ import 'widgets/login_form_widget.dart';
 class LoginScreen extends StatelessWidget {
   // ignore: close_sinks
   final _loginScreenBloc = LoginScreenBloc();
+  final i18n = GetIt.I<I18n>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +32,14 @@ class LoginScreen extends StatelessWidget {
               isAccent: true,
               showAppBar: true,
               isStatic: true,
-              appBarText: I18n.of(context).trans('enter'),
+              appBarText: i18n.trans('enter'),
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Text(
-                    I18n.of(context).trans('login_screen', ['title']),
+                    i18n.trans('login_screen', ['title']),
                     key: Key(LoginScreenKeys.title),
                     style: Theme.of(context).textTheme.body2,
                     textAlign: TextAlign.start,

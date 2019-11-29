@@ -1,9 +1,11 @@
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/screens/login/bloc/bloc.dart';
 import 'package:remessa_app/screens/login/keys.dart';
+import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/text_input/text_input.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,6 +20,7 @@ class LoginFormWidget extends StatelessWidget {
 
   final LoginScreenBloc _loginScreenBloc;
   final LoginScreenFormState formState;
+  final i18n = GetIt.I<I18n>();
   final _formKey = GlobalKey<FormState>();
   final cpfCtrl = MaskedTextController(mask: '000.000.000-00');
   final passwordCtrl = TextEditingController();
@@ -37,13 +40,14 @@ class LoginFormWidget extends StatelessWidget {
             TextInput(
               textFormFieldKey: Key(LoginScreenKeys.cpfInput),
               controller: cpfCtrl,
-              labelText: I18n.of(context).trans('document', ['cpf', 'label']),
-              hintText: I18n.of(context).trans('document', ['cpf', 'mask']),
+              labelText: GetIt.I<I18n>().trans('document', ['cpf', 'label']),
+              hintText: i18n.trans('document', ['cpf', 'mask']),
+              keyboardType: TextInputType.number,
               validator: (value) {
                 if (value.isEmpty) {
-                  return I18n.of(context).trans('requiredField');
+                  return i18n.trans('requiredField');
                 } else if (!CPFValidator.isValid(value)) {
-                  return I18n.of(context).trans('login_screen', ['invalidCPF']);
+                  return i18n.trans('login_screen', ['invalidCPF']);
                 }
                 return null;
               },
@@ -51,10 +55,10 @@ class LoginFormWidget extends StatelessWidget {
             TextInput(
               controller: passwordCtrl,
               obscureText: true,
-              labelText: I18n.of(context).trans('password'),
+              labelText: i18n.trans('password'),
               validator: (value) {
                 if (value.isEmpty) {
-                  return I18n.of(context).trans('requiredField');
+                  return i18n.trans('requiredField');
                 }
                 return null;
               },
@@ -79,16 +83,23 @@ class LoginFormWidget extends StatelessWidget {
                   FocusScope.of(context).requestFocus(FocusNode());
                 },
                 child: Text(
-                  I18n.of(context).trans('continue'),
+                  i18n.trans('continue'),
                   style: Theme.of(context).textTheme.button,
                 ),
               ),
             ),
-            FlatButton(
-              child: Text(
-                I18n.of(context).trans('forgotMyPassword'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: FlatButton(
+                child: Text(
+                  i18n.trans('forgotMyPassword'),
+                  style: Theme.of(context).textTheme.button.copyWith(
+                        color: StyleColors.BRAND_PRIMARY_40,
+                        fontSize: 16,
+                      ),
+                ),
+                onPressed: _forgotPassword,
               ),
-              onPressed: _forgotPassword,
             ),
           ],
         ),
@@ -97,6 +108,9 @@ class LoginFormWidget extends StatelessWidget {
   }
 
   _forgotPassword() {
-    launch('http://google.com');
+    launch(
+      'https://www.remessaonline.com.br/recuperar-senha',
+      statusBarBrightness: Brightness.light,
+    );
   }
 }

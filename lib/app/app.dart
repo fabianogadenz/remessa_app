@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/screens/initial/initial_screen.dart';
+import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
 
@@ -41,11 +43,23 @@ class App extends StatelessWidget {
       },
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme(),
-      home: BlocBuilder<AppBloc, AppState>(
-        bloc: GetIt.I<AppBloc>(),
-        builder: (BuildContext context, AppState state) =>
-            state.isLoggedIn ? TabControllerWidget() : InitialScreen(),
-      ),
+      home: Builder(builder: (BuildContext context) {
+        try {
+          GetIt.I<I18n>();
+        } catch (_) {
+          SetUp.registerI18n(context);
+
+          SystemChrome.setPreferredOrientations([
+            DeviceOrientation.portraitUp,
+          ]);
+        }
+
+        return BlocBuilder<AppBloc, AppState>(
+          bloc: GetIt.I<AppBloc>(),
+          builder: (BuildContext context, AppState state) =>
+              state.isLoggedIn ? TabControllerWidget() : InitialScreen(),
+        );
+      }),
     );
   }
 }

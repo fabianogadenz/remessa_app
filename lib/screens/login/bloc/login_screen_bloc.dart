@@ -35,7 +35,7 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
         formState: formState..clearPassword(),
       );
     } catch (e) {
-      yield LoginScreenState(success: false, errorMessage: e.message);
+      yield LoginScreenState(success: false, errorMessage: e?.message);
     }
   }
 

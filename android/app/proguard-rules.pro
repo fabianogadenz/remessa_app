@@ -5,4 +5,6 @@
 -keep class io.flutter.view.**  { *; }
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
+-keep public class com.google.android.gms.* { public *; }
+-dontwarn com.google.android.gms.**
 -dontwarn io.flutter.embedding.**

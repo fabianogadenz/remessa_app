@@ -15,9 +15,11 @@ class ScreenWidget extends StatefulWidget {
   final List<Widget> children;
   final bool showAppBar;
   final String appBarText;
+  final Widget appBarWidget;
   final bool isAccent;
   final bool isStatic;
   final EdgeInsetsGeometry padding;
+  final BottomNavigationBar bottomNavigationBar;
 
   ScreenWidget({
     Key key,
@@ -25,9 +27,11 @@ class ScreenWidget extends StatefulWidget {
     this.isAccent = false,
     this.isStatic = false,
     this.appBarText = '',
+    this.appBarWidget,
     this.padding,
     this.child,
     this.children,
+    this.bottomNavigationBar,
   })  : assert(child != null || children != null),
         super(key: key);
 
@@ -60,10 +64,13 @@ class _ScreenWidgetState extends State<ScreenWidget> {
     }
 
     final _appBar = AppBar(
+      backgroundColor:
+          widget.isAccent ? theme.accentColor : theme.scaffoldBackgroundColor,
       centerTitle: true,
-      title: Text(
-        widget.appBarText,
-      ),
+      title: widget.appBarWidget ??
+          Text(
+            widget.appBarText,
+          ),
     );
 
     return Stack(
@@ -93,6 +100,7 @@ class _ScreenWidgetState extends State<ScreenWidget> {
                   : ListView(children: widget.children),
             ),
           ),
+          bottomNavigationBar: widget.bottomNavigationBar,
         ),
         _buildErrorDialog(context),
         _buildLoader(context),

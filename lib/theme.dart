@@ -2,17 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class AppTheme {
-  static ThemeData theme() => ThemeData.light().copyWith(
+  static ThemeData theme() => ThemeData(
+        fontFamily: 'OpenSans',
         primaryColor: StyleColors.BRAND_PRIMARY_40,
         accentColor: StyleColors.SUPPORT_NEUTRAL_10,
         scaffoldBackgroundColor: StyleColors.BRAND_PRIMARY_60,
         textTheme: TextTheme(
           title: TextStyle(
             fontSize: 30,
+            color: StyleColors.SUPPORT_NEUTRAL_10,
+            fontWeight: FontWeight.w300,
+          ),
+          subtitle: TextStyle(
+            fontSize: 28,
+            color: StyleColors.SUPPORT_NEUTRAL_10,
             fontWeight: FontWeight.w300,
           ),
           headline: TextStyle(
             fontSize: 18,
+            color: StyleColors.SUPPORT_NEUTRAL_10,
           ),
           body2: TextStyle(
             color: StyleColors.BRAND_PRIMARY_80,
@@ -22,8 +30,6 @@ class AppTheme {
             color: StyleColors.SUPPORT_NEUTRAL_10,
             fontWeight: FontWeight.bold,
           ),
-        ).apply(
-          fontFamily: 'OpenSans',
         ),
         iconTheme: IconThemeData(
           color: Colors.white,
@@ -49,6 +55,12 @@ class AppTheme {
             ),
           ),
           elevation: 0.5,
+        ),
+        cardTheme: CardTheme(
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          shape: RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(10),
+          ),
         ),
       );
 }
