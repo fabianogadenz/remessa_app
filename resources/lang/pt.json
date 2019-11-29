@@ -8,7 +8,8 @@
     "requiredField": "Campo obrigatório.",
     "error": {
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
-        "request_timeout": "Algo deu errado, não foi possível carregar suas informações. Tente novamente mais tarde."
+        "request_timeout": "Algo deu errado, não foi possível carregar suas informações. Tente novamente mais tarde.",
+        "auth_expired": "Seu login expirou. Por favor, entre novamente."
     },
     "document": {
         "cpf": {
