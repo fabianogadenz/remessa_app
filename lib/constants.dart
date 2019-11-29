@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:remessa_app/helpers/enviroment_model.dart';
 
 const Map<String, String> intercom = {
-  'appId': 'nucbuzqn',
-  'iosApiKey': 'ios_sdk-a404f625a23cc834f9d2ee079c7b5b2dbdec533e',
-  'androidApiKey': 'android_sdk-1781b33f946be31caf417d150915e354756a9b8b',
+  'appId': 'zuuy27xs',
+  'iosApiKey': 'ios_sdk-26b758b23b6b69426d2d5dcab13626a6686bdf13',
+  'androidApiKey': 'android_sdk-bb88cc19b5a9a4b6ae6418ee901a2ebecceee29a',
 };
 
 const Map<String, String> dev_amplitude = {
