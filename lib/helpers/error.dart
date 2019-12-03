@@ -7,6 +7,7 @@ import 'package:remessa_app/app/bloc/bloc.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
+import 'package:remessa_app/services/auth_service.dart';
 
 class ErrorHelper {
   static const statusToLogout = [
@@ -102,7 +103,8 @@ class ErrorHelper {
       );
     }
 
-    if (statusToLogout.contains(dioError.response?.statusCode)) {
+    if (statusToLogout.contains(dioError.response?.statusCode) &&
+        GetIt.I<AuthService>().token != null) {
       GetIt.I<AppBloc>().add(LogoutEvent());
 
       return DioError(
