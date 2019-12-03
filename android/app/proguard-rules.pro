@@ -6,5 +6,6 @@
 -keep class io.flutter.**  { *; }
 -keep class io.flutter.plugins.**  { *; }
 -keep public class com.google.android.gms.* { public *; }
+-dontwarn android.**
 -dontwarn com.google.android.gms.**
 -dontwarn io.flutter.embedding.**
