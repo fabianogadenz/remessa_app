@@ -22,7 +22,12 @@ class LoginFormWidget extends StatelessWidget {
   final LoginScreenFormState formState;
   final i18n = GetIt.I<I18n>();
   final _formKey = GlobalKey<FormState>();
-  final cpfCtrl = MaskedTextController(mask: '000.000.000-00');
+  final cpfCtrl = MaskedTextController(
+    mask: GetIt.I<I18n>().trans(
+      'document',
+      ['cpf', 'mask'],
+    ),
+  );
   final passwordCtrl = TextEditingController();
 
   @override
@@ -40,7 +45,7 @@ class LoginFormWidget extends StatelessWidget {
             TextInput(
               textFormFieldKey: Key(LoginScreenKeys.cpfInput),
               controller: cpfCtrl,
-              labelText: GetIt.I<I18n>().trans('document', ['cpf', 'label']),
+              labelText: i18n.trans('document', ['cpf', 'label']),
               hintText: i18n.trans('document', ['cpf', 'mask']),
               keyboardType: TextInputType.number,
               validator: (value) {
@@ -78,6 +83,8 @@ class LoginFormWidget extends StatelessWidget {
                         password: password,
                       ),
                     );
+                  } else {
+                    passwordCtrl.clear();
                   }
 
                   FocusScope.of(context).requestFocus(FocusNode());
