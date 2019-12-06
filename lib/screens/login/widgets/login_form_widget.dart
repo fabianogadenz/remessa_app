@@ -115,9 +115,6 @@ class LoginFormWidget extends StatelessWidget {
   }
 
   _forgotPassword() {
-    launch(
-      'https://www.remessaonline.com.br/recuperar-senha',
-      statusBarBrightness: Brightness.light,
-    );
+    launch('https://www.remessaonline.com.br/recuperar-senha');
   }
 }
