@@ -12,8 +12,13 @@ const Map<String, String> prod_amplitude = {
   'apiKey': 'ee6caed71b8515f3aabc21b4d3582a19',
 };
 
-const Map<String, dynamic> api = {
+const Map<String, dynamic> dev_api = {
   'url': 'https://dev-bff.beetech.global/v1/app',
+  'timeout': 5000, // 5s
+};
+
+const Map<String, dynamic> prod_api = {
+  'url': 'https://bff.beetech.global/v1/app',
   'timeout': 5000, // 5s
 };
 
@@ -21,12 +26,12 @@ final Map<Environment, Constants> constantsMap = {
   Environment.DEV: Constants(
     onesignal: onesignal,
     amplitude: dev_amplitude,
-    api: api,
+    api: dev_api,
   ),
   Environment.PROD: Constants(
     onesignal: onesignal,
     amplitude: prod_amplitude,
-    api: api,
+    api: prod_api,
   ),
 };
 
