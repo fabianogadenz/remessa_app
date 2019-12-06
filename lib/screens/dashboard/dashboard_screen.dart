@@ -1,8 +1,10 @@
+import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/bloc/bloc.dart';
 import 'package:remessa_app/helpers/i18n.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/dashboard/widgets/transaction_card_widget.dart';
 import 'package:remessa_app/style/colors.dart';
 
@@ -11,6 +13,7 @@ import 'bloc/bloc.dart';
 class DashboardScreen extends StatelessWidget {
   final i18n = GetIt.I<I18n>();
   final _dashboardSreenBloc = DashboardScreenBloc();
+  final amplitude = GetIt.I<AmplitudeFlutter>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +70,11 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
+  _logout() {
+    amplitude.logEvent(name: TrackEvents.LOGOUT_CLICK);
+    GetIt.I<AppBloc>()..add(LogoutEvent());
+  }
+
   SliverAppBar _sliverAppBar(ThemeData theme) {
     return SliverAppBar(
       expandedHeight: 80,
@@ -77,7 +85,7 @@ class DashboardScreen extends StatelessWidget {
             icon: Icon(Icons.exit_to_app),
             iconSize: 35,
             color: Colors.white,
-            onPressed: () => GetIt.I<AppBloc>()..add(LogoutEvent()),
+            onPressed: _logout,
           ),
         ),
       ],

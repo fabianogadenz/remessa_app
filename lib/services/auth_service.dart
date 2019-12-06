@@ -1,3 +1,4 @@
+import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -44,6 +45,7 @@ class AuthService {
       final loginResponse = LoginResponseModel.fromJson(response.data);
 
       saveUser(loginResponse.token, loginResponse.customerId);
+      GetIt.I<AmplitudeFlutter>().setUserId(userId);
     } on DioError catch (e) {
       ErrorHelper.throwFormattedErrorResponse(e);
     } catch (e) {

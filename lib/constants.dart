@@ -18,7 +18,7 @@ const Map<String, dynamic> dev_api = {
 };
 
 const Map<String, dynamic> prod_api = {
-  'url': 'https://bff.beetech.global/v1/app',
+  'url': 'https://app.beetech.global/v1/app',
   'timeout': 5000, // 5s
 };
 

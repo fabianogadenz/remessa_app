@@ -1,7 +1,9 @@
+import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 
@@ -9,6 +11,7 @@ class InitialScreen extends StatelessWidget {
   final i18n = GetIt.I<I18n>();
 
   _openLogin(BuildContext context) {
+    GetIt.I<AmplitudeFlutter>().logEvent(name: TrackEvents.SPLASH_ENTER_CLICK);
     NavigatorHelper.push(context, LoginScreen());
   }
 

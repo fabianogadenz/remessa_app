@@ -1,8 +1,10 @@
+import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/bloc/bloc.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -15,6 +17,7 @@ class LoginScreen extends StatelessWidget {
   // ignore: close_sinks
   final _loginScreenBloc = LoginScreenBloc();
   final i18n = GetIt.I<I18n>();
+  final amplitude = GetIt.I<AmplitudeFlutter>();
 
   final useTermsUrl = 'https://www.remessaonline.com.br/termos-de-uso';
   final privacyPolicyUrl =
@@ -87,6 +90,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
+                    amplitude.logEvent(name: TrackEvents.PRIVACY_POLICY_CLICK);
                     launch(privacyPolicyUrl);
                   },
               ),
@@ -102,6 +106,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
+                    amplitude.logEvent(name: TrackEvents.USE_TERMS_CLICK);
                     launch(useTermsUrl);
                   },
               ),
