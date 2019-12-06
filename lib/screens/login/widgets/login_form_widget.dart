@@ -1,8 +1,10 @@
+import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/i18n.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/bloc/bloc.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -29,6 +31,7 @@ class LoginFormWidget extends StatelessWidget {
     ),
   );
   final passwordCtrl = TextEditingController();
+  final amplitude = GetIt.I<AmplitudeFlutter>();
 
   @override
   Widget build(BuildContext context) {
@@ -72,23 +75,7 @@ class LoginFormWidget extends StatelessWidget {
               width: double.infinity,
               margin: EdgeInsets.only(top: 20),
               child: RaisedButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    final cpf = cpfCtrl.value.text;
-                    final password = passwordCtrl.value.text;
-
-                    _loginScreenBloc.add(
-                      LoginEvent(
-                        cpf: cpf,
-                        password: password,
-                      ),
-                    );
-                  } else {
-                    passwordCtrl.clear();
-                  }
-
-                  FocusScope.of(context).requestFocus(FocusNode());
-                },
+                onPressed: () => _login(context),
                 child: Text(
                   i18n.trans('continue'),
                   style: Theme.of(context).textTheme.button,
@@ -114,7 +101,30 @@ class LoginFormWidget extends StatelessWidget {
     );
   }
 
+  _login(BuildContext context) {
+    if (_formKey.currentState.validate()) {
+      final cpf = cpfCtrl.value.text;
+      final password = passwordCtrl.value.text;
+
+      amplitude.logEvent(name: TrackEvents.SUBMIT_LOGIN_VALID);
+
+      _loginScreenBloc.add(
+        LoginEvent(
+          cpf: cpf,
+          password: password,
+        ),
+      );
+    } else {
+      amplitude.logEvent(name: TrackEvents.SUBMIT_LOGIN_INVALID);
+
+      passwordCtrl.clear();
+    }
+
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
+
   _forgotPassword() {
+    amplitude.logEvent(name: TrackEvents.FORGOT_PASSWORD_CLICK);
     launch('https://www.remessaonline.com.br/recuperar-senha');
   }
 }
