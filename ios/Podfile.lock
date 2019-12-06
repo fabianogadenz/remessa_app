@@ -9,10 +9,6 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - Intercom (5.5.2)
-  - "intercom_flutter (2.0.5+2)":
-    - Flutter
-    - Intercom (~> 5.5.1)
   - OneSignal (2.11.2)
   - onesignal_flutter (2.2.0):
     - Flutter
@@ -34,7 +30,6 @@ DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
-  - intercom_flutter (from `.symlinks/plugins/intercom_flutter/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -45,7 +40,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - FMDB
-    - Intercom
     - OneSignal
 
 EXTERNAL SOURCES:
@@ -57,8 +51,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/flutter/ios"
   flutter_statusbarcolor:
     :path: ".symlinks/plugins/flutter_statusbarcolor/ios"
-  intercom_flutter:
-    :path: ".symlinks/plugins/intercom_flutter/ios"
   onesignal_flutter:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
   package_info:
@@ -78,8 +70,6 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  Intercom: 1151a15e5e7931d8e401671a4357239d44325159
-  intercom_flutter: bfadb1c7e3d0af65b91cef2a53a29f5a9abc32c1
   OneSignal: 4e3e68bb6c29975286a2fa910cb49132bc6e20bb
   onesignal_flutter: 5a6041629e3f93a61cf7ae8193c3d1702f2ef78d
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef

@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
-import 'package:intercom_flutter/intercom_flutter.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:remessa_app/app/bloc/app_bloc.dart';
@@ -23,14 +22,6 @@ class SetUp {
   _initializeHive() async {
     var dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
-  }
-
-  _initializeIntercom() async {
-    await Intercom.initialize(
-      constants.intercom['appId'],
-      iosApiKey: constants.intercom['iosApiKey'],
-      androidApiKey: constants.intercom['androidApiKey'],
-    );
   }
 
   _registerAmplitude() {
@@ -96,8 +87,6 @@ class SetUp {
   }
 
   init() async {
-    await _initializeIntercom();
-
     await _initializeHive();
 
     await _registerOneSignal();

@@ -41,10 +41,9 @@ dependencies:
   tuple: ^1.0.3
 
   # Plugins
-  intercom_flutter: ^2.0.5+2
   amplitude_flutter: ^1.0.1
   share: ^0.6.3+1
-  url_launcher: ^5.2.5
+  url_launcher: ^5.2.7
   onesignal_flutter: ^2.0.0
 
 dev_dependencies:

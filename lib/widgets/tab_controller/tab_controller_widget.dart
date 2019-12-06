@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:intercom_flutter/intercom_flutter.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 
 import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
-import 'package:remessa_app/services/auth_service.dart';
-import 'package:remessa_app/style/colors.dart';
+// import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
 import 'package:remessa_app/widgets/widgets.dart';
 
@@ -53,39 +51,32 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       builder: (context, state) => ScreenWidget(
         isStatic: true,
         child: _tabs[state.currentTabIndex].widget,
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: StyleColors.SUPPORT_NEUTRAL_10,
-          unselectedItemColor: StyleColors.SUPPORT_NEUTRAL_40,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          elevation: 100,
-          iconSize: 30,
-          currentIndex: state.currentTabIndex,
-          onTap: (int index) {
-            onTabTapped(context, index);
-          },
-          items: _tabs
-              .map(
-                (tab) => BottomNavigationBarItem(
-                  icon: Icon(tab.iconData),
-                  title: Text(tab.title),
-                ),
-              )
-              .toList(),
-        ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   selectedItemColor: StyleColors.SUPPORT_NEUTRAL_10,
+        //   unselectedItemColor: StyleColors.SUPPORT_NEUTRAL_40,
+        //   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        //   elevation: 100,
+        //   iconSize: 30,
+        //   currentIndex: state.currentTabIndex,
+        //   onTap: (int index) {
+        //     onTabTapped(context, index);
+        //   },
+        //   items: _tabs
+        //       .map(
+        //         (tab) => BottomNavigationBarItem(
+        //           icon: Icon(tab.iconData),
+        //           title: Text(tab.title),
+        //         ),
+        //       )
+        //       .toList(),
+        // ),
       )
         ..errorStreamController.add(state.errorMessage)
         ..loaderStreamController.add(state.isLoading),
     );
   }
 
-  Future onTabTapped(BuildContext context, int index) async {
-    if (index == 1) {
-      await Intercom.registerIdentifiedUser(
-          userId: GetIt.I<AuthService>().userId?.toString());
-      await Intercom.displayMessenger();
-      return;
-    }
-
+  void onTabTapped(BuildContext context, int index) {
     _tabControllerBloc.add(
       ChangeTabEvent(index: index),
     );

@@ -16,6 +16,10 @@ class LoginScreen extends StatelessWidget {
   final _loginScreenBloc = LoginScreenBloc();
   final i18n = GetIt.I<I18n>();
 
+  final useTermsUrl = 'https://www.remessaonline.com.br/termos-de-uso';
+  final privacyPolicyUrl =
+      'https://www.remessaonline.com.br/politica-de-privacidade';
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginScreenBloc, LoginScreenState>(
@@ -83,8 +87,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    launch(
-                        'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
+                    launch(privacyPolicyUrl);
                   },
               ),
               TextSpan(
@@ -99,8 +102,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    launch(
-                        'https://docs.flutter.io/flutter/services/UrlLauncher-class.html');
+                    launch(useTermsUrl);
                   },
               ),
             ]),
