@@ -15,12 +15,21 @@ class I18n {
 
   Map<String, dynamic> _sentences;
 
-  Future<bool> load() async {
-    String data = await rootBundle
-        .loadString('resources/lang/${this.locale.languageCode}.json');
-    this._sentences = json.decode(data);
+  Future<bool> load([Map<String, dynamic> sentences]) async {
+    if (sentences != null) {
+      _sentences = sentences;
+      return true;
+    }
 
-    return true;
+    try {
+      String data = await rootBundle
+          .loadString('resources/lang/${this.locale.languageCode}.json');
+      this._sentences = json.decode(data);
+
+      return true;
+    } catch (_) {
+      return false;
+    }
   }
 
   String trans(String key, [List<String> subKeys]) {

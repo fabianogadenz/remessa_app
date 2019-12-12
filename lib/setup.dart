@@ -10,14 +10,16 @@ import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/enviroment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/helpers.dart';
+import 'package:remessa_app/test_setup.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
 
 import 'services/services.dart';
 
 class SetUp {
   final Constants constants;
+  final Environment env;
 
-  SetUp(Environment env) : constants = Constants.get(env);
+  SetUp(this.env) : constants = Constants.get(env);
 
   _initializeHive() async {
     var dir = await getApplicationDocumentsDirectory();
@@ -32,7 +34,13 @@ class SetUp {
     );
   }
 
+  startOneSignal() {}
+
   _registerOneSignal() async {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    OneSignal.shared.setRequiresUserPrivacyConsent(false);
+
     await OneSignal.shared.init(
       constants.onesignal['appId'],
       iOSSettings: {
@@ -87,6 +95,11 @@ class SetUp {
   }
 
   init() async {
+    if (env == Environment.TEST) {
+      await TestSetUp.init();
+      return;
+    }
+
     await _initializeHive();
 
     await _registerOneSignal();
