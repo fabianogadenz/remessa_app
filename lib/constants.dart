@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:remessa_app/helpers/enviroment_model.dart';
 
 const Map<String, String> onesignal = {
-  'appId': '160b97f4-512f-4ed5-924d-f73f352f2e42',
+  'appId': 'b2f1b437-2038-499a-8cd6-b22afe57daa9',
 };
 
 const Map<String, String> dev_amplitude = {

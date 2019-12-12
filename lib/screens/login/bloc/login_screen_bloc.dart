@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:remessa_app/app/bloc/bloc.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
@@ -25,9 +24,6 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
 
     try {
       await GetIt.I<AuthService>().login(event.cpf, event.password);
-
-      await OneSignal.shared
-          .setExternalUserId(GetIt.I<AuthService>()?.userId?.toString());
 
       GetIt.I<AppBloc>().add(RefreshLoginEvent());
 

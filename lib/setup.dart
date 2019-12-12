@@ -34,7 +34,13 @@ class SetUp {
     );
   }
 
+  startOneSignal() {}
+
   _registerOneSignal() async {
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+    OneSignal.shared.setRequiresUserPrivacyConsent(false);
+
     await OneSignal.shared.init(
       constants.onesignal['appId'],
       iOSSettings: {

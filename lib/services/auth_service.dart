@@ -2,6 +2,7 @@ import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/models/responses/login_response_model.dart';
 
@@ -28,7 +29,11 @@ class AuthService {
     _box.put('userId', userId);
   }
 
-  void logout() => _box.clear();
+  void logout() async {
+    _box.clear();
+    GetIt.I<AmplitudeFlutter>().setUserId(null);
+    await OneSignal.shared.removeExternalUserId();
+  }
 
   bool get isLoggedIn => (token != null);
 
@@ -46,6 +51,7 @@ class AuthService {
 
       saveUser(loginResponse.token, loginResponse.customerId);
       GetIt.I<AmplitudeFlutter>().setUserId(userId);
+      await OneSignal.shared.setExternalUserId(userId.toString());
     } on DioError catch (e) {
       ErrorHelper.throwFormattedErrorResponse(e);
     } catch (e) {
