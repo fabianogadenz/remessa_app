@@ -13,7 +13,7 @@ const Map<String, String> prod_amplitude = {
 };
 
 const Map<String, dynamic> dev_api = {
-  'url': 'https://dev-bff.beetech.global/v1/app',
+  'url': 'https://dev-app.beetech.global/v1/app',
   'timeout': 5000, // 5s
 };
 
