@@ -5,20 +5,21 @@ import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
+import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 
 class InitialScreen extends StatelessWidget {
   final i18n = GetIt.I<I18n>();
 
-  _openLogin(BuildContext context) {
+  _openLogin(BuildContext context) async {
     GetIt.I<AmplitudeFlutter>().logEvent(name: TrackEvents.SPLASH_ENTER_CLICK);
     NavigatorHelper.push(context, LoginScreen());
+    await SetUp.startOneSignal();
   }
 
   @override
   Widget build(BuildContext context) {
     return ScreenWidget(
-      appBarText: 'lalala',
       isStatic: true,
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
       child: Column(
