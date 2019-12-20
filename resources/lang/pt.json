@@ -17,7 +17,7 @@
             "mask": "000.000.000-00"
         }
     },
-    "password": "Password",
+    "password": "Senha",
     "forgotMyPassword": "Esqueci minha senha",
     "initial_screen": {
         "title": "Transferências internacionais para todos"

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,27 @@ class SetUp {
 
   SetUp(this.env) : constants = Constants.get(env);
 
+  static registerI18n(BuildContext context) {
+    GetIt.I.registerLazySingleton<I18n>(
+      () => Localizations.of<I18n>(context, I18n),
+    );
+  }
+
+  static startOneSignal() async {
+    final askPermission = await OneSignal.shared.requiresUserPrivacyConsent();
+
+    if (askPermission) {
+      bool allowed = true;
+
+      if (Platform.isIOS) {
+        allowed = await OneSignal.shared
+            .promptUserForPushNotificationPermission(fallbackToSettings: true);
+      }
+
+      await OneSignal.shared.consentGranted(allowed);
+    }
+  }
+
   _initializeHive() async {
     var dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
@@ -34,23 +57,21 @@ class SetUp {
     );
   }
 
-  startOneSignal() {}
-
   _registerOneSignal() async {
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
-    OneSignal.shared.setRequiresUserPrivacyConsent(false);
 
     await OneSignal.shared.init(
       constants.onesignal['appId'],
       iOSSettings: {
-        OSiOSSettings.autoPrompt: false,
+        OSiOSSettings.autoPrompt: true,
         OSiOSSettings.inAppLaunchUrl: true
       },
     );
 
     await OneSignal.shared
         .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+    await startOneSignal();
   }
 
   _registerServices() async {
@@ -85,12 +106,6 @@ class SetUp {
 
     GetIt.I.registerLazySingleton<Dio>(
       () => dio,
-    );
-  }
-
-  static registerI18n(BuildContext context) {
-    GetIt.I.registerLazySingleton<I18n>(
-      () => Localizations.of<I18n>(context, I18n),
     );
   }
 

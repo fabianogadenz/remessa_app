@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/models/responses/login_response_model.dart';
+import 'package:remessa_app/setup.dart';
 
 class AuthService {
   final Box _box;
@@ -51,6 +52,7 @@ class AuthService {
 
       saveUser(loginResponse.token, loginResponse.customerId);
       GetIt.I<AmplitudeFlutter>().setUserId(userId);
+      await SetUp.startOneSignal();
       await OneSignal.shared.setExternalUserId(userId.toString());
     } on DioError catch (e) {
       ErrorHelper.throwFormattedErrorResponse(e);
