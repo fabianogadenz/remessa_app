@@ -16,7 +16,10 @@ const Map<String, dynamic> dev_api = {
   'url': 'https://dev-app.beetech.global/v1/app',
   'timeout': 5000, // 5s
 };
-
+const Map<String, dynamic> release_api = {
+  'url': 'https://release-app.beetech.global/v1/app',
+  'timeout': 5000, // 5s
+};
 const Map<String, dynamic> prod_api = {
   'url': 'https://app.beetech.global/v1/app',
   'timeout': 5000, // 5s
@@ -27,6 +30,11 @@ final Map<Environment, Constants> constantsMap = {
     onesignal: onesignal,
     amplitude: dev_amplitude,
     api: dev_api,
+  ),
+  Environment.RELEASE: Constants(
+    onesignal: onesignal,
+    amplitude: dev_amplitude,
+    api: release_api,
   ),
   Environment.PROD: Constants(
     onesignal: onesignal,
