@@ -11,6 +11,12 @@
             "program": "${workspaceRoot}/lib/main.dart"
         },
         {
+            "name": "RELEASE",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceRoot}/lib/main_release.dart"
+        },
+        {
             "name": "PROD",
             "request": "launch",
             "type": "dart",
