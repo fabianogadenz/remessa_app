@@ -14,6 +14,7 @@ import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/helpers.dart';
 import 'package:remessa_app/test_setup.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
+import 'package:zendesk/zendesk.dart';
 
 import 'services/services.dart';
 
@@ -74,6 +75,20 @@ class SetUp {
     await startOneSignal();
   }
 
+  _registerZendesk() async {
+    final Zendesk zendesk = Zendesk();
+
+    await zendesk.init(
+      constants.zendesk['accountKey'],
+      department: constants.zendesk['department'],
+      appName: constants.zendesk['appNName'],
+    );
+
+    GetIt.I.registerLazySingleton<Zendesk>(
+      () => zendesk,
+    );
+  }
+
   _registerServices() async {
     await Services.register();
   }
@@ -118,6 +133,8 @@ class SetUp {
     await _initializeHive();
 
     await _registerOneSignal();
+
+    await _registerZendesk();
 
     // GetIt registers
     _registerAmplitude();

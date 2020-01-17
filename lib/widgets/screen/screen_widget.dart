@@ -78,6 +78,8 @@ class _ScreenWidgetState extends State<ScreenWidget> {
         Scaffold(
           backgroundColor: widget.isAccent ? theme.accentColor : null,
           appBar: widget.showAppBar ? _appBar : null,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
           body: Container(
             child: SafeArea(
               child: (widget.child != null)

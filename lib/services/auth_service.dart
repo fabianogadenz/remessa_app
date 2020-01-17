@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:remessa_app/helpers/error.dart';
+import 'package:remessa_app/models/customer_model.dart';
 import 'package:remessa_app/models/responses/login_response_model.dart';
 import 'package:remessa_app/setup.dart';
 
@@ -17,17 +18,19 @@ class AuthService {
   }
 
   static Future<AuthService> init() async {
+    Hive.registerAdapter(CustomerAdapter(), 0);
+
     final _box = await Hive.openBox('auth');
 
     return AuthService(_box);
   }
 
   String get token => _box.get('token');
-  int get userId => _box.get('userId');
+  Customer get customer => _box.get('customer');
 
-  void saveUser(String token, int userId) {
+  void saveUser(String token, Customer customer) {
     _box.put('token', token);
-    _box.put('userId', userId);
+    _box.put('customer', customer);
   }
 
   void logout() async {
@@ -50,10 +53,10 @@ class AuthService {
 
       final loginResponse = LoginResponseModel.fromJson(response.data);
 
-      saveUser(loginResponse.token, loginResponse.customerId);
-      GetIt.I<AmplitudeFlutter>().setUserId(userId);
+      saveUser(loginResponse.token, loginResponse.customer);
+      GetIt.I<AmplitudeFlutter>().setUserId(customer.id);
       await SetUp.startOneSignal();
-      await OneSignal.shared.setExternalUserId(userId.toString());
+      await OneSignal.shared.setExternalUserId(customer.id.toString());
     } on DioError catch (e) {
       ErrorHelper.throwFormattedErrorResponse(e);
     } catch (e) {

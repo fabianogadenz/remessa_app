@@ -1,26 +1,24 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:remessa_app/models/customer_model.dart';
 
-import 'package:remessa_app/helpers/serializable.dart';
+class LoginResponseModel {
+  String token;
+  Customer customer;
 
-part 'login_response_model.g.dart';
+  LoginResponseModel({this.token, this.customer});
 
-@JsonSerializable()
-class LoginResponseModel extends Equatable implements Serializable {
-  LoginResponseModel({
-    this.token,
-    this.customerId,
-  });
+  LoginResponseModel.fromJson(Map<String, dynamic> json) {
+    token = json['token'];
+    customer = json['customer'] != null
+        ? new Customer.fromJson(json['customer'])
+        : null;
+  }
 
-  final String token;
-  final int customerId;
-
-  @override
-  List<Object> get props => [token, customerId];
-
-  factory LoginResponseModel.fromJson(Map json) =>
-      _$LoginResponseModelFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$LoginResponseModelToJson(this);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['token'] = this.token;
+    if (this.customer != null) {
+      data['customer'] = this.customer.toJson();
+    }
+    return data;
+  }
 }

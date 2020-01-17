@@ -25,21 +25,30 @@ const Map<String, dynamic> prod_api = {
   'timeout': 5000, // 5s
 };
 
+const Map<String, String> zendesk = {
+  'accountKey': '47q7iV5YLFz3pQ0WIjoy2p5S71UzBaaA',
+  'department': '1818188829',
+  'appName': 'Remessa Online (APP)',
+};
+
 final Map<Environment, Constants> constantsMap = {
   Environment.DEV: Constants(
     onesignal: onesignal,
     amplitude: dev_amplitude,
     api: dev_api,
+    zendesk: zendesk,
   ),
   Environment.RELEASE: Constants(
     onesignal: onesignal,
     amplitude: dev_amplitude,
     api: release_api,
+    zendesk: zendesk,
   ),
   Environment.PROD: Constants(
     onesignal: onesignal,
     amplitude: prod_amplitude,
     api: prod_api,
+    zendesk: zendesk,
   ),
 };
 
@@ -47,14 +56,17 @@ class Constants {
   final Map<String, String> onesignal;
   final Map<String, String> amplitude;
   final Map<String, dynamic> api;
+  final Map<String, String> zendesk;
 
   Constants({
     @required this.onesignal,
     @required this.amplitude,
     @required this.api,
+    @required this.zendesk,
   })  : assert(onesignal != null),
         assert(amplitude != null),
-        assert(api != null);
+        assert(api != null),
+        assert(zendesk != null);
 
   static Constants get(Environment env) => constantsMap[env];
 }
