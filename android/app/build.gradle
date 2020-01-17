@@ -94,6 +94,7 @@ android {
              force 'androidx.viewpager:viewpager:1.0.0'
              force 'androidx.interpolator:interpolator:1.0.0'
              force 'androidx.fragment:fragment:1.1.0'
+             force 'androidx.appcompat:appcompat:1.1.0'
          }
      }
 }

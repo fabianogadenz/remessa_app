@@ -42,7 +42,7 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -236,7 +236,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "3.1.0"
   flutter_driver:
     dependency: "direct dev"
     description: flutter
@@ -460,6 +460,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   node_interop:
     dependency: transitive
     description:
@@ -501,7 +508,7 @@ packages:
       name: package_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.0+10"
+    version: "0.4.0+13"
   package_resolver:
     dependency: transitive
     description:
@@ -571,7 +578,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0+1"
+    version: "4.0.1"
   pub_semver:
     dependency: transitive
     description:
@@ -599,7 +606,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.22.3"
+    version: "0.23.1"
   share:
     dependency: "direct main"
     description:
@@ -829,6 +836,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  zendesk:
+    dependency: "direct main"
+    description:
+      name: zendesk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
 sdks:
-  dart: ">=2.5.0 <3.0.0"
-  flutter: ">=1.10.0 <2.0.0"
+  dart: ">=2.6.0 <3.0.0"
+  flutter: ">=1.12.1 <2.0.0"

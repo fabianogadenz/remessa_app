@@ -24,6 +24,17 @@ PODS:
     - FMDB (~> 2.7.2)
   - url_launcher (0.0.1):
     - Flutter
+  - ZDCChat (1.4.4):
+    - ZDCChat/API (= 1.4.4)
+    - ZDCChat/Localization (= 1.4.4)
+    - ZDCChat/UI (= 1.4.4)
+  - ZDCChat/API (1.4.4)
+  - ZDCChat/Localization (1.4.4)
+  - ZDCChat/UI (1.4.4):
+    - ZDCChat/API
+  - zendesk (0.0.1):
+    - Flutter
+    - ZDCChat
 
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
@@ -37,11 +48,13 @@ DEPENDENCIES:
   - share (from `.symlinks/plugins/share/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - zendesk (from `.symlinks/plugins/zendesk/ios`)
 
 SPEC REPOS:
   trunk:
     - FMDB
     - OneSignal
+    - ZDCChat
 
 EXTERNAL SOURCES:
   amplitude_flutter:
@@ -64,6 +77,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
+  zendesk:
+    :path: ".symlinks/plugins/zendesk/ios"
 
 SPEC CHECKSUMS:
   amplitude_flutter: d6cc84a75b7f67fb7ce2d99415fc1692180224ed
@@ -78,6 +93,8 @@ SPEC CHECKSUMS:
   share: bae0a282aab4483288913fc4dc0b935d4b491f2e
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
+  ZDCChat: 02340a2389a4b7d9f6c78bf2374130875ebffb9b
+  zendesk: cb7101c6cc005b76116b24635880a416e83214aa
 
 PODFILE CHECKSUM: 3b3835b1ed8763910814635894da748742ed9e1b
 
