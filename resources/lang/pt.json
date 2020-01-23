@@ -10,7 +10,12 @@
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
         "request_timeout": "Algo deu errado, não foi possível carregar suas informações. Tente novamente mais tarde.",
         "auth_expired": "Seu login expirou. Por favor, entre novamente.",
-        "chat": "Chat indisponível. Tente novamente mais tarde, ou envie um e-mail para remessa@remessaonline.com.br que responderemos em breve."
+        "chat": "Chat indisponível. Tente novamente mais tarde, ou envie um e-mail para remessa@remessaonline.com.br que responderemos em breve.",
+        "app_version": {
+            "title": "App desatualizado",
+            "content": "Baixe a versão atualizada em sua loja de aplicativos.",
+            "button": "Fechar"
+        }
     },
     "document": {
         "cpf": {

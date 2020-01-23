@@ -58,8 +58,10 @@ class AuthService {
       await SetUp.startOneSignal();
       await OneSignal.shared.setExternalUserId(customer.id.toString());
     } on DioError catch (e) {
+      logout();
       ErrorHelper.throwFormattedErrorResponse(e);
     } catch (e) {
+      logout();
       throw e;
     }
   }

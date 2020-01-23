@@ -26,43 +26,44 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginScreenBloc, LoginScreenState>(
+      bloc: _loginScreenBloc,
+      listener: (BuildContext context, LoginScreenState state) {
+        if (state.success) {
+          Navigator.pop(context);
+        }
+      },
+      child: BlocBuilder<LoginScreenBloc, LoginScreenState>(
         bloc: _loginScreenBloc,
-        listener: (BuildContext context, LoginScreenState state) {
-          if (state.success) {
-            Navigator.pop(context);
-          }
+        builder: (context, state) {
+          return ScreenWidget(
+            isAccent: true,
+            showAppBar: true,
+            isStatic: true,
+            appBarText: i18n.trans('enter'),
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  i18n.trans('login_screen', ['title']),
+                  key: Key(LoginScreenKeys.title),
+                  style: Theme.of(context).textTheme.body2,
+                  textAlign: TextAlign.start,
+                ),
+                LoginFormWidget(
+                  loginScreenBloc: _loginScreenBloc,
+                  formState: state.formState,
+                ),
+                _buildPrivacyTermsBanner(context),
+              ],
+            ),
+          )
+            ..errorStreamController.add(state.errorMessage)
+            ..loaderStreamController.add(state.isLoading);
         },
-        child: BlocBuilder<LoginScreenBloc, LoginScreenState>(
-          bloc: _loginScreenBloc,
-          builder: (context, state) {
-            return ScreenWidget(
-              isAccent: true,
-              showAppBar: true,
-              isStatic: true,
-              appBarText: i18n.trans('enter'),
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    i18n.trans('login_screen', ['title']),
-                    key: Key(LoginScreenKeys.title),
-                    style: Theme.of(context).textTheme.body2,
-                    textAlign: TextAlign.start,
-                  ),
-                  LoginFormWidget(
-                    loginScreenBloc: _loginScreenBloc,
-                    formState: state.formState,
-                  ),
-                  _buildPrivacyTermsBanner(context),
-                ],
-              ),
-            )
-              ..errorStreamController.add(state.errorMessage)
-              ..loaderStreamController.add(state.isLoading);
-          },
-        ));
+      ),
+    );
   }
 
   Container _buildPrivacyTermsBanner(BuildContext context) {

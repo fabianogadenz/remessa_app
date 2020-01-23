@@ -3,17 +3,21 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
-import 'package:remessa_app/helpers/enviroment_model.dart';
+import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
+import 'package:remessa_app/models/responses/remote_config_response_model.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/test_setup.dart';
 import 'package:test/test.dart';
 
 void main() async {
-  await SetUp(Environment.TEST).init();
+  final remoteConfigs =
+      RemoteConfigResponseModel(environment: Environment.TEST);
+
+  await SetUp(remoteConfigs).init();
 
   group('ErrorHelper', () {
     group('parseErrorResponse', () {
