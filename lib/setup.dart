@@ -7,11 +7,12 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:remessa_app/app/bloc/app_bloc.dart';
+import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/constants.dart';
-import 'package:remessa_app/helpers/enviroment_model.dart';
+import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/helpers.dart';
+import 'package:remessa_app/models/responses/remote_config_response_model.dart';
 import 'package:remessa_app/test_setup.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
 import 'package:zendesk/zendesk.dart';
@@ -20,9 +21,10 @@ import 'services/services.dart';
 
 class SetUp {
   final Constants constants;
-  final Environment env;
+  final RemoteConfigResponseModel remoteConfigs;
 
-  SetUp(this.env) : constants = Constants.get(env);
+  SetUp(this.remoteConfigs)
+      : constants = Constants.get(remoteConfigs.environment);
 
   static registerI18n(BuildContext context) {
     GetIt.I.registerLazySingleton<I18n>(
@@ -93,9 +95,9 @@ class SetUp {
     await Services.register();
   }
 
-  _registerBlocs() {
-    GetIt.I.registerLazySingleton<AppBloc>(
-      () => AppBloc(),
+  _registerStores() {
+    GetIt.I.registerLazySingleton<AppStore>(
+      () => AppStore(remoteConfigs),
     );
 
     GetIt.I.registerLazySingleton<TabControllerBloc>(
@@ -125,7 +127,7 @@ class SetUp {
   }
 
   init() async {
-    if (env == Environment.TEST) {
+    if (remoteConfigs.environment == Environment.TEST) {
       await TestSetUp.init();
       return;
     }
@@ -143,6 +145,6 @@ class SetUp {
 
     await _registerServices();
 
-    _registerBlocs();
+    _registerStores();
   }
 }

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:remessa_app/app/app.dart';
+import 'package:remessa_app/services/remote_config_service.dart';
 import 'package:remessa_app/setup.dart';
-import 'package:remessa_app/helpers/enviroment_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SetUp(Environment.DEV).init();
+
+  final configVersion = await RemoteConfigService.getConfigVersion();
+  final remoteConfigs = await RemoteConfigService.getConfigs(configVersion);
+
+  await SetUp(remoteConfigs).init();
 
   runApp(App());
 }

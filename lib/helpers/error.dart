@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/app/bloc/bloc.dart';
+import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
@@ -86,6 +86,7 @@ class ErrorHelper {
 
   static dioErrorInterceptor(DioError dioError) async {
     final i18n = GetIt.I<I18n>();
+    final _appStore = GetIt.I<AppStore>();
 
     if (dioError.error is SocketException) {
       await requestRetry(dioError);
@@ -105,7 +106,7 @@ class ErrorHelper {
 
     if (statusToLogout.contains(dioError.response?.statusCode) &&
         GetIt.I<AuthService>().token != null) {
-      GetIt.I<AppBloc>().add(LogoutEvent());
+      _appStore.logout();
 
       return DioError(
         error: i18n.trans('error', ['auth_expired']),
