@@ -25,6 +25,7 @@ class RemoteConfigService {
       return RemoteConfigResponseModel(
         environment: Environment.PROD,
         isActive: true,
+        isChatEnabled: true,
       );
     }
   }
