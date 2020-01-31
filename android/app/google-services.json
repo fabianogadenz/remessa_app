@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "671406368378",
+    "firebase_url": "https://bee-remessaonline.firebaseio.com",
+    "project_id": "bee-remessaonline",
+    "storage_bucket": "bee-remessaonline.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671406368378:android:c6398e97f55ab47c68fdc3",
+        "android_client_info": {
+          "package_name": "br.com.remessaonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671406368378-344sk8jsi27ibp24ngkvmloaikrn2l1m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.remessaonline",
+            "certificate_hash": "642bd858c940185ecfa113a850d2bb189671548f"
+          }
+        },
+        {
+          "client_id": "671406368378-elrdm38n43evp9onqmg6qjqq2c8739ve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh5Ne_Hp3el5rCbLFLfazIAzd7pnV3yM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671406368378-elrdm38n43evp9onqmg6qjqq2c8739ve.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "671406368378-0jh6c1vprmjuqm18uuj28edmlholma5s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.remessaonline"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
