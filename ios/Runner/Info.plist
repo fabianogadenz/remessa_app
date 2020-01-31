@@ -26,14 +26,29 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundelURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.671406368378-0jh6c1vprmjuqm18uuj28edmlholma5s</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>${NSCameraUsageDescription}</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Algumas APIs que acessamos requisitam essa informação, não é necessário autorizar</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Algumas APIs que acessamos requisitam essa informação, não é necessário autorizar</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Isso possibilita enviar fotos no chat</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -130,6 +131,12 @@ class SetUp {
     if (remoteConfigs.environment == Environment.TEST) {
       await TestSetUp.init();
       return;
+    }
+
+    if ([Environment.PROD, Environment.RELEASE]
+        .contains(remoteConfigs.environment)) {
+      // Pass all uncaught errors from the framework to Crashlytics.
+      FlutterError.onError = Crashlytics.instance.recordFlutterError;
     }
 
     await _initializeHive();
