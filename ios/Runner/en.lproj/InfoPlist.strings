@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by Eliseu Codinhoto on 30/01/20.
+  Copyright © 2020 The Chromium Authors. All rights reserved.
+*/
+"NSPhotoLibraryUsageDescription" = "Isso possibilita enviar fotos no chat";
+"NSCameraUsageDescription" = "Isso permite tirar fotos para enviar no chat";
+"NSLocationAlwaysUsageDescription" = "Algumas APIs que acessamos requisitam essa informação, não é necessário autorizar";
+"NSLocationWhenInUseUsageDescription" = "Algumas APIs que acessamos requisitam essa informação, não é necessário autorizar";

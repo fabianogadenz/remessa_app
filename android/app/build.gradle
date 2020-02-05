@@ -1,0 +1,115 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal
+    }
+    dependencies {
+        // OneSignal-Gradle-Plugin
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.2, 0.99.99]'
+    }
+}
+
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    compileSdkVersion 28
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        applicationId "br.com.remessaonline"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            keyAlias System.env.SIGN_KEY_ALIAS
+            keyPassword System.env.SIGN_KEY_PASSWORD
+            storeFile rootProject.file('remessaonline.keystore')
+            storePassword System.env.SIGN_STORE_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+
+            minifyEnabled true
+            useProguard true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    configurations.all {
+         resolutionStrategy {
+             force 'com.google.firebase:firebase-common:16.1.0'
+             force 'com.google.firebase:firebase-iid:17.1.2'
+             force 'com.google.firebase:firebase-messaging:17.6.0'
+             force 'androidx.arch.core:core-runtime:2.0.0'
+             force 'androidx.customview:customview:1.0.0'
+             force 'androidx.lifecycle:lifecycle-viewmodel:2.1.0'
+             force 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'
+             force 'androidx.drawerlayout:drawerlayout:1.0.0'
+             force 'androidx.core:core:1.1.0'
+             force 'androidx.loader:loader:1.0.0'
+             force 'androidx.lifecycle:lifecycle-runtime:2.1.0'
+             force 'androidx.cursoradapter:cursoradapter:1.0.0'
+             force 'androidx.viewpager:viewpager:1.0.0'
+             force 'androidx.interpolator:interpolator:1.0.0'
+             force 'androidx.fragment:fragment:1.1.0'
+             force 'androidx.appcompat:appcompat:1.1.0'
+         }
+     }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
