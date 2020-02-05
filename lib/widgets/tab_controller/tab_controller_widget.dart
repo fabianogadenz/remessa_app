@@ -48,7 +48,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       ),
     ];
 
-    if (GetIt.I<AppStore>()?.remoteConfigs?.isActive ?? true) {
+    if (GetIt.I<AppStore>()?.remoteConfigs?.isChatEnabled ?? true) {
       _tabs.add(
         TabContent(
           title: i18n.trans('help'),
