@@ -14,11 +14,10 @@ import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/helpers.dart';
 import 'package:remessa_app/models/responses/remote_config_response_model.dart';
+import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/test_setup.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
 import 'package:zendesk/zendesk.dart';
-
-import 'services/services.dart';
 
 class SetUp {
   final Constants constants;
