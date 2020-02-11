@@ -61,12 +61,12 @@ class Constants {
   Constants({
     @required this.onesignal,
     @required this.amplitude,
-    @required this.api,
     @required this.zendesk,
+    @required this.api,
   })  : assert(onesignal != null),
         assert(amplitude != null),
-        assert(api != null),
-        assert(zendesk != null);
+        assert(zendesk != null),
+        assert(api != null);
 
   static Constants get(Environment env) => constantsMap[env];
 }
