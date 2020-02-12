@@ -6,16 +6,15 @@ import 'package:mockito/mockito.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/i18n.dart';
+import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
-import 'package:remessa_app/models/responses/remote_config_response_model.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/test_setup.dart';
 import 'package:test/test.dart';
 
 void main() async {
-  final remoteConfigs =
-      RemoteConfigResponseModel(environment: Environment.TEST);
+  final remoteConfigs = ConfigModel(environment: Environment.TEST);
 
   await SetUp(remoteConfigs).init();
 

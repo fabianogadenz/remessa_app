@@ -13,7 +13,7 @@ import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/helpers.dart';
-import 'package:remessa_app/models/responses/remote_config_response_model.dart';
+import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/test_setup.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
@@ -21,10 +21,9 @@ import 'package:zendesk/zendesk.dart';
 
 class SetUp {
   final Constants constants;
-  final RemoteConfigResponseModel remoteConfigs;
+  final ConfigModel configs;
 
-  SetUp(this.remoteConfigs)
-      : constants = Constants.get(remoteConfigs.environment);
+  SetUp(this.configs) : constants = Constants.get(configs.environment);
 
   static registerI18n(BuildContext context) {
     GetIt.I.registerLazySingleton<I18n>(
@@ -97,7 +96,7 @@ class SetUp {
 
   _registerStores() {
     GetIt.I.registerLazySingleton<AppStore>(
-      () => AppStore(remoteConfigs),
+      () => AppStore(configs),
     );
 
     GetIt.I.registerLazySingleton<TabControllerBloc>(
@@ -110,8 +109,8 @@ class SetUp {
 
     // Set default configs
     dio.options.baseUrl = constants.api['url'];
-    dio.options.connectTimeout = constants.api['timeout'];
-    dio.options.receiveTimeout = constants.api['timeout'];
+    dio.options.connectTimeout = configs.timeout;
+    dio.options.receiveTimeout = configs.timeout;
 
     // Add interceptors
     dio.interceptors.add(
@@ -127,13 +126,12 @@ class SetUp {
   }
 
   init() async {
-    if (remoteConfigs.environment == Environment.TEST) {
+    if (configs.environment == Environment.TEST) {
       await TestSetUp.init();
       return;
     }
 
-    if ([Environment.PROD, Environment.RELEASE]
-        .contains(remoteConfigs.environment)) {
+    if ([Environment.PROD, Environment.RELEASE].contains(configs.environment)) {
       // Pass all uncaught errors from the framework to Crashlytics.
       FlutterError.onError = Crashlytics.instance.recordFlutterError;
     }

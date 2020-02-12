@@ -59,7 +59,7 @@ class App extends StatelessWidget {
         }
 
         return Observer(builder: (_) {
-          if (!(_appStore?.remoteConfigs?.isUpToDate ?? true)) {
+          if (!(_appStore?.configs?.isUpToDate ?? true)) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               final i18n = GetIt.I<I18n>();
 
