@@ -71,13 +71,19 @@ class _ScreenWidgetState extends State<ScreenWidget> {
           Text(
             widget.appBarText,
           ),
+      elevation: widget.showAppBar ? theme.appBarTheme.elevation : 0,
     );
 
     return Stack(
       children: <Widget>[
         Scaffold(
           backgroundColor: widget.isAccent ? theme.accentColor : null,
-          appBar: widget.showAppBar ? _appBar : null,
+          appBar: widget.showAppBar
+              ? _appBar
+              : PreferredSize(
+                  preferredSize: Size.fromHeight(0),
+                  child: _appBar,
+                ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           body: Container(

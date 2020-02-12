@@ -77,41 +77,42 @@ class LoginScreen extends StatelessWidget {
       child: RichText(
         textAlign: TextAlign.center,
         text: TextSpan(
-            style: TextStyle(
-              color: StyleColors.BRAND_SECONDARY_50,
+          style: TextStyle(
+            color: StyleColors.BRAND_SECONDARY_50,
+          ),
+          text: I18n.of(context)
+              .trans('login_screen', ['privacyBanner', 'intro']),
+          children: [
+            TextSpan(
+              text: I18n.of(context)
+                  .trans('login_screen', ['privacyBanner', 'privacyPolicy']),
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  amplitude.logEvent(name: TrackEvents.PRIVACY_POLICY_CLICK);
+                  launch(privacyPolicyUrl);
+                },
             ),
-            text: I18n.of(context)
-                .trans('login_screen', ['privacyBanner', 'intro']),
-            children: [
-              TextSpan(
-                text: I18n.of(context)
-                    .trans('login_screen', ['privacyBanner', 'privacyPolicy']),
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    amplitude.logEvent(name: TrackEvents.PRIVACY_POLICY_CLICK);
-                    launch(privacyPolicyUrl);
-                  },
+            TextSpan(
+              text: I18n.of(context)
+                  .trans('login_screen', ['privacyBanner', 'and']),
+            ),
+            TextSpan(
+              text: I18n.of(context)
+                  .trans('login_screen', ['privacyBanner', 'useTerms']),
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
               ),
-              TextSpan(
-                text: I18n.of(context)
-                    .trans('login_screen', ['privacyBanner', 'and']),
-              ),
-              TextSpan(
-                text: I18n.of(context)
-                    .trans('login_screen', ['privacyBanner', 'useTerms']),
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    amplitude.logEvent(name: TrackEvents.USE_TERMS_CLICK);
-                    launch(useTermsUrl);
-                  },
-              ),
-            ]),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  amplitude.logEvent(name: TrackEvents.USE_TERMS_CLICK);
+                  launch(useTermsUrl);
+                },
+            ),
+          ],
+        ),
       ),
     );
   }
