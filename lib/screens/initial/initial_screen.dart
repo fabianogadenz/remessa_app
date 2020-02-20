@@ -6,6 +6,7 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/setup.dart';
+import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 
 class InitialScreen extends StatelessWidget {
@@ -65,7 +66,7 @@ class BigButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: RaisedButton(
-        color: Colors.white,
+        color: StyleColors.SUPPORT_NEUTRAL_10,
         padding: EdgeInsets.all(20),
         child: Text(
           text,

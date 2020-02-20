@@ -1,3 +1,4 @@
+import 'package:mobx/mobx.dart';
 import 'package:remessa_app/models/pagination_model.dart';
 
 class TransactionResponseModel {
@@ -29,10 +30,11 @@ class TransactionResponseModel {
   }
 }
 
-class Transaction {
+class Transaction with Store {
   int id;
   String createdAt;
   String updatedAt;
+  String paidAt;
   String foreignCurrency;
   String foreignCurrencyAmount;
   String nationalCurrency;
@@ -47,6 +49,7 @@ class Transaction {
       {this.id,
       this.createdAt,
       this.updatedAt,
+      this.paidAt,
       this.foreignCurrency,
       this.foreignCurrencyAmount,
       this.nationalCurrency,
@@ -61,6 +64,7 @@ class Transaction {
     id = json['id'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    paidAt = json['paidAt'];
     foreignCurrency = json['foreignCurrency'];
     foreignCurrencyAmount = json['foreignCurrencyAmount'];
     nationalCurrency = json['nationalCurrency'];
@@ -77,6 +81,7 @@ class Transaction {
     data['id'] = this.id;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
+    data['paidAt'] = this.paidAt;
     data['foreignCurrency'] = this.foreignCurrency;
     data['foreignCurrencyAmount'] = this.foreignCurrencyAmount;
     data['nationalCurrency'] = this.nationalCurrency;

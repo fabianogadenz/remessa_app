@@ -14,7 +14,7 @@ description: Remessa
 version: 1.0.0+12
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -44,6 +44,8 @@ dependencies:
   flutter_mobx: ^0.3.4
   firebase_remote_config: ^0.3.0+1
   version: ^1.0.3
+  carousel_slider: ^1.4.1
+  skeleton_text: ^1.0.0
 
   # Plugins
   amplitude_flutter: ^1.1.1
@@ -85,6 +87,8 @@ flutter:
   - images/initial_screen.png
   - images/full_icon.png
   - images/wallet.png
+  - images/historic.png
+  - resources/images/splash_logo.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

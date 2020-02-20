@@ -5,10 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "DEV",
+            "name": "REMOTE CONFIG",
             "request": "launch",
             "type": "dart",
             "program": "${workspaceRoot}/lib/main.dart"
+        },
+        {
+            "name": "DEV",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceRoot}/lib/main_dev.dart"
         },
         {
             "name": "RELEASE",
