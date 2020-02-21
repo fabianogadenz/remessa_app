@@ -40,6 +40,13 @@
         "invalidCPF": "CPF incorreto, confira e tente novamente."
     },
     "dashboard_screen": {
-        "empty_state": "Você ainda não possui\ntransferências em andamento"
+        "title": "Acompanhe suas remessas em tempo real",
+        "open_transactions": "Em andamento",
+        "close_transactions": "Histórico",
+        "open_empty_state": "Você ainda não tem remessas em andamento",
+        "closed_empty_state": "Você ainda não tem histórico de remessas"
+    },
+    "transaction": {
+        "paid_at": "Pago em"
     }
 }

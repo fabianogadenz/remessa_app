@@ -32,7 +32,7 @@ class AppTheme {
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.white,
+          color: StyleColors.SUPPORT_NEUTRAL_10,
         ),
         buttonTheme: ButtonThemeData(
           buttonColor: StyleColors.BRAND_PRIMARY_60,
@@ -43,7 +43,7 @@ class AppTheme {
           ),
         ),
         appBarTheme: AppBarTheme(
-          color: Colors.white,
+          color: StyleColors.SUPPORT_NEUTRAL_10,
           iconTheme: IconThemeData(
             color: StyleColors.BRAND_PRIMARY_40,
           ),
