@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
-import 'package:remessa_app/helpers/i18n.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';

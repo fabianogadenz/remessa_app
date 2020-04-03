@@ -1,28 +1,21 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+class ErrorResponseModel {
+  String field;
+  String message;
+  String code;
 
-import 'package:remessa_app/helpers/serializable.dart';
+  ErrorResponseModel({this.field, this.message, this.code});
 
-part 'error_response_model.g.dart';
+  ErrorResponseModel.fromJson(Map<String, dynamic> json) {
+    field = json['field'];
+    message = json['message'];
+    code = json['code'];
+  }
 
-@JsonSerializable()
-class ErrorResponseModel extends Equatable implements Serializable {
-  ErrorResponseModel({
-    this.field,
-    this.message,
-    this.code,
-  });
-
-  final String code;
-  final String field;
-  final String message;
-
-  @override
-  List<Object> get props => [code, field, message];
-
-  factory ErrorResponseModel.fromJson(Map json) =>
-      _$ErrorResponseModelFromJson(json);
-
-  @override
-  Map<String, dynamic> toJson() => _$ErrorResponseModelToJson(this);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['field'] = this.field;
+    data['message'] = this.message;
+    data['code'] = this.code;
+    return data;
+  }
 }

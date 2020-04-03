@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:remessa_app/screens/dashboard/dashboard_screen_store.dart';
+
 import 'package:remessa_app/screens/dashboard/widgets/historic_card_widget.dart';
+import 'package:remessa_app/stores/transactions_store.dart';
 
 class HistoricListWidget extends StatelessWidget {
   const HistoricListWidget({
     Key key,
-    @required DashboardScreenStore dashboardSreenStore,
-  })  : _dashboardSreenStore = dashboardSreenStore,
+    @required TransactionsStore transactionsStore,
+  })  : _transactionsStore = transactionsStore,
         super(key: key);
 
-  final DashboardScreenStore _dashboardSreenStore;
+  final TransactionsStore _transactionsStore;
 
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (context, index) {
-          if (index == _dashboardSreenStore.closedTransactions.length - 2) {
-            final pagination =
-                _dashboardSreenStore.closedTransactionsPagination;
+          if (index == _transactionsStore.closedTransactions.length - 2) {
+            final pagination = _transactionsStore.closedTransactionsPagination;
 
             if (pagination != null && pagination.page < pagination.totalPages)
-              _dashboardSreenStore.getClosedTransactions(pagination.page + 1);
+              _transactionsStore.getClosedTransactions(pagination.page + 1);
           }
 
-          final transaction = _dashboardSreenStore.closedTransactions[index];
+          final transaction = _transactionsStore.closedTransactions[index];
 
           return HistoricCardWidget(transaction: transaction);
         },
-        childCount: _dashboardSreenStore.closedTransactions.length,
+        childCount: _transactionsStore.closedTransactions.length,
       ),
     );
   }

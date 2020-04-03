@@ -26,6 +26,13 @@ mixin _$AppStore on _AppStoreBase, Store {
     }, _$isLoggedInAtom, name: '${_$isLoggedInAtom.name}_set');
   }
 
+  final _$logoutAsyncAction = AsyncAction('logout');
+
+  @override
+  Future<void> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   final _$_AppStoreBaseActionController =
       ActionController(name: '_AppStoreBase');
 
@@ -40,12 +47,8 @@ mixin _$AppStore on _AppStoreBase, Store {
   }
 
   @override
-  dynamic logout() {
-    final _$actionInfo = _$_AppStoreBaseActionController.startAction();
-    try {
-      return super.logout();
-    } finally {
-      _$_AppStoreBaseActionController.endAction(_$actionInfo);
-    }
+  String toString() {
+    final string = 'isLoggedIn: ${isLoggedIn.toString()}';
+    return '{$string}';
   }
 }

@@ -8,21 +8,21 @@ class AppTheme {
         accentColor: StyleColors.SUPPORT_NEUTRAL_10,
         scaffoldBackgroundColor: StyleColors.BRAND_PRIMARY_60,
         textTheme: TextTheme(
-          title: TextStyle(
+          headline6: TextStyle(
             fontSize: 30,
             color: StyleColors.SUPPORT_NEUTRAL_10,
             fontWeight: FontWeight.w300,
           ),
-          subtitle: TextStyle(
+          subtitle2: TextStyle(
             fontSize: 28,
             color: StyleColors.SUPPORT_NEUTRAL_10,
             fontWeight: FontWeight.w300,
           ),
-          headline: TextStyle(
+          headline5: TextStyle(
             fontSize: 18,
             color: StyleColors.SUPPORT_NEUTRAL_10,
           ),
-          body2: TextStyle(
+          bodyText1: TextStyle(
             color: StyleColors.BRAND_PRIMARY_80,
             fontSize: 20,
           ),
@@ -48,7 +48,7 @@ class AppTheme {
             color: StyleColors.BRAND_PRIMARY_40,
           ),
           textTheme: TextTheme(
-            title: TextStyle(
+            headline6: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 18,
               color: StyleColors.BRAND_PRIMARY_80,

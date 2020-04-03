@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
-import 'package:remessa_app/helpers/i18n.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
@@ -18,6 +18,11 @@ class ErrorHelper {
     DioErrorType.CONNECT_TIMEOUT,
     DioErrorType.RECEIVE_TIMEOUT,
     DioErrorType.SEND_TIMEOUT
+  ];
+
+  static const serverErrorStatus = [
+    HttpStatus.serviceUnavailable,
+    HttpStatus.internalServerError,
   ];
 
   static List<ErrorResponseModel> parseErrorResponse(DioError error) =>
@@ -92,8 +97,8 @@ class ErrorHelper {
     final i18n = GetIt.I<I18n>();
     final _appStore = GetIt.I<AppStore>();
 
-    if (dioError.response?.statusCode == HttpStatus.internalServerError) {
-      _appStore.logout();
+    if (serverErrorStatus.contains(dioError.response?.statusCode)) {
+      await _appStore.logout();
 
       return DioError(
         error: i18n.trans('error', ['internal_server']),

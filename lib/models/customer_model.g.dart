@@ -8,6 +8,9 @@ part of 'customer_model.dart';
 
 class CustomerAdapter extends TypeAdapter<Customer> {
   @override
+  final typeId = 0;
+
+  @override
   Customer read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{

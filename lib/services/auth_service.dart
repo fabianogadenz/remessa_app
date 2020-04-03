@@ -18,7 +18,7 @@ class AuthService {
   }
 
   static Future<AuthService> init() async {
-    Hive.registerAdapter(CustomerAdapter(), 0);
+    Hive.registerAdapter(CustomerAdapter());
 
     final _box = await Hive.openBox('auth');
 
@@ -33,7 +33,7 @@ class AuthService {
     _box.put('customer', customer);
   }
 
-  void logout() async {
+  Future<void> logout() async {
     _box.clear();
     GetIt.I<AmplitudeFlutter>().setUserId(null);
     await OneSignal.shared.removeExternalUserId();

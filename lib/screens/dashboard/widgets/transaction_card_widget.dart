@@ -2,11 +2,12 @@ import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
-import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/models/responses/transaction_response_model.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:tuple/tuple.dart';
+import 'package:remessa_app/widgets/transaction_status_widget.dart';
 
 class TransactionCardWidget extends StatelessWidget {
   final Transaction transaction;
@@ -19,21 +20,26 @@ class TransactionCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final amount = CurrencyHelper.format(transaction.foreignCurrencyAmount);
-
-    final statusColor = TransactionStatus.getColor(transaction.statusId);
-
     return GestureDetector(
-      onTap: () => GetIt.I<AmplitudeFlutter>()
-          .logEvent(name: TrackEvents.TRANSACTION_CARD_CLICK, properties: {
-        'operation_id': transaction.id,
-        'operation_status': transaction.statusName,
-      }),
-      child: body(amount, statusColor),
+      onTap: () {
+        GetIt.I<AmplitudeFlutter>()
+            .logEvent(name: TrackEvents.TRANSACTION_CARD_CLICK, properties: {
+          'operation_id': transaction.id,
+          'operation_status': transaction.statusName,
+        });
+
+        NavigatorHelper.push(
+          context,
+          TransactionDetailsScreen(
+            transactionId: transaction.id,
+          ),
+        );
+      },
+      child: body(),
     );
   }
 
-  Widget body(String amount, Tuple2<Color, Color> statusColor) {
+  Widget body() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
@@ -56,11 +62,14 @@ class TransactionCardWidget extends StatelessWidget {
                 ),
               ),
               subtitle: Text(
-                '${transaction.foreignCurrency} $amount',
+                CurrencyHelper.withPrefix(
+                  transaction.foreignCurrency,
+                  transaction.foreignCurrencyAmount.toString(),
+                ),
                 style: TextStyle(
                   color: StyleColors.BRAND_PRIMARY_80,
                   fontWeight: FontWeight.w700,
-                  fontSize: 25,
+                  fontSize: 20,
                 ),
               ),
             ),
@@ -79,26 +88,14 @@ class TransactionCardWidget extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 2,
-                        horizontal: 5,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: statusColor.item1,
-                      ),
-                      child: Text(
-                        transaction?.statusName?.toUpperCase(),
-                        style: TextStyle(
-                          color: statusColor.item2,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                    TransactionStatusWidget(
+                      status: transaction.status,
+                      statusName: transaction.statusName,
                     ),
                     Text(
                       'ID ${transaction.id}',
                       style: TextStyle(
+                        fontSize: 11,
                         color: StyleColors.SUPPORT_NEUTRAL_50,
                       ),
                     ),

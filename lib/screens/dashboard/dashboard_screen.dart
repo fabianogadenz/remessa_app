@@ -4,15 +4,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
-import 'package:remessa_app/helpers/i18n.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
-import 'package:remessa_app/screens/dashboard/dashboard_screen_store.dart';
 import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/historic_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/section_title_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/transactions_carousel_widget.dart';
+import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final i18n = GetIt.I<I18n>();
-  final _dashboardSreenStore = DashboardScreenStore()..getTransactions();
+  final _transactionsStore = TransactionsStore()..getTransactions();
   final amplitude = GetIt.I<AmplitudeFlutter>();
   final _appStore = GetIt.I<AppStore>();
 
@@ -32,7 +32,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   initState() {
     reactionDisposer = reaction(
-      (_) => _dashboardSreenStore.isEmpty,
+      (_) =>
+          !_transactionsStore.isLoadingTransactions &&
+          _transactionsStore.openTransactions.length == 0 &&
+          _transactionsStore.closedTransactions.length == 0,
       (bool isEmpty) => (isEmpty != this.isEmpty)
           ? setState(() {
               this.isEmpty = isEmpty;
@@ -84,11 +87,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Observer(
-              builder: (_) => (_dashboardSreenStore.openTransactions.length > 0)
+              builder: (_) => (_transactionsStore.openTransactions.length > 0)
                   ? TransactionsCarousel(
-                      dashboardSreenStore: _dashboardSreenStore,
+                      transactionsStore: _transactionsStore,
                     )
-                  : _dashboardSreenStore.isLoading
+                  : _transactionsStore.isLoadingTransactions
                       ? SkeletonCardWidget()
                       : EmptyCardWidget(
                           margin: EdgeInsets.only(
@@ -121,9 +124,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
         Observer(
-          builder: (_) => (_dashboardSreenStore.closedTransactions.length > 0)
-              ? HistoricListWidget(dashboardSreenStore: _dashboardSreenStore)
-              : _dashboardSreenStore.isLoading
+          builder: (_) => (_transactionsStore.closedTransactions.length > 0)
+              ? HistoricListWidget(transactionsStore: _transactionsStore)
+              : _transactionsStore.isLoadingTransactions
                   ? SkeletonListWidget()
                   : SliverToBoxAdapter(
                       child: EmptyCardWidget(
@@ -158,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   'dashboard_screen',
                   ['open_empty_state'],
                 ),
-                style: theme.textTheme.subtitle.copyWith(fontSize: 15),
+                style: theme.textTheme.subtitle2.copyWith(fontSize: 15),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -185,7 +188,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               'dashboard_screen',
               ['title'],
             ),
-            style: theme.textTheme.title.copyWith(fontSize: 25),
+            style: theme.textTheme.headline6.copyWith(fontSize: 25),
           ),
         ),
       ),
