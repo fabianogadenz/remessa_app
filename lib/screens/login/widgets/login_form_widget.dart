@@ -3,7 +3,7 @@ import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/helpers/i18n.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/bloc/bloc.dart';
 import 'package:remessa_app/screens/login/keys.dart';
@@ -75,6 +75,7 @@ class LoginFormWidget extends StatelessWidget {
               width: double.infinity,
               margin: EdgeInsets.only(top: 20),
               child: RaisedButton(
+                elevation: 0,
                 onPressed: () => _login(context),
                 child: Text(
                   i18n.trans('continue'),

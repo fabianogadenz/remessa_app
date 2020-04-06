@@ -7,12 +7,18 @@ import 'package:remessa_app/models/responses/transaction_response_model.dart';
 import 'package:remessa_app/services/transaction_service.dart';
 import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
 
-part 'dashboard_screen_store.g.dart';
+part 'transactions_store.g.dart';
 
-class DashboardScreenStore = _DashboardScreenStore with _$DashboardScreenStore;
+class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
 
-abstract class _DashboardScreenStore with Store {
+abstract class _TransactionsStoreBase with Store {
   final _tabControllerBloc = GetIt.I<TabControllerBloc>();
+
+  @observable
+  bool isLoadingTransactions = true;
+
+  @action
+  setIsLoadingTransactions(bool value) => isLoadingTransactions = value;
 
   bool isLoadingOpenTransactions = false;
 
@@ -21,24 +27,6 @@ abstract class _DashboardScreenStore with Store {
 
   @observable
   ObservableList<Transaction> openTransactions = ObservableList.of([]);
-
-  @observable
-  PaginationModel closedTransactionsPagination;
-
-  @observable
-  ObservableList<Transaction> closedTransactions = ObservableList.of([]);
-
-  @observable
-  bool isLoading = true;
-
-  @computed
-  bool get isEmpty =>
-      !isLoading &&
-      openTransactions.length == 0 &&
-      closedTransactions.length == 0;
-
-  @action
-  setIsLoading(bool value) => isLoading = value;
 
   @action
   getOpenTransactions(int page) async {
@@ -59,8 +47,20 @@ abstract class _DashboardScreenStore with Store {
     isLoadingOpenTransactions = false;
   }
 
+  @observable
+  PaginationModel closedTransactionsPagination;
+
+  @observable
+  ObservableList<Transaction> closedTransactions = ObservableList.of([]);
+
+  bool isLoadingClosedTransactions = false;
+
   @action
   getClosedTransactions(int page) async {
+    if (isLoadingClosedTransactions) return;
+
+    isLoadingClosedTransactions = true;
+
     final TransactionResponseModel closedTransactions =
         await TransactionService.getTransactions(
       statusType: StatusType.FINISHED,
@@ -70,6 +70,8 @@ abstract class _DashboardScreenStore with Store {
 
     this.closedTransactions.addAll(closedTransactions.items);
     this.closedTransactionsPagination = closedTransactions.pagination;
+
+    isLoadingClosedTransactions = false;
   }
 
   @action
@@ -77,6 +79,8 @@ abstract class _DashboardScreenStore with Store {
     int openTransactionsPage,
     int closedTransactionsPage,
   }) async {
+    setIsLoadingTransactions(true);
+
     try {
       await getOpenTransactions(openTransactionsPage);
       await getClosedTransactions(closedTransactionsPage);
@@ -90,6 +94,6 @@ abstract class _DashboardScreenStore with Store {
       );
     }
 
-    setIsLoading(false);
+    setIsLoadingTransactions(false);
   }
 }

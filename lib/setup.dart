@@ -2,17 +2,17 @@ import 'dart:io';
 
 import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
-import 'package:remessa_app/helpers/helpers.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/test_setup.dart';
@@ -47,8 +47,7 @@ class SetUp {
   }
 
   _initializeHive() async {
-    var dir = await getApplicationDocumentsDirectory();
-    Hive.init(dir.path);
+    await Hive.initFlutter();
   }
 
   _registerAmplitude() {
@@ -117,6 +116,9 @@ class SetUp {
       InterceptorsWrapper(
         onError: (DioError dioError) =>
             ErrorHelper.dioErrorInterceptor(dioError),
+        onResponse: (configs.environment != Environment.PROD)
+            ? (response) => print(response)
+            : null,
       ),
     );
 

@@ -37,8 +37,10 @@ class EmptyCardWidget extends StatelessWidget {
               padding: EdgeInsets.only(left: 20),
               child: Text(
                 text,
-                style:
-                    Theme.of(context).textTheme.subtitle.copyWith(fontSize: 15),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    .copyWith(fontSize: 15),
               ),
             ),
           )

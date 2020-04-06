@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'customer_model.g.dart';
 
-@HiveType()
+@HiveType(typeId: 0)
 class Customer extends HiveObject {
   @HiveField(0)
   int id;

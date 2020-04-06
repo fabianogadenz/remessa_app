@@ -22,8 +22,8 @@ abstract class _AppStoreBase with Store {
   refreshIsLoggedIn() => isLoggedIn = _authService.isLoggedIn;
 
   @action
-  logout() {
-    _authService.logout();
+  Future<void> logout() async {
+    await _authService.logout();
     isLoggedIn = false;
   }
 }

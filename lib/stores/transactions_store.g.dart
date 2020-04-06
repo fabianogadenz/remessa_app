@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dashboard_screen_store.dart';
+part of 'transactions_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,15 +8,29 @@ part of 'dashboard_screen_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$DashboardScreenStore on _DashboardScreenStore, Store {
-  Computed<bool> _$isEmptyComputed;
+mixin _$TransactionsStore on _TransactionsStoreBase, Store {
+  final _$isLoadingTransactionsAtom =
+      Atom(name: '_TransactionsStoreBase.isLoadingTransactions');
 
   @override
-  bool get isEmpty =>
-      (_$isEmptyComputed ??= Computed<bool>(() => super.isEmpty)).value;
+  bool get isLoadingTransactions {
+    _$isLoadingTransactionsAtom.context
+        .enforceReadPolicy(_$isLoadingTransactionsAtom);
+    _$isLoadingTransactionsAtom.reportObserved();
+    return super.isLoadingTransactions;
+  }
+
+  @override
+  set isLoadingTransactions(bool value) {
+    _$isLoadingTransactionsAtom.context.conditionallyRunInAction(() {
+      super.isLoadingTransactions = value;
+      _$isLoadingTransactionsAtom.reportChanged();
+    }, _$isLoadingTransactionsAtom,
+        name: '${_$isLoadingTransactionsAtom.name}_set');
+  }
 
   final _$openTransactionsPaginationAtom =
-      Atom(name: '_DashboardScreenStore.openTransactionsPagination');
+      Atom(name: '_TransactionsStoreBase.openTransactionsPagination');
 
   @override
   PaginationModel get openTransactionsPagination {
@@ -36,7 +50,7 @@ mixin _$DashboardScreenStore on _DashboardScreenStore, Store {
   }
 
   final _$openTransactionsAtom =
-      Atom(name: '_DashboardScreenStore.openTransactions');
+      Atom(name: '_TransactionsStoreBase.openTransactions');
 
   @override
   ObservableList<Transaction> get openTransactions {
@@ -54,7 +68,7 @@ mixin _$DashboardScreenStore on _DashboardScreenStore, Store {
   }
 
   final _$closedTransactionsPaginationAtom =
-      Atom(name: '_DashboardScreenStore.closedTransactionsPagination');
+      Atom(name: '_TransactionsStoreBase.closedTransactionsPagination');
 
   @override
   PaginationModel get closedTransactionsPagination {
@@ -74,7 +88,7 @@ mixin _$DashboardScreenStore on _DashboardScreenStore, Store {
   }
 
   final _$closedTransactionsAtom =
-      Atom(name: '_DashboardScreenStore.closedTransactions');
+      Atom(name: '_TransactionsStoreBase.closedTransactions');
 
   @override
   ObservableList<Transaction> get closedTransactions {
@@ -90,23 +104,6 @@ mixin _$DashboardScreenStore on _DashboardScreenStore, Store {
       super.closedTransactions = value;
       _$closedTransactionsAtom.reportChanged();
     }, _$closedTransactionsAtom, name: '${_$closedTransactionsAtom.name}_set');
-  }
-
-  final _$isLoadingAtom = Atom(name: '_DashboardScreenStore.isLoading');
-
-  @override
-  bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
-    return super.isLoading;
-  }
-
-  @override
-  set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
-      super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
   }
 
   final _$getOpenTransactionsAsyncAction = AsyncAction('getOpenTransactions');
@@ -136,16 +133,23 @@ mixin _$DashboardScreenStore on _DashboardScreenStore, Store {
         closedTransactionsPage: closedTransactionsPage));
   }
 
-  final _$_DashboardScreenStoreActionController =
-      ActionController(name: '_DashboardScreenStore');
+  final _$_TransactionsStoreBaseActionController =
+      ActionController(name: '_TransactionsStoreBase');
 
   @override
-  dynamic setIsLoading(bool value) {
-    final _$actionInfo = _$_DashboardScreenStoreActionController.startAction();
+  dynamic setIsLoadingTransactions(bool value) {
+    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction();
     try {
-      return super.setIsLoading(value);
+      return super.setIsLoadingTransactions(value);
     } finally {
-      _$_DashboardScreenStoreActionController.endAction(_$actionInfo);
+      _$_TransactionsStoreBaseActionController.endAction(_$actionInfo);
     }
+  }
+
+  @override
+  String toString() {
+    final string =
+        'isLoadingTransactions: ${isLoadingTransactions.toString()},openTransactionsPagination: ${openTransactionsPagination.toString()},openTransactions: ${openTransactions.toString()},closedTransactionsPagination: ${closedTransactionsPagination.toString()},closedTransactions: ${closedTransactions.toString()}';
+    return '{$string}';
   }
 }

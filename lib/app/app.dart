@@ -7,7 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
-import 'package:remessa_app/helpers/i18n.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/screens/initial/initial_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/style/colors.dart';

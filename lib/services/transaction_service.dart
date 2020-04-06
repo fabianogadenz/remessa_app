@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/error.dart';
+import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
 import 'package:remessa_app/models/responses/transaction_response_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
 
@@ -60,6 +61,25 @@ class TransactionService {
       );
 
       return TransactionResponseModel.fromJson(response.data);
+    } on DioError catch (e) {
+      ErrorHelper.throwFormattedErrorResponse(e);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  static getTransactionDetailsById(int transactionId) async {
+    try {
+      final token = GetIt.I<AuthService>().token;
+
+      Response response = await GetIt.I<Dio>().get(
+        '/transaction/$transactionId',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      return TransactionDetailsResponseModel.fromJson(response.data);
     } on DioError catch (e) {
       ErrorHelper.throwFormattedErrorResponse(e);
     } catch (e) {

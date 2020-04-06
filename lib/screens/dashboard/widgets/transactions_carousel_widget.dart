@@ -1,17 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:remessa_app/screens/dashboard/dashboard_screen_store.dart';
 import 'package:remessa_app/screens/dashboard/widgets/transaction_card_widget.dart';
+import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class TransactionsCarousel extends StatefulWidget {
   const TransactionsCarousel({
     Key key,
-    this.dashboardSreenStore,
+    this.transactionsStore,
   }) : super(key: key);
 
-  final DashboardScreenStore dashboardSreenStore;
+  final TransactionsStore transactionsStore;
 
   @override
   _TransactionsCarouselState createState() => _TransactionsCarouselState();
@@ -22,8 +22,8 @@ class _TransactionsCarouselState extends State<TransactionsCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    var transactions = widget.dashboardSreenStore.openTransactions;
-    var pagination = widget.dashboardSreenStore.openTransactionsPagination;
+    var transactions = widget.transactionsStore.openTransactions;
+    var pagination = widget.transactionsStore.openTransactionsPagination;
 
     var children = <Widget>[
       CarouselSlider(
@@ -39,11 +39,11 @@ class _TransactionsCarouselState extends State<TransactionsCarousel> {
             .map(
               (item) => Builder(
                 builder: (BuildContext context) {
-                  if (!widget.dashboardSreenStore.isLoadingOpenTransactions &&
+                  if (!widget.transactionsStore.isLoadingOpenTransactions &&
                       _current == transactions.length - 5) {
                     if (pagination != null &&
                         pagination.page < pagination.totalPages) {
-                      widget.dashboardSreenStore
+                      widget.transactionsStore
                           .getOpenTransactions(pagination.page + 1);
                     }
                   }
