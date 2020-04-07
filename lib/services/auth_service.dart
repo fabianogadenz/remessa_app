@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:remessa_app/helpers/error.dart';
-import 'package:remessa_app/models/customer_model.dart';
+import 'package:remessa_app/models/hive/customer_model.dart';
 import 'package:remessa_app/models/responses/login_response_model.dart';
 import 'package:remessa_app/setup.dart';
 

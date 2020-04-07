@@ -20,6 +20,8 @@ class TransactionCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = GetIt.I<NavigatorHelper>();
+
     return GestureDetector(
       onTap: () {
         GetIt.I<AmplitudeFlutter>()
@@ -28,8 +30,7 @@ class TransactionCardWidget extends StatelessWidget {
           'operation_status': transaction.statusName,
         });
 
-        NavigatorHelper.push(
-          context,
+        navigator.push(
           TransactionDetailsScreen(
             transactionId: transaction.id,
           ),

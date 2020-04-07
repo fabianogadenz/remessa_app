@@ -54,12 +54,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   SliverAppBar _sliverAppBar(ThemeData theme) {
     return SliverAppBar(
       actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.exit_to_app),
-          iconSize: 30,
-          padding: const EdgeInsets.only(right: 22),
-          color: StyleColors.SUPPORT_NEUTRAL_10,
-          onPressed: _logout,
+        Container(
+          margin: EdgeInsets.only(right: 10),
+          child: IconButton(
+            icon: Icon(Icons.exit_to_app),
+            iconSize: 30,
+            color: StyleColors.SUPPORT_NEUTRAL_10,
+            onPressed: _logout,
+          ),
         ),
       ],
       title: Image.asset(

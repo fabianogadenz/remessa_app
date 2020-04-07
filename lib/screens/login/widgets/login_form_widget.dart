@@ -8,6 +8,7 @@ import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/bloc/bloc.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/divider_with_text_widget.dart';
 import 'package:remessa_app/widgets/text_input/text_input.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,62 +42,86 @@ class LoginFormWidget extends StatelessWidget {
     }
 
     return Expanded(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            TextInput(
-              textFormFieldKey: Key(LoginScreenKeys.cpfInput),
-              controller: cpfCtrl,
-              labelText: i18n.trans('document', ['cpf', 'label']),
-              hintText: i18n.trans('document', ['cpf', 'mask']),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return i18n.trans('requiredField');
-                } else if (!CPFValidator.isValid(value)) {
-                  return i18n.trans('login_screen', ['invalidCPF']);
-                }
-                return null;
-              },
-            ),
-            TextInput(
-              controller: passwordCtrl,
-              obscureText: true,
-              labelText: i18n.trans('password'),
-              validator: (value) {
-                if (value.isEmpty) {
-                  return i18n.trans('requiredField');
-                }
-                return null;
-              },
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 20),
-              child: RaisedButton(
-                elevation: 0,
-                onPressed: () => _login(context),
-                child: Text(
-                  i18n.trans('continue'),
-                  style: Theme.of(context).textTheme.button,
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              TextInput(
+                textFormFieldKey: Key(LoginScreenKeys.cpfInput),
+                controller: cpfCtrl,
+                labelText: i18n.trans('document', ['cpf', 'label']),
+                hintText: i18n.trans('document', ['cpf', 'mask']),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return i18n.trans('requiredField');
+                  } else if (!CPFValidator.isValid(value)) {
+                    return i18n.trans('login_screen', ['invalidCPF']);
+                  }
+                  return null;
+                },
+              ),
+              TextInput(
+                controller: passwordCtrl,
+                obscureText: true,
+                labelText: i18n.trans('password'),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return i18n.trans('requiredField');
+                  }
+                  return null;
+                },
+              ),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 20),
+                child: RaisedButton(
+                  elevation: 0,
+                  onPressed: () => _login(context),
+                  child: Text(
+                    i18n.trans('continue'),
+                    style: Theme.of(context).textTheme.button,
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: FlatButton(
-                child: Text(
-                  i18n.trans('forgotMyPassword'),
-                  style: Theme.of(context).textTheme.button.copyWith(
-                        color: StyleColors.BRAND_PRIMARY_40,
-                        fontSize: 16,
-                      ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: GestureDetector(
+                  child: Text(
+                    i18n.trans('forgotMyPassword'),
+                    style: Theme.of(context).textTheme.button.copyWith(
+                          color: StyleColors.BRAND_PRIMARY_40,
+                          fontSize: 16,
+                        ),
+                  ),
+                  onTap: _forgotPassword,
                 ),
-                onPressed: _forgotPassword,
               ),
-            ),
-          ],
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 22),
+                child: DividerWithTextWidget(
+                  i18n.trans('or'),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(bottom: 20),
+                child: OutlineButton(
+                  borderSide: BorderSide(
+                    color: StyleColors.BRAND_PRIMARY_40,
+                  ),
+                  onPressed: () => _register(),
+                  child: Text(
+                    i18n.trans('login_screen', ['register']),
+                    style: Theme.of(context).textTheme.button.copyWith(
+                          color: StyleColors.BRAND_PRIMARY_40,
+                        ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -127,5 +152,13 @@ class LoginFormWidget extends StatelessWidget {
   _forgotPassword() {
     amplitude.logEvent(name: TrackEvents.FORGOT_PASSWORD_CLICK);
     launch('https://www.remessaonline.com.br/recuperar-senha');
+  }
+
+  _register() {
+    amplitude.logEvent(name: TrackEvents.REGISTER_CLICK);
+    launch(
+      'https://www.remessaonline.com.br/cadastrar',
+      forceWebView: true,
+    );
   }
 }
