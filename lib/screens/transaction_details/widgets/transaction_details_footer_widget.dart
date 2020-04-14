@@ -1,7 +1,6 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_link_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_title_widget.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -9,14 +8,18 @@ import 'package:remessa_app/style/colors.dart';
 class TransactionDetailsFooterWidget extends StatelessWidget {
   const TransactionDetailsFooterWidget({
     Key key,
-  }) : super(key: key);
+    @required this.onTap,
+  })  : assert(onTap != null),
+        super(key: key);
+
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
     final i18n = GetIt.I<I18n>();
 
     return GestureDetector(
-      onTap: () => ChatHelper().openChat(),
+      onTap: onTap,
       child: Container(
         color: StyleColors.SUPPORT_NEUTRAL_20,
         child: Container(
@@ -48,6 +51,7 @@ class TransactionDetailsFooterWidget extends StatelessWidget {
                   ),
                   DetailSectionLink(
                     i18n.trans('transaction_details_screen', ['talk_with_us']),
+                    action: onTap,
                   ),
                 ],
               ),

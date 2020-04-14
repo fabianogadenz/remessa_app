@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_footer_widget.dart';
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_widget.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
@@ -55,6 +56,11 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
         setState(() {
           _currentIndex = index;
         });
+
+        TrackEvents.log(
+          TrackEvents.INITIAL_STEPPER_VIEW_STEPPER,
+          {'tutorial_step': 'step $_currentIndex'},
+        );
       },
       items: steppers
           .map(
@@ -72,6 +78,8 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final stepLogLabel = 'step $_currentIndex';
+
     return ScreenWidget(
       isStatic: true,
       child: Container(
@@ -95,23 +103,43 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
                     color: StyleColors.SUPPORT_NEUTRAL_10,
                   ),
                 ),
-                onTap: () => navigator.pushReplacement(
-                  LoginScreen(),
-                ),
+                onTap: () {
+                  TrackEvents.log(
+                    TrackEvents.INITIAL_STEPPER_SKIP_STEPPER_CLICK,
+                    {'tutorial_step': stepLogLabel},
+                  );
+
+                  navigator.pushReplacement(
+                    LoginScreen(),
+                  );
+                },
               ),
             ),
             InitialStepperFooterWidget(
               length: steppers.length,
               index: _currentIndex,
               highlightedButton: _currentIndex == steppers.length - 1,
-              onTap: () => _currentIndex == steppers.length - 1
-                  ? navigator.pushReplacement(
-                      LoginScreen(),
-                    )
-                  : carousel.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.linear,
-                    ),
+              onTap: () {
+                if (_currentIndex == steppers.length - 1) {
+                  TrackEvents.log(
+                      TrackEvents.INITIAL_STEPPER_FINISH_BUTTON_CLICK);
+
+                  navigator.pushReplacement(
+                    LoginScreen(),
+                  );
+                  return;
+                }
+
+                TrackEvents.log(
+                  TrackEvents.INITIAL_STEPPER_NEXT_STEP_CLICK,
+                  {'tutorial_step': stepLogLabel},
+                );
+
+                carousel.nextPage(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.linear,
+                );
+              },
             ),
           ],
         ),

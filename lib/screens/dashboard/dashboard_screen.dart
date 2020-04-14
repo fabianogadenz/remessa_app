@@ -172,7 +172,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
 
   _logout() {
-    amplitude.logEvent(name: TrackEvents.LOGOUT_CLICK);
+    TrackEvents.log(TrackEvents.DASHBOARD_LOGOUT_CLICK);
     _appStore.logout();
   }
 

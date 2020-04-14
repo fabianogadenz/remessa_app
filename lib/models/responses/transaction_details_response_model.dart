@@ -111,15 +111,16 @@ class Quote {
 
   Quote.fromJson(Map<String, dynamic> json) {
     foreignCurrency = json['foreignCurrency'];
-    foreignCurrencyAmount = json['foreignCurrencyAmount'].toDouble();
+    foreignCurrencyAmount = (json['foreignCurrencyAmount'] ?? 0).toDouble();
     nationalCurrency = json['nationalCurrency'];
     nationalCurrencyTotalAmount =
-        json['nationalCurrencyTotalAmount'].toDouble();
-    nationalCurrencySubAmount = json['nationalCurrencySubAmount'].toDouble();
-    exchangeRate = json['exchangeRate'].toDouble();
-    vet = json['vet'].toDouble();
-    spread = json['spread'].toDouble();
-    tradingQuotation = json['tradingQuotation'].toDouble();
+        (json['nationalCurrencyTotalAmount'] ?? 0).toDouble();
+    nationalCurrencySubAmount =
+        (json['nationalCurrencySubAmount'] ?? 0).toDouble();
+    exchangeRate = (json['exchangeRate'] ?? 0).toDouble();
+    vet = (json['vet'] ?? 0).toDouble();
+    spread = (json['spread'] ?? 0).toDouble();
+    tradingQuotation = (json['tradingQuotation'] ?? 0).toDouble();
     voucherCode = json['voucherCode'];
     if (json['spreadDiscount'] != null) {
       spreadDiscount = json['spreadDiscount'].toDouble();
@@ -166,7 +167,7 @@ class FeesTaxes {
   FeesTaxes.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     description = json['description'];
-    value = json['value'].toDouble();
+    value = (json['value'] ?? 0).toDouble();
   }
 
   Map<String, dynamic> toJson() {

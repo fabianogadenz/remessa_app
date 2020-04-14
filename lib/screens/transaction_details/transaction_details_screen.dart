@@ -6,6 +6,7 @@ import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
 import 'package:remessa_app/screens/transaction_details/favored_data_screen.dart';
@@ -122,7 +123,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                       ),
                       _buildDetailAction(),
                       ...sections,
-                      TransactionDetailsFooterWidget()
+                      TransactionDetailsFooterWidget(
+                        onTap: () => _openChatAndLogEvent(
+                          eventName: TrackEvents.TRANSACTION_HELP_BANNER_CLICK,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -146,25 +151,45 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       case TransactionStatus.WAITING_PAYMENT:
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['how_to_pay']),
-          onPressed: () => navigator.push(
-            HowToPayScreen(
-              paymentDeadline: transactionDetails.paymentDeadline,
-            ),
-          ),
+          onPressed: () {
+            _log(TrackEvents.TRANSACTION_HOW_TO_PAY_CLICK);
+
+            navigator.push(
+              HowToPayScreen(
+                paymentDeadline: transactionDetails.paymentDeadline,
+              ),
+            );
+          },
         );
       case TransactionStatus.PENDENCY:
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['action', 'pendency']),
-          onPressed: () => chatHelper.openChat(),
+          onPressed: _openChatAndLogEvent,
         );
       case TransactionStatus.CANCELED:
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['action', 'canceled']),
-          onPressed: () => chatHelper.openChat(),
+          onPressed: _openChatAndLogEvent,
         );
       default:
         return Container();
     }
+  }
+
+  _log(String eventName) => TrackEvents.log(
+        eventName,
+        {
+          'operation_id': transactionDetails.id,
+          'operation_status_group': transactionDetails.statusId,
+          'operation_status_name': transactionDetails.statusName,
+        },
+      );
+
+  _openChatAndLogEvent(
+      {String eventName = TrackEvents.TRANSACTION_HELP_CTA_CLICK}) {
+    _log(eventName);
+
+    chatHelper.openChat();
   }
 
   List _buildDefaultStatusContent() => [
@@ -202,11 +227,15 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           sectionLink: SectionLink(
             i18n.trans(
                 'transaction_details_screen', ['transaction_calculation']),
-            () => navigator.push(
-              TransactionCalculationScreen(
-                transactionDetails: transactionDetails,
-              ),
-            ),
+            () {
+              _log(TrackEvents.TRANSACTION_CALCULATION_CLICK);
+
+              navigator.push(
+                TransactionCalculationScreen(
+                  transactionDetails: transactionDetails,
+                ),
+              );
+            },
           ),
         ),
         DetailSectionWidget(
@@ -219,11 +248,15 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           ],
           sectionLink: SectionLink(
             i18n.trans('transaction_details_screen', ['favored_data']),
-            () => navigator.push(
-              FavoredDataScreen(
-                transactionDetails: transactionDetails,
-              ),
-            ),
+            () {
+              _log(TrackEvents.TRANSACTION_FAVORED_INFO_CLICK);
+
+              navigator.push(
+                FavoredDataScreen(
+                  transactionDetails: transactionDetails,
+                ),
+              );
+            },
           ),
         ),
       ];

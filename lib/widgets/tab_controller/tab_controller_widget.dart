@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 
 import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -53,7 +54,10 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
           title: i18n.trans('help'),
           iconData: Icons.chat,
           widget: Container(),
-          action: () => ChatHelper().openChat(),
+          action: () {
+            TrackEvents.log(TrackEvents.DASHBOARD_HELP_TAB_CLICK);
+            ChatHelper().openChat();
+          },
         ),
       );
     }
