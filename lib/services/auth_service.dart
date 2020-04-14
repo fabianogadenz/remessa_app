@@ -10,6 +10,7 @@ import 'package:remessa_app/setup.dart';
 
 class AuthService {
   final Box _box;
+  final _amplitude = GetIt.I<AmplitudeFlutter>();
 
   Dio _dio;
 
@@ -35,7 +36,7 @@ class AuthService {
 
   Future<void> logout() async {
     _box.clear();
-    GetIt.I<AmplitudeFlutter>().setUserId(null);
+    _amplitude.setUserId(null);
     await OneSignal.shared.removeExternalUserId();
   }
 
@@ -54,7 +55,7 @@ class AuthService {
       final loginResponse = LoginResponseModel.fromJson(response.data);
 
       saveUser(loginResponse.token, loginResponse.customer);
-      GetIt.I<AmplitudeFlutter>().setUserId(customer.id);
+      _amplitude.setUserId(customer.id);
       await SetUp.startOneSignal();
       await OneSignal.shared.setExternalUserId(customer.id.toString());
     } on DioError catch (e) {

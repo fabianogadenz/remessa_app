@@ -1,4 +1,3 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
@@ -24,11 +23,14 @@ class TransactionCardWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        GetIt.I<AmplitudeFlutter>()
-            .logEvent(name: TrackEvents.TRANSACTION_CARD_CLICK, properties: {
-          'operation_id': transaction.id,
-          'operation_status': transaction.statusName,
-        });
+        TrackEvents.log(
+          TrackEvents.DASHBOARD_OPEN_TRANSACTION_CARD_CLICK,
+          {
+            'operation_id': transaction.id,
+            'operation_status_group': transaction.statusId,
+            'operation_status_name': transaction.statusName,
+          },
+        );
 
         navigator.push(
           TransactionDetailsScreen(

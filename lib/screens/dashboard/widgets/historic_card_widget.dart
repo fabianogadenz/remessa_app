@@ -6,6 +6,7 @@ import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/transaction_response_model.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -26,6 +27,15 @@ class HistoricCardWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
+        TrackEvents.log(
+          TrackEvents.DASHBOARD_HISTORY_TRANSACTION_CARD_CLICK,
+          {
+            'operation_id': transaction.id,
+            'operation_status_group': transaction.statusId,
+            'operation_status_name': transaction.statusName,
+          },
+        );
+
         navigator.push(
           TransactionDetailsScreen(
             transactionId: transaction.id,

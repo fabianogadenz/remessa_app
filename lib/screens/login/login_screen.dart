@@ -17,17 +17,33 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets/login_form_widget.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   // ignore: close_sinks
   final _loginScreenBloc = LoginScreenBloc();
+
   final i18n = GetIt.I<I18n>();
+
   final navigator = GetIt.I<NavigatorHelper>();
+
   final amplitude = GetIt.I<AmplitudeFlutter>();
+
   final showStepper = GetIt.I<SystemService>().showStepper;
 
   final useTermsUrl = 'https://www.remessaonline.com.br/termos-de-uso';
+
   final privacyPolicyUrl =
       'https://www.remessaonline.com.br/politica-de-privacidade';
+
+  @override
+  void initState() {
+    TrackEvents.log(TrackEvents.LOGIN_VIEW);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +64,14 @@ class LoginScreen extends StatelessWidget {
                         icon: Icon(RemessaIcons.multiply),
                         color: StyleColors.BRAND_PRIMARY_40,
                         iconSize: 18,
-                        onPressed: () => navigator.pushReplacement(
-                          InitialStepperScreen(),
-                        ),
+                        onPressed: () {
+                          TrackEvents.log(
+                              TrackEvents.LOGIN_BACK_TO_STEPPER_CLICK);
+
+                          navigator.pushReplacement(
+                            InitialStepperScreen(),
+                          );
+                        },
                       )
                     : null,
               ),
@@ -106,7 +127,7 @@ class LoginScreen extends StatelessWidget {
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  amplitude.logEvent(name: TrackEvents.PRIVACY_POLICY_CLICK);
+                  TrackEvents.log(TrackEvents.LOGIN_PRIVACY_POLICY_CLICK);
                   launch(privacyPolicyUrl);
                 },
             ),
@@ -122,7 +143,7 @@ class LoginScreen extends StatelessWidget {
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  amplitude.logEvent(name: TrackEvents.USE_TERMS_CLICK);
+                  TrackEvents.log(TrackEvents.LOGIN_USE_TERMS_CLICK);
                   launch(useTermsUrl);
                 },
             ),

@@ -1,9 +1,7 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -14,7 +12,6 @@ class StaticInitialScreen extends StatelessWidget {
   final navigator = GetIt.I<NavigatorHelper>();
 
   _openLogin(BuildContext context) async {
-    GetIt.I<AmplitudeFlutter>().logEvent(name: TrackEvents.SPLASH_ENTER_CLICK);
     navigator.push(LoginScreen());
     await SetUp.startOneSignal();
   }

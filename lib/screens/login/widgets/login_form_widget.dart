@@ -132,7 +132,7 @@ class LoginFormWidget extends StatelessWidget {
       final cpf = cpfCtrl.value.text;
       final password = passwordCtrl.value.text;
 
-      amplitude.logEvent(name: TrackEvents.SUBMIT_LOGIN_VALID);
+      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_VALID);
 
       _loginScreenBloc.add(
         LoginEvent(
@@ -141,7 +141,7 @@ class LoginFormWidget extends StatelessWidget {
         ),
       );
     } else {
-      amplitude.logEvent(name: TrackEvents.SUBMIT_LOGIN_INVALID);
+      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_INVALID);
 
       passwordCtrl.clear();
     }
@@ -150,12 +150,12 @@ class LoginFormWidget extends StatelessWidget {
   }
 
   _forgotPassword() {
-    amplitude.logEvent(name: TrackEvents.FORGOT_PASSWORD_CLICK);
+    TrackEvents.log(TrackEvents.LOGIN_FORGOT_PASSWORD_CLICK);
     launch('https://www.remessaonline.com.br/recuperar-senha');
   }
 
   _register() {
-    amplitude.logEvent(name: TrackEvents.REGISTER_CLICK);
+    TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
     launch(
       'https://www.remessaonline.com.br/cadastrar',
       forceWebView: true,

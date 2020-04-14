@@ -2,6 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/text_value_widget.dart';
 import 'package:remessa_app/style/colors.dart';
 
@@ -79,9 +80,15 @@ class DetailItemWidget extends StatelessWidget {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
+                        TrackEvents.log(
+                          TrackEvents.TRANSACTION_COPY_LOCAL_BANCK_INFO,
+                          {'label': label},
+                        );
+
                         Clipboard.setData(
                           ClipboardData(text: copyableValue ?? value),
                         );
+
                         final snackBar = SnackBar(
                           content: Text(
                             i18n.populate(
