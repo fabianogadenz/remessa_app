@@ -9,12 +9,13 @@ import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 
-class InitialScreen extends StatelessWidget {
+class StaticInitialScreen extends StatelessWidget {
   final i18n = GetIt.I<I18n>();
+  final navigator = GetIt.I<NavigatorHelper>();
 
   _openLogin(BuildContext context) async {
     GetIt.I<AmplitudeFlutter>().logEvent(name: TrackEvents.SPLASH_ENTER_CLICK);
-    NavigatorHelper.push(context, LoginScreen());
+    navigator.push(LoginScreen());
     await SetUp.startOneSignal();
   }
 
@@ -39,20 +40,6 @@ class InitialScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Image.asset('images/initial_screen.png'),
-          // Container(
-          //   width: double.infinity,
-          //   child: RaisedButton(
-          //     elevation: 0,
-          //     color: StyleColors.SUPPORT_NEUTRAL_10,
-          //     onPressed: () => _openLogin(context),
-          //     child: Text(
-          //       i18n.trans('enter'),
-          //       style: theme.textTheme.button.copyWith(
-          //         color: theme.primaryColor,
-          //       ),
-          //     ),
-          //   ),
-          // ),
           BigButton(
             text: i18n.trans('enter'),
             onPressed: () => _openLogin(context),

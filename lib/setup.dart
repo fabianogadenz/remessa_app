@@ -13,6 +13,7 @@ import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/test_setup.dart';
@@ -127,6 +128,12 @@ class SetUp {
     );
   }
 
+  _registerHelpers() {
+    GetIt.I.registerLazySingleton<NavigatorHelper>(
+      () => NavigatorHelper(),
+    );
+  }
+
   init() async {
     if (configs.environment == Environment.TEST) {
       await TestSetUp.init();
@@ -152,5 +159,7 @@ class SetUp {
     await _registerServices();
 
     _registerStores();
+
+    _registerHelpers();
   }
 }

@@ -39,6 +39,7 @@ class TransactionDetailsScreen extends StatefulWidget {
 
 class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   final i18n = GetIt.I<I18n>();
+  final navigator = GetIt.I<NavigatorHelper>();
   final _transactionsStore = TransactionDetailsStore();
   final chatHelper = ChatHelper();
 
@@ -66,6 +67,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       showAppBar: true,
       safeAreaConfig: SafeAreaConfig(bottom: false),
       appBarWidget: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         iconTheme: IconThemeData(
           color: StyleColors.SUPPORT_NEUTRAL_10,
@@ -144,7 +146,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       case TransactionStatus.WAITING_PAYMENT:
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['how_to_pay']),
-          onPressed: () => NavigatorHelper.push(context, HowToPayScreen()),
+          onPressed: () => navigator.push(
+            HowToPayScreen(
+              paymentDeadline: transactionDetails.paymentDeadline,
+            ),
+          ),
         );
       case TransactionStatus.PENDENCY:
         return TransactionDetailActionWidget(
@@ -196,8 +202,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           sectionLink: SectionLink(
             i18n.trans(
                 'transaction_details_screen', ['transaction_calculation']),
-            () => NavigatorHelper.push(
-              context,
+            () => navigator.push(
               TransactionCalculationScreen(
                 transactionDetails: transactionDetails,
               ),
@@ -214,11 +219,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           ],
           sectionLink: SectionLink(
             i18n.trans('transaction_details_screen', ['favored_data']),
-            () => NavigatorHelper.push(
-                context,
-                FavoredDataScreen(
-                  transactionDetails: transactionDetails,
-                )),
+            () => navigator.push(
+              FavoredDataScreen(
+                transactionDetails: transactionDetails,
+              ),
+            ),
           ),
         ),
       ];

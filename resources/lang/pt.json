@@ -4,6 +4,7 @@
     "chat": "Chat",
     "enter": "Entrar",
     "continue": "Continuar",
+    "or": "ou",
     "requiredField": "Campo obrigatório.",
     "summary": "Resumo",
     "name": "Nome",
@@ -41,7 +42,7 @@
     "forgotMyPassword": "Esqueci minha senha",
     "status": {
         "waiting_payment": {
-            "description": "Garanta a entrega da remessa em 1 dia útil após identificação do pagamento, pagando sua remessa até as 16h30 do dia $paymentDeadline"
+            "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
         },
         "payment_indetified": {
             "description": "Recebemos o seu pagamento. Agora é só aguardar a confirmação da remessa."
@@ -56,7 +57,7 @@
             "description": "Informações confirmadas. Em breve, faremos o envio pra conta de destino."
         },
         "finished": {
-            "description": "Pronto. O dinheiro foi entregue na conta de destino."
+            "description": "O dinheiro foi enviado para a conta do beneficiário."
         },
         "canceled": {
             "description": "Foi preciso cancelar essa remessa. Uma justificativa foi enviada para o email cadastrado."
@@ -67,6 +68,7 @@
     },
     "login_screen": {
         "title": "Faça seu login",
+        "register": "Cadastre-se no site",
         "privacyBanner": {
             "intro": "Ao logar você concorda com nossa\n",
             "privacyPolicy": "Política de Privacidade",
@@ -115,11 +117,11 @@
         "subtitle": "Siga as instruções e evite atrasos na sua remessa:",
         "ted": {
             "title": "Envie o pagamento via TED",
-            "description": "O dinheiro chega em minutos na conta da Remessa Online."
+            "description": "O dinheiro chega em até 2h úteis na conta da Remessa Online."
         },
         "deadline": {
             "title": "Não perca o prazo de pagamento",
-            "description": "O prazo limite para pagamento da sua remessa é até as 16h30 do dia seguinte à sua solicitação."
+            "description": "O prazo limite para pagamento da sua remessa é até as 16h30 do dia $paymentDeadline."
         },
         "bank_account": {
             "title": "Lembre-se: o pagamento deve ser feito de uma conta de pessoa física em que você seja o titular",

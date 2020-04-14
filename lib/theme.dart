@@ -35,7 +35,7 @@ class AppTheme {
           color: StyleColors.SUPPORT_NEUTRAL_10,
         ),
         buttonTheme: ButtonThemeData(
-          buttonColor: StyleColors.BRAND_PRIMARY_60,
+          buttonColor: StyleColors.BRAND_PRIMARY_40,
           textTheme: ButtonTextTheme.accent,
           padding: EdgeInsets.all(15),
           shape: RoundedRectangleBorder(

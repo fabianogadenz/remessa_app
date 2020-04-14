@@ -4,6 +4,7 @@ class TrackEvents {
   static const SUBMIT_LOGIN_INVALID = 'mobile_app.alert.invalid_login_error';
   static const FORGOT_PASSWORD_CLICK =
       'mobile_app.click.forgot_password_button';
+  static const REGISTER_CLICK = 'mobile_app.click.register';
   static const USE_TERMS_CLICK = 'mobile_app.click.terms_of_usage_link';
   static const PRIVACY_POLICY_CLICK = 'mobile_app.click.privacy_policy';
   static const LOGOUT_CLICK = 'mobile_app.click.logout_button';

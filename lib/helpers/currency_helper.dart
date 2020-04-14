@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 
 class CurrencyHelper {
-  static const String currencyFormat = ',###.00';
+  static const String currencyFormat = ',##0.00';
 
   static String format(String value, [String formatString = currencyFormat]) {
     final formatter = NumberFormat(

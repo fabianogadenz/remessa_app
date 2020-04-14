@@ -5,6 +5,7 @@ import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/models/responses/transaction_response_model.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -21,11 +22,11 @@ class HistoricCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final paidDate = DateHelper.stringToDate(transaction.paidAt);
     final i18n = GetIt.I<I18n>();
+    final navigator = GetIt.I<NavigatorHelper>();
 
     return GestureDetector(
       onTap: () {
-        NavigatorHelper.push(
-          context,
+        navigator.push(
           TransactionDetailsScreen(
             transactionId: transaction.id,
           ),
@@ -49,7 +50,14 @@ class HistoricCardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  transaction.counterpartName,
+                  StringHelper.handleLimiterWithEllipsisFromTextWidthAndStyle(
+                    transaction.counterpartName,
+                    270,
+                    TextStyle(
+                      fontSize: 12,
+                      color: StyleColors.SUPPORT_NEUTRAL_10,
+                    ),
+                  ),
                   style: TextStyle(
                     fontSize: 12,
                     color: StyleColors.SUPPORT_NEUTRAL_10,
