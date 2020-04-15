@@ -92,7 +92,7 @@
         "how_to_pay": "Entenda como fazer o pagamento",
         "delivery_estimate": {
             "title": "Estimativa de chegada",
-            "value": "1 dia útil após a identificação do pagamento"
+            "value": "$arrivalEstimate após a identificação do pagamento"
         },
         "foreign_currency_amount": "Valor enviado em moeda estrangeira",
         "national_currency_amount": "Valor total em reais",
