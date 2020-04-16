@@ -62,7 +62,7 @@ class TransactionCalculationScreen extends StatelessWidget {
             TransactionCalculationColumnSectionWidget(
               spotlightRow: TransactionCalculationSpotlightRowWidget(
                 spotlightIcon: Icon(
-                  RemessaIcons.multiply,
+                  RemessaIcons.close,
                   color: StyleColors.BRAND_SECONDARY_50,
                   size: 10,
                 ),

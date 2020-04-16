@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/historic_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/section_title_widget.dart';
@@ -57,17 +58,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Container(
           margin: EdgeInsets.only(right: 10),
           child: IconButton(
-            icon: Icon(Icons.exit_to_app),
-            iconSize: 30,
+            icon: Icon(RemessaIcons.exit),
+            iconSize: 22,
             color: StyleColors.SUPPORT_NEUTRAL_10,
             onPressed: _logout,
           ),
         ),
       ],
-      title: Image.asset(
-        'resources/images/splash_logo.png',
-        height: 25,
-        width: 25,
+      title: Icon(
+        RemessaIcons.logo,
+        size: 24,
+        color: StyleColors.SUPPORT_NEUTRAL_10,
       ),
       titleSpacing: 22,
       centerTitle: false,

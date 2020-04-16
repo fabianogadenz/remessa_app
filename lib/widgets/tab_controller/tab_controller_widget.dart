@@ -5,6 +5,7 @@ import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 
 import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -43,7 +44,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
     _tabs = <TabContent>[
       TabContent(
         title: i18n.trans('dashboard'),
-        iconData: Icons.home,
+        iconData: RemessaIcons.home,
         widget: DashboardScreen(),
       ),
     ];
@@ -52,7 +53,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       _tabs.add(
         TabContent(
           title: i18n.trans('help'),
-          iconData: Icons.chat,
+          iconData: RemessaIcons.chat,
           widget: Container(),
           action: () {
             TrackEvents.log(TrackEvents.DASHBOARD_HELP_TAB_CLICK);
@@ -81,7 +82,10 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
                 items: _tabs
                     .map(
                       (tab) => BottomNavigationBarItem(
-                        icon: Icon(tab.iconData),
+                        icon: Icon(
+                          tab.iconData,
+                          size: 18,
+                        ),
                         title: Text(tab.title),
                       ),
                     )
