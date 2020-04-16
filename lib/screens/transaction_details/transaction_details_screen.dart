@@ -200,8 +200,13 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             DetailItemWidget(
               label: i18n.trans(
                   'transaction_details_screen', ['delivery_estimate', 'title']),
-              value: i18n.trans(
-                  'transaction_details_screen', ['delivery_estimate', 'value']),
+              value: i18n.populate(
+                i18n.trans('transaction_details_screen',
+                    ['delivery_estimate', 'value']),
+                {
+                  'arrivalEstimate': transactionDetails.arrivalEstimate,
+                },
+              ),
             ),
             DetailItemWidget(
               label: i18n.trans(
