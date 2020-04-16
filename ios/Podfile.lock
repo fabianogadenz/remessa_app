@@ -11,6 +11,9 @@ PODS:
     - FirebaseAnalytics (= 6.2.1)
   - Firebase/CoreOnly (6.15.0):
     - FirebaseCore (= 6.6.0)
+  - Firebase/RemoteConfig (6.15.0):
+    - Firebase/CoreOnly
+    - FirebaseRemoteConfig (~> 4.4.6)
   - firebase_core (0.0.1):
     - Firebase/Core
     - Flutter
@@ -21,6 +24,13 @@ PODS:
     - Fabric
     - Firebase/Core
     - Flutter
+  - firebase_remote_config (0.0.1):
+    - Firebase/RemoteConfig
+    - Flutter
+  - FirebaseABTesting (3.1.2):
+    - FirebaseAnalyticsInterop (~> 1.3)
+    - FirebaseCore (~> 6.1)
+    - Protobuf (>= 3.9.2, ~> 3.9)
   - FirebaseAnalytics (6.2.1):
     - FirebaseCore (~> 6.6)
     - FirebaseInstanceID (~> 4.3)
@@ -30,6 +40,7 @@ PODS:
     - GoogleUtilities/Network (~> 6.0)
     - "GoogleUtilities/NSData+zlib (~> 6.0)"
     - nanopb (= 0.3.9011)
+  - FirebaseAnalyticsInterop (1.5.0)
   - FirebaseCore (6.6.0):
     - FirebaseCoreDiagnostics (~> 1.2)
     - FirebaseCoreDiagnosticsInterop (~> 1.2)
@@ -51,6 +62,14 @@ PODS:
     - FirebaseInstallations (~> 1.0)
     - GoogleUtilities/Environment (~> 6.5)
     - GoogleUtilities/UserDefaults (~> 6.5)
+  - FirebaseRemoteConfig (4.4.6):
+    - FirebaseABTesting (~> 3.1)
+    - FirebaseAnalyticsInterop (~> 1.4)
+    - FirebaseCore (~> 6.2)
+    - FirebaseInstanceID (~> 4.2)
+    - GoogleUtilities/Environment (~> 6.2)
+    - "GoogleUtilities/NSData+zlib (~> 6.2)"
+    - Protobuf (>= 3.9.2, ~> 3.9)
   - Flutter (1.0.0)
   - flutter_statusbarcolor (0.0.1):
     - Flutter
@@ -90,21 +109,34 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - OneSignal (2.12.2)
-  - onesignal_flutter (2.3.1):
+  - OneSignal (2.12.6)
+  - onesignal_flutter (2.3.4):
     - Flutter
-    - OneSignal (= 2.12.2)
+    - OneSignal (= 2.12.6)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - path_provider_macos (0.0.1):
+    - Flutter
   - PromisesObjC (1.2.8)
+  - Protobuf (3.11.2)
   - share (0.5.2):
+    - Flutter
+  - shared_preferences (0.0.1):
+    - Flutter
+  - shared_preferences_macos (0.0.1):
+    - Flutter
+  - shared_preferences_web (0.0.1):
     - Flutter
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
   - url_launcher (0.0.1):
+    - Flutter
+  - url_launcher_macos (0.0.1):
+    - Flutter
+  - url_launcher_web (0.0.1):
     - Flutter
   - ZDCChat (1.4.4):
     - ZDCChat/API (= 1.4.4)
@@ -124,15 +156,22 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
+  - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
   - OneSignal (< 3.0, >= 2.9.3)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - share (from `.symlinks/plugins/share/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
+  - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - url_launcher_macos (from `.symlinks/plugins/url_launcher_macos/ios`)
+  - url_launcher_web (from `.symlinks/plugins/url_launcher_web/ios`)
   - zendesk (from `.symlinks/plugins/zendesk/ios`)
 
 SPEC REPOS:
@@ -140,12 +179,15 @@ SPEC REPOS:
     - Crashlytics
     - Fabric
     - Firebase
+    - FirebaseABTesting
     - FirebaseAnalytics
+    - FirebaseAnalyticsInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
     - FirebaseInstallations
     - FirebaseInstanceID
+    - FirebaseRemoteConfig
     - FMDB
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -154,6 +196,7 @@ SPEC REPOS:
     - nanopb
     - OneSignal
     - PromisesObjC
+    - Protobuf
     - ZDCChat
 
 EXTERNAL SOURCES:
@@ -167,6 +210,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core_web/ios"
   firebase_crashlytics:
     :path: ".symlinks/plugins/firebase_crashlytics/ios"
+  firebase_remote_config:
+    :path: ".symlinks/plugins/firebase_remote_config/ios"
   Flutter:
     :path: Flutter
   flutter_statusbarcolor:
@@ -177,12 +222,24 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_macos:
+    :path: ".symlinks/plugins/path_provider_macos/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+  shared_preferences_macos:
+    :path: ".symlinks/plugins/shared_preferences_macos/ios"
+  shared_preferences_web:
+    :path: ".symlinks/plugins/shared_preferences_web/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
+  url_launcher_macos:
+    :path: ".symlinks/plugins/url_launcher_macos/ios"
+  url_launcher_web:
+    :path: ".symlinks/plugins/url_launcher_web/ios"
   zendesk:
     :path: ".symlinks/plugins/zendesk/ios"
 
@@ -192,15 +249,19 @@ SPEC CHECKSUMS:
   device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 5d77105d9740a07ca6b16927ca971db7e860faaf
-  firebase_core: 9bd2e66a276153e219a87ff39dfecb6b671f524a
+  firebase_core: 0d8be0e0d14c4902953aeb5ac5d7316d1fe4b978
   firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
-  firebase_crashlytics: 0066966d67fee22065fdcf1c9703a97c4fdbae2e
+  firebase_crashlytics: bd8c58df07f107cb7e1a20cb190b9a468e0a69fd
+  firebase_remote_config: f3581c5addecc691a968f2a7f2bcdf0878509bfd
+  FirebaseABTesting: 0d10f3cdc3fa00f3f175b5b56c1003c8e888299f
   FirebaseAnalytics: e83e64b1231dedcd9ddd4bdecd9bcfd6ba341679
+  FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
   FirebaseCore: 4aeb81ff53dcd9a3634ca725dc1fb8c2a4622046
   FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
   FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
   FirebaseInstallations: 575cd32f2aec0feeb0e44f5d0110a09e5e60b47b
   FirebaseInstanceID: 6668efc1655a4052c083f287a7141f1ead12f9c2
+  FirebaseRemoteConfig: c11d74d8b1ff8463b587fc8899d92ee089f9a691
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -209,17 +270,24 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  OneSignal: b2c1511c6b5db2d3b0ce1859f574dcf190dde5f3
-  onesignal_flutter: 289d8b75eaa81fc80d657ffa450253a654f5514a
+  OneSignal: a6df91542d1cf133b9dd19d89f2b533d8f2d3163
+  onesignal_flutter: c542d9b9aa51c1fdaeeab7f1a2b372bf2f02ab67
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  Protobuf: dd1aaea7140debfe4dd0683fb8ef208e527ae153
   share: bae0a282aab4483288913fc4dc0b935d4b491f2e
+  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
+  shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
+  shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
+  url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
+  url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
   ZDCChat: 02340a2389a4b7d9f6c78bf2374130875ebffb9b
   zendesk: cb7101c6cc005b76116b24635880a416e83214aa
 
 PODFILE CHECKSUM: 3b3835b1ed8763910814635894da748742ed9e1b
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.9.1

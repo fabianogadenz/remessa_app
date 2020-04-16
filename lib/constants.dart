@@ -14,15 +14,12 @@ const Map<String, String> prod_amplitude = {
 
 const Map<String, dynamic> dev_api = {
   'url': 'https://dev-app.beetech.global/v1/app',
-  'timeout': 5000, // 5s
 };
 const Map<String, dynamic> release_api = {
   'url': 'https://release-app.beetech.global/v1/app',
-  'timeout': 5000, // 5s
 };
 const Map<String, dynamic> prod_api = {
   'url': 'https://app.beetech.global/v1/app',
-  'timeout': 5000, // 5s
 };
 
 const Map<String, String> zendesk = {
@@ -61,12 +58,12 @@ class Constants {
   Constants({
     @required this.onesignal,
     @required this.amplitude,
-    @required this.api,
     @required this.zendesk,
+    @required this.api,
   })  : assert(onesignal != null),
         assert(amplitude != null),
-        assert(api != null),
-        assert(zendesk != null);
+        assert(zendesk != null),
+        assert(api != null);
 
   static Constants get(Environment env) => constantsMap[env];
 }

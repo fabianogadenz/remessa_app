@@ -1,125 +1,217 @@
 import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
-import 'package:remessa_app/helpers/i18n.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
-import 'package:remessa_app/screens/dashboard/widgets/transaction_card_widget.dart';
+import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
+import 'package:remessa_app/screens/dashboard/widgets/historic_list_widget.dart';
+import 'package:remessa_app/screens/dashboard/widgets/section_title_widget.dart';
+import 'package:remessa_app/screens/dashboard/widgets/skeleton_card_widget.dart';
+import 'package:remessa_app/screens/dashboard/widgets/skeleton_list_widget.dart';
+import 'package:remessa_app/screens/dashboard/widgets/transactions_carousel_widget.dart';
+import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
 
-import 'bloc/bloc.dart';
+class DashboardScreen extends StatefulWidget {
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
 
-class DashboardScreen extends StatelessWidget {
+class _DashboardScreenState extends State<DashboardScreen> {
   final i18n = GetIt.I<I18n>();
-  final _dashboardSreenBloc = DashboardScreenBloc();
+  final _transactionsStore = TransactionsStore()..getTransactions();
   final amplitude = GetIt.I<AmplitudeFlutter>();
   final _appStore = GetIt.I<AppStore>();
 
+  bool isEmpty = false;
+  ReactionDisposer reactionDisposer;
+
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return BlocBuilder<DashboardScreenBloc, DashboardScreenState>(
-      bloc: _dashboardSreenBloc..add(LoadTransactionsEvent()),
-      builder: (context, state) => CustomScrollView(
-        slivers: <Widget>[
-          _sliverAppBar(theme),
-          (state.value.length > 0)
-              ? SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      if (index == state.value.length - 5) {
-                        final pagination = state?.pagination;
-
-                        if (pagination != null &&
-                            pagination.page < pagination.totalPages)
-                          _dashboardSreenBloc.add(
-                              LoadTransactionsEvent(page: pagination.page + 1));
-                      }
-
-                      return TransactionCardWidget(
-                        transaction: state.value[index],
-                      );
-                    },
-                    childCount: state.value.length,
-                  ),
-                )
-              : SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 50),
-                        child: Text(
-                          GetIt.I<I18n>().trans(
-                            'dashboard_screen',
-                            ['empty_state'],
-                          ),
-                          style: Theme.of(context).textTheme.subtitle,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Image.asset('images/wallet.png'),
-                    ],
-                  ),
-                ),
-        ],
-      ),
+  initState() {
+    reactionDisposer = reaction(
+      (_) =>
+          !_transactionsStore.isLoadingTransactions &&
+          _transactionsStore.openTransactions.length == 0 &&
+          _transactionsStore.closedTransactions.length == 0,
+      (bool isEmpty) => (isEmpty != this.isEmpty)
+          ? setState(() {
+              this.isEmpty = isEmpty;
+            })
+          : null,
     );
+    super.initState();
   }
 
-  _logout() {
-    amplitude.logEvent(name: TrackEvents.LOGOUT_CLICK);
-    _appStore.logout();
+  @override
+  dispose() {
+    reactionDisposer();
+    super.dispose();
   }
 
   SliverAppBar _sliverAppBar(ThemeData theme) {
     return SliverAppBar(
-      expandedHeight: 80,
       actions: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(right: 10),
+        Container(
+          margin: EdgeInsets.only(right: 10),
           child: IconButton(
             icon: Icon(Icons.exit_to_app),
-            iconSize: 35,
-            color: Colors.white,
+            iconSize: 30,
+            color: StyleColors.SUPPORT_NEUTRAL_10,
             onPressed: _logout,
           ),
         ),
       ],
-      title: Padding(
-        padding: const EdgeInsets.only(left: 3),
-        child: Text(
-          i18n.trans('dashboard'),
-          style: TextStyle(
-            color: StyleColors.SUPPORT_NEUTRAL_10,
-            fontWeight: FontWeight.w200,
-            fontSize: 40,
-          ),
-        ),
+      title: Image.asset(
+        'resources/images/splash_logo.png',
+        height: 25,
+        width: 25,
       ),
+      titleSpacing: 22,
       centerTitle: false,
       pinned: false,
       floating: true,
       elevation: 0.5,
       backgroundColor: theme.scaffoldBackgroundColor,
-      // flexibleSpace: FlexibleSpaceBar(
-      //   centerTitle: false,
-      //   titlePadding:
-      //       EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      //   title: Text(
-      //     i18n.trans('dashboard'),
-      //     style: TextStyle(
-      //       color: StyleColors.SUPPORT_NEUTRAL_10,
-      //       fontWeight: FontWeight.w200,
-      //       fontSize: 30,
-      //     ),
-      //   ),
-      // ),
-      // expandedHeight: 80,
+    );
+  }
+
+  _buildOpenTransactionsList(ThemeData theme) => SliverToBoxAdapter(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SectionTitleWidget(
+              text: GetIt.I<I18n>().trans(
+                'dashboard_screen',
+                ['open_transactions'],
+              ),
+            ),
+            Observer(
+              builder: (_) => (_transactionsStore.openTransactions.length > 0)
+                  ? TransactionsCarousel(
+                      transactionsStore: _transactionsStore,
+                    )
+                  : _transactionsStore.isLoadingTransactions
+                      ? SkeletonCardWidget()
+                      : EmptyCardWidget(
+                          margin: EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            bottom: 30,
+                          ),
+                          image: Image.asset(
+                            'images/wallet.png',
+                            width: 100,
+                          ),
+                          text: GetIt.I<I18n>().trans(
+                            'dashboard_screen',
+                            ['open_empty_state'],
+                          ),
+                        ),
+            )
+          ],
+        ),
+      );
+
+  _buildCloseTransactionsList(ThemeData theme, BuildContext context) =>
+      <Widget>[
+        SliverToBoxAdapter(
+          child: SectionTitleWidget(
+            text: GetIt.I<I18n>().trans(
+              'dashboard_screen',
+              ['close_transactions'],
+            ),
+          ),
+        ),
+        Observer(
+          builder: (_) => (_transactionsStore.closedTransactions.length > 0)
+              ? HistoricListWidget(transactionsStore: _transactionsStore)
+              : _transactionsStore.isLoadingTransactions
+                  ? SkeletonListWidget()
+                  : SliverToBoxAdapter(
+                      child: EmptyCardWidget(
+                        image: Image.asset(
+                          'images/historic.png',
+                          width: 100,
+                        ),
+                        text: GetIt.I<I18n>().trans(
+                          'dashboard_screen',
+                          ['closed_empty_state'],
+                        ),
+                      ),
+                    ),
+        ),
+      ];
+
+  _buildScreenEmptyState(ThemeData theme) => SliverFillRemaining(
+        hasScrollBody: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'images/wallet.png',
+              width: 200,
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 30),
+              width: 230,
+              child: Text(
+                GetIt.I<I18n>().trans(
+                  'dashboard_screen',
+                  ['open_empty_state'],
+                ),
+                style: theme.textTheme.subtitle2.copyWith(fontSize: 15),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      );
+
+  _logout() {
+    TrackEvents.log(TrackEvents.DASHBOARD_LOGOUT_CLICK);
+    _appStore.logout();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final _baseSlivers = <Widget>[
+      _sliverAppBar(theme),
+      SliverToBoxAdapter(
+        child: Container(
+          padding: EdgeInsets.only(left: 23, right: 23, top: 30, bottom: 40),
+          child: Text(
+            GetIt.I<I18n>().trans(
+              'dashboard_screen',
+              ['title'],
+            ),
+            style: theme.textTheme.headline6.copyWith(fontSize: 25),
+          ),
+        ),
+      ),
+    ];
+
+    var _slivers = _baseSlivers;
+
+    if (isEmpty) {
+      _slivers = [
+        ..._baseSlivers,
+        _buildScreenEmptyState(theme),
+      ];
+    } else {
+      _slivers = [
+        ..._baseSlivers,
+        _buildOpenTransactionsList(theme),
+      ]..addAll(_buildCloseTransactionsList(theme, context));
+    }
+
+    return CustomScrollView(
+      slivers: _slivers,
     );
   }
 }

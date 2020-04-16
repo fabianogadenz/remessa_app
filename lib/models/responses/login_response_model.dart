@@ -1,4 +1,4 @@
-import 'package:remessa_app/models/customer_model.dart';
+import 'package:remessa_app/models/hive/customer_model.dart';
 
 class LoginResponseModel {
   String token;

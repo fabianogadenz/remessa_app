@@ -47,7 +47,7 @@ class ErrorDialog extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text(
                       errorMessage,
-                      style: Theme.of(context).textTheme.headline,
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                   ),
                 ),

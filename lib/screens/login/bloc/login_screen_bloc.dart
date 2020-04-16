@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
+import 'package:remessa_app/services/system_service.dart';
 import './bloc.dart';
 
 class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
@@ -29,6 +31,8 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
 
       _appStore.refreshIsLoggedIn();
 
+      GetIt.I<SystemService>().setShowStepper(false);
+
       yield LoginScreenState(success: true);
     } on ErrorModel catch (e) {
       yield LoginScreenState(
@@ -36,8 +40,16 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
         errorMessage: e?.mainError?.message,
         formState: formState..clearPassword(),
       );
-    } catch (_) {
-      yield LoginScreenState(success: false);
+    } on DioError catch (e) {
+      yield LoginScreenState(
+        success: false,
+        errorMessage: e.error,
+      );
+    } catch (e) {
+      yield LoginScreenState(
+        success: false,
+        errorMessage: e.error,
+      );
     }
   }
 

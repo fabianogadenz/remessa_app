@@ -5,6 +5,20 @@ import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/widgets/error_dialog/error_dialog_widget.dart';
 
+class SafeAreaConfig {
+  final bool top;
+  final bool left;
+  final bool right;
+  final bool bottom;
+
+  const SafeAreaConfig({
+    this.top = true,
+    this.left = true,
+    this.right = true,
+    this.bottom = true,
+  });
+}
+
 class ScreenWidget extends StatefulWidget {
   // ignore: close_sinks
   final StreamController<String> errorStreamController = StreamController();
@@ -20,6 +34,7 @@ class ScreenWidget extends StatefulWidget {
   final bool isStatic;
   final EdgeInsetsGeometry padding;
   final BottomNavigationBar bottomNavigationBar;
+  final SafeAreaConfig safeAreaConfig;
 
   ScreenWidget({
     Key key,
@@ -32,6 +47,7 @@ class ScreenWidget extends StatefulWidget {
     this.child,
     this.children,
     this.bottomNavigationBar,
+    this.safeAreaConfig = const SafeAreaConfig(),
   })  : assert(child != null || children != null),
         super(key: key);
 
@@ -63,25 +79,36 @@ class _ScreenWidgetState extends State<ScreenWidget> {
       FlutterStatusbarcolor.setStatusBarWhiteForeground(!widget.isAccent);
     }
 
-    final _appBar = AppBar(
-      backgroundColor:
-          widget.isAccent ? theme.accentColor : theme.scaffoldBackgroundColor,
-      centerTitle: true,
-      title: widget.appBarWidget ??
-          Text(
+    final _appBar = widget.appBarWidget ??
+        AppBar(
+          backgroundColor: widget.isAccent
+              ? theme.accentColor
+              : theme.scaffoldBackgroundColor,
+          centerTitle: true,
+          title: Text(
             widget.appBarText,
           ),
-    );
+          elevation: widget.showAppBar ? theme.appBarTheme.elevation : 0,
+        );
 
     return Stack(
       children: <Widget>[
         Scaffold(
           backgroundColor: widget.isAccent ? theme.accentColor : null,
-          appBar: widget.showAppBar ? _appBar : null,
+          appBar: widget.showAppBar
+              ? _appBar
+              : PreferredSize(
+                  preferredSize: Size.fromHeight(0),
+                  child: _appBar,
+                ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           body: Container(
             child: SafeArea(
+              top: widget.safeAreaConfig.top,
+              left: widget.safeAreaConfig.left,
+              right: widget.safeAreaConfig.right,
+              bottom: widget.safeAreaConfig.bottom,
               child: (widget.child != null)
                   ? LayoutBuilder(
                       builder:

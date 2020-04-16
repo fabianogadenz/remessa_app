@@ -1,14 +1,29 @@
 {
-    "greetTo": "Hello {name}",
     "help": "Ajuda",
     "dashboard": "Início",
     "chat": "Chat",
     "enter": "Entrar",
     "continue": "Continuar",
+    "or": "ou",
     "requiredField": "Campo obrigatório.",
+    "summary": "Resumo",
+    "name": "Nome",
+    "favored": "Favorecido",
+    "ok": "Ok",
+    "bank": "Banco",
+    "agency": "Agência",
+    "checking_account": "Conta Corrente",
+    "recipient": "Favorecido",
+    "cnpj": "CNPJ",
+    "value": "Valor",
+    "how_to_pay": "Como fazer o pagamento",
+    "account_owner": "Titular da conta",
+    "favored_data": "Dados do favorecido",
+    "ffc": "FFC (For Further Credit)",
     "error": {
+        "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
-        "request_timeout": "Algo deu errado, não foi possível carregar suas informações. Tente novamente mais tarde.",
+        "request_timeout": "Não foi possível carregar suas informações.\nTente novamente mais tarde.",
         "auth_expired": "Seu login expirou. Por favor, entre novamente.",
         "chat": "Chat indisponível. Tente novamente mais tarde, ou envie um e-mail para remessa@remessaonline.com.br que responderemos em breve.",
         "app_version": {
@@ -25,11 +40,35 @@
     },
     "password": "Senha",
     "forgotMyPassword": "Esqueci minha senha",
+    "status": {
+        "waiting_payment": {
+            "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
+        },
+        "payment_indetified": {
+            "description": "Recebemos o seu pagamento. Agora é só aguardar a confirmação da remessa."
+        },
+        "pendency": {
+            "description": "Precisamos confirmar algumas informações. Assim que possível, entre em contato conosco."
+        },
+        "waiting_signature": {
+            "description": "Seu contrato de câmbio está disponível para assinatura!"
+        },
+        "confirmed": {
+            "description": "Informações confirmadas. Em breve, faremos o envio pra conta de destino."
+        },
+        "finished": {
+            "description": "O dinheiro foi enviado para a conta do beneficiário."
+        },
+        "canceled": {
+            "description": "Foi preciso cancelar essa remessa. Uma justificativa foi enviada para o email cadastrado."
+        }
+    },
     "initial_screen": {
         "title": "Transferências internacionais para todos"
     },
     "login_screen": {
         "title": "Faça seu login",
+        "register": "Cadastre-se no site",
         "privacyBanner": {
             "intro": "Ao logar você concorda com nossa\n",
             "privacyPolicy": "Política de Privacidade",
@@ -39,6 +78,70 @@
         "invalidCPF": "CPF incorreto, confira e tente novamente."
     },
     "dashboard_screen": {
-        "empty_state": "Você ainda não possui\ntransferências em andamento"
+        "title": "Acompanhe suas remessas em tempo real",
+        "open_transactions": "Em andamento",
+        "close_transactions": "Histórico",
+        "open_empty_state": "Você não tem remessas em andamento",
+        "closed_empty_state": "Você ainda não tem remessas concluídas"
+    },
+    "transaction": {
+        "paid_at": "Pago em"
+    },
+    "transaction_details_screen": {
+        "title": "Remessa #$transactionId",
+        "how_to_pay": "Entenda como fazer o pagamento",
+        "delivery_estimate": {
+            "title": "Estimativa de chegada",
+            "value": "1 dia útil após a identificação do pagamento"
+        },
+        "foreign_currency_amount": "Valor enviado em moeda estrangeira",
+        "national_currency_amount": "Valor total em reais",
+        "vet": "Valor efetivo total (VET)",
+        "transaction_calculation": "Entenda o cálculo da remessa",
+        "favored_data": "Ver dados do favorecido",
+        "talk_with_us": "Toque aqui e fale com a gente",
+        "doubts": "Dúvidas?",
+        "copied": "$label copiado com sucesso",
+        "ted": "Dados para TED",
+        "account_type": "Tipo de conta",
+        "ted_reason": "Finalidade da TED",
+        "checking_account_credit": "Crédito em Conta Corrente",
+        "ted_value": "Valor da TED",
+        "arrival_estimate": "Previsão de chegada",
+        "action": {
+            "pendency": "Falar no chat",
+            "canceled": "Entrar em contato pelo chat"
+        }
+    },
+    "how_to_pay_screen": {
+        "subtitle": "Siga as instruções e evite atrasos na sua remessa:",
+        "ted": {
+            "title": "Envie o pagamento via TED",
+            "description": "O dinheiro chega em até 2h úteis na conta da Remessa Online."
+        },
+        "deadline": {
+            "title": "Não perca o prazo de pagamento",
+            "description": "O prazo limite para pagamento da sua remessa é até as 16h30 do dia $paymentDeadline."
+        },
+        "bank_account": {
+            "title": "Lembre-se: o pagamento deve ser feito de uma conta de pessoa física em que você seja o titular",
+            "description": "Não aceitamos pagamentos de contas de terceiros nem de contas de pessoa jurídica, mesmo que você seja o titular."
+        }
+    },
+    "transaction_calculation_screen": {
+        "title": "Entenda o cálculo da remessa",
+        "subtitle": "Mais transparência para conferir os custos do seu envio",
+        "foreignTotalAmount": "Você enviou",
+        "spread": {
+            "title": "Custo",
+            "description": "É a taxa de spread cambial que cobramos para enviar seu dinheiro, uma das menores do mercado."
+        },
+        "exchangeRate": "Taxa de Câmbio",
+        "tradingQuotation": {
+            "title": "Câmbio Comercial",
+            "description": "Usamos a cotação comercial da moeda estrangeira, sem taxas e impostos embutidos."
+        },
+        "totalFees": "Tarifas",
+        "totalAmount": "Valor total"
     }
 }

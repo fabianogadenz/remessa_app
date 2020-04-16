@@ -1,24 +1,25 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/helpers/i18n.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/setup.dart';
+import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 
-class InitialScreen extends StatelessWidget {
+class StaticInitialScreen extends StatelessWidget {
   final i18n = GetIt.I<I18n>();
+  final navigator = GetIt.I<NavigatorHelper>();
 
   _openLogin(BuildContext context) async {
-    GetIt.I<AmplitudeFlutter>().logEvent(name: TrackEvents.SPLASH_ENTER_CLICK);
-    NavigatorHelper.push(context, LoginScreen());
+    navigator.push(LoginScreen());
     await SetUp.startOneSignal();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return ScreenWidget(
       isStatic: true,
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
@@ -32,7 +33,7 @@ class InitialScreen extends StatelessWidget {
           ),
           Text(
             i18n.trans('initial_screen', ['title']),
-            style: Theme.of(context).textTheme.title,
+            style: theme.textTheme.headline6,
             textAlign: TextAlign.center,
           ),
           Image.asset('images/initial_screen.png'),
@@ -65,7 +66,8 @@ class BigButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: RaisedButton(
-        color: Colors.white,
+        elevation: 0,
+        color: StyleColors.SUPPORT_NEUTRAL_10,
         padding: EdgeInsets.all(20),
         child: Text(
           text,

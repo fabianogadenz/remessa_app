@@ -1,3 +1,5 @@
+import 'package:mobx/mobx.dart';
+import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/models/pagination_model.dart';
 
 class TransactionResponseModel {
@@ -29,38 +31,43 @@ class TransactionResponseModel {
   }
 }
 
-class Transaction {
+class Transaction with Store {
   int id;
   String createdAt;
   String updatedAt;
+  String paidAt;
   String foreignCurrency;
   String foreignCurrencyAmount;
   String nationalCurrency;
   String nationalCurrencyTotalAmount;
   String flow;
   int statusId;
+  TransactionStatus status;
   String statusName;
   String counterpartName;
   String transactionName;
 
-  Transaction(
-      {this.id,
-      this.createdAt,
-      this.updatedAt,
-      this.foreignCurrency,
-      this.foreignCurrencyAmount,
-      this.nationalCurrency,
-      this.nationalCurrencyTotalAmount,
-      this.flow,
-      this.statusId,
-      this.statusName,
-      this.counterpartName,
-      this.transactionName});
+  Transaction({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.paidAt,
+    this.foreignCurrency,
+    this.foreignCurrencyAmount,
+    this.nationalCurrency,
+    this.nationalCurrencyTotalAmount,
+    this.flow,
+    this.statusId,
+    this.statusName,
+    this.counterpartName,
+    this.transactionName,
+  });
 
   Transaction.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    paidAt = json['paidAt'];
     foreignCurrency = json['foreignCurrency'];
     foreignCurrencyAmount = json['foreignCurrencyAmount'];
     nationalCurrency = json['nationalCurrency'];
@@ -70,6 +77,8 @@ class Transaction {
     statusName = json['statusName'];
     counterpartName = json['counterpartName'];
     transactionName = json['transactionName'];
+
+    status = TransactionStatusHelper.parse(statusId);
   }
 
   Map<String, dynamic> toJson() {
@@ -77,6 +86,7 @@ class Transaction {
     data['id'] = this.id;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
+    data['paidAt'] = this.paidAt;
     data['foreignCurrency'] = this.foreignCurrency;
     data['foreignCurrencyAmount'] = this.foreignCurrencyAmount;
     data['nationalCurrency'] = this.nationalCurrency;
