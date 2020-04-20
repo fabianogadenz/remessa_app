@@ -111,7 +111,7 @@ class LoginFormWidget extends StatelessWidget {
                   borderSide: BorderSide(
                     color: StyleColors.BRAND_PRIMARY_40,
                   ),
-                  onPressed: () => _register(),
+                  onPressed: _register,
                   child: Text(
                     i18n.trans('login_screen', ['register']),
                     style: Theme.of(context).textTheme.button.copyWith(
@@ -156,9 +156,6 @@ class LoginFormWidget extends StatelessWidget {
 
   _register() {
     TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
-    launch(
-      'https://www.remessaonline.com.br/cadastrar',
-      forceWebView: true,
-    );
+    launch('https://www.remessaonline.com.br/cadastrar');
   }
 }

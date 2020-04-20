@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 margin: EdgeInsets.only(right: 10),
                 child: showStepper
                     ? IconButton(
-                        icon: Icon(RemessaIcons.multiply),
+                        icon: Icon(RemessaIcons.close),
                         color: StyleColors.BRAND_PRIMARY_40,
                         iconSize: 18,
                         onPressed: () {
