@@ -471,7 +471,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.12"
+    version: "2.1.4"
   intl:
     dependency: transitive
     description:
@@ -506,7 +506,7 @@ packages:
       name: json_rpc_2
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   kernel:
     dependency: transitive
     description:
@@ -779,7 +779,7 @@ packages:
       name: shelf_packages_handler
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "1.0.4"
   shelf_static:
     dependency: transitive
     description:
@@ -994,7 +994,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "2.3.1"
   vm_service_client:
     dependency: transitive
     description:
@@ -1036,7 +1036,7 @@ packages:
       name: xml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.6.1"
+    version: "3.5.0"
   yaml:
     dependency: transitive
     description:

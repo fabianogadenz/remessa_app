@@ -211,8 +211,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ]..addAll(_buildCloseTransactionsList(theme, context));
     }
 
-    return CustomScrollView(
-      slivers: _slivers,
+    return RefreshIndicator(
+      color: StyleColors.BRAND_PRIMARY_40,
+      onRefresh: () => _transactionsStore.getTransactions(),
+      child: CustomScrollView(
+        slivers: _slivers,
+      ),
     );
   }
 }
