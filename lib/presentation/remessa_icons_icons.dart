@@ -29,4 +29,5 @@ class RemessaIcons {
   static const IconData close = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData exit = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData home = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData warning = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
