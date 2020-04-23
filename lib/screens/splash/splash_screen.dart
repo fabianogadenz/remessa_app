@@ -10,6 +10,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_screen.dart';
 import 'package:remessa_app/setup.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
@@ -21,6 +22,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final _appStore = GetIt.I<AppStore>();
+  final _authStore = GetIt.I<AuthStore>();
   final navigator = GetIt.I<NavigatorHelper>();
   ReactionDisposer reactionDisposer;
 
@@ -76,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
           );
         } else {
           navigator.pushReplacement(
-            _appStore.isLoggedIn ? TabControllerWidget() : InitialScreen(),
+            _authStore.isLoggedIn ? TabControllerWidget() : InitialScreen(),
           );
         }
       });

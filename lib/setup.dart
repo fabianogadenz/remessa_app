@@ -16,8 +16,9 @@ import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/services/services.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/test_setup.dart';
-import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
+import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:zendesk/zendesk.dart';
 
 class SetUp {
@@ -99,8 +100,12 @@ class SetUp {
       () => AppStore(configs),
     );
 
-    GetIt.I.registerLazySingleton<TabControllerBloc>(
-      () => TabControllerBloc(),
+    GetIt.I.registerLazySingleton<AuthStore>(
+      () => AuthStore(),
+    );
+
+    GetIt.I.registerLazySingleton<TabControllerStore>(
+      () => TabControllerStore(),
     );
   }
 

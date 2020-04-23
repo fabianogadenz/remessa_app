@@ -5,14 +5,14 @@ import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/pagination_model.dart';
 import 'package:remessa_app/models/responses/transaction_response_model.dart';
 import 'package:remessa_app/services/transaction_service.dart';
-import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
+import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 
 part 'transactions_store.g.dart';
 
 class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
 
 abstract class _TransactionsStoreBase with Store {
-  final _tabControllerBloc = GetIt.I<TabControllerBloc>();
+  final _tabControllerStore = GetIt.I<TabControllerStore>();
 
   @observable
   bool isLoadingTransactions = true;
@@ -75,11 +75,16 @@ abstract class _TransactionsStoreBase with Store {
   }
 
   clearTransactions() {
+    isLoadingTransactions = true;
+    isLoadingOpenTransactions = false;
+
     openTransactions.clear();
     closedTransactions.clear();
 
     openTransactionsPagination = null;
     closedTransactionsPagination = null;
+
+    _tabControllerStore.setErrorMessage('');
   }
 
   @action
@@ -89,19 +94,13 @@ abstract class _TransactionsStoreBase with Store {
   }) async {
     setIsLoadingTransactions(true);
 
-    clearTransactions();
-
     try {
       await getOpenTransactions(openTransactionsPage);
       await getClosedTransactions(closedTransactionsPage);
     } on ErrorModel catch (e) {
-      _tabControllerBloc.add(
-        ErrorTabEvent(errorMessage: e?.mainError?.message),
-      );
+      _tabControllerStore.setErrorMessage(e?.mainError?.message);
     } catch (e) {
-      _tabControllerBloc.add(
-        ErrorTabEvent(errorMessage: e?.message),
-      );
+      _tabControllerStore.setErrorMessage(e?.message);
     }
 
     setIsLoadingTransactions(false);

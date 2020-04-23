@@ -4,16 +4,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_screen.dart';
 import 'package:remessa_app/screens/splash/splash_screen.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/theme.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
 
 class App extends StatelessWidget {
   final reactionDesposer = reaction(
-    (_) => GetIt.I<AppStore>().isLoggedIn,
+    (_) => GetIt.I<AuthStore>().isLoggedIn,
     (bool isLoggedIn) => GetIt.I<NavigatorHelper>().pushReplacement(
       isLoggedIn ? TabControllerWidget() : InitialScreen(),
     ),
