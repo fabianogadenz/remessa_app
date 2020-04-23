@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
@@ -13,6 +12,7 @@ import 'package:remessa_app/screens/dashboard/widgets/section_title_widget.dart'
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/transactions_carousel_widget.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
 
@@ -25,7 +25,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final i18n = GetIt.I<I18n>();
   final _transactionsStore = TransactionsStore()..getTransactions();
   final amplitude = GetIt.I<AmplitudeFlutter>();
-  final _appStore = GetIt.I<AppStore>();
 
   bool isEmpty = false;
   ReactionDisposer reactionDisposer;
@@ -174,7 +173,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   _logout() {
     TrackEvents.log(TrackEvents.DASHBOARD_LOGOUT_CLICK);
-    _appStore.logout();
+    GetIt.I<AuthStore>().logout();
   }
 
   @override
@@ -213,7 +212,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return RefreshIndicator(
       color: StyleColors.BRAND_PRIMARY_40,
-      onRefresh: () => _transactionsStore.getTransactions(),
+      onRefresh: () {
+        _transactionsStore.clearTransactions();
+        _transactionsStore.getTransactions();
+
+        return Future.delayed(Duration(seconds: 1));
+      },
       child: CustomScrollView(
         slivers: _slivers,
       ),
