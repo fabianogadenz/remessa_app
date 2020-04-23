@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
@@ -23,31 +24,33 @@ class InitialStepperScreen extends StatefulWidget {
 }
 
 class _InitialStepperScreenState extends State<InitialStepperScreen> {
+  final i18n = GetIt.I<I18n>();
   final navigator = GetIt.I<NavigatorHelper>();
-  final steppers = [
-    InitialStepperModel(
-      'images/step1.png',
-      'Envie no site e acompanhe por aqui',
-      'Confira o status dos seus envios em andamento, veja seu histórico de remessas e tire dúvidas pelo chat.',
-    ),
-    InitialStepperModel(
-      'images/step2.png',
-      'Receba atualizações em tempo real',
-      'Ative as notificações e acompanhe o andamento de seus envios de onde estiver.',
-    ),
-    InitialStepperModel(
-      'images/step3.png',
-      'Acompanhe as novidades do app',
-      'Estamos aprimorando o app. Em breve, você poderá fazer suas remessas por aqui. Aguarde!',
-    ),
-  ];
 
+  List<InitialStepperModel> steppers;
   CarouselSlider carousel;
-
   int _currentIndex = 0;
 
   @override
-  void didChangeDependencies() {
+  void initState() {
+    steppers = [
+      InitialStepperModel(
+        'images/step1.png',
+        i18n.trans('stepper1', ['title']),
+        i18n.trans('stepper1', ['description']),
+      ),
+      InitialStepperModel(
+        'images/step2.png',
+        i18n.trans('stepper2', ['title']),
+        i18n.trans('stepper2', ['description']),
+      ),
+      InitialStepperModel(
+        'images/step3.png',
+        i18n.trans('stepper3', ['title']),
+        i18n.trans('stepper3', ['description']),
+      ),
+    ];
+
     carousel = CarouselSlider(
       enableInfiniteScroll: false,
       height: double.infinity,
@@ -73,7 +76,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
           .toList(),
     );
 
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -97,7 +100,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
               margin: EdgeInsets.only(bottom: 30),
               child: GestureDetector(
                 child: Text(
-                  'Pular',
+                  i18n.trans('skip'),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: StyleColors.SUPPORT_NEUTRAL_10,

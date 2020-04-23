@@ -20,6 +20,11 @@
     "account_owner": "Titular da conta",
     "favored_data": "Dados do favorecido",
     "ffc": "FFC (For Further Credit)",
+    "start": "Começar",
+    "next": "Próximo",
+    "skip": "Pular",
+    "password": "Senha",
+    "forgotMyPassword": "Esqueci minha senha",
     "error": {
         "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
@@ -32,14 +37,24 @@
             "button": "Fechar"
         }
     },
+    "stepper1": {
+        "title": "Envie no site e acompanhe por aqui",
+        "description": "Confira o status dos seus envios em andamento, veja seu histórico de remessas e tire dúvidas pelo chat."
+    },
+    "stepper2": {
+        "title": "Receba atualizações em tempo real",
+        "description": "Ative as notificações e acompanhe o andamento de seus envios de onde estiver."
+    },
+    "stepper3": {
+        "title": "Acompanhe as novidades do app",
+        "description": "Estamos aprimorando o app. Em breve, você poderá fazer suas remessas por aqui. Aguarde!"
+    },
     "document": {
         "cpf": {
             "label": "CPF",
             "mask": "000.000.000-00"
         }
     },
-    "password": "Senha",
-    "forgotMyPassword": "Esqueci minha senha",
     "status": {
         "waiting_payment": {
             "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."

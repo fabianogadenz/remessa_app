@@ -1,8 +1,10 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class InitialStepperFooterWidget extends StatelessWidget {
-  const InitialStepperFooterWidget({
+  InitialStepperFooterWidget({
     Key key,
     @required this.length,
     @required this.index,
@@ -10,6 +12,7 @@ class InitialStepperFooterWidget extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
+  final i18n = GetIt.I<I18n>();
   final int length;
   final int index;
   final bool highlightedButton;
@@ -58,7 +61,7 @@ class InitialStepperFooterWidget extends StatelessWidget {
                       color: StyleColors.SUPPORT_NEUTRAL_10,
                       onPressed: () => onTap(),
                       child: Text(
-                        'Começar',
+                        i18n.trans('start'),
                         style: Theme.of(context).textTheme.button.copyWith(
                               color: StyleColors.BRAND_PRIMARY_40,
                             ),
@@ -68,7 +71,7 @@ class InitialStepperFooterWidget extends StatelessWidget {
                       child: Row(
                         children: <Widget>[
                           Text(
-                            'Próximo',
+                            i18n.trans('next'),
                             style: TextStyle(
                               color: StyleColors.SUPPORT_NEUTRAL_10,
                               fontWeight: FontWeight.w600,
