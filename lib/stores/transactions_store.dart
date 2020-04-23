@@ -74,12 +74,22 @@ abstract class _TransactionsStoreBase with Store {
     isLoadingClosedTransactions = false;
   }
 
+  clearTransactions() {
+    openTransactions.clear();
+    closedTransactions.clear();
+
+    openTransactionsPagination = null;
+    closedTransactionsPagination = null;
+  }
+
   @action
   getTransactions({
     int openTransactionsPage,
     int closedTransactionsPage,
   }) async {
     setIsLoadingTransactions(true);
+
+    clearTransactions();
 
     try {
       await getOpenTransactions(openTransactionsPage);
