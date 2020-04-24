@@ -15,6 +15,8 @@ import 'package:remessa_app/screens/dashboard/widgets/transactions_carousel_widg
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/primary_button_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -28,6 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   bool isEmpty = false;
   ReactionDisposer reactionDisposer;
+  PrimaryButtonWidget createTransactionButton;
 
   @override
   initState() {
@@ -42,6 +45,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
             })
           : null,
     );
+
+    createTransactionButton = PrimaryButtonWidget(
+      i18n.trans('dashboard_screen', ['create_transaction']),
+      onPressed: () =>
+          launch('https://www.remessaonline.com.br/app/perfil/painel'),
+    );
+
     super.initState();
   }
 
@@ -109,6 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             'dashboard_screen',
                             ['open_empty_state'],
                           ),
+                          action: createTransactionButton,
                         ),
             )
           ],
@@ -167,6 +178,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            createTransactionButton,
           ],
         ),
       );

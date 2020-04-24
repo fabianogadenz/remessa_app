@@ -16,6 +16,7 @@ class DetailItemWidget extends StatelessWidget {
     this.copyableValue,
     this.titleSpotlight = false,
     this.valueSpotlight = false,
+    this.onTapInfo,
   })  : assert(!isValueCopyable || label != null),
         assert(value != null),
         super(key: key);
@@ -27,6 +28,7 @@ class DetailItemWidget extends StatelessWidget {
   final String copyableValue;
   final bool titleSpotlight;
   final bool valueSpotlight;
+  final Function onTapInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -34,25 +36,42 @@ class DetailItemWidget extends StatelessWidget {
 
     final labelWidgets = <Widget>[
       SizedBox(
-        height: titleSpotlight ? 24 : 16,
+        height: titleSpotlight ? 32 : 16,
       ),
     ];
 
     if (showLabel && label != null) {
       labelWidgets.addAll([
-        Text(
-          label,
-          style: titleSpotlight
-              ? TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: StyleColors.BRAND_SECONDARY_80,
-                )
-              : TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: StyleColors.BRAND_SECONDARY_50,
-                ),
+        Row(
+          children: [
+            Text(
+              label,
+              style: titleSpotlight
+                  ? TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: StyleColors.BRAND_SECONDARY_80,
+                    )
+                  : TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: StyleColors.BRAND_SECONDARY_50,
+                    ),
+            ),
+            SizedBox(
+              width: 4,
+            ),
+            onTapInfo != null
+                ? GestureDetector(
+                    child: Icon(
+                      Icons.info,
+                      color: StyleColors.BRAND_PRIMARY_40,
+                      size: 17,
+                    ),
+                    onTap: () => onTapInfo(),
+                  )
+                : Container(),
+          ],
         ),
         SizedBox(
           height: titleSpotlight ? 8 : 4,

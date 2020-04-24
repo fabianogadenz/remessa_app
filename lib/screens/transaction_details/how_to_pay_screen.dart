@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
-import 'package:remessa_app/screens/transaction_details/widgets/subtitle_widget.dart';
 import 'package:remessa_app/widgets/screen/screen_widget.dart';
 
 class HowToPayScreen extends StatelessWidget {
@@ -22,11 +21,10 @@ class HowToPayScreen extends StatelessWidget {
       showAppBar: true,
       appBarText: i18n.trans('how_to_pay'),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 24, vertical: 26),
+        margin: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SubtitleWidget(i18n.trans('how_to_pay_screen', ['subtitle'])),
             DetailItemWidget(
               titleSpotlight: true,
               label: i18n.trans('how_to_pay_screen', ['ted', 'title']),

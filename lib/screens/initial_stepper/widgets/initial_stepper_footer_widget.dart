@@ -2,6 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/primary_button_widget.dart';
 
 class InitialStepperFooterWidget extends StatelessWidget {
   InitialStepperFooterWidget({
@@ -53,20 +54,7 @@ class InitialStepperFooterWidget extends StatelessWidget {
             ),
             child: Container(
               child: highlightedButton
-                  ? RaisedButton(
-                      elevation: 0,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 60,
-                      ),
-                      color: StyleColors.SUPPORT_NEUTRAL_10,
-                      onPressed: () => onTap(),
-                      child: Text(
-                        i18n.trans('start'),
-                        style: Theme.of(context).textTheme.button.copyWith(
-                              color: StyleColors.BRAND_PRIMARY_40,
-                            ),
-                      ),
-                    )
+                  ? PrimaryButtonWidget(i18n.trans('start'), onPressed: onTap)
                   : GestureDetector(
                       child: Row(
                         children: <Widget>[
