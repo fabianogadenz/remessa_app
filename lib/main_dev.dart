@@ -8,6 +8,8 @@ import 'package:remessa_app/helpers/environment_model.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await SetUp.registerConfig();
+
   final remoteConfigs = ConfigModel(environment: Environment.DEV);
 
   await SetUp(remoteConfigs).init();

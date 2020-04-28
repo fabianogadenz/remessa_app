@@ -9,4 +9,10 @@ abstract class _AppStoreBase with Store {
   final ConfigModel configs;
 
   _AppStoreBase(this.configs);
+
+  @observable
+  int transactionId;
+
+  @action
+  setTransactionId(int value) => transactionId = value;
 }

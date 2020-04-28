@@ -30,6 +30,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
   List<InitialStepperModel> steppers;
   CarouselSlider carousel;
   int _currentIndex = 0;
+  int _currentLogIndex = 1;
 
   @override
   void initState() {
@@ -58,11 +59,12 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
       onPageChanged: (int index) {
         setState(() {
           _currentIndex = index;
+          _currentLogIndex = _currentIndex + 1;
         });
 
         TrackEvents.log(
           TrackEvents.INITIAL_STEPPER_VIEW_STEPPER,
-          {'tutorial_step': 'step $_currentIndex'},
+          {'tutorial_step': _currentLogIndex},
         );
       },
       items: steppers
@@ -81,8 +83,6 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final stepLogLabel = 'step $_currentIndex';
-
     return ScreenWidget(
       isStatic: true,
       child: Container(
@@ -109,7 +109,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
                 onTap: () {
                   TrackEvents.log(
                     TrackEvents.INITIAL_STEPPER_SKIP_STEPPER_CLICK,
-                    {'tutorial_step': stepLogLabel},
+                    {'tutorial_step': _currentLogIndex},
                   );
 
                   navigator.pushReplacement(
@@ -135,7 +135,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
 
                 TrackEvents.log(
                   TrackEvents.INITIAL_STEPPER_NEXT_STEP_CLICK,
-                  {'tutorial_step': stepLogLabel},
+                  {'tutorial_step': _currentLogIndex},
                 );
 
                 carousel.nextPage(

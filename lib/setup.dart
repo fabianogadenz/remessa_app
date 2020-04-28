@@ -14,7 +14,9 @@ import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/config_model.dart';
+import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/test_setup.dart';
@@ -26,6 +28,17 @@ class SetUp {
   final ConfigModel configs;
 
   SetUp(this.configs) : constants = Constants.get(configs.environment);
+
+  static Future<ConfigService> registerConfig() async {
+    final configService = ConfigService();
+    await configService.init();
+
+    GetIt.I.registerLazySingleton<ConfigService>(
+      () => configService,
+    );
+
+    return configService;
+  }
 
   static registerI18n(BuildContext context) {
     GetIt.I.registerLazySingleton<I18n>(
@@ -46,6 +59,19 @@ class SetUp {
 
       await OneSignal.shared.consentGranted(allowed);
     }
+
+    OneSignal.shared.setNotificationOpenedHandler((openedResult) {
+      TrackEvents.log(TrackEvents.PUSH_NOTIFICATION_OPENED);
+
+      final additionalData =
+          openedResult?.notification?.payload?.additionalData;
+
+      if (additionalData != null) {
+        if (additionalData['transactionId'] != null)
+          GetIt.I<AppStore>()
+              .setTransactionId(int.parse(additionalData['transactionId']));
+      }
+    });
   }
 
   _initializeHive() async {
@@ -152,8 +178,6 @@ class SetUp {
 
     await _initializeHive();
 
-    await _registerOneSignal();
-
     await _registerZendesk();
 
     // GetIt registers
@@ -166,5 +190,7 @@ class SetUp {
     _registerStores();
 
     _registerHelpers();
+
+    await _registerOneSignal();
   }
 }
