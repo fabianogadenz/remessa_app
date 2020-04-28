@@ -82,7 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 i18n.trans('login_screen', ['title']),
                 key: Key(LoginScreenKeys.title),
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 24,
+                    ),
                 textAlign: TextAlign.start,
               ),
               LoginFormWidget(

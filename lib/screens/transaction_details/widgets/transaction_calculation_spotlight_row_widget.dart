@@ -23,44 +23,47 @@ class TransactionCalculationSpotlightRowWidget extends StatelessWidget {
         ? StyleColors.BRAND_SECONDARY_80
         : StyleColors.BRAND_SECONDARY_50;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Container(
-              height: 24,
-              width: 24,
-              decoration: BoxDecoration(
-                color: isPrimary
-                    ? StyleColors.BRAND_PRIMARY_40
-                    : StyleColors.SUPPORT_NEUTRAL_30,
-                borderRadius: BorderRadius.circular(5),
+    return Container(
+      margin: isPrimary ? EdgeInsets.only(bottom: 12) : EdgeInsets.zero,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                height: 24,
+                width: 24,
+                decoration: BoxDecoration(
+                  color: isPrimary
+                      ? StyleColors.BRAND_PRIMARY_40
+                      : StyleColors.SUPPORT_NEUTRAL_30,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Center(
+                  child: spotlightIcon,
+                ),
               ),
-              child: Center(
-                child: spotlightIcon,
+              SizedBox(
+                width: 8,
               ),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Text(
-              label,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: textColor,
+              Text(
+                label,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: textColor,
+                ),
               ),
-            ),
-          ],
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: textColor,
+            ],
           ),
-        ),
-      ],
+          Text(
+            value,
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: textColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

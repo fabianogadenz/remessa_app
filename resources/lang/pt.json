@@ -57,32 +57,32 @@
     },
     "status": {
         "waiting_payment": {
-            "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
+            "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em aproximadamente 2h úteis."
         },
         "payment_indetified": {
-            "description": "Recebemos o seu pagamento. Agora é só aguardar a confirmação da remessa."
+            "description": "Recebemos seu pagamento. Agora é só aguardar a confirmação da remessa."
         },
         "pendency": {
-            "description": "Precisamos confirmar algumas informações. Assim que possível, entre em contato conosco."
+            "description": "Precisamos confirmar algumas informações. Assim que possível, entre em contato pelo chat."
         },
         "waiting_signature": {
-            "description": "Seu contrato de câmbio está disponível para assinatura!"
+            "description": "Seu contrato de câmbio está disponível. Acesse o dashboard pelo site e assine eletronicamente."
         },
         "confirmed": {
-            "description": "Informações confirmadas. Em breve, faremos o envio pra conta de destino."
+            "description": "Remessa confirmada. Em breve, faremos o envio para a conta de destino."
         },
         "finished": {
-            "description": "O dinheiro foi enviado para a conta do beneficiário."
+            "description": "Tudo certo! Sua remessa já está a caminho da conta de destino."
         },
         "canceled": {
-            "description": "Foi preciso cancelar essa remessa. Uma justificativa foi enviada para o email cadastrado."
+            "description": "Tivemos que cancelar sua remessa. Uma justificativa foi enviada para seu e-mail de cadastro."
         }
     },
     "initial_screen": {
         "title": "Transferências internacionais para todos"
     },
     "login_screen": {
-        "title": "Faça seu login",
+        "title": "Olá, entre ou cadastre-se",
         "register": "Cadastre-se no site",
         "privacyBanner": {
             "intro": "Ao logar você concorda com nossa\n",
@@ -97,7 +97,8 @@
         "open_transactions": "Em andamento",
         "close_transactions": "Histórico",
         "open_empty_state": "Você não tem remessas em andamento",
-        "closed_empty_state": "Você ainda não tem remessas concluídas"
+        "closed_empty_state": "Você ainda não tem remessas concluídas",
+        "create_transaction": "Fazer uma remessa no site"
     },
     "transaction": {
         "paid_at": "Pago em"
@@ -111,7 +112,10 @@
         },
         "foreign_currency_amount": "Valor enviado em moeda estrangeira",
         "national_currency_amount": "Valor total em reais",
-        "vet": "Valor efetivo total (VET)",
+        "vet": {
+            "title": "Valor efetivo total (VET)",
+            "description": "Esse é o valor final da cotação com todos os impostos e tarifas incluídos."
+        },
         "transaction_calculation": "Entenda o cálculo da remessa",
         "favored_data": "Ver dados do favorecido",
         "talk_with_us": "Toque aqui e fale com a gente",
@@ -129,9 +133,8 @@
         }
     },
     "how_to_pay_screen": {
-        "subtitle": "Siga as instruções e evite atrasos na sua remessa:",
         "ted": {
-            "title": "Envie o pagamento via TED",
+            "title": "Faça o pagamento via TED",
             "description": "O dinheiro chega em até 2h úteis na conta da Remessa Online."
         },
         "deadline": {

@@ -7,6 +7,7 @@ class EmptyCardWidget extends StatelessWidget {
     @required this.image,
     @required this.text,
     this.margin,
+    this.action,
   })  : assert(image != null),
         assert(text != null),
         super(key: key);
@@ -14,12 +15,23 @@ class EmptyCardWidget extends StatelessWidget {
   final Image image;
   final String text;
   final EdgeInsets margin;
+  final Widget action;
 
   @override
   Widget build(BuildContext context) {
+    final _actionSection = [];
+    if (action != null) {
+      _actionSection.addAll([
+        SizedBox(
+          height: 16,
+        ),
+        action,
+      ]);
+    }
+
     return Container(
       margin: margin ?? EdgeInsets.symmetric(horizontal: 20),
-      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 40),
+      padding: EdgeInsets.all(24),
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -27,23 +39,28 @@ class EmptyCardWidget extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
         children: [
-          image,
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Text(
-                text,
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    .copyWith(fontSize: 15),
-              ),
-            ),
-          )
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              image,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    text,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2
+                        .copyWith(fontSize: 15),
+                  ),
+                ),
+              )
+            ],
+          ),
+          ..._actionSection,
         ],
       ),
     );

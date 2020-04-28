@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
@@ -167,6 +168,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           onPressed: _openChatAndLogEvent,
         );
       case TransactionStatus.CANCELED:
+      case TransactionStatus.WAITING_SIGNATURE:
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['action', 'canceled']),
           onPressed: _openChatAndLogEvent,
@@ -221,11 +223,17 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                   '${transactionDetails.quote.nationalCurrency} $nationalCurrencyTotalAmount',
             ),
             DetailItemWidget(
-              label: i18n.trans('transaction_details_screen', ['vet']),
+              label: i18n.trans('transaction_details_screen', ['vet', 'title']),
               value: CurrencyHelper.withPrefix(
                 transactionDetails.quote.nationalCurrency,
                 transactionDetails.quote.vet.toString(),
                 CurrencyHelper.currencyFormat + '00',
+              ),
+              onTapInfo: () => ModalHelper.showInfoBottomSheet(
+                context,
+                i18n.trans('transaction_details_screen', ['vet', 'title']),
+                i18n.trans(
+                    'transaction_details_screen', ['vet', 'description']),
               ),
             ),
           ],

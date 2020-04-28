@@ -152,6 +152,25 @@ class TransactionCalculationScreen extends StatelessWidget {
                   .toList(),
             ),
             TransactionCalculationColumnSectionWidget(
+              items: [
+                TransactionCalculationRowWidget(
+                  label: i18n
+                      .trans('transaction_details_screen', ['vet', 'title']),
+                  value: CurrencyHelper.withPrefix(
+                    transactionDetails.quote.nationalCurrency,
+                    transactionDetails.quote.vet.toString(),
+                    CurrencyHelper.currencyFormat + '00',
+                  ),
+                  onTapInfo: () => ModalHelper.showInfoBottomSheet(
+                    context,
+                    i18n.trans('transaction_details_screen', ['vet', 'title']),
+                    i18n.trans(
+                        'transaction_details_screen', ['vet', 'description']),
+                  ),
+                ),
+              ],
+            ),
+            TransactionCalculationColumnSectionWidget(
               spotlightRow: TransactionCalculationSpotlightRowWidget(
                 isPrimary: true,
                 spotlightIcon: Icon(
