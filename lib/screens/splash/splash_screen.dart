@@ -93,16 +93,11 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Stack(
             children: [
               Center(
-                child: TweenAnimationBuilder(
-                  duration: Duration(seconds: 1),
-                  tween: Tween<double>(begin: 0.4, end: 0.6),
-                  curve: Curves.elasticIn,
-                  builder: (_, double scale, ___) {
-                    return Transform.scale(
-                      scale: scale,
-                      child: Image.asset('images/full_icon.png'),
-                    );
-                  },
+                child: Container(
+                  width: 200,
+                  child: Image.asset(
+                    'images/full_icon.png',
+                  ),
                 ),
               ),
               Container(
