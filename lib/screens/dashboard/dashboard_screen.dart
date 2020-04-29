@@ -48,8 +48,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     createTransactionButton = PrimaryButtonWidget(
       i18n.trans('dashboard_screen', ['create_transaction']),
-      onPressed: () =>
-          launch('https://www.remessaonline.com.br/app/perfil/painel'),
+      onPressed: () {
+        TrackEvents.log(TrackEvents.DASHBOARD_NEW_TRANSACTION_CLICK);
+        launch('https://www.remessaonline.com.br/app/perfil/painel');
+      },
     );
 
     super.initState();
@@ -74,10 +76,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       ],
-      title: Icon(
-        RemessaIcons.logo,
-        size: 24,
-        color: StyleColors.SUPPORT_NEUTRAL_10,
+      title: GestureDetector(
+        onTap: () => TrackEvents.log(TrackEvents.DASHBOARD_HOME_LOGO_CLICK),
+        child: Icon(
+          RemessaIcons.logo,
+          size: 24,
+          color: StyleColors.SUPPORT_NEUTRAL_10,
+        ),
       ),
       titleSpacing: 22,
       centerTitle: false,

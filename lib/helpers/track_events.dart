@@ -36,6 +36,10 @@ class TrackEvents {
   static const DASHBOARD_HISTORY_TRANSACTION_CARD_CLICK =
       'mobile_app.click.operation_history_card_widget';
   static const DASHBOARD_LOGOUT_CLICK = 'mobile_app.click.logout_button';
+  static const DASHBOARD_NEW_TRANSACTION_CLICK =
+      'mobile_app.click.new_remittance_site';
+  static const DASHBOARD_HOME_LOGO_CLICK =
+      'mobile_app.click.remessa_online_logo';
 
   // Transaction Details
   static const TRANSACTION_FAVORED_INFO_CLICK =
