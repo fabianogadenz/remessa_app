@@ -13,7 +13,7 @@ import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
-import 'package:remessa_app/widgets/widgets.dart';
+import 'package:screens/screens.dart';
 
 class TabContent {
   final String title;
@@ -99,7 +99,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
 
     return Observer(
       builder: (_) {
-        return ScreenWidget(
+        return GetIt.I<Screens>().widget(
           isStatic: true,
           child: _tabs[_tabControllerStore.currentTabIndex].widget,
           bottomNavigationBar: _tabs.length >= 2
