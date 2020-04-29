@@ -25,6 +25,10 @@ class TrackEvents {
   static const LOGIN_REGISTER_CLICK =
       'mobile_app.click.new_registration_button';
 
+  // Push Notification
+  static const PUSH_NOTIFICATION_OPENED =
+      'mobile_app.open.mobile_push_notification';
+
   // Dashboard
   static const DASHBOARD_HELP_TAB_CLICK = 'mobile_app.click.help_button_menu';
   static const DASHBOARD_OPEN_TRANSACTION_CARD_CLICK =
@@ -74,7 +78,9 @@ class TrackEvents {
         continue log;
       log:
       default:
-        amplitude.logEvent(name: name, properties: properties);
+        amplitude.logEvent(name: name, properties: {
+          'event_properties': properties,
+        });
     }
   }
 }

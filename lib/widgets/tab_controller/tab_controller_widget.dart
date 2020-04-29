@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 
 import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:remessa_app/widgets/widgets.dart';
@@ -36,8 +39,39 @@ class TabControllerWidget extends StatefulWidget {
 class _TabControllerWidgetState extends State<TabControllerWidget> {
   final i18n = GetIt.I<I18n>();
   final _tabControllerStore = GetIt.I<TabControllerStore>();
+  final _appStore = GetIt.I<AppStore>();
 
   List<TabContent> _tabs = [];
+  ReactionDisposer reactionDisposer;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      reactionDisposer = autorun(openTransactionDetails);
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    reactionDisposer();
+    super.dispose();
+  }
+
+  openTransactionDetails(_) {
+    if (_appStore.transactionId != null) {
+      if (Navigator.canPop(context)) {
+        Navigator.popUntil(context, (route) => route.isFirst);
+      }
+
+      GetIt.I<NavigatorHelper>().push(
+        TransactionDetailsScreen(transactionId: _appStore.transactionId),
+      );
+
+      _appStore.setTransactionId(null);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +83,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       ),
     ];
 
-    if (GetIt.I<AppStore>()?.configs?.isChatEnabled ?? true) {
+    if (_appStore?.configs?.isChatEnabled ?? true) {
       _tabs.add(
         TabContent(
           title: i18n.trans('help'),

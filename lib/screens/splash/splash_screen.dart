@@ -9,6 +9,7 @@ import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_screen.dart';
+import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -50,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   checkAppVersionAndLogin(_) =>
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         final i18n = GetIt.I<I18n>();
 
         if (!(_appStore?.configs?.isUpToDate ?? true)) {
@@ -77,6 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           );
         } else {
+          await Future.delayed(Duration(seconds: 1));
           navigator.pushReplacement(
             _authStore.isLoggedIn ? TabControllerWidget() : InitialScreen(),
           );
@@ -85,6 +87,38 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) => ScreenWidget(
-        child: Container(),
+        isStatic: true,
+        child: Container(
+          height: double.infinity,
+          child: Stack(
+            children: [
+              Center(
+                child: TweenAnimationBuilder(
+                  duration: Duration(seconds: 1),
+                  tween: Tween<double>(begin: 0.4, end: 0.6),
+                  curve: Curves.elasticIn,
+                  builder: (_, double scale, ___) {
+                    return Transform.scale(
+                      scale: scale,
+                      child: Image.asset('images/full_icon.png'),
+                    );
+                  },
+                ),
+              ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                padding: EdgeInsets.all(30),
+                child: Text(
+                  'v${GetIt.I<ConfigService>().packageInfo.version}',
+                  style: TextStyle(
+                    color: StyleColors.SUPPORT_NEUTRAL_10,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       );
 }

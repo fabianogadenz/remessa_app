@@ -44,19 +44,21 @@ class DetailItemWidget extends StatelessWidget {
       labelWidgets.addAll([
         Row(
           children: [
-            Text(
-              label,
-              style: titleSpotlight
-                  ? TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: StyleColors.BRAND_SECONDARY_80,
-                    )
-                  : TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: StyleColors.BRAND_SECONDARY_50,
-                    ),
+            Expanded(
+              child: Text(
+                label,
+                style: titleSpotlight
+                    ? TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: StyleColors.BRAND_SECONDARY_80,
+                      )
+                    : TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: StyleColors.BRAND_SECONDARY_50,
+                      ),
+              ),
             ),
             SizedBox(
               width: 4,
