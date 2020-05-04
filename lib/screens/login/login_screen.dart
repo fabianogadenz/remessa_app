@@ -12,7 +12,7 @@ import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/screens/login/login_screen_store.dart';
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/screen/screen_widget.dart';
+import 'package:screens/screens.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets/login_form_widget.dart';
@@ -47,11 +47,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) => Observer(
-        builder: (_) => ScreenWidget(
+        builder: (_) => GetIt.I<Screens>().widget(
           isAccent: true,
           showAppBar: true,
           isStatic: true,
+          brightness: Brightness.light,
           appBarWidget: AppBar(
+            brightness: Brightness.light,
             elevation: 0,
             actions: <Widget>[
               Container(

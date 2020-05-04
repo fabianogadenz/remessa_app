@@ -41,44 +41,55 @@ class DetailItemWidget extends StatelessWidget {
     ];
 
     if (showLabel && label != null) {
-      labelWidgets.addAll([
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                label,
-                style: titleSpotlight
-                    ? TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: StyleColors.BRAND_SECONDARY_80,
-                      )
-                    : TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: StyleColors.BRAND_SECONDARY_50,
-                      ),
+      final _labelText = Text(
+        label,
+        style: titleSpotlight
+            ? TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: StyleColors.BRAND_SECONDARY_80,
+              )
+            : TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: StyleColors.BRAND_SECONDARY_50,
               ),
-            ),
-            SizedBox(
-              width: 4,
-            ),
-            onTapInfo != null
-                ? GestureDetector(
-                    child: Icon(
-                      Icons.info,
-                      color: StyleColors.BRAND_PRIMARY_40,
-                      size: 17,
-                    ),
-                    onTap: () => onTapInfo(),
-                  )
-                : Container(),
-          ],
-        ),
+      );
+
+      if (onTapInfo != null) {
+        labelWidgets.add(
+          Row(
+            children: [
+              _labelText,
+              SizedBox(
+                width: 4,
+              ),
+              GestureDetector(
+                child: Icon(
+                  Icons.info,
+                  color: StyleColors.BRAND_PRIMARY_40,
+                  size: 17,
+                ),
+                onTap: () => onTapInfo(),
+              ),
+            ],
+          ),
+        );
+      } else {
+        labelWidgets.add(
+          Row(
+            children: [
+              Expanded(child: _labelText),
+            ],
+          ),
+        );
+      }
+
+      labelWidgets.add(
         SizedBox(
           height: titleSpotlight ? 8 : 4,
         ),
-      ]);
+      );
     }
 
     final textValue = TextValueWidget(

@@ -8,7 +8,7 @@ import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_foot
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_widget.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/widgets.dart';
+import 'package:screens/screens.dart';
 
 class InitialStepperModel {
   final String imagePath;
@@ -83,7 +83,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenWidget(
+    return GetIt.I<Screens>().widget(
       isStatic: true,
       child: Container(
         height: double.infinity,

@@ -13,8 +13,8 @@ import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/screen/screen_widget.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
+import 'package:screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -86,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
       });
 
   @override
-  Widget build(BuildContext context) => ScreenWidget(
+  Widget build(BuildContext context) => GetIt.I<Screens>().widget(
         isStatic: true,
         child: Container(
           height: double.infinity,

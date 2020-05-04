@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
-import 'package:remessa_app/widgets/screen/screen_widget.dart';
+import 'package:screens/screens.dart';
 
 class FavoredDataScreen extends StatelessWidget {
   final TransactionDetailsResponseModel transactionDetails;
@@ -16,9 +16,10 @@ class FavoredDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final i18n = GetIt.I<I18n>();
 
-    return ScreenWidget(
+    return GetIt.I<Screens>().widget(
       isAccent: true,
       showAppBar: true,
+      brightness: Brightness.light,
       appBarText: i18n.trans('favored_data'),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),

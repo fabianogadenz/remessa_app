@@ -2,6 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:screens/screen_overlay.dart';
+
+class ErrorOverlay implements ScreenOverlay {
+  @override
+  Widget build(screenWidget, data) => ErrorDialog(
+        previousStatusBarWhiteForeground:
+            screenWidget.brightness == Brightness.dark ||
+                screenWidget.brightness == null,
+        errorMessage: data,
+        closeFunction: () {
+          screenWidget.errorStreamController.add(null);
+        },
+      );
+}
 
 class ErrorDialog extends StatelessWidget {
   final String errorMessage;
@@ -11,16 +25,15 @@ class ErrorDialog extends StatelessWidget {
   ErrorDialog({
     Key key,
     @required this.errorMessage,
-    this.previousStatusBarWhiteForeground,
+    this.previousStatusBarWhiteForeground = true,
     @required this.closeFunction,
   })  : assert(errorMessage != null && errorMessage.isNotEmpty),
         assert(closeFunction != null),
         super(key: key);
 
   _closeDialog() {
-    if (previousStatusBarWhiteForeground) {
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
-    }
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(
+        previousStatusBarWhiteForeground);
 
     closeFunction();
   }

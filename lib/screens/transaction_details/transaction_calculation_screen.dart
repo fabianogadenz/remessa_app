@@ -12,7 +12,7 @@ import 'package:remessa_app/screens/transaction_details/widgets/transaction_calc
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_calculation_row_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_calculation_spotlight_row_widget.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/screen/screen_widget.dart';
+import 'package:screens/screens.dart';
 
 class TransactionCalculationScreen extends StatelessWidget {
   const TransactionCalculationScreen({
@@ -30,9 +30,10 @@ class TransactionCalculationScreen extends StatelessWidget {
     final totalFees = (transactionDetails.quote.nationalCurrencyTotalAmount -
         transactionDetails.quote.nationalCurrencySubAmount);
 
-    return ScreenWidget(
+    return GetIt.I<Screens>().widget(
       isAccent: true,
       showAppBar: true,
+      brightness: Brightness.light,
       appBarText: i18n.trans('transaction_calculation_screen', ['title']),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 26),

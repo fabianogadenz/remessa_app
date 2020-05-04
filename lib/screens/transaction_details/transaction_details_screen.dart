@@ -23,7 +23,8 @@ import 'package:remessa_app/screens/transaction_details/widgets/transaction_deta
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_status_section.dart';
 import 'package:remessa_app/stores/transaction_details_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/widgets.dart';
+import 'package:screens/safe_area_config.dart';
+import 'package:screens/screens.dart';
 
 class TransactionDetailsScreen extends StatefulWidget {
   final int transactionId;
@@ -64,7 +65,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screen = ScreenWidget(
+    final screen = GetIt.I<Screens>().widget(
       isStatic: true,
       showAppBar: true,
       safeAreaConfig: SafeAreaConfig(bottom: false),
