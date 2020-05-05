@@ -75,53 +75,53 @@ class TransactionCalculationRowWidget extends StatelessWidget {
       color: StyleColors.BRAND_SECONDARY_50,
     );
 
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              GestureDetector(
-                child: Icon(
+    return GestureDetector(
+      onTap: onTapInfo,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Icon(
                   Icons.info,
                   color: StyleColors.BRAND_PRIMARY_40,
                   size: 17,
                 ),
-                onTap: () => onTapInfo(),
-              ),
-              SizedBox(
-                width: 6,
-              ),
-              RichText(
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                  text: '$label ',
-                  children: [
-                    TextSpan(
-                      text: labelSpotlight != null
-                          ? StringHelper
-                              .handleLimiterWithEllipsisFromTextWidthAndStyle(
-                              labelSpotlight,
-                              205,
-                              textStyle,
-                            )
-                          : null,
-                      style: TextStyle(
-                        color: StyleColors.BRAND_PRIMARY_40,
-                      ),
-                    ),
-                  ],
-                  style: textStyle,
+                SizedBox(
+                  width: 6,
                 ),
-              ),
-            ],
-          ),
-          Row(
-            children: _values,
-          )
-        ],
+                RichText(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    text: '$label ',
+                    children: [
+                      TextSpan(
+                        text: labelSpotlight != null
+                            ? StringHelper
+                                .handleLimiterWithEllipsisFromTextWidthAndStyle(
+                                labelSpotlight,
+                                205,
+                                textStyle,
+                              )
+                            : null,
+                        style: TextStyle(
+                          color: StyleColors.BRAND_PRIMARY_40,
+                        ),
+                      ),
+                    ],
+                    style: textStyle,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: _values,
+            )
+          ],
+        ),
       ),
     );
   }

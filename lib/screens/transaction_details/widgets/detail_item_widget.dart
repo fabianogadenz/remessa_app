@@ -7,7 +7,7 @@ import 'package:remessa_app/screens/transaction_details/widgets/text_value_widge
 import 'package:remessa_app/style/colors.dart';
 
 class DetailItemWidget extends StatelessWidget {
-  const DetailItemWidget({
+  DetailItemWidget({
     Key key,
     this.label,
     this.value,
@@ -30,10 +30,37 @@ class DetailItemWidget extends StatelessWidget {
   final bool valueSpotlight;
   final Function onTapInfo;
 
+  final i18n = GetIt.I<I18n>();
+
+  copy(BuildContext context) {
+    TrackEvents.log(
+      TrackEvents.TRANSACTION_COPY_LOCAL_BANCK_INFO,
+      {'label': label},
+    );
+
+    Clipboard.setData(
+      ClipboardData(text: copyableValue ?? value),
+    );
+
+    final snackBar = SnackBar(
+      content: Text(
+        i18n.populate(
+          i18n.trans('transaction_details_screen', ['copied']),
+          {'label': label},
+        ),
+      ),
+      action: SnackBarAction(
+        textColor: StyleColors.BRAND_PRIMARY_30,
+        label: i18n.trans('ok').toUpperCase(),
+        onPressed: () {},
+      ),
+    );
+
+    Scaffold.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final i18n = GetIt.I<I18n>();
-
     final labelWidgets = <Widget>[
       SizedBox(
         height: titleSpotlight ? 32 : 16,
@@ -65,12 +92,12 @@ class DetailItemWidget extends StatelessWidget {
                 width: 4,
               ),
               GestureDetector(
+                onTap: onTapInfo,
                 child: Icon(
                   Icons.info,
                   color: StyleColors.BRAND_PRIMARY_40,
                   size: 17,
                 ),
-                onTap: () => onTapInfo(),
               ),
             ],
           ),
@@ -99,59 +126,37 @@ class DetailItemWidget extends StatelessWidget {
           : StyleColors.BRAND_SECONDARY_60,
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        ...labelWidgets,
-        isValueCopyable
-            ? Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        TrackEvents.log(
-                          TrackEvents.TRANSACTION_COPY_LOCAL_BANCK_INFO,
-                          {'label': label},
-                        );
-
-                        Clipboard.setData(
-                          ClipboardData(text: copyableValue ?? value),
-                        );
-
-                        final snackBar = SnackBar(
-                          content: Text(
-                            i18n.populate(
-                              i18n.trans(
-                                  'transaction_details_screen', ['copied']),
-                              {'label': label},
-                            ),
-                          ),
-                          action: SnackBarAction(
-                            textColor: StyleColors.BRAND_PRIMARY_30,
-                            label: i18n.trans('ok').toUpperCase(),
-                            onPressed: () {},
-                          ),
-                        );
-                        Scaffold.of(context).showSnackBar(snackBar);
-                      },
-                      child: Icon(
-                        Icons.content_copy,
-                        color: StyleColors.BRAND_PRIMARY_40,
-                        size: 15,
+    return GestureDetector(
+      onTap: onTapInfo ?? (isValueCopyable ? () => copy(context) : null),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ...labelWidgets,
+          isValueCopyable
+              ? Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () => copy(context),
+                        child: Icon(
+                          Icons.content_copy,
+                          color: StyleColors.BRAND_PRIMARY_40,
+                          size: 15,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    textValue,
-                  ],
-                ),
-              )
-            : textValue,
-      ],
+                      SizedBox(
+                        width: 8,
+                      ),
+                      textValue,
+                    ],
+                  ),
+                )
+              : textValue,
+        ],
+      ),
     );
   }
 }

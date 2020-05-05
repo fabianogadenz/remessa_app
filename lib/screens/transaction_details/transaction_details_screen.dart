@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
@@ -57,6 +58,8 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
         transactionDetails.quote.foreignCurrencyAmount.toString(),
       );
 
+  String completeArrivalEstimateMessage;
+
   @override
   void initState() {
     _transactionsStore.getTransactionDetailsStore(widget.transactionId);
@@ -91,6 +94,14 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       child: Observer(
         builder: (_) {
           if (transactionDetails == null) return Container();
+
+          completeArrivalEstimateMessage = i18n.populate(
+            i18n.trans(
+                'transaction_details_screen', ['delivery_estimate', 'value']),
+            {
+              'arrivalEstimate': transactionDetails.arrivalEstimate,
+            },
+          );
 
           final sections = [];
 
@@ -200,17 +211,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           showDivisor: false,
           title: i18n.trans('summary'),
           detailItems: [
-            DetailItemWidget(
-              label: i18n.trans(
-                  'transaction_details_screen', ['delivery_estimate', 'title']),
-              value: i18n.populate(
-                i18n.trans('transaction_details_screen',
-                    ['delivery_estimate', 'value']),
-                {
-                  'arrivalEstimate': transactionDetails.arrivalEstimate,
-                },
-              ),
-            ),
+            handleDeliveryEstimate(),
             DetailItemWidget(
               label: i18n.trans(
                   'transaction_details_screen', ['foreign_currency_amount']),
@@ -275,69 +276,102 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
         ),
       ];
 
-  List _buildWaitingPaymentContent() => [
-        DetailSectionWidget(
-          showDivisor: false,
-          title: i18n.trans('transaction_details_screen', ['ted']),
-          detailItems: [
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('bank'),
-              value:
-                  '${transactionDetails.paymentAccountInfo.bankName} (${transactionDetails.paymentAccountInfo.bankCode})',
-            ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('agency'),
-              value: transactionDetails.paymentAccountInfo.branchCode,
-            ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('checking_account'),
-              value: transactionDetails.paymentAccountInfo.accountNumber,
-            ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('favored'),
-              value: transactionDetails.paymentAccountInfo.accountHolderName,
-            ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('cnpj'),
-              value: transactionDetails
-                  .paymentAccountInfo.accountHolderDocumentNumber,
-            ),
-            DetailItemWidget(
-              label: i18n.trans('transaction_details_screen', ['account_type']),
-              value: i18n.trans('checking_account'),
-            ),
-            DetailItemWidget(
-              label: i18n.trans('transaction_details_screen', ['ted_reason']),
-              value: i18n.trans(
-                  'transaction_details_screen', ['checking_account_credit']),
-            ),
-          ],
-        ),
-        DetailSectionWidget(
-          title: i18n.trans('transaction_details_screen', ['ted_value']),
-          detailItems: [
-            DetailItemWidget(
-              showLabel: false,
-              isValueCopyable: true,
-              copyableValue: nationalCurrencyTotalAmount,
-              label: i18n.trans('value'),
-              value:
-                  '${transactionDetails.quote.nationalCurrency} $nationalCurrencyTotalAmount',
-            ),
-          ],
-        ),
-        DetailSectionWidget(
-          title: i18n.trans('transaction_details_screen', ['arrival_estimate']),
-          detailItems: [
-            DetailItemWidget(
-              value: transactionDetails.arrivalEstimate,
-            ),
-          ],
-        ),
-      ];
+  Widget handleDeliveryEstimate() {
+    String deliveryEstimateValue;
+
+    switch (transactionDetails.status) {
+      case TransactionStatus.PAYMENT_IDENTIFIED:
+        deliveryEstimateValue = transactionDetails.arrivalEstimate;
+        break;
+      case TransactionStatus.CONFIRMED:
+      case TransactionStatus.FINISHED:
+        deliveryEstimateValue = DateHelper.formatToBRLong(
+          DateHelper.stringToDate(transactionDetails.paidAt),
+        );
+        break;
+      case TransactionStatus.WAITING_SIGNATURE:
+      case TransactionStatus.CANCELED:
+      case TransactionStatus.PENDENCY:
+        deliveryEstimateValue = null;
+        break;
+      default:
+        deliveryEstimateValue = completeArrivalEstimateMessage;
+    }
+
+    return deliveryEstimateValue != null
+        ? DetailItemWidget(
+            label: i18n.trans(
+                'transaction_details_screen', ['delivery_estimate', 'title']),
+            value: deliveryEstimateValue,
+          )
+        : Container();
+  }
+
+  List _buildWaitingPaymentContent() {
+    return [
+      DetailSectionWidget(
+        showDivisor: false,
+        title: i18n.trans('transaction_details_screen', ['ted']),
+        detailItems: [
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('bank'),
+            value:
+                '${transactionDetails.paymentAccountInfo.bankName} (${transactionDetails.paymentAccountInfo.bankCode})',
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('agency'),
+            value: transactionDetails.paymentAccountInfo.branchCode,
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('checking_account'),
+            value: transactionDetails.paymentAccountInfo.accountNumber,
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('favored'),
+            value: transactionDetails.paymentAccountInfo.accountHolderName,
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('cnpj'),
+            value: transactionDetails
+                .paymentAccountInfo.accountHolderDocumentNumber,
+          ),
+          DetailItemWidget(
+            label: i18n.trans('transaction_details_screen', ['account_type']),
+            value: i18n.trans('checking_account'),
+          ),
+          DetailItemWidget(
+            label: i18n.trans('transaction_details_screen', ['ted_reason']),
+            value: i18n.trans(
+                'transaction_details_screen', ['checking_account_credit']),
+          ),
+        ],
+      ),
+      DetailSectionWidget(
+        title: i18n.trans('transaction_details_screen', ['ted_value']),
+        detailItems: [
+          DetailItemWidget(
+            showLabel: false,
+            isValueCopyable: true,
+            copyableValue: nationalCurrencyTotalAmount,
+            label: i18n.trans('value'),
+            value:
+                '${transactionDetails.quote.nationalCurrency} $nationalCurrencyTotalAmount',
+          ),
+        ],
+      ),
+      DetailSectionWidget(
+        title: i18n.trans('transaction_details_screen', ['arrival_estimate']),
+        detailItems: [
+          DetailItemWidget(
+            value: completeArrivalEstimateMessage,
+          ),
+        ],
+      ),
+    ];
+  }
 }
