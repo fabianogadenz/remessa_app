@@ -1,4 +1,3 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -26,7 +25,6 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final i18n = GetIt.I<I18n>();
   final _transactionsStore = TransactionsStore()..getTransactions();
-  final amplitude = GetIt.I<AmplitudeFlutter>();
 
   bool isEmpty = false;
   ReactionDisposer reactionDisposer;

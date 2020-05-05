@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
 
-class TextInput extends StatelessWidget {
-  const TextInput({
+class TextInputWidget extends StatelessWidget {
+  const TextInputWidget({
     Key key,
     this.labelText,
     this.hintText,
@@ -10,8 +10,8 @@ class TextInput extends StatelessWidget {
     this.keyboardType,
     this.validator,
     this.controller,
-    this.textFormFieldKey,
-  }) : super(key: key);
+    this.decoration,
+  });
 
   final String labelText;
   final String hintText;
@@ -19,20 +19,21 @@ class TextInput extends StatelessWidget {
   final TextInputType keyboardType;
   final String Function(String) validator;
   final TextEditingController controller;
-  final Key textFormFieldKey;
+  final InputDecoration decoration;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextFormField(
-        key: textFormFieldKey,
+        key: key,
         controller: controller,
         obscureText: obscureText,
-        decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-        ),
+        decoration: decoration ??
+            InputDecoration(
+              labelText: labelText,
+              hintText: hintText,
+            ),
         style: TextStyle(
           color: StyleColors.BRAND_PRIMARY_80,
         ),
