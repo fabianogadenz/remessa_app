@@ -10,6 +10,7 @@ class TransactionDetailsResponseModel {
   String arrivalEstimate;
   String ffc;
   String paymentDeadline;
+  String paidAt;
   int statusId;
   String statusName;
   TransactionStatus status;
@@ -43,6 +44,7 @@ class TransactionDetailsResponseModel {
     arrivalEstimate = json['arrivalEstimate'];
     ffc = json['ffc'];
     paymentDeadline = json['paymentDeadline'];
+    paidAt = json['paidAt'];
 
     status = TransactionStatusHelper.parse(statusId);
     quote = json['quote'] != null ? new Quote.fromJson(json['quote']) : null;
@@ -67,6 +69,7 @@ class TransactionDetailsResponseModel {
     data['arrivalEstimate'] = this.arrivalEstimate;
     data['ffc'] = this.ffc;
     data['paymentDeadline'] = this.paymentDeadline;
+    data['paidAt'] = this.paidAt;
     if (this.quote != null) {
       data['quote'] = this.quote.toJson();
     }
