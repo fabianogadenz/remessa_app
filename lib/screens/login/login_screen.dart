@@ -1,4 +1,3 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -29,8 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final i18n = GetIt.I<I18n>();
 
   final navigator = GetIt.I<NavigatorHelper>();
-
-  final amplitude = GetIt.I<AmplitudeFlutter>();
 
   final showStepper = GetIt.I<SystemService>().showStepper;
 

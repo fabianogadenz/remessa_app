@@ -1,17 +1,17 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/divider_with_text_widget.dart';
-import 'package:remessa_app/widgets/text_input/text_input.dart';
+import 'package:remessa_app/widgets/text_input/text_input_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LoginFormWidget extends StatelessWidget {
+class LoginFormWidget extends StatefulWidget {
   LoginFormWidget({
     Key key,
     @required this.login,
@@ -21,21 +21,31 @@ class LoginFormWidget extends StatelessWidget {
 
   final Future<dynamic> Function(String, String) login;
   final String cpf;
+
+  @override
+  _LoginFormWidgetState createState() => _LoginFormWidgetState();
+}
+
+class _LoginFormWidgetState extends State<LoginFormWidget> {
   final i18n = GetIt.I<I18n>();
+
   final _formKey = GlobalKey<FormState>();
+
   final cpfCtrl = MaskedTextController(
     mask: GetIt.I<I18n>().trans(
       'document',
       ['cpf', 'mask'],
     ),
   );
+
   final passwordCtrl = TextEditingController();
-  final amplitude = GetIt.I<AmplitudeFlutter>();
+
+  bool cpfHasError = false;
 
   @override
   Widget build(BuildContext context) {
-    if (cpf != null) {
-      cpfCtrl.text = cpf;
+    if (widget.cpf != null) {
+      cpfCtrl.text = widget.cpf;
     }
 
     return Expanded(
@@ -44,22 +54,48 @@ class LoginFormWidget extends StatelessWidget {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              TextInput(
-                textFormFieldKey: Key(LoginScreenKeys.cpfInput),
+              TextInputWidget(
+                key: Key(LoginScreenKeys.cpfInput),
                 controller: cpfCtrl,
-                labelText: i18n.trans('document', ['cpf', 'label']),
-                hintText: i18n.trans('document', ['cpf', 'mask']),
+                decoration: InputDecoration(
+                  suffixIconConstraints: BoxConstraints(
+                    maxHeight: 0,
+                    minWidth: 25,
+                  ),
+                  suffixIcon: cpfHasError
+                      ? Icon(
+                          RemessaIcons.warning,
+                          size: 20,
+                          color: StyleColors.SUPPORT_DANGER_40,
+                        )
+                      : null,
+                  labelText: i18n.trans('document', ['cpf', 'label']),
+                  hintText: i18n.trans('document', ['cpf', 'mask']),
+                ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value.isEmpty) {
+                    setState(() {
+                      cpfHasError = true;
+                    });
+
                     return i18n.trans('requiredField');
                   } else if (!CPFValidator.isValid(value)) {
+                    setState(() {
+                      cpfHasError = true;
+                    });
+
                     return i18n.trans('login_screen', ['invalidCPF']);
                   }
+
+                  setState(() {
+                    cpfHasError = false;
+                  });
+
                   return null;
                 },
               ),
-              TextInput(
+              TextInputWidget(
                 controller: passwordCtrl,
                 obscureText: true,
                 labelText: i18n.trans('password'),
@@ -131,7 +167,7 @@ class LoginFormWidget extends StatelessWidget {
 
       TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_VALID);
 
-      await login(cpf, password);
+      await widget.login(cpf, password);
     } else {
       TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_INVALID);
 
