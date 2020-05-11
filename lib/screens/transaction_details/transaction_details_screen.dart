@@ -303,6 +303,13 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             label: i18n.trans(
                 'transaction_details_screen', ['delivery_estimate', 'title']),
             value: deliveryEstimateValue,
+            onTapInfo: () => ModalHelper.showInfoBottomSheet(
+              context,
+              i18n.trans(
+                  'transaction_details_screen', ['delivery_estimate', 'title']),
+              i18n.trans('transaction_details_screen',
+                  ['delivery_estimate', 'description']),
+            ),
           )
         : Container();
   }
