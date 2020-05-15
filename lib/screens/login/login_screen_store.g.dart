@@ -43,23 +43,6 @@ mixin _$LoginScreenStore on _LoginScreenStoreBase, Store {
     }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
   }
 
-  final _$cpfAtom = Atom(name: '_LoginScreenStoreBase.cpf');
-
-  @override
-  String get cpf {
-    _$cpfAtom.context.enforceReadPolicy(_$cpfAtom);
-    _$cpfAtom.reportObserved();
-    return super.cpf;
-  }
-
-  @override
-  set cpf(String value) {
-    _$cpfAtom.context.conditionallyRunInAction(() {
-      super.cpf = value;
-      _$cpfAtom.reportChanged();
-    }, _$cpfAtom, name: '${_$cpfAtom.name}_set');
-  }
-
   final _$loginAsyncAction = AsyncAction('login');
 
   @override
@@ -91,19 +74,9 @@ mixin _$LoginScreenStore on _LoginScreenStoreBase, Store {
   }
 
   @override
-  dynamic setcpf(String value) {
-    final _$actionInfo = _$_LoginScreenStoreBaseActionController.startAction();
-    try {
-      return super.setcpf(value);
-    } finally {
-      _$_LoginScreenStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     final string =
-        'isLoading: ${isLoading.toString()},errorMessage: ${errorMessage.toString()},cpf: ${cpf.toString()}';
+        'isLoading: ${isLoading.toString()},errorMessage: ${errorMessage.toString()}';
     return '{$string}';
   }
 }

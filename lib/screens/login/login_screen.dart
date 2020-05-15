@@ -89,7 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               LoginFormWidget(
                 login: _loginScreenStore.login,
-                cpf: _loginScreenStore.cpf,
               ),
               _buildPrivacyTermsBanner(context),
             ],
