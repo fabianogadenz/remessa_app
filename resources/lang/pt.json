@@ -108,7 +108,8 @@
         "how_to_pay": "Entenda como fazer o pagamento",
         "delivery_estimate": {
             "title": "Estimativa de chegada",
-            "value": "$arrivalEstimate após a identificação do pagamento"
+            "value": "$arrivalEstimate após a identificação do pagamento",
+            "description": "O prazo pode ser impactado por feriados locais e/ou processos internos do banco de destino."
         },
         "foreign_currency_amount": "Valor enviado em moeda estrangeira",
         "national_currency_amount": "Valor total em reais",
