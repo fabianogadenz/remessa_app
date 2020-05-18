@@ -15,12 +15,10 @@ class LoginFormWidget extends StatefulWidget {
   LoginFormWidget({
     Key key,
     @required this.login,
-    @required this.cpf,
   })  : assert(login != null),
         super(key: key);
 
   final Future<dynamic> Function(String, String) login;
-  final String cpf;
 
   @override
   _LoginFormWidgetState createState() => _LoginFormWidgetState();
@@ -44,10 +42,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.cpf != null) {
-      cpfCtrl.text = widget.cpf;
-    }
-
     return Expanded(
       child: SingleChildScrollView(
         child: Form(
@@ -170,9 +164,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       await widget.login(cpf, password);
     } else {
       TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_INVALID);
-
-      passwordCtrl.clear();
     }
+
+    passwordCtrl.clear();
 
     FocusScope.of(context).requestFocus(FocusNode());
   }

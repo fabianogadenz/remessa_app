@@ -22,18 +22,10 @@ abstract class _LoginScreenStoreBase with Store {
   @action
   setErrorMessage(String value) => errorMessage = value;
 
-  @observable
-  String cpf;
-
-  @action
-  setcpf(String value) => cpf = value;
-
   @action
   login(String cpf, String password) async {
     setIsLoading(true);
     setErrorMessage('');
-
-    setcpf(cpf);
 
     try {
       await _authStore.login(cpf, password);
