@@ -57,22 +57,22 @@
     },
     "status": {
         "waiting_payment": {
-            "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em aproximadamente 2h úteis."
+            "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
         },
         "payment_indetified": {
-            "description": "Recebemos seu pagamento. Agora é só aguardar a confirmação da remessa."
+            "description": "Recebemos o seu pagamento. Agora é só aguardar a confirmação da remessa."
         },
         "pendency": {
-            "description": "Precisamos confirmar algumas informações. Assim que possível, entre em contato pelo chat."
+            "description": "Precisamos confirmar algumas informações. Assim que possível, entre em contato conosco."
         },
         "waiting_signature": {
             "description": "Seu contrato de câmbio está disponível. Acesse o dashboard pelo site e assine eletronicamente."
         },
         "confirmed": {
-            "description": "Remessa confirmada. Em breve, faremos o envio para a conta de destino."
+            "description": "Agora faremos o envio ao beneficiário. Confira a estimativa de chegada."
         },
         "finished": {
-            "description": "Tudo certo! Sua remessa já está a caminho da conta de destino."
+            "description": "O dinheiro foi enviado para a conta do beneficiário."
         },
         "canceled": {
             "description": "Tivemos que cancelar sua remessa. Uma justificativa foi enviada para seu e-mail de cadastro."
