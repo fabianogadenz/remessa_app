@@ -24,7 +24,7 @@ const Map<String, dynamic> prod_api = {
 
 const Map<String, String> zendesk = {
   'accountKey': '47q7iV5YLFz3pQ0WIjoy2p5S71UzBaaA',
-  'department': '1818188829',
+  'department': '1818663681',
   'appName': 'Remessa Online (APP)',
 };
 

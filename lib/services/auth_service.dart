@@ -26,7 +26,11 @@ class AuthService {
     return AuthService(_box);
   }
 
-  String get token => _box.get('token');
+  String get token {
+    final token = _box.get('token');
+    return token;
+  }
+
   Customer get customer => _box.get('customer');
 
   void saveUser(String token, Customer customer) {

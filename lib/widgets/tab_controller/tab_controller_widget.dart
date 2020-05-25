@@ -38,7 +38,8 @@ class TabControllerWidget extends StatefulWidget {
 
 class _TabControllerWidgetState extends State<TabControllerWidget> {
   final i18n = GetIt.I<I18n>();
-  final _tabControllerStore = GetIt.I<TabControllerStore>();
+  final _tabControllerStore = GetIt.I<TabControllerStore>()
+    ..setErrorMessage(null);
   final _appStore = GetIt.I<AppStore>();
 
   List<TabContent> _tabs = [];

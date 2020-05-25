@@ -14,12 +14,13 @@ import 'package:remessa_app/models/responses/transaction_details_response_model.
 import 'package:remessa_app/screens/transaction_details/favored_data_screen.dart';
 import 'package:remessa_app/screens/transaction_details/how_to_pay_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_link_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/details_section_widget.dart';
+import 'package:remessa_app/screens/transaction_details/widgets/receipt_download_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_detail_action_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_footer_widget.dart';
-
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_header_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_status_section.dart';
 import 'package:remessa_app/stores/transaction_details_store.dart';
@@ -45,7 +46,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   final i18n = GetIt.I<I18n>();
   final navigator = GetIt.I<NavigatorHelper>();
   final _transactionsStore = TransactionDetailsStore();
+  final _transactionsDetailsScreenStore = TransactionDetailsScreenStore();
   final chatHelper = ChatHelper();
+
+  bool showReceiptDownload;
+  bool showFirstDivisor = false;
 
   TransactionDetailsResponseModel get transactionDetails =>
       _transactionsStore.transactionDetails;
@@ -63,100 +68,124 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   @override
   void initState() {
     _transactionsStore.getTransactionDetailsStore(widget.transactionId);
+    when(
+      (_) => _transactionsStore.transactionDetails != null,
+      () => _transactionsDetailsScreenStore.setIsLoading(false),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final screen = GetIt.I<Screens>().widget(
-      isStatic: true,
-      showAppBar: true,
-      safeAreaConfig: SafeAreaConfig(bottom: false),
-      appBarWidget: AppBar(
-        centerTitle: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        iconTheme: IconThemeData(
-          color: StyleColors.SUPPORT_NEUTRAL_10,
-        ),
-        elevation: 0,
-        title: Text(
-          i18n.populate(
-            i18n.trans('transaction_details_screen', ['title']),
-            {
-              'transactionId': widget.transactionId.toString(),
-            },
-          ),
-          style: TextStyle(
+    return Observer(
+      builder: (_) => GetIt.I<Screens>().widget(
+        isStatic: true,
+        showAppBar: true,
+        safeAreaConfig: SafeAreaConfig(bottom: false),
+        appBarWidget: AppBar(
+          centerTitle: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          iconTheme: IconThemeData(
             color: StyleColors.SUPPORT_NEUTRAL_10,
           ),
+          elevation: 0,
+          title: Text(
+            i18n.populate(
+              i18n.trans('transaction_details_screen', ['title']),
+              {
+                'transactionId': widget.transactionId.toString(),
+              },
+            ),
+            style: TextStyle(
+              color: StyleColors.SUPPORT_NEUTRAL_10,
+            ),
+          ),
         ),
-      ),
-      child: Observer(
-        builder: (_) {
-          if (transactionDetails == null) return Container();
+        child: Builder(
+          builder: (_) {
+            if (transactionDetails == null) return Container();
 
-          completeArrivalEstimateMessage = i18n.populate(
-            i18n.trans(
-                'transaction_details_screen', ['delivery_estimate', 'value']),
-            {
-              'arrivalEstimate': transactionDetails.arrivalEstimate,
-            },
-          );
+            switch (transactionDetails.status) {
+              case TransactionStatus.FINISHED:
+                showReceiptDownload = true;
+                showFirstDivisor = true;
+                break;
+              case TransactionStatus.WAITING_SIGNATURE:
+                showReceiptDownload = transactionDetails.analysisLevel == 2;
+                break;
+              default:
+                showReceiptDownload = false;
+            }
 
-          final sections = [];
-
-          if (transactionDetails.status == TransactionStatus.WAITING_PAYMENT) {
-            sections.addAll(
-              _buildWaitingPaymentContent(),
+            completeArrivalEstimateMessage = i18n.populate(
+              i18n.trans(
+                  'transaction_details_screen', ['delivery_estimate', 'value']),
+              {
+                'arrivalEstimate': transactionDetails.arrivalEstimate,
+              },
             );
-          } else {
-            sections.addAll(
-              _buildDefaultStatusContent(),
-            );
-          }
 
-          return Stack(
-            children: <Widget>[
-              TransactionDetailsHeaderWidget(
-                transactionDetails: transactionDetails,
-              ),
-              SingleChildScrollView(
-                child: Container(
-                  margin: EdgeInsets.only(top: 210),
-                  decoration: BoxDecoration(
-                    color: StyleColors.SUPPORT_NEUTRAL_10,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
+            final sections = [];
+
+            if (transactionDetails.status ==
+                TransactionStatus.WAITING_PAYMENT) {
+              sections.addAll(
+                _buildWaitingPaymentContent(),
+              );
+            } else {
+              sections.addAll(
+                _buildDefaultStatusContent(),
+              );
+            }
+
+            return Stack(
+              children: <Widget>[
+                TransactionDetailsHeaderWidget(
+                  transactionDetails: transactionDetails,
+                ),
+                SingleChildScrollView(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 210),
+                    decoration: BoxDecoration(
+                      color: StyleColors.SUPPORT_NEUTRAL_10,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        TransactionDetailStatusSectionWidget(
+                          transactionDetails: transactionDetails,
+                        ),
+                        showReceiptDownload
+                            ? ReceiptDownloadWidget(
+                                transactionId: transactionDetails.id,
+                                label: transactionDetails.counterpart.name,
+                                transactionDetailsScreenStore:
+                                    _transactionsDetailsScreenStore,
+                              )
+                            : Container(),
+                        _buildDetailAction(),
+                        ...sections,
+                        TransactionDetailsFooterWidget(
+                          onTap: () => _openChatAndLogEvent(
+                            eventName:
+                                TrackEvents.TRANSACTION_HELP_BANNER_CLICK,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      TransactionDetailStatusSectionWidget(
-                        transactionDetails: transactionDetails,
-                      ),
-                      _buildDetailAction(),
-                      ...sections,
-                      TransactionDetailsFooterWidget(
-                        onTap: () => _openChatAndLogEvent(
-                          eventName: TrackEvents.TRANSACTION_HELP_BANNER_CLICK,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-            ],
-          );
-        },
-      ),
-    )..loaderStreamController.add(true);
-
-    when(
-      (_) => _transactionsStore.transactionDetails != null,
-      () => screen.loaderStreamController.add(false),
+              ],
+            );
+          },
+        ),
+      )
+        ..loaderStreamController.add(_transactionsDetailsScreenStore.isLoading)
+        ..errorStreamController
+            .add(_transactionsDetailsScreenStore.errorMessage),
     );
-
-    return screen;
   }
 
   Widget _buildDetailAction() {
@@ -184,6 +213,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['action', 'canceled']),
           onPressed: _openChatAndLogEvent,
+          showTopBorder: showReceiptDownload,
         );
       default:
         return Container();
@@ -208,7 +238,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
 
   List _buildDefaultStatusContent() => [
         DetailSectionWidget(
-          showDivisor: false,
+          showDivisor: showFirstDivisor,
           title: i18n.trans('summary'),
           detailItems: [
             handleDeliveryEstimate(),

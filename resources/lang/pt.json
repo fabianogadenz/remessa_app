@@ -131,7 +131,8 @@
         "action": {
             "pendency": "Falar no chat",
             "canceled": "Entrar em contato pelo chat"
-        }
+        },
+        "receipt": "Comprovante de envio"
     },
     "how_to_pay_screen": {
         "ted": {
