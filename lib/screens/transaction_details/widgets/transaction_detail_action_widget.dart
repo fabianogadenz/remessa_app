@@ -6,17 +6,24 @@ class TransactionDetailActionWidget extends StatelessWidget {
     this.label, {
     Key key,
     this.onPressed,
+    this.showTopBorder = false,
   })  : assert(label != null),
         super(key: key);
 
   final String label;
   final Function() onPressed;
+  final bool showTopBorder;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
+          top: showTopBorder
+              ? BorderSide(
+                  color: StyleColors.SUPPORT_NEUTRAL_30,
+                )
+              : BorderSide.none,
           bottom: BorderSide(
             color: StyleColors.SUPPORT_NEUTRAL_30,
           ),

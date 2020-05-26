@@ -155,6 +155,8 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   }
 
   _login(BuildContext context) async {
+    FocusScope.of(context).requestFocus(FocusNode());
+
     if (_formKey.currentState.validate()) {
       final cpf = cpfCtrl.value.text;
       final password = passwordCtrl.value.text;
@@ -167,8 +169,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     }
 
     passwordCtrl.clear();
-
-    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   _forgotPassword() {

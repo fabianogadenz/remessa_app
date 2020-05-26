@@ -16,6 +16,7 @@ import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/config_model.dart';
+import 'package:remessa_app/services/auth_service.dart';
 import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/stores/auth_store.dart';
@@ -110,8 +111,8 @@ class SetUp {
 
     await zendesk.init(
       constants.zendesk['accountKey'],
-      department: constants.zendesk['department'],
       appName: constants.zendesk['appName'],
+      department: constants.zendesk['department'],
     );
 
     GetIt.I.registerLazySingleton<Zendesk>(
@@ -145,17 +146,6 @@ class SetUp {
     dio.options.connectTimeout = configs.timeout;
     dio.options.receiveTimeout = configs.timeout;
 
-    // Add interceptors
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioError dioError) =>
-            ErrorHelper.dioErrorInterceptor(dioError),
-        onResponse: (configs.environment != Environment.PROD)
-            ? (response) => print(response)
-            : null,
-      ),
-    );
-
     GetIt.I.registerLazySingleton<Dio>(
       () => dio,
     );
@@ -184,6 +174,23 @@ class SetUp {
         errorOverlay: ErrorOverlay(),
       ),
     );
+  }
+
+  _registerDioInterceptors() {
+    GetIt.I<Dio>().interceptors.add(
+          InterceptorsWrapper(
+            onRequest: (requestOptions) => GetIt.I<AuthStore>().isLoggedIn
+                ? requestOptions.headers.addAll(
+                    {'Authorization': 'Bearer ${GetIt.I<AuthService>().token}'},
+                  )
+                : null,
+            onError: (DioError dioError) =>
+                ErrorHelper.dioErrorInterceptor(dioError),
+            onResponse: (configs.environment != Environment.PROD)
+                ? (response) => print(response)
+                : null,
+          ),
+        );
   }
 
   init() async {
@@ -215,5 +222,7 @@ class SetUp {
     await _registerOneSignal();
 
     _registerScreens();
+
+    _registerDioInterceptors();
   }
 }
