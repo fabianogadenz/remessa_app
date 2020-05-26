@@ -71,8 +71,7 @@ class SetUp {
 
       if (additionalData != null) {
         if (additionalData['transactionId'] != null)
-          GetIt.I<AppStore>()
-              .setTransactionId(int.parse(additionalData['transactionId']));
+          GetIt.I<AppStore>().setTransactionId(additionalData['transactionId']);
       }
     });
   }
