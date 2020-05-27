@@ -120,7 +120,7 @@ class SetUp {
   }
 
   _registerServices() async {
-    await Services.register();
+    await Services.register(constants);
   }
 
   _registerStores() {
