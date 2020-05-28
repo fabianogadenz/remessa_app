@@ -1,14 +1,13 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_share/flutter_share.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/details_section_widget.dart';
-import 'package:remessa_app/services/auth_service.dart';
+import 'package:remessa_app/services/download_service.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:share_extend/share_extend.dart';
 
 class ReceiptDownloadWidget extends StatelessWidget {
   ReceiptDownloadWidget({
@@ -30,19 +29,16 @@ class ReceiptDownloadWidget extends StatelessWidget {
     transactionDetailsScreenStore.setErrorMessage(null);
     transactionDetailsScreenStore.setIsLoading(true);
 
-    final url =
-        'https://dev-app.pesoreal.xyz/v1/app/transaction/$transactionId/receipt';
-
     try {
-      final fileInfo =
-          await DefaultCacheManager().downloadFile(url, authHeaders: {
-        'Authorization': 'Bearer ${GetIt.I<AuthService>().token}',
-      });
+      final fileInfo = await GetIt.I<DownloadService>()
+          .downloadFile('/transaction/$transactionId/receipt');
 
-      await FlutterShare.shareFile(
-        title: 'Comprovante de pagamento',
-        filePath: fileInfo.file.path,
-      );
+      await ShareExtend.share(fileInfo.file.path, 'file');
+
+      // await FlutterShare.shareFile(
+      //   title: 'Comprovante de pagamento',
+      //   filePath: fileInfo.file.path,
+      // );
     } catch (e) {
       transactionDetailsScreenStore.setErrorMessage(e?.message);
     } finally {
