@@ -1,8 +1,11 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/primary_button_widget.dart';
 
 class InitialStepperFooterWidget extends StatelessWidget {
-  const InitialStepperFooterWidget({
+  InitialStepperFooterWidget({
     Key key,
     @required this.length,
     @required this.index,
@@ -10,6 +13,7 @@ class InitialStepperFooterWidget extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
+  final i18n = GetIt.I<I18n>();
   final int length;
   final int index;
   final bool highlightedButton;
@@ -50,25 +54,12 @@ class InitialStepperFooterWidget extends StatelessWidget {
             ),
             child: Container(
               child: highlightedButton
-                  ? RaisedButton(
-                      elevation: 0,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 60,
-                      ),
-                      color: StyleColors.SUPPORT_NEUTRAL_10,
-                      onPressed: () => onTap(),
-                      child: Text(
-                        'Começar',
-                        style: Theme.of(context).textTheme.button.copyWith(
-                              color: StyleColors.BRAND_PRIMARY_40,
-                            ),
-                      ),
-                    )
+                  ? PrimaryButtonWidget(i18n.trans('start'), onPressed: onTap)
                   : GestureDetector(
                       child: Row(
                         children: <Widget>[
                           Text(
-                            'Próximo',
+                            i18n.trans('next'),
                             style: TextStyle(
                               color: StyleColors.SUPPORT_NEUTRAL_10,
                               fontWeight: FontWeight.w600,

@@ -10,26 +10,14 @@ class TransactionDetailsResponseModel {
   String arrivalEstimate;
   String ffc;
   String paymentDeadline;
+  String paidAt;
   int statusId;
   String statusName;
   TransactionStatus status;
   Quote quote;
   Counterpart counterpart;
   PaymentAccountInfo paymentAccountInfo;
-
-  TransactionDetailsResponseModel({
-    this.id,
-    this.createdAt,
-    this.updatedAt,
-    this.flow,
-    this.statusId,
-    this.statusName,
-    this.transactionName,
-    this.purpose,
-    this.quote,
-    this.counterpart,
-    this.paymentAccountInfo,
-  });
+  int analysisLevel;
 
   TransactionDetailsResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,6 +31,8 @@ class TransactionDetailsResponseModel {
     arrivalEstimate = json['arrivalEstimate'];
     ffc = json['ffc'];
     paymentDeadline = json['paymentDeadline'];
+    paidAt = json['paidAt'];
+    analysisLevel = json['analysisLevel'];
 
     status = TransactionStatusHelper.parse(statusId);
     quote = json['quote'] != null ? new Quote.fromJson(json['quote']) : null;
@@ -67,6 +57,8 @@ class TransactionDetailsResponseModel {
     data['arrivalEstimate'] = this.arrivalEstimate;
     data['ffc'] = this.ffc;
     data['paymentDeadline'] = this.paymentDeadline;
+    data['paidAt'] = this.paidAt;
+    data['analysisLevel'] = this.analysisLevel;
     if (this.quote != null) {
       data['quote'] = this.quote.toJson();
     }

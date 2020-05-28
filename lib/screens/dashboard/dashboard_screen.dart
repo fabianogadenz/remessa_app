@@ -1,19 +1,21 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/historic_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/section_title_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/transactions_carousel_widget.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/primary_button_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -23,11 +25,10 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final i18n = GetIt.I<I18n>();
   final _transactionsStore = TransactionsStore()..getTransactions();
-  final amplitude = GetIt.I<AmplitudeFlutter>();
-  final _appStore = GetIt.I<AppStore>();
 
   bool isEmpty = false;
   ReactionDisposer reactionDisposer;
+  PrimaryButtonWidget createTransactionButton;
 
   @override
   initState() {
@@ -42,6 +43,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
             })
           : null,
     );
+
+    createTransactionButton = PrimaryButtonWidget(
+      i18n.trans('dashboard_screen', ['create_transaction']),
+      onPressed: () {
+        TrackEvents.log(TrackEvents.DASHBOARD_NEW_TRANSACTION_CLICK);
+        launch('https://www.remessaonline.com.br/app/perfil/painel');
+      },
+    );
+
     super.initState();
   }
 
@@ -57,17 +67,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Container(
           margin: EdgeInsets.only(right: 10),
           child: IconButton(
-            icon: Icon(Icons.exit_to_app),
-            iconSize: 30,
+            icon: Icon(RemessaIcons.exit),
+            iconSize: 22,
             color: StyleColors.SUPPORT_NEUTRAL_10,
             onPressed: _logout,
           ),
         ),
       ],
-      title: Image.asset(
-        'resources/images/splash_logo.png',
-        height: 25,
-        width: 25,
+      title: GestureDetector(
+        onTap: () => TrackEvents.log(TrackEvents.DASHBOARD_HOME_LOGO_CLICK),
+        child: Icon(
+          RemessaIcons.logo,
+          size: 24,
+          color: StyleColors.SUPPORT_NEUTRAL_10,
+        ),
       ),
       titleSpacing: 22,
       centerTitle: false,
@@ -109,6 +122,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             'dashboard_screen',
                             ['open_empty_state'],
                           ),
+                          action: createTransactionButton,
                         ),
             )
           ],
@@ -167,13 +181,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            createTransactionButton,
           ],
         ),
       );
 
   _logout() {
     TrackEvents.log(TrackEvents.DASHBOARD_LOGOUT_CLICK);
-    _appStore.logout();
+    GetIt.I<AuthStore>().logout();
   }
 
   @override
@@ -210,8 +228,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ]..addAll(_buildCloseTransactionsList(theme, context));
     }
 
-    return CustomScrollView(
-      slivers: _slivers,
+    return RefreshIndicator(
+      color: StyleColors.BRAND_PRIMARY_40,
+      onRefresh: () {
+        _transactionsStore.clearTransactions();
+        _transactionsStore.getTransactions();
+
+        return Future.delayed(Duration(seconds: 1));
+      },
+      child: CustomScrollView(
+        slivers: _slivers,
+      ),
     );
   }
 }

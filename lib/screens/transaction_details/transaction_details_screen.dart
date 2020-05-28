@@ -5,6 +5,8 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/date_helper.dart';
+import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
@@ -12,17 +14,19 @@ import 'package:remessa_app/models/responses/transaction_details_response_model.
 import 'package:remessa_app/screens/transaction_details/favored_data_screen.dart';
 import 'package:remessa_app/screens/transaction_details/how_to_pay_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_link_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/details_section_widget.dart';
+import 'package:remessa_app/screens/transaction_details/widgets/receipt_download_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_detail_action_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_footer_widget.dart';
-
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_header_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_status_section.dart';
 import 'package:remessa_app/stores/transaction_details_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/widgets.dart';
+import 'package:screens/safe_area_config.dart';
+import 'package:screens/screens.dart';
 
 class TransactionDetailsScreen extends StatefulWidget {
   final int transactionId;
@@ -42,7 +46,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   final i18n = GetIt.I<I18n>();
   final navigator = GetIt.I<NavigatorHelper>();
   final _transactionsStore = TransactionDetailsStore();
+  final _transactionsDetailsScreenStore = TransactionDetailsScreenStore();
   final chatHelper = ChatHelper();
+
+  bool showReceiptDownload;
+  bool showFirstDivisor = false;
 
   TransactionDetailsResponseModel get transactionDetails =>
       _transactionsStore.transactionDetails;
@@ -55,95 +63,129 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
         transactionDetails.quote.foreignCurrencyAmount.toString(),
       );
 
+  String completeArrivalEstimateMessage;
+
   @override
   void initState() {
     _transactionsStore.getTransactionDetailsStore(widget.transactionId);
+    when(
+      (_) => _transactionsStore.transactionDetails != null,
+      () => _transactionsDetailsScreenStore.setIsLoading(false),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final screen = ScreenWidget(
-      isStatic: true,
-      showAppBar: true,
-      safeAreaConfig: SafeAreaConfig(bottom: false),
-      appBarWidget: AppBar(
-        centerTitle: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        iconTheme: IconThemeData(
-          color: StyleColors.SUPPORT_NEUTRAL_10,
-        ),
-        elevation: 0,
-        title: Text(
-          i18n.populate(
-            i18n.trans('transaction_details_screen', ['title']),
-            {
-              'transactionId': widget.transactionId.toString(),
-            },
-          ),
-          style: TextStyle(
+    return Observer(
+      builder: (_) => GetIt.I<Screens>().widget(
+        isStatic: true,
+        showAppBar: true,
+        safeAreaConfig: SafeAreaConfig(bottom: false),
+        appBarWidget: AppBar(
+          centerTitle: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          iconTheme: IconThemeData(
             color: StyleColors.SUPPORT_NEUTRAL_10,
           ),
+          elevation: 0,
+          title: Text(
+            i18n.populate(
+              i18n.trans('transaction_details_screen', ['title']),
+              {
+                'transactionId': widget.transactionId.toString(),
+              },
+            ),
+            style: TextStyle(
+              color: StyleColors.SUPPORT_NEUTRAL_10,
+            ),
+          ),
         ),
-      ),
-      child: Observer(
-        builder: (_) {
-          if (transactionDetails == null) return Container();
+        child: Builder(
+          builder: (_) {
+            if (transactionDetails == null) return Container();
 
-          final sections = [];
+            switch (transactionDetails.status) {
+              case TransactionStatus.FINISHED:
+                showReceiptDownload = true;
+                showFirstDivisor = true;
+                break;
+              case TransactionStatus.WAITING_SIGNATURE:
+                showReceiptDownload = transactionDetails.analysisLevel == 2;
+                break;
+              default:
+                showReceiptDownload = false;
+            }
 
-          if (transactionDetails.status == TransactionStatus.WAITING_PAYMENT) {
-            sections.addAll(
-              _buildWaitingPaymentContent(),
+            completeArrivalEstimateMessage = i18n.populate(
+              i18n.trans(
+                  'transaction_details_screen', ['delivery_estimate', 'value']),
+              {
+                'arrivalEstimate': transactionDetails.arrivalEstimate,
+              },
             );
-          } else {
-            sections.addAll(
-              _buildDefaultStatusContent(),
-            );
-          }
 
-          return Stack(
-            children: <Widget>[
-              TransactionDetailsHeaderWidget(
-                transactionDetails: transactionDetails,
-              ),
-              SingleChildScrollView(
-                child: Container(
-                  margin: EdgeInsets.only(top: 210),
-                  decoration: BoxDecoration(
-                    color: StyleColors.SUPPORT_NEUTRAL_10,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
+            final sections = [];
+
+            if (transactionDetails.status ==
+                TransactionStatus.WAITING_PAYMENT) {
+              sections.addAll(
+                _buildWaitingPaymentContent(),
+              );
+            } else {
+              sections.addAll(
+                _buildDefaultStatusContent(),
+              );
+            }
+
+            return Stack(
+              children: <Widget>[
+                TransactionDetailsHeaderWidget(
+                  transactionDetails: transactionDetails,
+                ),
+                SingleChildScrollView(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 210),
+                    decoration: BoxDecoration(
+                      color: StyleColors.SUPPORT_NEUTRAL_10,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        TransactionDetailStatusSectionWidget(
+                          transactionDetails: transactionDetails,
+                        ),
+                        showReceiptDownload
+                            ? ReceiptDownloadWidget(
+                                transactionId: transactionDetails.id,
+                                label: transactionDetails.counterpart.name,
+                                transactionDetailsScreenStore:
+                                    _transactionsDetailsScreenStore,
+                              )
+                            : Container(),
+                        _buildDetailAction(),
+                        ...sections,
+                        TransactionDetailsFooterWidget(
+                          onTap: () => _openChatAndLogEvent(
+                            eventName:
+                                TrackEvents.TRANSACTION_HELP_BANNER_CLICK,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  child: Column(
-                    children: <Widget>[
-                      TransactionDetailStatusSectionWidget(
-                        transactionDetails: transactionDetails,
-                      ),
-                      _buildDetailAction(),
-                      ...sections,
-                      TransactionDetailsFooterWidget(
-                        onTap: () => _openChatAndLogEvent(
-                          eventName: TrackEvents.TRANSACTION_HELP_BANNER_CLICK,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-            ],
-          );
-        },
-      ),
-    )..loaderStreamController.add(true);
-
-    when(
-      (_) => _transactionsStore.transactionDetails != null,
-      () => screen.loaderStreamController.add(false),
+              ],
+            );
+          },
+        ),
+      )
+        ..loaderStreamController.add(_transactionsDetailsScreenStore.isLoading)
+        ..errorStreamController
+            .add(_transactionsDetailsScreenStore.errorMessage),
     );
-
-    return screen;
   }
 
   Widget _buildDetailAction() {
@@ -167,9 +209,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           onPressed: _openChatAndLogEvent,
         );
       case TransactionStatus.CANCELED:
+      case TransactionStatus.WAITING_SIGNATURE:
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['action', 'canceled']),
           onPressed: _openChatAndLogEvent,
+          showTopBorder: showReceiptDownload,
         );
       default:
         return Container();
@@ -194,15 +238,10 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
 
   List _buildDefaultStatusContent() => [
         DetailSectionWidget(
-          showDivisor: false,
+          showDivisor: showFirstDivisor,
           title: i18n.trans('summary'),
           detailItems: [
-            DetailItemWidget(
-              label: i18n.trans(
-                  'transaction_details_screen', ['delivery_estimate', 'title']),
-              value: i18n.trans(
-                  'transaction_details_screen', ['delivery_estimate', 'value']),
-            ),
+            handleDeliveryEstimate(),
             DetailItemWidget(
               label: i18n.trans(
                   'transaction_details_screen', ['foreign_currency_amount']),
@@ -216,11 +255,17 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                   '${transactionDetails.quote.nationalCurrency} $nationalCurrencyTotalAmount',
             ),
             DetailItemWidget(
-              label: i18n.trans('transaction_details_screen', ['vet']),
+              label: i18n.trans('transaction_details_screen', ['vet', 'title']),
               value: CurrencyHelper.withPrefix(
                 transactionDetails.quote.nationalCurrency,
                 transactionDetails.quote.vet.toString(),
                 CurrencyHelper.currencyFormat + '00',
+              ),
+              onTapInfo: () => ModalHelper.showInfoBottomSheet(
+                context,
+                i18n.trans('transaction_details_screen', ['vet', 'title']),
+                i18n.trans(
+                    'transaction_details_screen', ['vet', 'description']),
               ),
             ),
           ],
@@ -261,69 +306,109 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
         ),
       ];
 
-  List _buildWaitingPaymentContent() => [
-        DetailSectionWidget(
-          showDivisor: false,
-          title: i18n.trans('transaction_details_screen', ['ted']),
-          detailItems: [
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('bank'),
-              value:
-                  '${transactionDetails.paymentAccountInfo.bankName} (${transactionDetails.paymentAccountInfo.bankCode})',
+  Widget handleDeliveryEstimate() {
+    String deliveryEstimateValue;
+
+    switch (transactionDetails.status) {
+      case TransactionStatus.PAYMENT_IDENTIFIED:
+        deliveryEstimateValue = transactionDetails.arrivalEstimate;
+        break;
+      case TransactionStatus.CONFIRMED:
+      case TransactionStatus.FINISHED:
+        deliveryEstimateValue = DateHelper.formatToBRLong(
+          DateHelper.stringToDate(transactionDetails.paidAt),
+        );
+        break;
+      case TransactionStatus.WAITING_SIGNATURE:
+      case TransactionStatus.CANCELED:
+      case TransactionStatus.PENDENCY:
+        deliveryEstimateValue = null;
+        break;
+      default:
+        deliveryEstimateValue = completeArrivalEstimateMessage;
+    }
+
+    return deliveryEstimateValue != null
+        ? DetailItemWidget(
+            label: i18n.trans(
+                'transaction_details_screen', ['delivery_estimate', 'title']),
+            value: deliveryEstimateValue,
+            onTapInfo: () => ModalHelper.showInfoBottomSheet(
+              context,
+              i18n.trans(
+                  'transaction_details_screen', ['delivery_estimate', 'title']),
+              i18n.trans('transaction_details_screen',
+                  ['delivery_estimate', 'description']),
             ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('agency'),
-              value: transactionDetails.paymentAccountInfo.branchCode,
-            ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('checking_account'),
-              value: transactionDetails.paymentAccountInfo.accountNumber,
-            ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('favored'),
-              value: transactionDetails.paymentAccountInfo.accountHolderName,
-            ),
-            DetailItemWidget(
-              isValueCopyable: true,
-              label: i18n.trans('cnpj'),
-              value: transactionDetails
-                  .paymentAccountInfo.accountHolderDocumentNumber,
-            ),
-            DetailItemWidget(
-              label: i18n.trans('transaction_details_screen', ['account_type']),
-              value: i18n.trans('checking_account'),
-            ),
-            DetailItemWidget(
-              label: i18n.trans('transaction_details_screen', ['ted_reason']),
-              value: i18n.trans(
-                  'transaction_details_screen', ['checking_account_credit']),
-            ),
-          ],
-        ),
-        DetailSectionWidget(
-          title: i18n.trans('transaction_details_screen', ['ted_value']),
-          detailItems: [
-            DetailItemWidget(
-              showLabel: false,
-              isValueCopyable: true,
-              copyableValue: nationalCurrencyTotalAmount,
-              label: i18n.trans('value'),
-              value:
-                  '${transactionDetails.quote.nationalCurrency} $nationalCurrencyTotalAmount',
-            ),
-          ],
-        ),
-        DetailSectionWidget(
-          title: i18n.trans('transaction_details_screen', ['arrival_estimate']),
-          detailItems: [
-            DetailItemWidget(
-              value: transactionDetails.arrivalEstimate,
-            ),
-          ],
-        ),
-      ];
+          )
+        : Container();
+  }
+
+  List _buildWaitingPaymentContent() {
+    return [
+      DetailSectionWidget(
+        showDivisor: false,
+        title: i18n.trans('transaction_details_screen', ['ted']),
+        detailItems: [
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('bank'),
+            value:
+                '${transactionDetails.paymentAccountInfo.bankName} (${transactionDetails.paymentAccountInfo.bankCode})',
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('agency'),
+            value: transactionDetails.paymentAccountInfo.branchCode,
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('checking_account'),
+            value: transactionDetails.paymentAccountInfo.accountNumber,
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('favored'),
+            value: transactionDetails.paymentAccountInfo.accountHolderName,
+          ),
+          DetailItemWidget(
+            isValueCopyable: true,
+            label: i18n.trans('cnpj'),
+            value: transactionDetails
+                .paymentAccountInfo.accountHolderDocumentNumber,
+          ),
+          DetailItemWidget(
+            label: i18n.trans('transaction_details_screen', ['account_type']),
+            value: i18n.trans('checking_account'),
+          ),
+          DetailItemWidget(
+            label: i18n.trans('transaction_details_screen', ['ted_reason']),
+            value: i18n.trans(
+                'transaction_details_screen', ['checking_account_credit']),
+          ),
+        ],
+      ),
+      DetailSectionWidget(
+        title: i18n.trans('transaction_details_screen', ['ted_value']),
+        detailItems: [
+          DetailItemWidget(
+            showLabel: false,
+            isValueCopyable: true,
+            copyableValue: nationalCurrencyTotalAmount,
+            label: i18n.trans('value'),
+            value:
+                '${transactionDetails.quote.nationalCurrency} $nationalCurrencyTotalAmount',
+          ),
+        ],
+      ),
+      DetailSectionWidget(
+        title: i18n.trans('transaction_details_screen', ['arrival_estimate']),
+        detailItems: [
+          DetailItemWidget(
+            value: completeArrivalEstimateMessage,
+          ),
+        ],
+      ),
+    ];
+  }
 }

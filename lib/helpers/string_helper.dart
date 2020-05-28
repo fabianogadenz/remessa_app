@@ -9,8 +9,12 @@ class StringHelper {
       str.length > limit ? '${limiter(str, limit - 3)}...' : str;
 
   static String handleLimiterWithEllipsisFromTextWidthAndStyle(
-      String str, double limitWidth, TextStyle textStyle) {
-    final charWidth = TextHelper.mediumCharsWidth(str, textStyle);
+      String str, double limitWidth,
+      [TextStyle textStyle]) {
+    final charWidth = TextHelper.mediumCharsWidth(
+      str,
+      textStyle ?? TextStyle(),
+    );
 
     final maxStringLength = TextHelper.maxStringLength(charWidth, limitWidth);
 

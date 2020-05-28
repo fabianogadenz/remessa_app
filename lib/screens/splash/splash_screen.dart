@@ -9,10 +9,12 @@ import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_screen.dart';
+import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/setup.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/screen/screen_widget.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
+import 'package:screens/screens.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -21,6 +23,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final _appStore = GetIt.I<AppStore>();
+  final _authStore = GetIt.I<AuthStore>();
   final navigator = GetIt.I<NavigatorHelper>();
   ReactionDisposer reactionDisposer;
 
@@ -48,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   checkAppVersionAndLogin(_) =>
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         final i18n = GetIt.I<I18n>();
 
         if (!(_appStore?.configs?.isUpToDate ?? true)) {
@@ -75,14 +78,42 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           );
         } else {
+          await Future.delayed(Duration(seconds: 1));
           navigator.pushReplacement(
-            _appStore.isLoggedIn ? TabControllerWidget() : InitialScreen(),
+            _authStore.isLoggedIn ? TabControllerWidget() : InitialScreen(),
           );
         }
       });
 
   @override
-  Widget build(BuildContext context) => ScreenWidget(
-        child: Container(),
+  Widget build(BuildContext context) => GetIt.I<Screens>().widget(
+        isStatic: true,
+        child: Container(
+          height: double.infinity,
+          child: Stack(
+            children: [
+              Center(
+                child: Container(
+                  width: 200,
+                  child: Image.asset(
+                    'images/full_icon.png',
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                padding: EdgeInsets.all(30),
+                child: Text(
+                  'v${GetIt.I<ConfigService>().packageInfo.version}',
+                  style: TextStyle(
+                    color: StyleColors.SUPPORT_NEUTRAL_10,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       );
 }

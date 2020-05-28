@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_link_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_title_widget.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -17,7 +16,7 @@ class DetailSectionWidget extends StatelessWidget {
 
   final String title;
   final SectionLink sectionLink;
-  final List<DetailItemWidget> detailItems;
+  final List<Widget> detailItems;
   final bool showDivisor;
 
   @override

@@ -1,18 +1,17 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_stepper_screen.dart';
-import 'package:remessa_app/screens/login/bloc/bloc.dart';
 import 'package:remessa_app/screens/login/keys.dart';
+import 'package:remessa_app/screens/login/login_screen_store.dart';
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/screen/screen_widget.dart';
+import 'package:screens/screens.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets/login_form_widget.dart';
@@ -24,13 +23,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // ignore: close_sinks
-  final _loginScreenBloc = LoginScreenBloc();
+  final _loginScreenStore = LoginScreenStore();
 
   final i18n = GetIt.I<I18n>();
 
   final navigator = GetIt.I<NavigatorHelper>();
-
-  final amplitude = GetIt.I<AmplitudeFlutter>();
 
   final showStepper = GetIt.I<SystemService>().showStepper;
 
@@ -46,22 +43,21 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginScreenBloc, LoginScreenState>(
-      bloc: _loginScreenBloc,
-      builder: (context, state) {
-        return ScreenWidget(
+  Widget build(BuildContext context) => Observer(
+        builder: (_) => GetIt.I<Screens>().widget(
           isAccent: true,
           showAppBar: true,
           isStatic: true,
+          brightness: Brightness.light,
           appBarWidget: AppBar(
+            brightness: Brightness.light,
             elevation: 0,
             actions: <Widget>[
               Container(
                 margin: EdgeInsets.only(right: 10),
                 child: showStepper
                     ? IconButton(
-                        icon: Icon(RemessaIcons.multiply),
+                        icon: Icon(RemessaIcons.close),
                         color: StyleColors.BRAND_PRIMARY_40,
                         iconSize: 18,
                         onPressed: () {
@@ -85,22 +81,22 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 i18n.trans('login_screen', ['title']),
                 key: Key(LoginScreenKeys.title),
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 24,
+                    ),
                 textAlign: TextAlign.start,
               ),
               LoginFormWidget(
-                loginScreenBloc: _loginScreenBloc,
-                formState: state.formState,
+                login: _loginScreenStore.login,
               ),
               _buildPrivacyTermsBanner(context),
             ],
           ),
         )
-          ..errorStreamController.add(state.errorMessage)
-          ..loaderStreamController.add(state.isLoading);
-      },
-    );
-  }
+          ..errorStreamController.add(_loginScreenStore.errorMessage)
+          ..loaderStreamController.add(_loginScreenStore.isLoading),
+      );
 
   Container _buildPrivacyTermsBanner(BuildContext context) {
     return Container(

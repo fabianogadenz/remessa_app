@@ -25,6 +25,10 @@ class TrackEvents {
   static const LOGIN_REGISTER_CLICK =
       'mobile_app.click.new_registration_button';
 
+  // Push Notification
+  static const PUSH_NOTIFICATION_OPENED =
+      'mobile_app.open.mobile_push_notification';
+
   // Dashboard
   static const DASHBOARD_HELP_TAB_CLICK = 'mobile_app.click.help_button_menu';
   static const DASHBOARD_OPEN_TRANSACTION_CARD_CLICK =
@@ -32,6 +36,10 @@ class TrackEvents {
   static const DASHBOARD_HISTORY_TRANSACTION_CARD_CLICK =
       'mobile_app.click.operation_history_card_widget';
   static const DASHBOARD_LOGOUT_CLICK = 'mobile_app.click.logout_button';
+  static const DASHBOARD_NEW_TRANSACTION_CLICK =
+      'mobile_app.click.new_remittance_site';
+  static const DASHBOARD_HOME_LOGO_CLICK =
+      'mobile_app.click.remessa_online_logo';
 
   // Transaction Details
   static const TRANSACTION_FAVORED_INFO_CLICK =
@@ -74,7 +82,9 @@ class TrackEvents {
         continue log;
       log:
       default:
-        amplitude.logEvent(name: name, properties: properties);
+        amplitude.logEvent(name: name, properties: {
+          'event_properties': properties,
+        });
     }
   }
 }

@@ -14,10 +14,16 @@ import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/config_model.dart';
+import 'package:remessa_app/services/auth_service.dart';
+import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/services/services.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/test_setup.dart';
-import 'package:remessa_app/widgets/tab_controller/bloc/bloc.dart';
+import 'package:remessa_app/widgets/error_dialog/error_dialog_widget.dart';
+import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
+import 'package:screens/screens.dart';
 import 'package:zendesk/zendesk.dart';
 
 class SetUp {
@@ -25,6 +31,17 @@ class SetUp {
   final ConfigModel configs;
 
   SetUp(this.configs) : constants = Constants.get(configs.environment);
+
+  static Future<ConfigService> registerConfig() async {
+    final configService = ConfigService();
+    await configService.init();
+
+    GetIt.I.registerLazySingleton<ConfigService>(
+      () => configService,
+    );
+
+    return configService;
+  }
 
   static registerI18n(BuildContext context) {
     GetIt.I.registerLazySingleton<I18n>(
@@ -45,6 +62,18 @@ class SetUp {
 
       await OneSignal.shared.consentGranted(allowed);
     }
+
+    OneSignal.shared.setNotificationOpenedHandler((openedResult) {
+      TrackEvents.log(TrackEvents.PUSH_NOTIFICATION_OPENED);
+
+      final additionalData =
+          openedResult?.notification?.payload?.additionalData;
+
+      if (additionalData != null) {
+        if (additionalData['transactionId'] != null)
+          GetIt.I<AppStore>().setTransactionId(additionalData['transactionId']);
+      }
+    });
   }
 
   _initializeHive() async {
@@ -81,8 +110,8 @@ class SetUp {
 
     await zendesk.init(
       constants.zendesk['accountKey'],
+      appName: constants.zendesk['appName'],
       department: constants.zendesk['department'],
-      appName: constants.zendesk['appNName'],
     );
 
     GetIt.I.registerLazySingleton<Zendesk>(
@@ -91,7 +120,7 @@ class SetUp {
   }
 
   _registerServices() async {
-    await Services.register();
+    await Services.register(constants);
   }
 
   _registerStores() {
@@ -99,8 +128,12 @@ class SetUp {
       () => AppStore(configs),
     );
 
-    GetIt.I.registerLazySingleton<TabControllerBloc>(
-      () => TabControllerBloc(),
+    GetIt.I.registerLazySingleton<AuthStore>(
+      () => AuthStore(),
+    );
+
+    GetIt.I.registerLazySingleton<TabControllerStore>(
+      () => TabControllerStore(),
     );
   }
 
@@ -112,17 +145,6 @@ class SetUp {
     dio.options.connectTimeout = configs.timeout;
     dio.options.receiveTimeout = configs.timeout;
 
-    // Add interceptors
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (DioError dioError) =>
-            ErrorHelper.dioErrorInterceptor(dioError),
-        onResponse: (configs.environment != Environment.PROD)
-            ? (response) => print(response)
-            : null,
-      ),
-    );
-
     GetIt.I.registerLazySingleton<Dio>(
       () => dio,
     );
@@ -132,6 +154,42 @@ class SetUp {
     GetIt.I.registerLazySingleton<NavigatorHelper>(
       () => NavigatorHelper(),
     );
+  }
+
+  _registerScreens() {
+    GetIt.I.registerLazySingleton<Screens>(
+      () => Screens(
+        fixedOverlayWidgets: [
+          configs.environment != Environment.PROD
+              ? Container(
+                  alignment: Alignment.topRight,
+                  child: Banner(
+                    message: configs.environment.toString().split('.').last,
+                    location: BannerLocation.topEnd,
+                  ),
+                )
+              : Container(),
+        ],
+        errorOverlay: ErrorOverlay(),
+      ),
+    );
+  }
+
+  _registerDioInterceptors() {
+    GetIt.I<Dio>().interceptors.add(
+          InterceptorsWrapper(
+            onRequest: (requestOptions) => GetIt.I<AuthStore>().isLoggedIn
+                ? requestOptions.headers.addAll(
+                    {'Authorization': 'Bearer ${GetIt.I<AuthService>().token}'},
+                  )
+                : null,
+            onError: (DioError dioError) =>
+                ErrorHelper.dioErrorInterceptor(dioError),
+            onResponse: (configs.environment != Environment.PROD)
+                ? (response) => print(response)
+                : null,
+          ),
+        );
   }
 
   init() async {
@@ -147,8 +205,6 @@ class SetUp {
 
     await _initializeHive();
 
-    await _registerOneSignal();
-
     await _registerZendesk();
 
     // GetIt registers
@@ -161,5 +217,11 @@ class SetUp {
     _registerStores();
 
     _registerHelpers();
+
+    await _registerOneSignal();
+
+    _registerScreens();
+
+    _registerDioInterceptors();
   }
 }

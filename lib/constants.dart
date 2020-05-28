@@ -13,7 +13,7 @@ const Map<String, String> prod_amplitude = {
 };
 
 const Map<String, dynamic> dev_api = {
-  'url': 'https://dev-app.beetech.global/v1/app',
+  'url': 'https://dev-app.pesoreal.xyz/v1/app',
 };
 const Map<String, dynamic> release_api = {
   'url': 'https://release-app.beetech.global/v1/app',
@@ -24,7 +24,7 @@ const Map<String, dynamic> prod_api = {
 
 const Map<String, String> zendesk = {
   'accountKey': '47q7iV5YLFz3pQ0WIjoy2p5S71UzBaaA',
-  'department': '1818188829',
+  'department': '1818663681',
   'appName': 'Remessa Online (APP)',
 };
 
