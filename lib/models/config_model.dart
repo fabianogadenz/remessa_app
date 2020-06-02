@@ -7,13 +7,15 @@ class ConfigModel {
   bool isUpToDate = true;
   Environment environment;
   bool isChatEnabled = true;
+  bool isEnvironmentFlagEnabled = true;
   int timeout = 20000;
 
   ConfigModel({
-    this.isUpToDate,
+    this.isUpToDate = true,
     this.environment,
-    this.isChatEnabled,
-    this.timeout,
+    this.isChatEnabled = true,
+    this.isEnvironmentFlagEnabled = true,
+    this.timeout = 20000,
   });
 
   _isUpToDate(String minVersionStr, String currentVersionStr) {
@@ -29,6 +31,7 @@ class ConfigModel {
     environment =
         EnvironmentModel.stringToEnv(remoteConfig.getString('environment'));
     isChatEnabled = remoteConfig.getBool('isChatEnabled');
+    isEnvironmentFlagEnabled = remoteConfig.getBool('isEnvironmentFlagEnabled');
 
     final remoteTimeout = remoteConfig.getInt('timeout');
 
@@ -39,6 +42,7 @@ class ConfigModel {
     isUpToDate = json['isUpToDate'];
     environment = EnvironmentModel.stringToEnv(json['environment']);
     isChatEnabled = json['isChatEnabled'];
+    isEnvironmentFlagEnabled = json['isEnvironmentFlagEnabled'];
     timeout = json['timeout'];
   }
 
@@ -47,6 +51,7 @@ class ConfigModel {
     data['isUpToDate'] = this.isUpToDate;
     data['environment'] = EnvironmentModel.envToString(this.environment);
     data['isChatEnabled'] = this.isChatEnabled;
+    data['isEnvironmentFlagEnabled'] = this.isEnvironmentFlagEnabled;
     data['timeout'] = this.timeout;
     return data;
   }
