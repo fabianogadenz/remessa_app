@@ -160,7 +160,8 @@ class SetUp {
     GetIt.I.registerLazySingleton<Screens>(
       () => Screens(
         fixedOverlayWidgets: [
-          configs.environment != Environment.PROD
+          configs.isEnvironmentFlagEnabled &&
+                  configs.environment != Environment.PROD
               ? Container(
                   alignment: Alignment.topRight,
                   child: Banner(
