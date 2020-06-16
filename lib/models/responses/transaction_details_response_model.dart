@@ -175,20 +175,24 @@ class Counterpart {
   String name;
   String country;
   String bankName;
+  String redirectUrl;
   List<AccountInfo> accountInfo;
   List<IntermediaryBankInfo> intermediaryBankInfo;
 
-  Counterpart(
-      {this.name,
-      this.country,
-      this.bankName,
-      this.accountInfo,
-      this.intermediaryBankInfo});
+  Counterpart({
+    this.name,
+    this.country,
+    this.bankName,
+    this.redirectUrl,
+    this.accountInfo,
+    this.intermediaryBankInfo,
+  });
 
   Counterpart.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     country = json['country'];
     bankName = json['bankName'];
+    redirectUrl = json['redirectUrl'];
     if (json['accountInfo'] != null) {
       accountInfo = new List<AccountInfo>();
       json['accountInfo'].forEach((v) {
@@ -208,6 +212,7 @@ class Counterpart {
     data['name'] = this.name;
     data['country'] = this.country;
     data['bankName'] = this.bankName;
+    data['redirectUrl'] = this.redirectUrl;
     if (this.accountInfo != null) {
       data['accountInfo'] = this.accountInfo.map((v) => v.toJson()).toList();
     }

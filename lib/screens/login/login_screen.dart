@@ -5,14 +5,15 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/helpers/url_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_stepper_screen.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/screens/login/login_screen_store.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:screens/screens.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'widgets/login_form_widget.dart';
 
@@ -22,19 +23,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // ignore: close_sinks
   final _loginScreenStore = LoginScreenStore();
-
   final i18n = GetIt.I<I18n>();
-
   final navigator = GetIt.I<NavigatorHelper>();
-
   final showStepper = GetIt.I<SystemService>().showStepper;
-
-  final useTermsUrl = 'https://www.remessaonline.com.br/termos-de-uso';
-
-  final privacyPolicyUrl =
-      'https://www.remessaonline.com.br/politica-de-privacidade';
 
   @override
   void initState() {
@@ -48,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
           isAccent: true,
           showAppBar: true,
           isStatic: true,
-          brightness: Brightness.light,
+          statusBarBrightness: Brightness.light,
           appBarWidget: AppBar(
             brightness: Brightness.light,
             elevation: 0,
@@ -63,6 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           TrackEvents.log(
                               TrackEvents.LOGIN_BACK_TO_STEPPER_CLICK);
+
+                          FocusScope.of(context).requestFocus(FocusNode());
 
                           navigator.pushReplacement(
                             InitialStepperScreen(),
@@ -124,7 +118,14 @@ class _LoginScreenState extends State<LoginScreen> {
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   TrackEvents.log(TrackEvents.LOGIN_PRIVACY_POLICY_CLICK);
-                  launch(privacyPolicyUrl);
+
+                  FocusScope.of(context).requestFocus(FocusNode());
+
+                  navigator.push(
+                    WebsiteRedirectScreen(
+                      url: UrlHelper.PRIVACY_POLICY_URL,
+                    ),
+                  );
                 },
             ),
             TextSpan(
@@ -140,7 +141,14 @@ class _LoginScreenState extends State<LoginScreen> {
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   TrackEvents.log(TrackEvents.LOGIN_USE_TERMS_CLICK);
-                  launch(useTermsUrl);
+
+                  FocusScope.of(context).requestFocus(FocusNode());
+
+                  navigator.push(
+                    WebsiteRedirectScreen(
+                      url: UrlHelper.USE_TERMS_URL,
+                    ),
+                  );
                 },
             ),
           ],

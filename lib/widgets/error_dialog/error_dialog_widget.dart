@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:screens/screen_overlay.dart';
+import 'package:screens/custom_overlay.dart';
+import 'package:screens/screen_widget.dart';
 
-class ErrorOverlay implements ScreenOverlay {
+class ErrorOverlay implements CustomOverlay {
   @override
-  Widget build(screenWidget, data) => ErrorDialog(
+  Widget build(_, data, {ScreenWidget screenWidget}) => ErrorDialog(
         previousStatusBarWhiteForeground:
-            screenWidget.brightness == Brightness.dark ||
-                screenWidget.brightness == null,
+            screenWidget.statusBarBrightness == Brightness.dark ||
+                screenWidget.statusBarBrightness == null,
         errorMessage: data,
         closeFunction: () {
           screenWidget.errorStreamController.add(null);

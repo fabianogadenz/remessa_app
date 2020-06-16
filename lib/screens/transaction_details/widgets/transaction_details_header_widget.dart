@@ -18,6 +18,7 @@ class TransactionDetailsHeaderWidget extends StatelessWidget {
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.6,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[

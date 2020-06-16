@@ -29,7 +29,7 @@ class StyleColors {
   static const SUPPORT_DANGER_20 = const Color(0xffff8a91);
   static const SUPPORT_DANGER_10 = const Color(0xfffaa8a9);
 
-  // Support Danger
+  // Support Warning
   static const SUPPORT_WARNING_60 = const Color(0xff473221);
   static const SUPPORT_WARNING_50 = const Color(0xffc1823e);
   static const SUPPORT_WARNING_40 = const Color(0xffffaa33);
