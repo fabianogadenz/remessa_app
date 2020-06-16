@@ -11,11 +11,12 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
-import 'package:remessa_app/screens/transaction_details/favored_data_screen.dart';
+import 'package:remessa_app/screens/transaction_details/beneficiary_data_screen.dart';
 import 'package:remessa_app/screens/transaction_details/how_to_pay_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
+import 'package:remessa_app/screens/transaction_details/widgets/detail_recurrence_button_overlay_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_link_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/details_section_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/receipt_download_widget.dart';
@@ -79,6 +80,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => GetIt.I<Screens>().widget(
+        overlayEvents: {'recurrence': DetailRecurrenceButtonOverlayWidget()},
         isStatic: true,
         showAppBar: true,
         safeAreaConfig: SafeAreaConfig(bottom: false),
@@ -140,6 +142,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
 
             return Stack(
               children: <Widget>[
+                buildScrollSafeArea(),
                 TransactionDetailsHeaderWidget(
                   transactionDetails: transactionDetails,
                 ),
@@ -168,6 +171,8 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                         _buildDetailAction(),
                         ...sections,
                         TransactionDetailsFooterWidget(
+                          showExtraBottomMargin: transactionDetails?.status ==
+                              TransactionStatus.FINISHED,
                           onTap: () => _openChatAndLogEvent(
                             eventName:
                                 TrackEvents.TRANSACTION_HELP_BANNER_CLICK,
@@ -184,9 +189,19 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       )
         ..loaderStreamController.add(_transactionsDetailsScreenStore.isLoading)
         ..errorStreamController
-            .add(_transactionsDetailsScreenStore.errorMessage),
+            .add(_transactionsDetailsScreenStore.errorMessage)
+        ..eventsStreamController.add(
+          transactionDetails?.status == TransactionStatus.FINISHED
+              ? OverlayEvent(
+                  'recurrence', transactionDetails?.counterpart?.redirectUrl)
+              : null,
+        ),
     );
   }
+
+  Container buildScrollSafeArea() => Container(
+        color: StyleColors.SUPPORT_NEUTRAL_20,
+      );
 
   Widget _buildDetailAction() {
     switch (transactionDetails.status) {
@@ -255,19 +270,26 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                   '${transactionDetails.quote.nationalCurrency} $nationalCurrencyTotalAmount',
             ),
             DetailItemWidget(
-              label: i18n.trans('transaction_details_screen', ['vet', 'title']),
-              value: CurrencyHelper.withPrefix(
-                transactionDetails.quote.nationalCurrency,
-                transactionDetails.quote.vet.toString(),
-                CurrencyHelper.currencyFormat + '00',
-              ),
-              onTapInfo: () => ModalHelper.showInfoBottomSheet(
-                context,
-                i18n.trans('transaction_details_screen', ['vet', 'title']),
-                i18n.trans(
-                    'transaction_details_screen', ['vet', 'description']),
-              ),
-            ),
+                label:
+                    i18n.trans('transaction_details_screen', ['vet', 'title']),
+                value: CurrencyHelper.withPrefix(
+                  transactionDetails.quote.nationalCurrency,
+                  transactionDetails.quote.vet.toString(),
+                  CurrencyHelper.currencyFormat + '00',
+                ),
+                onTapInfo: () {
+                  TrackEvents.log(
+                    TrackEvents.TRANSACTION_TOOLTIP_CLICK,
+                    {'origin': 'vet'},
+                  );
+
+                  ModalHelper.showInfoBottomSheet(
+                    context,
+                    i18n.trans('transaction_details_screen', ['vet', 'title']),
+                    i18n.trans(
+                        'transaction_details_screen', ['vet', 'description']),
+                  );
+                }),
           ],
           sectionLink: SectionLink(
             i18n.trans(
@@ -284,7 +306,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           ),
         ),
         DetailSectionWidget(
-          title: i18n.trans('favored'),
+          title: i18n.trans('beneficiary'),
           detailItems: [
             DetailItemWidget(
               label: i18n.trans('name'),
@@ -292,12 +314,12 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             ),
           ],
           sectionLink: SectionLink(
-            i18n.trans('transaction_details_screen', ['favored_data']),
+            i18n.trans('transaction_details_screen', ['beneficiary_data']),
             () {
-              _log(TrackEvents.TRANSACTION_FAVORED_INFO_CLICK);
+              _log(TrackEvents.TRANSACTION_BENEFICIARY_INFO_CLICK);
 
               navigator.push(
-                FavoredDataScreen(
+                BeneficiaryDataScreen(
                   transactionDetails: transactionDetails,
                 ),
               );
@@ -315,9 +337,12 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
         break;
       case TransactionStatus.CONFIRMED:
       case TransactionStatus.FINISHED:
-        deliveryEstimateValue = DateHelper.formatToBRLong(
-          DateHelper.stringToDate(transactionDetails.paidAt),
-        );
+        deliveryEstimateValue =
+            transactionDetails.paidAt != null && transactionDetails.paidAt != ''
+                ? DateHelper.formatToBRLong(
+                    DateHelper.stringToDate(transactionDetails.paidAt),
+                  )
+                : '';
         break;
       case TransactionStatus.WAITING_SIGNATURE:
       case TransactionStatus.CANCELED:
@@ -333,14 +358,24 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             label: i18n.trans(
                 'transaction_details_screen', ['delivery_estimate', 'title']),
             value: deliveryEstimateValue,
-            onTapInfo: () => ModalHelper.showInfoBottomSheet(
-              context,
-              i18n.trans(
-                  'transaction_details_screen', ['delivery_estimate', 'title']),
-              i18n.trans('transaction_details_screen',
-                  ['delivery_estimate', 'description']),
-            ),
-          )
+            onTapInfo: () {
+              TrackEvents.log(
+                TrackEvents.TRANSACTION_TOOLTIP_CLICK,
+                {'origin': 'deadline'},
+              );
+
+              ModalHelper.showInfoBottomSheet(
+                context,
+                i18n.trans('transaction_details_screen',
+                    ['delivery_estimate', 'title']),
+                i18n.trans('transaction_details_screen',
+                    ['delivery_estimate', 'description']),
+                Icon(
+                  Icons.info,
+                  size: 20,
+                ),
+              );
+            })
         : Container();
   }
 
@@ -368,7 +403,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           ),
           DetailItemWidget(
             isValueCopyable: true,
-            label: i18n.trans('favored'),
+            label: i18n.trans('beneficiary'),
             value: transactionDetails.paymentAccountInfo.accountHolderName,
           ),
           DetailItemWidget(

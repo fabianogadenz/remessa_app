@@ -21,7 +21,7 @@ class DetailSectionLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.only(top: 16),
       child: InkWell(
         onTap: () => action(),
         child: Text(

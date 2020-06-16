@@ -42,7 +42,7 @@ class TrackEvents {
       'mobile_app.click.remessa_online_logo';
 
   // Transaction Details
-  static const TRANSACTION_FAVORED_INFO_CLICK =
+  static const TRANSACTION_BENEFICIARY_INFO_CLICK =
       'mobile_app.click.operation_beneficiary_information_click';
   static const TRANSACTION_CALCULATION_CLICK =
       'mobile_app.click.operation_calculation_information_button';
@@ -56,6 +56,23 @@ class TrackEvents {
       'mobile_app.click.operation_how_to_make_payment_link';
   static const TRANSACTION_COPY_LOCAL_BANCK_INFO =
       'mobile_app.click.operation_copy_local_bank_info';
+  static const TRANSACTION_RECEIPT_SHARE_CLICK =
+      'mobile_app.click.remittance_receipt_share';
+  static const TRANSACTION_TOOLTIP_CLICK = 'mobile_app.click.operation_tooltip';
+  static const TRANSACTION_REPEAT_CLICK =
+      'mobile_app.click.operation_repeat_remittance';
+
+  // Beneficiary Screen (New Transaction)
+  static const BENEFICIARY_NEW_TRANSACTION_CLICK =
+      'mobile_app.click.beneficiary_add_new_remittance';
+  static const BENEFICIARY_SELECT_CLICK = 'mobile_app.click.beneficiary_select';
+  static const BENEFICIARY_DISABLED_CLICK =
+      'mobile_app.click.beneficiary_status';
+
+  // Website Redirect Screen
+  static const WEBSITE_REDIRECT_CLICK =
+      'mobile_app.click.redirect_go_to_website';
+  static const WEBSITE_GO_BACK_CLICK = 'mobile_app.click.redirect_go_back';
 
   // Actions
   static log(String name, [Map<String, dynamic> properties]) {
@@ -79,6 +96,18 @@ class TrackEvents {
       case TRANSACTION_CALCULATION_INFO_CLICK:
       case TRANSACTION_COPY_LOCAL_BANCK_INFO:
         assert(properties['label'] != null);
+        continue log;
+      case TRANSACTION_TOOLTIP_CLICK:
+        assert(properties['origin'] != null);
+        continue log;
+      case BENEFICIARY_NEW_TRANSACTION_CLICK:
+        assert(properties['first_remittance'] != null);
+        continue log;
+      case BENEFICIARY_SELECT_CLICK:
+        assert(properties['beneficiary_currency'] != null);
+        continue log;
+      case BENEFICIARY_DISABLED_CLICK:
+        assert(properties['beneficiary_status'] != null);
         continue log;
       log:
       default:

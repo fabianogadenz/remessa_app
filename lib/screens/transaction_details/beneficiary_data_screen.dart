@@ -5,10 +5,10 @@ import 'package:remessa_app/models/responses/transaction_details_response_model.
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
 import 'package:screens/screens.dart';
 
-class FavoredDataScreen extends StatelessWidget {
+class BeneficiaryDataScreen extends StatelessWidget {
   final TransactionDetailsResponseModel transactionDetails;
 
-  const FavoredDataScreen({Key key, @required this.transactionDetails})
+  const BeneficiaryDataScreen({Key key, @required this.transactionDetails})
       : assert(transactionDetails != null),
         super(key: key);
 
@@ -19,8 +19,8 @@ class FavoredDataScreen extends StatelessWidget {
     return GetIt.I<Screens>().widget(
       isAccent: true,
       showAppBar: true,
-      brightness: Brightness.light,
-      appBarText: i18n.trans('favored_data'),
+      statusBarBrightness: Brightness.light,
+      appBarText: i18n.trans('beneficiary_data'),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
         child: Column(

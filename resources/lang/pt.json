@@ -8,7 +8,7 @@
     "requiredField": "Campo obrigatório.",
     "summary": "Resumo",
     "name": "Nome",
-    "favored": "Favorecido",
+    "beneficiary": "Favorecido",
     "ok": "Ok",
     "bank": "Banco",
     "agency": "Agência",
@@ -18,13 +18,14 @@
     "value": "Valor",
     "how_to_pay": "Como fazer o pagamento",
     "account_owner": "Titular da conta",
-    "favored_data": "Dados do favorecido",
+    "beneficiary_data": "Dados do favorecido",
     "ffc": "FFC (For Further Credit)",
     "start": "Começar",
     "next": "Próximo",
     "skip": "Pular",
     "password": "Senha",
     "forgotMyPassword": "Esqueci minha senha",
+    "send_again": "Enviar novamente",
     "error": {
         "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
@@ -38,8 +39,8 @@
         }
     },
     "stepper1": {
-        "title": "Envie no site e acompanhe por aqui",
-        "description": "Confira o status dos seus envios em andamento, veja seu histórico de remessas e tire dúvidas pelo chat."
+        "title": "Repita e acompanhe envios para o exterior",
+        "description": "Envie novamente para beneficiários cadastrados, acompanhe o andamento, veja seu histórico e os comprovantes."
     },
     "stepper2": {
         "title": "Receba atualizações em tempo real",
@@ -47,7 +48,7 @@
     },
     "stepper3": {
         "title": "Acompanhe as novidades do app",
-        "description": "Estamos aprimorando o app. Em breve, você poderá fazer suas remessas por aqui. Aguarde!"
+        "description": "Estamos aprimorando o app, em breve você vai poder fazer tudo por aqui. Aguarde!"
     },
     "document": {
         "cpf": {
@@ -98,7 +99,7 @@
         "close_transactions": "Histórico",
         "open_empty_state": "Você não tem remessas em andamento",
         "closed_empty_state": "Você ainda não tem remessas concluídas",
-        "create_transaction": "Fazer uma remessa no site"
+        "create_transaction": "Enviar uma remessa"
     },
     "transaction": {
         "paid_at": "Pago em"
@@ -118,7 +119,7 @@
             "description": "Esse é o valor final da cotação com todos os impostos e tarifas incluídos."
         },
         "transaction_calculation": "Entenda o cálculo da remessa",
-        "favored_data": "Ver dados do favorecido",
+        "beneficiary_data": "Ver dados do favorecido",
         "talk_with_us": "Toque aqui e fale com a gente",
         "doubts": "Dúvidas?",
         "copied": "$label copiado com sucesso",
@@ -163,5 +164,21 @@
         },
         "totalFees": "Tarifas",
         "totalAmount": "Valor total"
+    },
+    "website_redirect_screen": {
+        "title": "Você será redirecionado para o site",
+        "description": {
+            "default": "Esta ação ainda não está disponível no app, mas fique tranquilo: conclua agora mesmo no site, diretamente pelo celular.",
+            "recurrence": "Esta ação ainda não está disponível no app.\nEnvie sua remessa no site diretamente pelo celular e depois acompanhe o andamento por aqui."
+        },
+        "action": "Ir para o site"
+    },
+    "beneficiary_screen": {
+        "header": "Escolha um beneficiário",
+        "body": "Você ainda não tem nenhum beneficiário. Cadastre um para enviar sua primeira remessa.",
+        "action": "Começar",
+        "new_beneficiary": "Deseja enviar para outro beneficiário?",
+        "new_transaction": "Comece um novo envio",
+        "send_currency": "Enviar $currency"
     }
 }

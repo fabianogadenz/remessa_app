@@ -2,6 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/details_section_widget.dart';
@@ -26,6 +27,8 @@ class ReceiptDownloadWidget extends StatelessWidget {
   final TransactionDetailsScreenStore transactionDetailsScreenStore;
 
   Future<void> shareFile() async {
+    TrackEvents.log(TrackEvents.TRANSACTION_RECEIPT_SHARE_CLICK);
+
     transactionDetailsScreenStore.setErrorMessage(null);
     transactionDetailsScreenStore.setIsLoading(true);
 
@@ -34,11 +37,6 @@ class ReceiptDownloadWidget extends StatelessWidget {
           .downloadFile('/transaction/$transactionId/receipt');
 
       await ShareExtend.share(fileInfo.file.path, 'file');
-
-      // await FlutterShare.shareFile(
-      //   title: 'Comprovante de pagamento',
-      //   filePath: fileInfo.file.path,
-      // );
     } catch (e) {
       transactionDetailsScreenStore.setErrorMessage(e?.message);
     } finally {
@@ -74,12 +72,11 @@ class ReceiptDownloadWidget extends StatelessWidget {
                         color: StyleColors.SUPPORT_NEUTRAL_40,
                       ),
                       SizedBox(width: 4),
-                      // Text(label),
                       Text(
                         StringHelper
                             .handleLimiterWithEllipsisFromTextWidthAndStyle(
                           label,
-                          380,
+                          300,
                         ),
                       ),
                     ],

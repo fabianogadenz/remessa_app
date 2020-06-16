@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/math_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 
@@ -23,6 +24,19 @@ class TransactionCalculationScreen extends StatelessWidget {
 
   final TransactionDetailsResponseModel transactionDetails;
 
+  _onTapInfo(BuildContext context, String title, String description) {
+    TrackEvents.log(
+      TrackEvents.TRANSACTION_CALCULATION_INFO_CLICK,
+      {'label': title},
+    );
+
+    ModalHelper.showInfoBottomSheet(
+      context,
+      title,
+      description,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final i18n = GetIt.I<I18n>();
@@ -33,7 +47,7 @@ class TransactionCalculationScreen extends StatelessWidget {
     return GetIt.I<Screens>().widget(
       isAccent: true,
       showAppBar: true,
-      brightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
       appBarText: i18n.trans('transaction_calculation_screen', ['title']),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 26),
@@ -95,7 +109,7 @@ class TransactionCalculationScreen extends StatelessWidget {
                           '%',
                         )
                       : null,
-                  onTapInfo: () => ModalHelper.showInfoBottomSheet(
+                  onTapInfo: () => _onTapInfo(
                     context,
                     i18n.trans(
                         'transaction_calculation_screen', ['spread', 'title']),
@@ -111,7 +125,7 @@ class TransactionCalculationScreen extends StatelessWidget {
                     transactionDetails.quote.tradingQuotation.toString(),
                     CurrencyHelper.currencyFormat + '00',
                   ),
-                  onTapInfo: () => ModalHelper.showInfoBottomSheet(
+                  onTapInfo: () => _onTapInfo(
                     context,
                     i18n.trans('transaction_calculation_screen',
                         ['tradingQuotation', 'title']),
@@ -143,7 +157,7 @@ class TransactionCalculationScreen extends StatelessWidget {
                         transactionDetails.quote.nationalCurrency,
                         fee.value.toString(),
                       ),
-                      onTapInfo: () => ModalHelper.showInfoBottomSheet(
+                      onTapInfo: () => _onTapInfo(
                         context,
                         fee.label,
                         fee.description,
@@ -162,7 +176,7 @@ class TransactionCalculationScreen extends StatelessWidget {
                     transactionDetails.quote.vet.toString(),
                     CurrencyHelper.currencyFormat + '00',
                   ),
-                  onTapInfo: () => ModalHelper.showInfoBottomSheet(
+                  onTapInfo: () => _onTapInfo(
                     context,
                     i18n.trans('transaction_details_screen', ['vet', 'title']),
                     i18n.trans(
