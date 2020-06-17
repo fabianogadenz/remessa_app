@@ -19,7 +19,7 @@ class HowToPayScreen extends StatelessWidget {
     return GetIt.I<Screens>().widget(
       isAccent: true,
       showAppBar: true,
-      brightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
       appBarText: i18n.trans('how_to_pay'),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24),

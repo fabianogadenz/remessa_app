@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
@@ -15,7 +16,6 @@ import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/primary_button_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -48,7 +48,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       i18n.trans('dashboard_screen', ['create_transaction']),
       onPressed: () {
         TrackEvents.log(TrackEvents.DASHBOARD_NEW_TRANSACTION_CLICK);
-        launch('https://www.remessaonline.com.br/app/perfil/painel');
+
+        ModalHelper.showNewTransactionBottomSheet(context);
       },
     );
 
@@ -159,33 +160,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ];
 
-  _buildScreenEmptyState(ThemeData theme) => SliverFillRemaining(
-        hasScrollBody: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'images/wallet.png',
-              width: 200,
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 30),
-              width: 230,
-              child: Text(
-                GetIt.I<I18n>().trans(
-                  'dashboard_screen',
-                  ['open_empty_state'],
-                ),
-                style: theme.textTheme.subtitle2.copyWith(fontSize: 15),
-                textAlign: TextAlign.center,
+  _buildScreenEmptyState(ThemeData theme) => SliverToBoxAdapter(
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            createTransactionButton,
-          ],
+              Image.asset(
+                'images/wallet.png',
+                width: 200,
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 30),
+                width: 230,
+                child: Text(
+                  GetIt.I<I18n>().trans(
+                    'dashboard_screen',
+                    ['open_empty_state'],
+                  ),
+                  style: theme.textTheme.subtitle2.copyWith(fontSize: 15),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              createTransactionButton,
+            ],
+          ),
         ),
       );
 
@@ -230,6 +237,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return RefreshIndicator(
       color: StyleColors.BRAND_PRIMARY_40,
+      backgroundColor: StyleColors.SUPPORT_NEUTRAL_10,
       onRefresh: () {
         _transactionsStore.clearTransactions();
         _transactionsStore.getTransactions();

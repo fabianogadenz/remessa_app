@@ -7,6 +7,8 @@ class AppTheme {
         primaryColor: StyleColors.BRAND_PRIMARY_40,
         accentColor: StyleColors.SUPPORT_NEUTRAL_10,
         scaffoldBackgroundColor: StyleColors.BRAND_PRIMARY_60,
+        canvasColor: StyleColors.SUPPORT_NEUTRAL_60,
+        brightness: Brightness.light,
         textTheme: TextTheme(
           headline6: TextStyle(
             fontSize: 30,
@@ -37,9 +39,8 @@ class AppTheme {
         buttonTheme: ButtonThemeData(
           buttonColor: StyleColors.BRAND_PRIMARY_40,
           textTheme: ButtonTextTheme.accent,
-          padding: EdgeInsets.all(15),
           shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(100),
           ),
         ),
         appBarTheme: AppBarTheme(
@@ -59,7 +60,7 @@ class AppTheme {
         cardTheme: CardTheme(
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
       );

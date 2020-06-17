@@ -6,13 +6,13 @@ import 'package:remessa_app/screens/transaction_details/widgets/detail_section_t
 import 'package:remessa_app/style/colors.dart';
 
 class TransactionDetailsFooterWidget extends StatelessWidget {
-  const TransactionDetailsFooterWidget({
-    Key key,
-    @required this.onTap,
-  })  : assert(onTap != null),
+  const TransactionDetailsFooterWidget(
+      {Key key, @required this.onTap, this.showExtraBottomMargin = false})
+      : assert(onTap != null),
         super(key: key);
 
   final Function onTap;
+  final bool showExtraBottomMargin;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +23,15 @@ class TransactionDetailsFooterWidget extends StatelessWidget {
       child: Container(
         color: StyleColors.SUPPORT_NEUTRAL_20,
         child: Container(
-          color: StyleColors.SUPPORT_NEUTRAL_10,
+          decoration: BoxDecoration(
+            color: StyleColors.SUPPORT_NEUTRAL_10,
+            borderRadius: BorderRadius.circular(10),
+          ),
           margin: EdgeInsets.only(
             top: 16,
             left: 16,
             right: 16,
-            bottom: 26,
+            bottom: showExtraBottomMargin ? 100 : 26,
           ),
           height: 130,
           child: Row(

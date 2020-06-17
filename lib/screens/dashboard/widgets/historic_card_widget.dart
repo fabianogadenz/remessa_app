@@ -12,16 +12,23 @@ import 'package:remessa_app/screens/transaction_details/transaction_details_scre
 import 'package:remessa_app/style/colors.dart';
 
 class HistoricCardWidget extends StatelessWidget {
-  const HistoricCardWidget({
+  HistoricCardWidget({
     Key key,
     @required this.transaction,
   }) : super(key: key);
 
   final Transaction transaction;
 
+  final counterpartNameTextStyle = TextStyle(
+    fontSize: 12,
+    color: StyleColors.SUPPORT_NEUTRAL_10,
+  );
+
   @override
   Widget build(BuildContext context) {
-    final paidDate = DateHelper.stringToDate(transaction.paidAt);
+    final paidDate = transaction.paidAt != null
+        ? DateHelper.stringToDate(transaction.paidAt)
+        : '';
     final i18n = GetIt.I<I18n>();
     final navigator = GetIt.I<NavigatorHelper>();
 
@@ -63,15 +70,9 @@ class HistoricCardWidget extends StatelessWidget {
                   StringHelper.handleLimiterWithEllipsisFromTextWidthAndStyle(
                     transaction.counterpartName,
                     270,
-                    TextStyle(
-                      fontSize: 12,
-                      color: StyleColors.SUPPORT_NEUTRAL_10,
-                    ),
+                    counterpartNameTextStyle,
                   ),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: StyleColors.SUPPORT_NEUTRAL_10,
-                  ),
+                  style: counterpartNameTextStyle,
                 ),
                 Text(
                   CurrencyHelper.withPrefix(
@@ -91,7 +92,7 @@ class HistoricCardWidget extends StatelessWidget {
                 Text(
                   '${i18n.trans('transaction', [
                     'paid_at'
-                  ])} ${DateHelper.formatToBR(paidDate)}',
+                  ])} ${paidDate != '' ? DateHelper.formatToBR(paidDate) : paidDate}',
                   style: TextStyle(
                     fontSize: 11,
                     color: StyleColors.BRAND_PRIMARY_20,

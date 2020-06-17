@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/helpers/url_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/login/keys.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/divider_with_text_widget.dart';
+import 'package:remessa_app/widgets/gradient_button_widget.dart';
 import 'package:remessa_app/widgets/text_input/text_input_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginFormWidget extends StatefulWidget {
   LoginFormWidget({
@@ -26,7 +29,7 @@ class LoginFormWidget extends StatefulWidget {
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
   final i18n = GetIt.I<I18n>();
-
+  final navigator = GetIt.I<NavigatorHelper>();
   final _formKey = GlobalKey<FormState>();
 
   final cpfCtrl = MaskedTextController(
@@ -103,13 +106,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.only(top: 20),
-                child: RaisedButton(
-                  elevation: 0,
+                child: GradientButtonWidget(
                   onPressed: () => _login(context),
-                  child: Text(
-                    i18n.trans('continue'),
-                    style: Theme.of(context).textTheme.button,
-                  ),
+                  label: i18n.trans('continue'),
                 ),
               ),
               Padding(
@@ -135,6 +134,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 width: double.infinity,
                 margin: EdgeInsets.only(bottom: 20),
                 child: OutlineButton(
+                  padding: EdgeInsets.all(15),
                   borderSide: BorderSide(
                     color: StyleColors.BRAND_PRIMARY_40,
                   ),
@@ -173,11 +173,21 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
 
   _forgotPassword() {
     TrackEvents.log(TrackEvents.LOGIN_FORGOT_PASSWORD_CLICK);
-    launch('https://www.remessaonline.com.br/recuperar-senha');
+    FocusScope.of(context).requestFocus(FocusNode());
+    navigator.push(
+      WebsiteRedirectScreen(
+        url: UrlHelper.FORGOT_PASSWORD_URL,
+      ),
+    );
   }
 
   _register() {
     TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
-    launch('https://www.remessaonline.com.br/cadastrar');
+    FocusScope.of(context).requestFocus(FocusNode());
+    navigator.push(
+      WebsiteRedirectScreen(
+        url: UrlHelper.REGISTER_URL,
+      ),
+    );
   }
 }
