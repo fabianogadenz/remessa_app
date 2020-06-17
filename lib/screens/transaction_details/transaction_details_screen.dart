@@ -335,6 +335,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
       case TransactionStatus.PAYMENT_IDENTIFIED:
         deliveryEstimateValue = transactionDetails.arrivalEstimate;
         break;
+      case TransactionStatus.WAITING_SIGNATURE:
       case TransactionStatus.CONFIRMED:
       case TransactionStatus.FINISHED:
         deliveryEstimateValue =
@@ -344,7 +345,6 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                   )
                 : '';
         break;
-      case TransactionStatus.WAITING_SIGNATURE:
       case TransactionStatus.CANCELED:
       case TransactionStatus.PENDENCY:
         deliveryEstimateValue = null;
