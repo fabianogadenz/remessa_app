@@ -4,8 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/math_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
-import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 
 import 'package:remessa_app/screens/transaction_details/widgets/subtitle_widget.dart';
@@ -18,11 +18,7 @@ import 'package:screens/screens.dart';
 class TransactionCalculationScreen extends StatelessWidget {
   const TransactionCalculationScreen({
     Key key,
-    @required this.transactionDetails,
-  })  : assert(transactionDetails != null),
-        super(key: key);
-
-  final TransactionDetailsResponseModel transactionDetails;
+  }) : super(key: key);
 
   _onTapInfo(BuildContext context, String title, String description) {
     TrackEvents.log(
@@ -40,6 +36,8 @@ class TransactionCalculationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final i18n = GetIt.I<I18n>();
+    final transactionDetails =
+        NavigatorHelper.getArgs(context).transactionDetails;
 
     final totalFees = (transactionDetails.quote.nationalCurrencyTotalAmount -
         transactionDetails.quote.nationalCurrencySubAmount);
@@ -150,7 +148,7 @@ class TransactionCalculationScreen extends StatelessWidget {
                 ),
               ),
               items: transactionDetails.quote.feesTaxes
-                  .map(
+                  .map<TransactionCalculationRowWidget>(
                     (fee) => TransactionCalculationRowWidget(
                       label: fee.label,
                       value: CurrencyHelper.withPrefix(

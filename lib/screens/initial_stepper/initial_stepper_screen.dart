@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_footer_widget.dart';
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_widget.dart';
-import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:screens/screens.dart';
 
@@ -112,9 +112,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
                     {'tutorial_step': _currentLogIndex},
                   );
 
-                  navigator.pushReplacement(
-                    LoginScreen(),
-                  );
+                  navigator.pushReplacementNamed(Router.LOGIN_ROUTE);
                 },
               ),
             ),
@@ -127,9 +125,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
                   TrackEvents.log(
                       TrackEvents.INITIAL_STEPPER_FINISH_BUTTON_CLICK);
 
-                  navigator.pushReplacement(
-                    LoginScreen(),
-                  );
+                  navigator.pushReplacementNamed(Router.LOGIN_ROUTE);
                   return;
                 }
 

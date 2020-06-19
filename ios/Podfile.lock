@@ -73,6 +73,9 @@ PODS:
   - Flutter (1.0.0)
   - flutter_statusbarcolor (0.0.1):
     - Flutter
+  - flutter_uxcam (1.1.1):
+    - Flutter
+    - UXCam (~> 3.1.15)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -109,10 +112,10 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - OneSignal (2.12.6)
-  - onesignal_flutter (2.3.4):
+  - OneSignal (2.13.1)
+  - onesignal_flutter (2.4.1):
     - Flutter
-    - OneSignal (= 2.12.6)
+    - OneSignal (= 2.13.1)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -138,6 +141,7 @@ PODS:
     - Flutter
   - url_launcher_web (0.0.1):
     - Flutter
+  - UXCam (3.1.15)
   - ZDCChat (1.4.4):
     - ZDCChat/API (= 1.4.4)
     - ZDCChat/Localization (= 1.4.4)
@@ -159,6 +163,7 @@ DEPENDENCIES:
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - Flutter (from `Flutter`)
   - flutter_statusbarcolor (from `.symlinks/plugins/flutter_statusbarcolor/ios`)
+  - flutter_uxcam (from `.symlinks/plugins/flutter_uxcam/ios`)
   - OneSignal (< 3.0, >= 2.9.3)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
@@ -197,6 +202,7 @@ SPEC REPOS:
     - OneSignal
     - PromisesObjC
     - Protobuf
+    - UXCam
     - ZDCChat
 
 EXTERNAL SOURCES:
@@ -216,6 +222,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_statusbarcolor:
     :path: ".symlinks/plugins/flutter_statusbarcolor/ios"
+  flutter_uxcam:
+    :path: ".symlinks/plugins/flutter_uxcam/ios"
   onesignal_flutter:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
   package_info:
@@ -264,14 +272,15 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfig: c11d74d8b1ff8463b587fc8899d92ee089f9a691
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
+  flutter_uxcam: 8b15d9328d7c4e6df1afada38b95cd07ad14a9dc
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleAppMeasurement: a08a43b8677b95ed51fcef880e36737334d804fd
   GoogleDataTransport: 574a983e829327d7c18f2627f65d9e80164ea8a4
   GoogleDataTransportCCTSupport: cad3cd6cdbdbad6b5c2c9206ec413402755faaaa
   GoogleUtilities: f8de7ddf8c706f58e9b405d53e38bbdaa2731e5a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  OneSignal: a6df91542d1cf133b9dd19d89f2b533d8f2d3163
-  onesignal_flutter: c542d9b9aa51c1fdaeeab7f1a2b372bf2f02ab67
+  OneSignal: fa98eaa90372bb367b6a4a1c1622ffb9832c7600
+  onesignal_flutter: fc5794fdcfdbd3f17426cb63c78281a3f51c85ff
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
@@ -285,6 +294,7 @@ SPEC CHECKSUMS:
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
   url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
   url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
+  UXCam: d9fe256ef297c6b41d411d1654e51acdc198c157
   ZDCChat: 02340a2389a4b7d9f6c78bf2374130875ebffb9b
   zendesk: cb7101c6cc005b76116b24635880a416e83214aa
 

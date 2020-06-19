@@ -1,20 +1,20 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
 import 'package:screens/screens.dart';
 
 class BeneficiaryDataScreen extends StatelessWidget {
-  final TransactionDetailsResponseModel transactionDetails;
-
-  const BeneficiaryDataScreen({Key key, @required this.transactionDetails})
-      : assert(transactionDetails != null),
-        super(key: key);
+  const BeneficiaryDataScreen({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final i18n = GetIt.I<I18n>();
+    final transactionDetails =
+        NavigatorHelper.getArgs(context).transactionDetails;
 
     return GetIt.I<Screens>().widget(
       isAccent: true,

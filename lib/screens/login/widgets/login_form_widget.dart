@@ -6,9 +6,11 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
+import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
+import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/login/keys.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/divider_with_text_widget.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
@@ -39,9 +41,16 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     ),
   );
 
+  final passwordFocus = FocusNode();
   final passwordCtrl = TextEditingController();
 
   bool cpfHasError = false;
+
+  @override
+  void initState() {
+    UxCamHelper.protectField(passwordFocus);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +103,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               ),
               TextInputWidget(
                 controller: passwordCtrl,
+                focusNode: passwordFocus,
                 obscureText: true,
                 labelText: i18n.trans('password'),
                 validator: (value) {
@@ -174,8 +184,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   _forgotPassword() {
     TrackEvents.log(TrackEvents.LOGIN_FORGOT_PASSWORD_CLICK);
     FocusScope.of(context).requestFocus(FocusNode());
-    navigator.push(
-      WebsiteRedirectScreen(
+    navigator.pushNamed(
+      Router.WEBSITE_REDIRECT_ROUTE,
+      arguments: WebsiteRedirectScreenArgs(
         url: UrlHelper.FORGOT_PASSWORD_URL,
       ),
     );
@@ -184,8 +195,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   _register() {
     TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
     FocusScope.of(context).requestFocus(FocusNode());
-    navigator.push(
-      WebsiteRedirectScreen(
+    navigator.pushNamed(
+      Router.WEBSITE_REDIRECT_ROUTE,
+      arguments: WebsiteRedirectScreenArgs(
         url: UrlHelper.REGISTER_URL,
       ),
     );

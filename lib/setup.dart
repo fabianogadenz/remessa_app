@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -74,6 +75,13 @@ class SetUp {
           GetIt.I<AppStore>().setTransactionId(additionalData['transactionId']);
       }
     });
+  }
+
+  _initializeUxCam() {
+    if (!configs.isUxCamEnabled) return;
+
+    FlutterUxcam.optIntoSchematicRecordings();
+    FlutterUxcam.startWithKey(constants.uxcam['key']);
   }
 
   _initializeHive() async {
@@ -224,5 +232,7 @@ class SetUp {
     _registerScreens();
 
     _registerDioInterceptors();
+
+    _initializeUxCam();
   }
 }
