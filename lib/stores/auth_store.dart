@@ -22,8 +22,8 @@ abstract class _AuthStoreBase with Store {
 
   @action
   Future<void> logout() async {
-    await _authService.logout();
     isLoggedIn = false;
+    await _authService.logout();
   }
 
   @action

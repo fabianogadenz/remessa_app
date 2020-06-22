@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
@@ -10,10 +11,13 @@ import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
+import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
-import 'package:remessa_app/screens/transaction_details/beneficiary_data_screen.dart';
-import 'package:remessa_app/screens/transaction_details/how_to_pay_screen.dart';
-import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen.dart';
+import 'package:remessa_app/router.dart';
+import 'package:remessa_app/screens/transaction_details/beneficiary_data_screen_args.dart';
+import 'package:remessa_app/screens/transaction_details/how_to_pay_screen_args.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen_args.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_recurrence_button_overlay_widget.dart';
@@ -30,26 +34,24 @@ import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
 
 class TransactionDetailsScreen extends StatefulWidget {
-  final int transactionId;
-
   const TransactionDetailsScreen({
     Key key,
-    @required this.transactionId,
-  })  : assert(transactionId != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _TransactionDetailsScreenState createState() =>
       _TransactionDetailsScreenState();
 }
 
-class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
+class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
+    with RouteAware {
   final i18n = GetIt.I<I18n>();
   final navigator = GetIt.I<NavigatorHelper>();
   final _transactionsStore = TransactionDetailsStore();
   final _transactionsDetailsScreenStore = TransactionDetailsScreenStore();
   final chatHelper = ChatHelper();
 
+  TransactionDetailsScreenArgs args;
   bool showReceiptDownload;
   bool showFirstDivisor = false;
 
@@ -67,13 +69,30 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   String completeArrivalEstimateMessage;
 
   @override
-  void initState() {
-    _transactionsStore.getTransactionDetailsStore(widget.transactionId);
+  void didChangeDependencies() {
+    args = NavigatorHelper.getArgs(context);
+
+    _transactionsStore.getTransactionDetailsStore(args.transactionId);
+
     when(
       (_) => _transactionsStore.transactionDetails != null,
       () => _transactionsDetailsScreenStore.setIsLoading(false),
     );
-    super.initState();
+
+    navigator.routeObserver.subscribe(this, ModalRoute.of(context));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    navigator.routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
   }
 
   @override
@@ -95,7 +114,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             i18n.populate(
               i18n.trans('transaction_details_screen', ['title']),
               {
-                'transactionId': widget.transactionId.toString(),
+                'transactionId': args.transactionId.toString(),
               },
             ),
             style: TextStyle(
@@ -211,8 +230,9 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
           onPressed: () {
             _log(TrackEvents.TRANSACTION_HOW_TO_PAY_CLICK);
 
-            navigator.push(
-              HowToPayScreen(
+            navigator.pushNamed(
+              Router.TD_HOW_TO_PAY_ROUTE,
+              arguments: HowToPayScreenArgs(
                 paymentDeadline: transactionDetails.paymentDeadline,
               ),
             );
@@ -297,8 +317,9 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             () {
               _log(TrackEvents.TRANSACTION_CALCULATION_CLICK);
 
-              navigator.push(
-                TransactionCalculationScreen(
+              navigator.pushNamed(
+                Router.TD_CALCULATION_ROUTE,
+                arguments: TransactionCalculationScreenArgs(
                   transactionDetails: transactionDetails,
                 ),
               );
@@ -318,8 +339,9 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             () {
               _log(TrackEvents.TRANSACTION_BENEFICIARY_INFO_CLICK);
 
-              navigator.push(
-                BeneficiaryDataScreen(
+              navigator.pushNamed(
+                Router.TD_BENEFICIARY_ROUTE,
+                arguments: BeneficiaryDataScreenArgs(
                   transactionDetails: transactionDetails,
                 ),
               );

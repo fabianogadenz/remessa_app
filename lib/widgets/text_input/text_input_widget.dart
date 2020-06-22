@@ -11,6 +11,7 @@ class TextInputWidget extends StatelessWidget {
     this.validator,
     this.controller,
     this.decoration,
+    this.focusNode,
   });
 
   final String labelText;
@@ -20,6 +21,7 @@ class TextInputWidget extends StatelessWidget {
   final String Function(String) validator;
   final TextEditingController controller;
   final InputDecoration decoration;
+  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class TextInputWidget extends StatelessWidget {
       child: TextFormField(
         key: key,
         controller: controller,
+        focusNode: focusNode ?? FocusNode(),
         obscureText: obscureText,
         decoration: decoration ??
             InputDecoration(

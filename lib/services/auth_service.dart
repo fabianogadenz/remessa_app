@@ -1,5 +1,6 @@
 import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -60,6 +61,7 @@ class AuthService {
 
       saveUser(loginResponse.token, loginResponse.customer);
       _amplitude.setUserId(customer.id);
+      setUxCamUserIdentity();
       await SetUp.startOneSignal();
       await OneSignal.shared.setExternalUserId(customer.id.toString());
     } on DioError catch (e) {
@@ -69,5 +71,12 @@ class AuthService {
       logout();
       throw e;
     }
+  }
+
+  Future<void> setUxCamUserIdentity() async {
+    if (!await FlutterUxcam.isRecording()) return;
+    FlutterUxcam.setUserIdentity(customer.id.toString());
+    FlutterUxcam.setUserProperty('name', customer.name);
+    FlutterUxcam.setUserProperty('email', customer.email);
   }
 }

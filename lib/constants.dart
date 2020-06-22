@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 
+const Map<String, String> uxcam = {
+  'key': 'nvvj457iu1lmndv',
+};
+
 const Map<String, String> onesignal = {
   'appId': 'b2f1b437-2038-499a-8cd6-b22afe57daa9',
 };
@@ -34,18 +38,21 @@ final Map<Environment, Constants> constantsMap = {
     amplitude: dev_amplitude,
     api: dev_api,
     zendesk: zendesk,
+    uxcam: uxcam,
   ),
   Environment.RELEASE: Constants(
     onesignal: onesignal,
     amplitude: dev_amplitude,
     api: release_api,
     zendesk: zendesk,
+    uxcam: uxcam,
   ),
   Environment.PROD: Constants(
     onesignal: onesignal,
     amplitude: prod_amplitude,
     api: prod_api,
     zendesk: zendesk,
+    uxcam: uxcam,
   ),
 };
 
@@ -54,16 +61,19 @@ class Constants {
   final Map<String, String> amplitude;
   final Map<String, dynamic> api;
   final Map<String, String> zendesk;
+  final Map<String, String> uxcam;
 
   Constants({
     @required this.onesignal,
     @required this.amplitude,
     @required this.zendesk,
     @required this.api,
+    @required this.uxcam,
   })  : assert(onesignal != null),
         assert(amplitude != null),
         assert(zendesk != null),
-        assert(api != null);
+        assert(api != null),
+        assert(uxcam != null);
 
   static Constants get(Environment env) => constantsMap[env];
 }

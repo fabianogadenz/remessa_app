@@ -9,3 +9,5 @@
 -dontwarn android.**
 -dontwarn com.google.android.gms.**
 -dontwarn io.flutter.embedding.**
+-keep class com.uxcam.** { *; }
+-dontwarn com.uxcam.**

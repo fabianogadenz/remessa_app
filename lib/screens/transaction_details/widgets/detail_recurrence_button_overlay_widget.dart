@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
+import 'package:remessa_app/router.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
 import 'package:screens/custom_overlay.dart';
@@ -30,8 +31,9 @@ class DetailRecurrenceButtonOverlayWidget implements CustomOverlay {
               hasShadow: true,
               onPressed: () {
                 TrackEvents.log(TrackEvents.TRANSACTION_REPEAT_CLICK);
-                GetIt.I<NavigatorHelper>().push(
-                  WebsiteRedirectScreen(
+                GetIt.I<NavigatorHelper>().pushNamed(
+                  Router.WEBSITE_REDIRECT_ROUTE,
+                  arguments: WebsiteRedirectScreenArgs(
                     url: url,
                   ),
                 );

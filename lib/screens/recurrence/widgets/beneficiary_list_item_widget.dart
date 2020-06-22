@@ -7,7 +7,8 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
+import 'package:remessa_app/router.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/user_avatar_widget.dart';
 
@@ -85,8 +86,9 @@ class BeneficiaryListItemWidget extends StatelessWidget {
           TrackEvents.BENEFICIARY_SELECT_CLICK,
           {'beneficiary_currency': beneficiary.currency},
         );
-        GetIt.I<NavigatorHelper>().push(
-          WebsiteRedirectScreen(
+        GetIt.I<NavigatorHelper>().pushNamed(
+          Router.WEBSITE_REDIRECT_ROUTE,
+          arguments: WebsiteRedirectScreenArgs(
             url: beneficiary.redirectUrl,
             description: i18n.trans(
               'website_redirect_screen',
