@@ -83,7 +83,7 @@ class ReceiptDownloadWidget extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  RemessaIcons.download,
+                  RemessaIcons.share,
                   size: 18,
                   color: StyleColors.BRAND_PRIMARY_40,
                 ),
