@@ -79,14 +79,14 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
       () => _transactionsDetailsScreenStore.setIsLoading(false),
     );
 
-    navigator.routeObserver.subscribe(this, ModalRoute.of(context));
+    navigator.subscribeRoute(this, context);
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    navigator.routeObserver.unsubscribe(this);
+    navigator.unsubscribeRoute(this);
     super.dispose();
   }
 

@@ -5,6 +5,18 @@ class NavigatorHelper {
 
   final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
+  void subscribeRoute(RouteAware routeAware, BuildContext context) {
+    try {
+      routeObserver.subscribe(routeAware, ModalRoute.of(context));
+    } catch (e) {
+      // Throw error when navigate to no ModalRoute
+    }
+  }
+
+  void unsubscribeRoute(RouteAware routeAware) {
+    routeObserver.unsubscribe(routeAware);
+  }
+
   dynamic pop() => navigatorKey.currentState.pop();
 
   Future<dynamic> push(Widget screen) => navigatorKey.currentState.push(
