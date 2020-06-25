@@ -62,13 +62,13 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
 
   @override
   void didChangeDependencies() {
-    navigator.routeObserver.subscribe(this, ModalRoute.of(context));
+    navigator.subscribeRoute(this, context);
     super.didChangeDependencies();
   }
 
   @override
   dispose() {
-    navigator.routeObserver.unsubscribe(this);
+    navigator.unsubscribeRoute(this);
     reactionDisposer();
     super.dispose();
   }

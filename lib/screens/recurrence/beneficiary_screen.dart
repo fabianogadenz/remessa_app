@@ -41,7 +41,7 @@ class _BeneficiaryScreenState extends State<BeneficiaryScreen> with RouteAware {
   @override
   void didChangeDependencies() {
     try {
-      navigator.routeObserver.subscribe(this, ModalRoute.of(context));
+      navigator.subscribeRoute(this, context);
     } catch (e) {
       // Throw error when navigate to modal/bottom sheet
     }
@@ -50,7 +50,7 @@ class _BeneficiaryScreenState extends State<BeneficiaryScreen> with RouteAware {
 
   @override
   void dispose() {
-    navigator.routeObserver.unsubscribe(this);
+    navigator.unsubscribeRoute(this);
     super.dispose();
   }
 
