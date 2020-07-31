@@ -283,7 +283,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                 ),
                 Positioned(
                   top: 270,
-                  bottom: 24,
+                  bottom: 40,
                   child: Container(
                     alignment: Alignment.bottomCenter,
                     child: Padding(

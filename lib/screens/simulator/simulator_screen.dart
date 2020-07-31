@@ -17,6 +17,7 @@ import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/primary_button_widget.dart';
+import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
 
 class SimulatorScreen extends StatefulWidget {
@@ -166,71 +167,21 @@ class _SimulatorScreenState extends State<SimulatorScreen>
 
   @override
   Widget build(BuildContext context) {
-    var simulatorOverflow = Observer(
-      builder: (_) {
-        final beneficiaries =
-            beneficiaryStore?.beneficiaryResponseModel?.beneficiaries ?? [];
-        final isLoading =
-            beneficiaryStore.isLoading || simulatorStore.isLoading;
+    return Observer(builder: (_) {
+      final isLoading = beneficiaryStore.isLoading || simulatorStore.isLoading;
+      final beneficiaries =
+          beneficiaryStore?.beneficiaryResponseModel?.beneficiaries ?? [];
 
-        return isLoading || beneficiaries.isNotEmpty
-            ? GestureDetector(
-                onTap: FocusScope.of(context).unfocus,
-                child: SizedBox.expand(
-                  child: SlideTransition(
-                    position: simulatorScreenAnimationStore.tween
-                        .animate(simulatorScreenAnimationStore.controller),
-                    child:
-                        // NotificationListener<DraggableScrollableNotification>(
-                        // onNotification: (notification) {
-                        //   simulatorScreenAnimationStore
-                        //       .setDraggableScrollablePosition(
-                        //           notification.extent);
-                        //   simulatorScreenAnimationStore
-                        //       .setIsExpanded(notification.extent < .85);
-                        //   return true;
-                        // },
-                        DraggableScrollableSheet(
-                      maxChildSize: .85,
-                      initialChildSize: .85,
-                      minChildSize: .85,
-                      // minChildSize: .1,
-                      builder: (context, scrollCtrl) {
-                        return SimulatorWidget(
-                          simulatorStore: simulatorStore,
-                          simulatorScreenAnimationStore:
-                              simulatorScreenAnimationStore,
-                          isScrollDisabled: true,
-                          // simulatorScreenAnimationStore.isScrollDisabled,
-                          isLoading: isLoading,
-                          controller: scrollCtrl,
-                          simulatorResponse: simulatorStore?.simulatorResponse,
-                          refreshFunction: () => simulate(disableLoad: true),
-                        );
-                      },
-                    ),
-                    // ),
-                  ),
-                ),
-              )
-            : Container();
-      },
-    );
-
-    return GetIt.I<Screens>().widget(
-      isStatic: true,
-      child: Stack(
-        children: <Widget>[
-          SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Observer(builder: (_) {
-              final isLoading =
-                  beneficiaryStore.isLoading || simulatorStore.isLoading;
-              final beneficiaries =
-                  beneficiaryStore?.beneficiaryResponseModel?.beneficiaries ??
-                      [];
-
-              return Container(
+      return GetIt.I<Screens>().widget(
+        isStatic: true,
+        safeAreaConfig: SafeAreaConfig(
+          bottom: false,
+        ),
+        child: Stack(
+          children: <Widget>[
+            SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: Container(
                 height: beneficiaries.isEmpty
                     ? MediaQuery.of(context).size.height - 50
                     : null,
@@ -257,18 +208,20 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                           )
                         : emptyState,
                     !isLoading && beneficiaries.isEmpty
-                        ? Container(
-                            width: double.infinity,
-                            height: 48,
-                            child: PrimaryButtonWidget(
-                              'Começar',
-                              onPressed: () => navigator.pushNamed(
-                                Router.WEBSITE_REDIRECT_ROUTE,
-                                arguments: WebsiteRedirectScreenArgs(
-                                  url: beneficiaryStore
-                                          ?.beneficiaryResponseModel
-                                          ?.defaultUrl ??
-                                      '',
+                        ? SafeArea(
+                            child: Container(
+                              width: double.infinity,
+                              height: 48,
+                              child: PrimaryButtonWidget(
+                                'Começar',
+                                onPressed: () => navigator.pushNamed(
+                                  Router.WEBSITE_REDIRECT_ROUTE,
+                                  arguments: WebsiteRedirectScreenArgs(
+                                    url: beneficiaryStore
+                                            ?.beneficiaryResponseModel
+                                            ?.defaultUrl ??
+                                        '',
+                                  ),
                                 ),
                               ),
                             ),
@@ -276,11 +229,54 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                         : Container(),
                   ],
                 ),
+              ),
+            ),
+            isLoading || beneficiaries.isNotEmpty
+                ? buildSimulatorOverflow(context, isLoading)
+                : Container(),
+          ],
+        ),
+      );
+    });
+  }
+
+  GestureDetector buildSimulatorOverflow(BuildContext context, bool isLoading) {
+    return GestureDetector(
+      onTap: FocusScope.of(context).unfocus,
+      child: SizedBox.expand(
+        child: SlideTransition(
+          position: simulatorScreenAnimationStore.tween
+              .animate(simulatorScreenAnimationStore.controller),
+          child:
+              // NotificationListener<DraggableScrollableNotification>(
+              // onNotification: (notification) {
+              //   simulatorScreenAnimationStore
+              //       .setDraggableScrollablePosition(
+              //           notification.extent);
+              //   simulatorScreenAnimationStore
+              //       .setIsExpanded(notification.extent < .85);
+              //   return true;
+              // },
+              DraggableScrollableSheet(
+            maxChildSize: .85,
+            initialChildSize: .85,
+            minChildSize: .85,
+            // minChildSize: .1,
+            builder: (context, scrollCtrl) {
+              return SimulatorWidget(
+                simulatorStore: simulatorStore,
+                simulatorScreenAnimationStore: simulatorScreenAnimationStore,
+                isScrollDisabled: true,
+                // simulatorScreenAnimationStore.isScrollDisabled,
+                isLoading: isLoading,
+                controller: scrollCtrl,
+                simulatorResponse: simulatorStore?.simulatorResponse,
+                refreshFunction: () => simulate(disableLoad: true),
               );
-            }),
+            },
           ),
-          simulatorOverflow,
-        ],
+          // ),
+        ),
       ),
     );
   }

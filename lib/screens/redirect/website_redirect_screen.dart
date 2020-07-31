@@ -22,7 +22,6 @@ class WebsiteRedirectScreen extends StatelessWidget {
     return GetIt.I<Screens>().widget(
       isAccent: true,
       showAppBar: true,
-      isStatic: true,
       statusBarBrightness: Brightness.light,
       appBarWidget: AppBar(
         brightness: Brightness.light,
@@ -34,9 +33,9 @@ class WebsiteRedirectScreen extends StatelessWidget {
               GetIt.I<NavigatorHelper>().pop();
             }),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       child: Container(
-        height: MediaQuery.of(context).size.height - 140,
+        padding: EdgeInsets.symmetric(horizontal: 30),
+        height: MediaQuery.of(context).size.height - 150,
         child: Stack(
           children: <Widget>[
             SingleChildScrollView(

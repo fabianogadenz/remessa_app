@@ -11,7 +11,7 @@ description: Remessa Online App
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.6.0+25
+version: 1.7.0+32
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -27,7 +27,6 @@ dependencies:
   hive_flutter: ^0.3.0+2
   path_provider: ^1.6.5
   flutter_masked_text: ^0.8.0
-  mask_text_input_formatter: ^1.0.7
   flutter_statusbarcolor: ^0.2.3
   dio: ^3.0.9
   cpf_cnpj_validator: ^1.0.5
