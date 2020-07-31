@@ -4,11 +4,11 @@ import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:easy_i18n/easy_i18n.dart';
-import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
+import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/historic_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/section_title_widget.dart';
@@ -53,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
       onPressed: () {
         TrackEvents.log(TrackEvents.DASHBOARD_NEW_TRANSACTION_CLICK);
 
-        ModalHelper.showNewTransactionBottomSheet(context);
+        navigator.pushNamed(Router.SIMULATOR_ROUTE);
       },
     );
 

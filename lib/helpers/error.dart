@@ -6,7 +6,6 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
-import 'package:remessa_app/stores/auth_store.dart';
 
 class ErrorHelper {
   static const authStatus = [
@@ -95,10 +94,9 @@ class ErrorHelper {
 
   static dioErrorInterceptor(DioError dioError) async {
     final i18n = GetIt.I<I18n>();
-    final _authStore = GetIt.I<AuthStore>();
 
     if (serverErrorStatus.contains(dioError.response?.statusCode)) {
-      await _authStore.logout();
+      // await _authStore.logout();
 
       return DioError(
         error: i18n.trans('error', ['internal_server']),
@@ -123,7 +121,7 @@ class ErrorHelper {
 
     if (authStatus.contains(dioError.response?.statusCode) &&
         GetIt.I<AuthService>().token != null) {
-      await _authStore.logout();
+      // await _authStore.logout();
 
       return DioError(
         error: i18n.trans('error', ['auth_expired']),

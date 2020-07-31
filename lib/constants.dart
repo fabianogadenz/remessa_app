@@ -17,7 +17,7 @@ const Map<String, String> prod_amplitude = {
 };
 
 const Map<String, dynamic> dev_api = {
-  'url': 'https://dev-app.pesoreal.xyz/v1/app',
+  'url': 'https://out-dev-app.pesoreal.xyz/v1/app',
 };
 const Map<String, dynamic> release_api = {
   'url': 'https://release-app.beetech.global/v1/app',

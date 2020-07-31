@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
-import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
@@ -42,6 +42,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
   final _tabControllerStore = GetIt.I<TabControllerStore>()
     ..setErrorMessage(null);
   final _appStore = GetIt.I<AppStore>();
+  final navigator = GetIt.I<NavigatorHelper>();
 
   List<TabContent> _tabs = [];
   ReactionDisposer reactionDisposer;
@@ -67,7 +68,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
         Navigator.popUntil(context, (route) => route.isFirst);
       }
 
-      GetIt.I<NavigatorHelper>().pushNamed(
+      navigator.pushNamed(
         Router.TRANSACTION_DETAILS_ROUTE,
         arguments: TransactionDetailsScreenArgs(
           transactionId: _appStore.transactionId,
@@ -82,10 +83,27 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
   Widget build(BuildContext context) {
     _tabs = <TabContent>[
       TabContent(
-        title: i18n.trans('dashboard'),
-        iconData: RemessaIcons.home,
+        title: 'Envios',
+        iconData: RemessaIcons.send,
         widget: DashboardScreen(),
+        action: () {
+          TrackEvents.log(TrackEvents.NAVBAR_SEND_CLICK);
+        },
       ),
+      TabContent(
+        title: 'Simulador',
+        iconData: RemessaIcons.simulador,
+        widget: Container(),
+        action: () {
+          TrackEvents.log(TrackEvents.NAVBAR_SIMULATOR_CLICK);
+          navigator.pushNamed(Router.SIMULATOR_ROUTE);
+        },
+      ),
+      // TabContent(
+      //   title: 'Perfil',
+      //   iconData: RemessaIcons.user_fill,
+      //   widget: DashboardScreen(),
+      // ),
     ];
 
     if (_appStore?.configs?.isChatEnabled ?? true) {
@@ -106,6 +124,8 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       builder: (_) {
         return GetIt.I<Screens>().widget(
           isStatic: true,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           child: _tabs[_tabControllerStore.currentTabIndex].widget,
           bottomNavigationBar: _tabs.length >= 2
               ? BottomNavigationBar(

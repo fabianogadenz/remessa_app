@@ -21,6 +21,7 @@ import 'package:remessa_app/services/auth_service.dart';
 import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/stores/auth_store.dart';
+import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/test_setup.dart';
 import 'package:remessa_app/widgets/error_dialog/error_dialog_widget.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
@@ -143,6 +144,10 @@ class SetUp {
     GetIt.I.registerLazySingleton<TabControllerStore>(
       () => TabControllerStore(),
     );
+
+    GetIt.I.registerLazySingleton<TimerAnimationStore>(
+      () => TimerAnimationStore(),
+    );
   }
 
   _registerDio() {
@@ -192,8 +197,10 @@ class SetUp {
                     {'Authorization': 'Bearer ${GetIt.I<AuthService>().token}'},
                   )
                 : null,
-            onError: (DioError dioError) =>
-                ErrorHelper.dioErrorInterceptor(dioError),
+            onError: (DioError dioError) {
+              if (configs.environment != Environment.PROD) print(dioError);
+              return ErrorHelper.dioErrorInterceptor(dioError);
+            },
             onResponse: (configs.environment != Environment.PROD)
                 ? (response) => print(response)
                 : null,

@@ -10,6 +10,8 @@ class TransactionCalculationRowWidget extends StatelessWidget {
     @required this.value,
     this.oldValue,
     this.onTapInfo,
+    this.isSpotlight = false,
+    this.labelSuffix,
   })  : assert(label != null),
         assert(value != null),
         super(key: key);
@@ -19,63 +21,50 @@ class TransactionCalculationRowWidget extends StatelessWidget {
   final String value;
   final String oldValue;
   final Function onTapInfo;
+  final bool isSpotlight;
+  final Widget labelSuffix;
 
   @override
   Widget build(BuildContext context) {
     final _values = <Widget>[];
+    final textStyle = TextStyle(
+      fontSize: 14,
+      fontWeight: isSpotlight ? FontWeight.w600 : FontWeight.normal,
+      color: StyleColors.BRAND_SECONDARY_50,
+    );
 
     if (oldValue != null) {
-      _values.addAll([
-        Text(
-          oldValue,
-          style: TextStyle(
-            fontSize: 12,
-            color: StyleColors.BRAND_SECONDARY_30,
-            decoration: TextDecoration.lineThrough,
-          ),
-        ),
-        SizedBox(
-          width: 3,
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 3,
-            horizontal: 6,
-          ),
-          decoration: BoxDecoration(
-            color: StyleColors.BRAND_PRIMARY_40,
-            borderRadius: BorderRadius.circular(100),
-          ),
-          child: Text(
-            value,
+      _values.addAll(
+        [
+          Text(
+            oldValue,
             style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: StyleColors.SUPPORT_NEUTRAL_10,
+              color: StyleColors.BRAND_SECONDARY_30,
+              decoration: TextDecoration.lineThrough,
             ),
           ),
-        ),
-      ]);
+          SizedBox(
+            width: 8,
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              color: StyleColors.SUPPORT_SUCCESS_50,
+            ),
+          ),
+        ],
+      );
     } else {
       _values.add(
         Text(
           value,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: StyleColors.BRAND_SECONDARY_50,
-          ),
+          style: textStyle,
         ),
       );
     }
 
-    final textStyle = TextStyle(
-      fontSize: 12,
-      fontWeight: FontWeight.w600,
-      color: StyleColors.BRAND_SECONDARY_50,
-    );
-
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTapInfo,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 12),
@@ -87,34 +76,40 @@ class TransactionCalculationRowWidget extends StatelessWidget {
                 Icon(
                   Icons.info,
                   color: StyleColors.BRAND_PRIMARY_40,
-                  size: 17,
+                  size: 20,
                 ),
                 SizedBox(
-                  width: 6,
+                  width: 8,
                 ),
-                RichText(
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  text: TextSpan(
-                    text: '$label ',
-                    children: [
-                      TextSpan(
-                        text: labelSpotlight != null
-                            ? StringHelper
-                                .handleLimiterWithEllipsisFromTextWidthAndStyle(
-                                labelSpotlight,
-                                205,
-                                textStyle,
-                              )
-                            : null,
-                        style: TextStyle(
-                          color: StyleColors.BRAND_PRIMARY_40,
+                Container(
+                  child: RichText(
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    text: TextSpan(
+                      text: '$label ',
+                      children: [
+                        TextSpan(
+                          text: labelSpotlight != null
+                              ? StringHelper
+                                  .handleLimiterWithEllipsisFromTextWidthAndStyle(
+                                  labelSpotlight,
+                                  160,
+                                  textStyle,
+                                )
+                              : null,
+                          style: TextStyle(
+                            color: StyleColors.BRAND_PRIMARY_40,
+                          ),
                         ),
-                      ),
-                    ],
-                    style: textStyle,
+                      ],
+                      style: textStyle,
+                    ),
                   ),
                 ),
+                SizedBox(
+                  width: labelSuffix != null ? 4 : 0,
+                ),
+                labelSuffix ?? Container(),
               ],
             ),
             Row(

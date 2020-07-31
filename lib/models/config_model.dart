@@ -9,6 +9,7 @@ class ConfigModel {
   bool isChatEnabled = true;
   bool isEnvironmentFlagEnabled = true;
   bool isUxCamEnabled = false;
+  bool isBetaSimulator = false;
   int timeout = 20000;
 
   ConfigModel({
@@ -17,6 +18,7 @@ class ConfigModel {
     this.isChatEnabled = true,
     this.isEnvironmentFlagEnabled = true,
     this.isUxCamEnabled = false,
+    this.isBetaSimulator = false,
     this.timeout = 20000,
   });
 
@@ -35,6 +37,7 @@ class ConfigModel {
     isChatEnabled = remoteConfig.getBool('isChatEnabled');
     isEnvironmentFlagEnabled = remoteConfig.getBool('isEnvironmentFlagEnabled');
     isUxCamEnabled = remoteConfig.getBool('isUxCamEnabled');
+    isBetaSimulator = remoteConfig.getBool('isBetaSimulatorEnabled');
 
     final remoteTimeout = remoteConfig.getInt('timeout');
 
@@ -46,6 +49,7 @@ class ConfigModel {
     environment = EnvironmentModel.stringToEnv(json['environment']);
     isChatEnabled = json['isChatEnabled'];
     isEnvironmentFlagEnabled = json['isEnvironmentFlagEnabled'];
+    isBetaSimulator = json['isBetaSimulatorEnabled'];
     timeout = json['timeout'];
     isUxCamEnabled = json['isUxCamEnabled'];
   }
@@ -56,6 +60,7 @@ class ConfigModel {
     data['environment'] = EnvironmentModel.envToString(this.environment);
     data['isChatEnabled'] = this.isChatEnabled;
     data['isEnvironmentFlagEnabled'] = this.isEnvironmentFlagEnabled;
+    data['isBetaSimulatorEnabled'] = this.isBetaSimulator;
     data['timeout'] = this.timeout;
     data['isUxCamEnabled'] = this.isUxCamEnabled;
     return data;

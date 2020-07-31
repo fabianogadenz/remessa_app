@@ -71,7 +71,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   suffixIcon: cpfHasError
                       ? Icon(
                           RemessaIcons.warning,
-                          size: 20,
+                          size: 16,
                           color: StyleColors.SUPPORT_DANGER_40,
                         )
                       : null,
