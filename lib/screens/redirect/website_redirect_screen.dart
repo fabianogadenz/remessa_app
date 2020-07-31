@@ -3,27 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
 import 'package:screens/screens.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WebsiteRedirectScreen extends StatelessWidget {
-  final String url;
-  final String title;
-  final String description;
   final i18n = GetIt.I<I18n>();
 
-  WebsiteRedirectScreen({
-    Key key,
-    @required this.url,
-    this.title,
-    this.description,
-  })  : assert(url != null),
-        super(key: key);
+  WebsiteRedirectScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final WebsiteRedirectScreenArgs args = NavigatorHelper.getArgs(context);
+
     return GetIt.I<Screens>().widget(
       isAccent: true,
       showAppBar: true,
@@ -50,7 +44,7 @@ class WebsiteRedirectScreen extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                title ?? i18n.trans('website_redirect_screen', ['title']),
+                args.title ?? i18n.trans('website_redirect_screen', ['title']),
                 style: TextStyle(
                   color: StyleColors.BRAND_PRIMARY_80,
                   fontSize: 28,
@@ -61,7 +55,7 @@ class WebsiteRedirectScreen extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                description ??
+                args.description ??
                     i18n.trans(
                         'website_redirect_screen', ['description', 'default']),
                 style: TextStyle(
@@ -78,7 +72,7 @@ class WebsiteRedirectScreen extends StatelessWidget {
               onPressed: () async {
                 TrackEvents.log(TrackEvents.WEBSITE_REDIRECT_CLICK);
                 GetIt.I<NavigatorHelper>().pop();
-                launch(url);
+                launch(args.url);
               },
             ),
           ),

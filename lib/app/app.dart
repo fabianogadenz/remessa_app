@@ -6,19 +6,17 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/screens/initial_stepper/initial_screen.dart';
-import 'package:remessa_app/screens/splash/splash_screen.dart';
+import 'package:remessa_app/router.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/theme.dart';
-import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
 
 class App extends StatelessWidget {
   final reactionDesposer = reaction(
     (_) => GetIt.I<AuthStore>().isLoggedIn,
-    (bool isLoggedIn) => GetIt.I<NavigatorHelper>().pushReplacement(
-      isLoggedIn ? TabControllerWidget() : InitialScreen(),
-    ),
+    (bool isLoggedIn) => GetIt.I<NavigatorHelper>()
+        .pushReplacementNamed(Router.CHECK_LOGIN_ROUTE),
   );
+  final navigator = GetIt.I<NavigatorHelper>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +54,10 @@ class App extends StatelessWidget {
       },
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme(),
-      navigatorKey: GetIt.I<NavigatorHelper>().navigatorKey,
-      home: SplashScreen(),
+      navigatorKey: navigator.navigatorKey,
+      navigatorObservers: [navigator.routeObserver],
+      initialRoute: Router.SPLASH_ROUTE,
+      routes: Router.routes(),
     );
   }
 }

@@ -8,6 +8,7 @@ class ConfigModel {
   Environment environment;
   bool isChatEnabled = true;
   bool isEnvironmentFlagEnabled = true;
+  bool isUxCamEnabled = false;
   int timeout = 20000;
 
   ConfigModel({
@@ -15,6 +16,7 @@ class ConfigModel {
     this.environment,
     this.isChatEnabled = true,
     this.isEnvironmentFlagEnabled = true,
+    this.isUxCamEnabled = false,
     this.timeout = 20000,
   });
 
@@ -32,6 +34,7 @@ class ConfigModel {
         EnvironmentModel.stringToEnv(remoteConfig.getString('environment'));
     isChatEnabled = remoteConfig.getBool('isChatEnabled');
     isEnvironmentFlagEnabled = remoteConfig.getBool('isEnvironmentFlagEnabled');
+    isUxCamEnabled = remoteConfig.getBool('isUxCamEnabled');
 
     final remoteTimeout = remoteConfig.getInt('timeout');
 
@@ -44,6 +47,7 @@ class ConfigModel {
     isChatEnabled = json['isChatEnabled'];
     isEnvironmentFlagEnabled = json['isEnvironmentFlagEnabled'];
     timeout = json['timeout'];
+    isUxCamEnabled = json['isUxCamEnabled'];
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +57,7 @@ class ConfigModel {
     data['isChatEnabled'] = this.isChatEnabled;
     data['isEnvironmentFlagEnabled'] = this.isEnvironmentFlagEnabled;
     data['timeout'] = this.timeout;
+    data['isUxCamEnabled'] = this.isUxCamEnabled;
     return data;
   }
 }

@@ -1,13 +1,16 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
+import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/recurrence/widgets/beneficiary_list_item_widget.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/stores/beneficiary_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
@@ -22,15 +25,43 @@ class BeneficiaryScreen extends StatefulWidget {
   _BeneficiaryScreenState createState() => _BeneficiaryScreenState();
 }
 
-class _BeneficiaryScreenState extends State<BeneficiaryScreen> {
+class _BeneficiaryScreenState extends State<BeneficiaryScreen> with RouteAware {
   final i18n = GetIt.I<I18n>();
 
   final navigator = GetIt.I<NavigatorHelper>();
 
   final beneficiaryStore = BeneficiaryStore()..getBeneficiaries();
 
-  websiteRedirect(String url) => navigator.push(
-        WebsiteRedirectScreen(
+  @override
+  void initState() {
+    FlutterUxcam.tagScreenName(UxCamHelper.BENEFICIARY);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    try {
+      navigator.subscribeRoute(this, context);
+    } catch (e) {
+      // Throw error when navigate to modal/bottom sheet
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    navigator.unsubscribeRoute(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    FlutterUxcam.tagScreenName(UxCamHelper.BENEFICIARY);
+  }
+
+  websiteRedirect(String url) => navigator.pushNamed(
+        Router.WEBSITE_REDIRECT_ROUTE,
+        arguments: WebsiteRedirectScreenArgs(
           url: url,
         ),
       );

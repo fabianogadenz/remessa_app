@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/historic_list_widget.dart';
@@ -22,8 +25,9 @@ class DashboardScreen extends StatefulWidget {
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
   final i18n = GetIt.I<I18n>();
+  final navigator = GetIt.I<NavigatorHelper>();
   final _transactionsStore = TransactionsStore()..getTransactions();
 
   bool isEmpty = false;
@@ -57,9 +61,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    navigator.subscribeRoute(this, context);
+    super.didChangeDependencies();
+  }
+
+  @override
   dispose() {
+    navigator.unsubscribeRoute(this);
     reactionDisposer();
     super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    FlutterUxcam.tagScreenName(UxCamHelper.DASHBOARD);
   }
 
   SliverAppBar _sliverAppBar(ThemeData theme) {

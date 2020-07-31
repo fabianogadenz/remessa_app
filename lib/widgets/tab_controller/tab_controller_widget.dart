@@ -8,9 +8,10 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
+import 'package:remessa_app/router.dart';
 
 import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
-import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:screens/screens.dart';
@@ -66,8 +67,11 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
         Navigator.popUntil(context, (route) => route.isFirst);
       }
 
-      GetIt.I<NavigatorHelper>().push(
-        TransactionDetailsScreen(transactionId: _appStore.transactionId),
+      GetIt.I<NavigatorHelper>().pushNamed(
+        Router.TRANSACTION_DETAILS_ROUTE,
+        arguments: TransactionDetailsScreenArgs(
+          transactionId: _appStore.transactionId,
+        ),
       );
 
       _appStore.setTransactionId(null);

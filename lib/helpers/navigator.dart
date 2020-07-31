@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 
 class NavigatorHelper {
-  final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
+  void subscribeRoute(RouteAware routeAware, BuildContext context) {
+    try {
+      routeObserver.subscribe(routeAware, ModalRoute.of(context));
+    } catch (e) {
+      // Throw error when navigate to no ModalRoute
+    }
+  }
+
+  void unsubscribeRoute(RouteAware routeAware) {
+    routeObserver.unsubscribe(routeAware);
+  }
 
   dynamic pop() => navigatorKey.currentState.pop();
 
@@ -12,6 +25,9 @@ class NavigatorHelper {
         ),
       );
 
+  Future<dynamic> pushNamed(String routeName, {Object arguments}) =>
+      navigatorKey.currentState.pushNamed(routeName, arguments: arguments);
+
   Future<dynamic> pushReplacement(Widget screen) =>
       navigatorKey.currentState.pushReplacement(
         MaterialPageRoute(
@@ -19,5 +35,12 @@ class NavigatorHelper {
         ),
       );
 
-  static isCurrent(BuildContext context) => ModalRoute.of(context).isCurrent;
+  Future<dynamic> pushReplacementNamed(String routeName) =>
+      navigatorKey.currentState.pushReplacementNamed(routeName);
+
+  static bool isCurrent(BuildContext context) =>
+      ModalRoute.of(context).isCurrent;
+
+  static T getArgs<T>(BuildContext context) =>
+      ModalRoute.of(context).settings.arguments;
 }
