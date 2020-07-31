@@ -28,8 +28,10 @@ import 'package:remessa_app/screens/transaction_details/widgets/transaction_deta
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_footer_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_header_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_status_section.dart';
+import 'package:remessa_app/stores/quote_store.dart';
 import 'package:remessa_app/stores/transaction_details_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
 import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
 
@@ -68,16 +70,28 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
 
   String completeArrivalEstimateMessage;
 
+  ReactionDisposer loadingDisposer, popDisposer;
+
+  @override
+  void initState() {
+    loadingDisposer = when(
+      (_) => _transactionsStore.transactionDetails != null,
+      () => _transactionsDetailsScreenStore.setIsLoading(false),
+    );
+
+    popDisposer = when(
+      (_) => _transactionsStore.hasError,
+      () => navigator.pop(),
+    );
+
+    super.initState();
+  }
+
   @override
   void didChangeDependencies() {
     args = NavigatorHelper.getArgs(context);
 
     _transactionsStore.getTransactionDetailsStore(args.transactionId);
-
-    when(
-      (_) => _transactionsStore.transactionDetails != null,
-      () => _transactionsDetailsScreenStore.setIsLoading(false),
-    );
 
     navigator.subscribeRoute(this, context);
 
@@ -87,6 +101,8 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
   @override
   void dispose() {
     navigator.unsubscribeRoute(this);
+    loadingDisposer();
+    popDisposer();
     super.dispose();
   }
 
@@ -99,27 +115,20 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => GetIt.I<Screens>().widget(
-        overlayEvents: {'recurrence': DetailRecurrenceButtonOverlayWidget()},
+        overlayEvents: {
+          'recurrence': DetailRecurrenceButtonOverlayWidget(
+            beneficiaryId: transactionDetails?.counterpart?.historyId,
+          ),
+        },
         isStatic: true,
         showAppBar: true,
         safeAreaConfig: SafeAreaConfig(bottom: false),
-        appBarWidget: AppBar(
-          centerTitle: true,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          iconTheme: IconThemeData(
-            color: StyleColors.SUPPORT_NEUTRAL_10,
-          ),
-          elevation: 0,
-          title: Text(
-            i18n.populate(
-              i18n.trans('transaction_details_screen', ['title']),
-              {
-                'transactionId': args.transactionId.toString(),
-              },
-            ),
-            style: TextStyle(
-              color: StyleColors.SUPPORT_NEUTRAL_10,
-            ),
+        appBarWidget: AccentAppBarWidget(
+          title: i18n.populate(
+            i18n.trans('transaction_details_screen', ['title']),
+            {
+              'transactionId': args.transactionId.toString(),
+            },
           ),
         ),
         child: Builder(
@@ -317,10 +326,14 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
             () {
               _log(TrackEvents.TRANSACTION_CALCULATION_CLICK);
 
+              final quoteStore = QuoteStore()
+                ..setQuote(transactionDetails?.quote);
+
               navigator.pushNamed(
                 Router.TD_CALCULATION_ROUTE,
                 arguments: TransactionCalculationScreenArgs(
-                  transactionDetails: transactionDetails,
+                  quoteStore: quoteStore,
+                  beneficiaryName: transactionDetails.counterpart.name,
                 ),
               );
             },

@@ -58,6 +58,7 @@ class App extends StatelessWidget {
       navigatorObservers: [navigator.routeObserver],
       initialRoute: Router.SPLASH_ROUTE,
       routes: Router.routes(),
+      onGenerateRoute: Router.onGenerateRoute(),
     );
   }
 }

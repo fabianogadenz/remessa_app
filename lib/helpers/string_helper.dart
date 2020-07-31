@@ -11,6 +11,8 @@ class StringHelper {
   static String handleLimiterWithEllipsisFromTextWidthAndStyle(
       String str, double limitWidth,
       [TextStyle textStyle]) {
+    if (str.isEmpty) return str;
+
     final charWidth = TextHelper.mediumCharsWidth(
       str,
       textStyle ?? TextStyle(),

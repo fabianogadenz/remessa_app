@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/setup.dart';
@@ -37,6 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     reactionDisposer = autorun(checkAppVersionAndLogin);
+
+    TrackEvents.log(TrackEvents.SPLASH_VIEW);
 
     super.initState();
   }

@@ -1,3 +1,5 @@
+import 'package:remessa_app/models/currency_model.dart';
+
 class BeneficiaryResponseModel {
   List<Beneficiary> beneficiaries;
   String defaultUrl;
@@ -26,9 +28,10 @@ class BeneficiaryResponseModel {
 }
 
 class Beneficiary {
+  int id;
   String beneficiaryName;
   String abbreviatedName;
-  String currency;
+  Currency currency;
   Country country;
   String bankName;
   String statusName;
@@ -36,21 +39,26 @@ class Beneficiary {
   Info info;
   bool isDisabled;
 
-  Beneficiary(
-      {this.beneficiaryName,
-      this.abbreviatedName,
-      this.currency,
-      this.country,
-      this.bankName,
-      this.statusName,
-      this.redirectUrl,
-      this.info,
-      this.isDisabled});
+  Beneficiary({
+    this.id,
+    this.beneficiaryName,
+    this.abbreviatedName,
+    this.currency,
+    this.country,
+    this.bankName,
+    this.statusName,
+    this.redirectUrl,
+    this.info,
+    this.isDisabled,
+  });
 
   Beneficiary.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     beneficiaryName = json['beneficiaryName'];
     abbreviatedName = json['abbreviatedName'];
-    currency = json['currency'] ?? '';
+    currency = json['currency'] != null
+        ? new Currency.fromJson(json['currency'])
+        : null;
     country =
         json['country'] != null ? new Country.fromJson(json['country']) : null;
     bankName = json['bankName'];
@@ -62,9 +70,12 @@ class Beneficiary {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['beneficiaryName'] = this.beneficiaryName;
     data['abbreviatedName'] = this.abbreviatedName;
-    data['currency'] = this.currency;
+    if (this.currency != null) {
+      data['currency'] = this.currency.toJson();
+    }
     if (this.country != null) {
       data['country'] = this.country.toJson();
     }

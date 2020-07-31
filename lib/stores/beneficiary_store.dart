@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/services/beneficiary_service.dart';
@@ -12,10 +11,12 @@ class BeneficiaryStore = _BeneficiaryStoreBase with _$BeneficiaryStore;
 
 abstract class _BeneficiaryStoreBase with Store {
   final _tabControllerStore = GetIt.I<TabControllerStore>();
-  final navigator = GetIt.I<NavigatorHelper>();
 
   @observable
-  bool isLoading;
+  bool hasError = false;
+
+  @observable
+  bool isLoading = true;
 
   @observable
   BeneficiaryResponseModel beneficiaryResponseModel;
@@ -27,10 +28,10 @@ abstract class _BeneficiaryStoreBase with Store {
       beneficiaryResponseModel = await BeneficiaryService.getBeneficiaries();
     } on ErrorModel catch (e) {
       _tabControllerStore.setErrorMessage(e?.mainError?.message);
-      navigator.pop();
+      hasError = true;
     } catch (e) {
       _tabControllerStore.setErrorMessage(e?.message);
-      navigator.pop();
+      hasError = true;
     } finally {
       isLoading = false;
     }

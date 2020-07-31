@@ -1,5 +1,7 @@
 import 'package:amplitude_flutter/amplitude_flutter.dart';
 import 'package:get_it/get_it.dart';
+import 'package:remessa_app/app/app_store.dart';
+import 'package:remessa_app/helpers/environment_model.dart';
 
 class TrackEvents {
   // Stepper
@@ -74,9 +76,42 @@ class TrackEvents {
       'mobile_app.click.redirect_go_to_website';
   static const WEBSITE_GO_BACK_CLICK = 'mobile_app.click.redirect_go_back';
 
+  // Simulator Screen
+  static const SIMULATOR_SIMULATE_CLICK =
+      'mobile_app.click.simulate_send_remittance';
+  static const SIMULATOR_BENEFICIARY_DROPDOWN_CLICK =
+      'mobile_app.click.simulate_beneficiary_list';
+  static const SIMULATOR_CHANGE_CURRENCY_CLICK =
+      'mobile_app.click.simulate_currency_select';
+  static const SIMULATOR_SELECT_CURRENCY_CLICK =
+      'mobile_app.click.simulate_beneficiary_currency_select';
+  static const SIMULATOR_TAXES_CLICK = 'mobile_app.click.simulate_expand_taxes';
+  static const SIMULATOR_FOLLOW_UP_CLICK =
+      'mobile_app.click.simulate_follow_up_exchange_rate';
+  static const SIMULATOR_ADD_COUPON_CLICK =
+      'mobile_app.click.simulate_add_discount_coupon';
+
+  // NavigationBar
+  static const NAVBAR_SEND_CLICK = 'mobile_app.click_menu_sendings';
+  static const NAVBAR_SIMULATOR_CLICK = 'mobile_app.click_menu_simulate';
+
+  // Splash Screen
+  static const SPLASH_VIEW = 'mobile_app.view.splash_screen';
+
   // Actions
   static log(String name, [Map<String, dynamic> properties]) {
     final amplitude = GetIt.I<AmplitudeFlutter>();
+    final appStore = GetIt.I<AppStore>();
+
+    if (appStore?.configs?.environment == Environment.PROD) {
+      amplitude.logEvent(
+        name: name,
+        properties: {
+          'event_properties': properties,
+        },
+      );
+      return;
+    }
 
     switch (name) {
       case INITIAL_STEPPER_VIEW_STEPPER:
@@ -103,17 +138,21 @@ class TrackEvents {
       case BENEFICIARY_NEW_TRANSACTION_CLICK:
         assert(properties['first_remittance'] != null);
         continue log;
-      case BENEFICIARY_SELECT_CLICK:
-        assert(properties['beneficiary_currency'] != null);
-        continue log;
       case BENEFICIARY_DISABLED_CLICK:
         assert(properties['beneficiary_status'] != null);
         continue log;
+      case SIMULATOR_CHANGE_CURRENCY_CLICK:
+      case SIMULATOR_SELECT_CURRENCY_CLICK:
+        assert(properties['currency'] != null);
+        continue log;
       log:
       default:
-        amplitude.logEvent(name: name, properties: {
-          'event_properties': properties,
-        });
+        amplitude.logEvent(
+          name: name,
+          properties: {
+            'event_properties': properties,
+          },
+        );
     }
   }
 }

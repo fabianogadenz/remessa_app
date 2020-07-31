@@ -64,6 +64,7 @@ class InfoWidget extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.symmetric(vertical: 10),
+            width: double.infinity,
             child: Text(
               description,
               style: TextStyle(

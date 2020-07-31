@@ -7,25 +7,33 @@ class UserAvatarWidget extends StatefulWidget {
     Key key,
     @required this.userName,
     this.isDisabled = false,
+    this.backgroundColor,
+    this.lettersColor,
   })  : assert(userName != null),
         super(key: key);
 
   final String userName;
   final bool isDisabled;
 
+  final Color backgroundColor;
+  final Color lettersColor;
+
   @override
   _UserAvatarWidgetState createState() => _UserAvatarWidgetState();
 }
 
 class _UserAvatarWidgetState extends State<UserAvatarWidget> {
-  Color avatarBackgroundColor = StyleColors.BRAND_PRIMARY_40.withOpacity(0.1);
-  Color avatarLettersColor = StyleColors.BRAND_PRIMARY_40;
+  Color backgroundColor = StyleColors.BRAND_PRIMARY_40.withOpacity(0.1);
+  Color lettersColor = StyleColors.BRAND_PRIMARY_40;
 
   @override
   void initState() {
+    backgroundColor = widget.backgroundColor ?? backgroundColor;
+    lettersColor = widget.lettersColor ?? lettersColor;
+
     if (widget.isDisabled != null && widget.isDisabled) {
-      avatarBackgroundColor = StyleColors.BRAND_SECONDARY_10.withOpacity(0.4);
-      avatarLettersColor = StyleColors.BRAND_SECONDARY_40;
+      backgroundColor = backgroundColor.withOpacity(.6);
+      lettersColor = lettersColor.withOpacity(.6);
     }
 
     super.initState();
@@ -35,7 +43,7 @@ class _UserAvatarWidgetState extends State<UserAvatarWidget> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: avatarBackgroundColor,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(100),
       ),
       width: 40,
@@ -45,7 +53,7 @@ class _UserAvatarWidgetState extends State<UserAvatarWidget> {
           NameHelper.abbreviation(widget.userName).toUpperCase(),
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: avatarLettersColor,
+            color: lettersColor,
           ),
         ),
       ),

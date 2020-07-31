@@ -1,4 +1,5 @@
 import 'package:remessa_app/helpers/transaction_status.dart';
+import 'package:remessa_app/models/quote_model.dart';
 
 class TransactionDetailsResponseModel {
   int id;
@@ -72,110 +73,12 @@ class TransactionDetailsResponseModel {
   }
 }
 
-class Quote {
-  String foreignCurrency;
-  double foreignCurrencyAmount;
-  String nationalCurrency;
-  double nationalCurrencyTotalAmount;
-  double nationalCurrencySubAmount;
-  double exchangeRate;
-  double vet;
-  double spread;
-  double tradingQuotation;
-  String voucherCode;
-  double spreadDiscount;
-  List<FeesTaxes> feesTaxes;
-
-  Quote({
-    this.foreignCurrency,
-    this.foreignCurrencyAmount,
-    this.nationalCurrency,
-    this.nationalCurrencyTotalAmount,
-    this.nationalCurrencySubAmount,
-    this.exchangeRate,
-    this.vet,
-    this.spread,
-    this.tradingQuotation,
-    this.feesTaxes,
-    this.voucherCode,
-    this.spreadDiscount,
-  });
-
-  Quote.fromJson(Map<String, dynamic> json) {
-    foreignCurrency = json['foreignCurrency'];
-    foreignCurrencyAmount = (json['foreignCurrencyAmount'] ?? 0).toDouble();
-    nationalCurrency = json['nationalCurrency'];
-    nationalCurrencyTotalAmount =
-        (json['nationalCurrencyTotalAmount'] ?? 0).toDouble();
-    nationalCurrencySubAmount =
-        (json['nationalCurrencySubAmount'] ?? 0).toDouble();
-    exchangeRate = (json['exchangeRate'] ?? 0).toDouble();
-    vet = (json['vet'] ?? 0).toDouble();
-    spread = (json['spread'] ?? 0).toDouble();
-    tradingQuotation = (json['tradingQuotation'] ?? 0).toDouble();
-    voucherCode = json['voucherCode'];
-    if (json['spreadDiscount'] != null) {
-      spreadDiscount = json['spreadDiscount'].toDouble();
-    }
-    if (json['feesTaxes'] != null) {
-      feesTaxes = new List<FeesTaxes>();
-      json['feesTaxes'].forEach((v) {
-        feesTaxes.add(new FeesTaxes.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['foreignCurrency'] = this.foreignCurrency;
-    data['foreignCurrencyAmount'] = this.foreignCurrencyAmount;
-    data['nationalCurrency'] = this.nationalCurrency;
-    data['nationalCurrencyTotalAmount'] = this.nationalCurrencyTotalAmount;
-    data['nationalCurrencySubAmount'] = this.nationalCurrencySubAmount;
-    data['exchangeRate'] = this.exchangeRate;
-    data['vet'] = this.vet;
-    data['spread'] = this.spread;
-    data['tradingQuotation'] = this.tradingQuotation;
-    data['voucherCode'] = this.voucherCode;
-    data['spreadDiscount'] = this.spreadDiscount;
-    if (this.feesTaxes != null) {
-      data['feesTaxes'] = this.feesTaxes.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class FeesTaxes {
-  String label;
-  String description;
-  double value;
-
-  FeesTaxes({
-    this.label,
-    this.description,
-    this.value,
-  });
-
-  FeesTaxes.fromJson(Map<String, dynamic> json) {
-    label = json['label'];
-    description = json['description'];
-    value = (json['value'] ?? 0).toDouble();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['label'] = this.label;
-    data['description'] = this.description;
-    data['value'] = this.value;
-    return data;
-  }
-}
-
 class Counterpart {
   String name;
   String country;
   String bankName;
   String redirectUrl;
+  int historyId;
   List<AccountInfo> accountInfo;
   List<IntermediaryBankInfo> intermediaryBankInfo;
 
@@ -184,6 +87,7 @@ class Counterpart {
     this.country,
     this.bankName,
     this.redirectUrl,
+    this.historyId,
     this.accountInfo,
     this.intermediaryBankInfo,
   });
@@ -193,6 +97,7 @@ class Counterpart {
     country = json['country'];
     bankName = json['bankName'];
     redirectUrl = json['redirectUrl'];
+    historyId = json['historyId'];
     if (json['accountInfo'] != null) {
       accountInfo = new List<AccountInfo>();
       json['accountInfo'].forEach((v) {
@@ -213,6 +118,7 @@ class Counterpart {
     data['country'] = this.country;
     data['bankName'] = this.bankName;
     data['redirectUrl'] = this.redirectUrl;
+    data['historyId'] = this.historyId;
     if (this.accountInfo != null) {
       data['accountInfo'] = this.accountInfo.map((v) => v.toJson()).toList();
     }

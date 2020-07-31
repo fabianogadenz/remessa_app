@@ -13,15 +13,13 @@ class TransactionCalculationSpotlightRowWidget extends StatelessWidget {
         super(key: key);
 
   final bool isPrimary;
-  final Icon spotlightIcon;
+  final IconData spotlightIcon;
   final String label;
   final String value;
 
   @override
   Widget build(BuildContext context) {
-    final textColor = isPrimary
-        ? StyleColors.BRAND_SECONDARY_80
-        : StyleColors.BRAND_SECONDARY_50;
+    final textColor = StyleColors.BRAND_SECONDARY_50;
 
     return Container(
       margin: isPrimary ? EdgeInsets.only(bottom: 12) : EdgeInsets.zero,
@@ -31,16 +29,19 @@ class TransactionCalculationSpotlightRowWidget extends StatelessWidget {
           Row(
             children: <Widget>[
               Container(
-                height: 24,
-                width: 24,
+                padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: isPrimary
-                      ? StyleColors.BRAND_PRIMARY_40
-                      : StyleColors.SUPPORT_NEUTRAL_30,
+                  border: Border.all(
+                    color: StyleColors.BRAND_SECONDARY_40,
+                  ),
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: Center(
-                  child: spotlightIcon,
+                  child: Icon(
+                    spotlightIcon,
+                    color: StyleColors.BRAND_SECONDARY_40,
+                    size: 10,
+                  ),
                 ),
               ),
               SizedBox(
