@@ -16,6 +16,9 @@ abstract class _TransactionDetailsStoreBase with Store {
   final navigator = GetIt.I<NavigatorHelper>();
 
   @observable
+  bool hasError = false;
+
+  @observable
   TransactionDetailsResponseModel transactionDetails;
 
   @action
@@ -25,10 +28,10 @@ abstract class _TransactionDetailsStoreBase with Store {
           await TransactionService.getTransactionDetailsById(transactionId);
     } on ErrorModel catch (e) {
       _tabControllerStore.setErrorMessage(e?.mainError?.message);
-      navigator.pop();
+      hasError = true;
     } catch (e) {
       _tabControllerStore.setErrorMessage(e?.message);
-      navigator.pop();
+      hasError = true;
     }
   }
 }

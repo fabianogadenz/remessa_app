@@ -8,5 +8,5 @@ class ErrorModel {
   ErrorModel({
     @required this.mainError,
     @required this.fieldErrors,
-  }) : assert(mainError != null);
+  });
 }

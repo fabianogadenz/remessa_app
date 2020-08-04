@@ -1,9 +1,15 @@
 import 'package:flutter/foundation.dart';
-import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
+import 'package:remessa_app/stores/quote_store.dart';
 
 class TransactionCalculationScreenArgs {
-  final TransactionDetailsResponseModel transactionDetails;
+  final QuoteStore quoteStore;
+  final bool showTimer;
+  final String beneficiaryName;
 
-  const TransactionCalculationScreenArgs({@required this.transactionDetails})
-      : assert(transactionDetails != null);
+  const TransactionCalculationScreenArgs({
+    @required this.quoteStore,
+    @required this.beneficiaryName,
+    this.showTimer = false,
+  })  : assert(quoteStore != null),
+        assert(beneficiaryName != null);
 }

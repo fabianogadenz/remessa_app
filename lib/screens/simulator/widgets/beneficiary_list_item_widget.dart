@@ -3,12 +3,9 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
-import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
-import 'package:remessa_app/router.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/user_avatar_widget.dart';
 
@@ -18,24 +15,24 @@ class BeneficiaryListItemWidget extends StatelessWidget {
   BeneficiaryListItemWidget({
     Key key,
     @required this.beneficiary,
+    this.onTap,
   })  : assert(beneficiary != null),
         super(key: key);
   final i18n = GetIt.I<I18n>();
+  final Function onTap;
 
   get isDisabled => beneficiary?.isDisabled != null && beneficiary.isDisabled;
 
   @override
   Widget build(BuildContext context) {
-    final limitTextWidth = MediaQuery.of(context).size.width * 0.5;
+    final limitTextWidth = MediaQuery.of(context).size.width * .9;
 
-    Color beneficiaryNameColor = StyleColors.BRAND_SECONDARY_60;
-    Color beneficiaryBankColor = StyleColors.BRAND_SECONDARY_50;
-    Color actionButtonColor = StyleColors.BRAND_PRIMARY_40;
+    Color beneficiaryNameColor = StyleColors.SUPPORT_NEUTRAL_10;
+    Color beneficiaryBankColor = StyleColors.SUPPORT_NEUTRAL_10;
 
     if (isDisabled) {
-      beneficiaryNameColor = StyleColors.BRAND_SECONDARY_40;
-      beneficiaryBankColor = StyleColors.BRAND_SECONDARY_20;
-      actionButtonColor = StyleColors.BRAND_SECONDARY_20;
+      beneficiaryNameColor = beneficiaryNameColor.withOpacity(.6);
+      beneficiaryBankColor = beneficiaryBankColor.withOpacity(.6);
     }
 
     final currencyCountryFlag = beneficiary?.country?.flagUrl != null
@@ -65,6 +62,7 @@ class BeneficiaryListItemWidget extends StatelessWidget {
     );
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         if (isDisabled) {
           TrackEvents.log(
@@ -86,22 +84,14 @@ class BeneficiaryListItemWidget extends StatelessWidget {
           TrackEvents.BENEFICIARY_SELECT_CLICK,
           {'beneficiary_currency': beneficiary.currency},
         );
-        GetIt.I<NavigatorHelper>().pushNamed(
-          Router.WEBSITE_REDIRECT_ROUTE,
-          arguments: WebsiteRedirectScreenArgs(
-            url: beneficiary.redirectUrl,
-            description: i18n.trans(
-              'website_redirect_screen',
-              ['description', 'recurrence'],
-            ),
-          ),
-        );
+
+        onTap();
       },
       child: Container(
         decoration: BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              color: StyleColors.BRAND_PRIMARY_80.withOpacity(0.1),
+            top: BorderSide(
+              color: StyleColors.SUPPORT_NEUTRAL_10.withOpacity(.2),
             ),
           ),
         ),
@@ -116,6 +106,8 @@ class BeneficiaryListItemWidget extends StatelessWidget {
                 UserAvatarWidget(
                   userName: beneficiary.beneficiaryName,
                   isDisabled: beneficiary.isDisabled,
+                  backgroundColor: StyleColors.BRAND_PRIMARY_50,
+                  lettersColor: StyleColors.BRAND_PRIMARY_20,
                 ),
                 Positioned(
                   top: 28,
@@ -125,23 +117,27 @@ class BeneficiaryListItemWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                         width: 2,
-                        color: StyleColors.SUPPORT_NEUTRAL_10,
+                        color: StyleColors.BRAND_PRIMARY_60,
                       ),
                     ),
                     child: currencyCountryFlag != null
                         ? ClipOval(
-                            child: Container(
-                              width: 14,
-                              height: 14,
-                              child: isDisabled
-                                  ? ColorFiltered(
-                                      colorFilter: ColorFilter.mode(
-                                        Colors.grey,
-                                        BlendMode.saturation,
-                                      ),
-                                      child: currencyCountryFlag,
-                                    )
-                                  : currencyCountryFlag,
+                            child: Stack(
+                              children: <Widget>[
+                                Container(
+                                  width: 14,
+                                  height: 14,
+                                  child: currencyCountryFlag,
+                                ),
+                                isDisabled
+                                    ? Container(
+                                        width: 14,
+                                        height: 14,
+                                        color: StyleColors.BRAND_PRIMARY_60
+                                            .withOpacity(.5),
+                                      )
+                                    : Container(),
+                              ],
                             ),
                           )
                         : Container(),
@@ -192,19 +188,6 @@ class BeneficiaryListItemWidget extends StatelessWidget {
                       )
                     : Container(),
               ],
-            ),
-            Expanded(
-              child: Text(
-                i18n.populate(
-                  i18n.trans('beneficiary_screen', ['send_currency']),
-                  {'currency': beneficiary.currency},
-                ).trim(),
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: actionButtonColor,
-                ),
-                textAlign: TextAlign.right,
-              ),
             ),
           ],
         ),

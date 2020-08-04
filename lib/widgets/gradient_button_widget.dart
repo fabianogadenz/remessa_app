@@ -9,6 +9,7 @@ class GradientButtonWidget extends StatelessWidget {
   final double height;
   final bool hasShadow;
   final Function onPressed;
+  final bool isDisabled;
 
   const GradientButtonWidget({
     Key key,
@@ -23,19 +24,21 @@ class GradientButtonWidget extends StatelessWidget {
     this.width = double.infinity,
     this.height,
     this.hasShadow = false,
+    this.isDisabled = false,
     this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isDisabled ? () {} : onPressed,
       child: Container(
         width: width,
         height: height,
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
-          gradient: gradient,
+          color: StyleColors.BRAND_SECONDARY_10,
+          gradient: isDisabled ? null : gradient,
           borderRadius: BorderRadius.circular(100),
           boxShadow: hasShadow
               ? [

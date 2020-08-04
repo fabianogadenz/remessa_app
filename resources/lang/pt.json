@@ -39,8 +39,8 @@
         }
     },
     "stepper1": {
-        "title": "Repita e acompanhe envios para o exterior",
-        "description": "Envie novamente para beneficiários cadastrados, acompanhe o andamento, veja seu histórico e os comprovantes."
+        "title": "Desde a simulação até o acompanhamento",
+        "description": "Simule e envie para beneficiários cadastrados, acompanhe o andamento, veja seu histórico e os comprovantes."
     },
     "stepper2": {
         "title": "Receba atualizações em tempo real",
@@ -58,7 +58,7 @@
     },
     "status": {
         "waiting_payment": {
-            "description": "Pague sua remessa até as 16h30 do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
+            "description": "Pague sua remessa até as 16h do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
         },
         "payment_indetified": {
             "description": "Recebemos o seu pagamento. Agora é só aguardar a confirmação da remessa."
@@ -99,7 +99,7 @@
         "close_transactions": "Histórico",
         "open_empty_state": "Você não tem remessas em andamento",
         "closed_empty_state": "Você ainda não tem remessas concluídas",
-        "create_transaction": "Enviar uma remessa"
+        "create_transaction": "Simular um envio"
     },
     "transaction": {
         "paid_at": "Pago em"
@@ -115,7 +115,7 @@
         "foreign_currency_amount": "Valor enviado em moeda estrangeira",
         "national_currency_amount": "Valor total em reais",
         "vet": {
-            "title": "Valor efetivo total (VET)",
+            "title": "Seu câmbio (VET)",
             "description": "Esse é o valor final da cotação com todos os impostos e tarifas incluídos."
         },
         "transaction_calculation": "Entenda o cálculo da remessa",
@@ -142,7 +142,7 @@
         },
         "deadline": {
             "title": "Não perca o prazo de pagamento",
-            "description": "O prazo limite para pagamento da sua remessa é até as 16h30 do dia $paymentDeadline."
+            "description": "O prazo limite para pagamento da sua remessa é até as 16h do dia $paymentDeadline."
         },
         "bank_account": {
             "title": "Lembre-se: o pagamento deve ser feito de uma conta de pessoa física em que você seja o titular",
@@ -150,11 +150,10 @@
         }
     },
     "transaction_calculation_screen": {
-        "title": "Entenda o cálculo da remessa",
-        "subtitle": "Mais transparência para conferir os custos do seu envio",
-        "foreignTotalAmount": "Você enviou",
+        "title": "Confira as taxas da sua remessa",
+        "foreignTotalAmount": "$beneficiaryName recebe",
         "spread": {
-            "title": "Custo",
+            "title": "Nosso custo",
             "description": "É a taxa de spread cambial que cobramos para enviar seu dinheiro, uma das menores do mercado."
         },
         "exchangeRate": "Taxa de Câmbio",
@@ -163,13 +162,13 @@
             "description": "Usamos a cotação comercial da moeda estrangeira, sem taxas e impostos embutidos."
         },
         "totalFees": "Tarifas",
-        "totalAmount": "Valor total"
+        "totalAmount": "Você paga"
     },
     "website_redirect_screen": {
         "title": "Você será redirecionado para o site",
         "description": {
             "default": "Esta ação ainda não está disponível no app, mas fique tranquilo: conclua agora mesmo no site, diretamente pelo celular.",
-            "recurrence": "Esta ação ainda não está disponível no app.\nEnvie sua remessa no site diretamente pelo celular e depois acompanhe o andamento por aqui."
+            "recurrence": "Ação ainda não disponível no app.\nEnvie no site diretamente pelo celular, depois acompanhe o andamento por aqui."
         },
         "action": "Ir para o site"
     },

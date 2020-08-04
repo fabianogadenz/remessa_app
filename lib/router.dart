@@ -5,6 +5,8 @@ import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_stepper_screen.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
+import 'package:remessa_app/screens/simulator/simulator_screen.dart';
+import 'package:remessa_app/screens/simulator/simulator_screen_args.dart';
 import 'package:remessa_app/screens/splash/splash_screen.dart';
 import 'package:remessa_app/screens/transaction_details/beneficiary_data_screen.dart';
 import 'package:remessa_app/screens/transaction_details/how_to_pay_screen.dart';
@@ -22,10 +24,12 @@ class Router {
   static const STEPPER_ROUTE = '/stepper';
   static const LOGIN_ROUTE = '/login';
   static const DASHBOARD_ROUTE = '/dashboard';
+  static const SIMULATOR_ROUTE = '/simulator';
   static const TRANSACTION_DETAILS_ROUTE = '/transaction_details';
   static const TD_HOW_TO_PAY_ROUTE = '/transaction_details/how_to_pay';
   static const TD_CALCULATION_ROUTE = '/transaction_details/calculation';
   static const TD_BENEFICIARY_ROUTE = '/transaction_details/beneficiary_data';
+  static const SIMULATOR_CALCULATION_ROUTE = '/simulator/calculation';
 
   static Widget _handleDashboardRoute() {
     FlutterUxcam.tagScreenName(UxCamHelper.DASHBOARD);
@@ -78,5 +82,46 @@ class Router {
           FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
           return BeneficiaryDataScreen();
         },
+        SIMULATOR_CALCULATION_ROUTE: (context) {
+          FlutterUxcam.tagScreenName(UxCamHelper.SIMULATOR_TAXES);
+          return TransactionCalculationScreen();
+        },
+      };
+
+  static Route<dynamic> Function(RouteSettings) onGenerateRoute() =>
+      (RouteSettings settings) {
+        switch (settings.name) {
+          case Router.SIMULATOR_ROUTE:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) {
+                FlutterUxcam.tagScreenName(UxCamHelper.SIMULATOR);
+                final SimulatorScreenArgs args = settings?.arguments;
+
+                return SimulatorScreen(
+                  preSelectedBeneficiaryId: args?.beneficiaryId,
+                );
+              },
+              transitionsBuilder: _slideUpTB(),
+            );
+            break;
+          default:
+            return PageRouteBuilder(
+              pageBuilder: (_, __, ___) => Container(), // TODO: 404 page
+            );
+        }
+      };
+
+  static _slideUpTB() => (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        final tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
       };
 }

@@ -9,6 +9,23 @@ part of 'beneficiary_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BeneficiaryStore on _BeneficiaryStoreBase, Store {
+  final _$hasErrorAtom = Atom(name: '_BeneficiaryStoreBase.hasError');
+
+  @override
+  bool get hasError {
+    _$hasErrorAtom.context.enforceReadPolicy(_$hasErrorAtom);
+    _$hasErrorAtom.reportObserved();
+    return super.hasError;
+  }
+
+  @override
+  set hasError(bool value) {
+    _$hasErrorAtom.context.conditionallyRunInAction(() {
+      super.hasError = value;
+      _$hasErrorAtom.reportChanged();
+    }, _$hasErrorAtom, name: '${_$hasErrorAtom.name}_set');
+  }
+
   final _$isLoadingAtom = Atom(name: '_BeneficiaryStoreBase.isLoading');
 
   @override
@@ -56,7 +73,7 @@ mixin _$BeneficiaryStore on _BeneficiaryStoreBase, Store {
   @override
   String toString() {
     final string =
-        'isLoading: ${isLoading.toString()},beneficiaryResponseModel: ${beneficiaryResponseModel.toString()}';
+        'hasError: ${hasError.toString()},isLoading: ${isLoading.toString()},beneficiaryResponseModel: ${beneficiaryResponseModel.toString()}';
     return '{$string}';
   }
 }

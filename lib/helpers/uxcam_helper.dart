@@ -8,7 +8,9 @@ class UxCamHelper {
   static const DASHBOARD = 'Dashboard';
   static const REDIRECT = 'Redirect';
   static const OPERATION = 'Operation';
-  static const BENEFICIARY = 'Benediciary';
+  static const BENEFICIARY = 'Beneficiary';
+  static const SIMULATOR = 'Simulator';
+  static const SIMULATOR_TAXES = 'Simulator taxes';
 
   static void protectField(FocusNode focusNode) async =>
       await FlutterUxcam.isRecording()

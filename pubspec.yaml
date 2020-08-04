@@ -11,7 +11,7 @@ description: Remessa Online App
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.6.0+25
+version: 1.7.0+32
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -39,7 +39,7 @@ dependencies:
   carousel_slider: ^1.4.1
   skeleton_text: ^1.0.0
   easy_i18n: ^1.0.0
-  screens: ^2.3.0
+  screens: ^2.3.4
   cached_network_image: ^2.2.0+1
 
   # Plugins
@@ -52,6 +52,7 @@ dependencies:
   share_extend: ^1.1.5
   flutter_cache_manager: ^1.2.2
   flutter_uxcam: ^1.1.1
+  rxdart: ^0.24.1
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,8 @@ flutter:
   - images/step3.png
   - images/website_redirect.png
   - images/new_transaction_empty_state.png
+  - images/simulator_empty.png
+  - images/flag_brazil.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

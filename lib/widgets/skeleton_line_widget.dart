@@ -9,6 +9,7 @@ class SkeletonLineWidget extends StatelessWidget {
     this.color,
     this.height,
     @required this.width,
+    this.borderRadius,
   })  : assert(width != null),
         super(key: key);
 
@@ -16,13 +17,14 @@ class SkeletonLineWidget extends StatelessWidget {
   final Color color;
   final double height;
   final double width;
+  final BorderRadius borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: borderRadius ?? BorderRadius.circular(10.0),
         color: color ?? StyleColors.SUPPORT_NEUTRAL_20.withOpacity(0.2),
       ),
       child: SkeletonAnimation(
