@@ -1,3 +1,4 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_uxcam/flutter_uxcam.dart';
@@ -33,6 +34,7 @@ class SimulatorScreen extends StatefulWidget {
 class _SimulatorScreenState extends State<SimulatorScreen>
     with TickerProviderStateMixin, RouteAware {
   final navigator = GetIt.I<NavigatorHelper>();
+  final i18n = GetIt.I<I18n>();
 
   final beneficiaryStore = BeneficiaryStore()..getBeneficiaries();
   final simulatorStore = SimulatorStore();
@@ -42,25 +44,29 @@ class _SimulatorScreenState extends State<SimulatorScreen>
 
   int get _preSelectedBeneficiaryId => widget.preSelectedBeneficiaryId;
 
-  final emptyState = Container(
-    width: 235,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Image.asset('images/simulator_empty.png'),
-        SizedBox(
-          height: 26,
-        ),
-        Text(
-          'Cadastre um beneficiário para simular um envio.',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: StyleColors.SUPPORT_NEUTRAL_10,
+  Widget emptyState;
+
+  _SimulatorScreenState() {
+    emptyState = Container(
+      width: 235,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset('images/simulator_empty.png'),
+          SizedBox(
+            height: 26,
           ),
-        ),
-      ],
-    ),
-  );
+          Text(
+            i18n.trans('simulator_screen', ['empty_state']),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: StyleColors.SUPPORT_NEUTRAL_10,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   final List<ReactionDisposer> reactionDesposers = [];
 
@@ -213,7 +219,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                               width: double.infinity,
                               height: 48,
                               child: PrimaryButtonWidget(
-                                'Começar',
+                                i18n.trans('start'),
                                 onPressed: () => navigator.pushNamed(
                                   Router.WEBSITE_REDIRECT_ROUTE,
                                   arguments: WebsiteRedirectScreenArgs(

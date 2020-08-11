@@ -1,3 +1,4 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
@@ -7,12 +8,13 @@ import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class NewBeneficiaryListItemWidget extends StatelessWidget {
-  const NewBeneficiaryListItemWidget({
+  NewBeneficiaryListItemWidget({
     Key key,
     @required this.newBeneficiaryUrl,
   })  : assert(newBeneficiaryUrl != null),
         super(key: key);
 
+  final i18n = GetIt.I<I18n>();
   final String newBeneficiaryUrl;
 
   @override
@@ -77,14 +79,20 @@ class NewBeneficiaryListItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Novo beneficiário',
+                  i18n.trans(
+                    'simulator_screen',
+                    ['beneficiary_selection', 'new_beneficiary'],
+                  ),
                   style: TextStyle(
                     color: StyleColors.SUPPORT_NEUTRAL_10,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  'Comece um novo envio',
+                  i18n.trans(
+                    'simulator_screen',
+                    ['beneficiary_selection', 'new_transaction'],
+                  ),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: StyleColors.BRAND_PRIMARY_20,

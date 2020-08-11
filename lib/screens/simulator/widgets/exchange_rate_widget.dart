@@ -1,3 +1,4 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -34,6 +35,7 @@ class ExchangeRateWidget extends StatefulWidget {
 }
 
 class _ExchangeRateWidgetState extends State<ExchangeRateWidget> {
+  final i18n = GetIt.I<I18n>();
   final timerAnimationStore = GetIt.I<TimerAnimationStore>();
   final QuoteStore quoteStore = QuoteStore();
   ReactionDisposer _reactionDisposer;
@@ -116,7 +118,10 @@ class _ExchangeRateWidgetState extends State<ExchangeRateWidget> {
                     quoteStore.setQuote(quote);
 
                     return Text(
-                      'Seu câmbio: BRL $vet',
+                      i18n.populate(
+                        i18n.trans('simulator_screen', ['exchange_rate']),
+                        {'vet': vet},
+                      ),
                       style: TextStyle(
                         color: StyleColors.BRAND_SECONDARY_50,
                         fontWeight: FontWeight.w600,
@@ -126,7 +131,7 @@ class _ExchangeRateWidgetState extends State<ExchangeRateWidget> {
                   Row(
                     children: <Widget>[
                       Text(
-                        'Taxas',
+                        i18n.trans('fees'),
                         style: TextStyle(
                           color: StyleColors.BRAND_PRIMARY_40,
                           fontWeight: FontWeight.w600,

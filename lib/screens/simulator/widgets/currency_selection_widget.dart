@@ -70,9 +70,19 @@ class CurrencySelectionWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              ListSectionLabelWidget('Mais usadas'),
+              ListSectionLabelWidget(
+                i18n.trans(
+                  'simulator_screen',
+                  ['currency_selection', 'most_useds'],
+                ),
+              ),
               ...(currencies?.mostUseds ?? []).map(_mapCurrency).toList(),
-              ListSectionLabelWidget('Outras moedas'),
+              ListSectionLabelWidget(
+                i18n.trans(
+                  'simulator_screen',
+                  ['currency_selection', 'others'],
+                ),
+              ),
               ...(currencies?.others ?? []).map(_mapCurrency).toList(),
             ],
           ),
@@ -110,7 +120,10 @@ class CurrencySelectionWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  'Selecione a moeda para envio',
+                  i18n.trans(
+                    'simulator_screen',
+                    ['currency_selection', 'title'],
+                  ),
                   style: TextStyle(
                     color: StyleColors.BRAND_PRIMARY_80,
                     fontWeight: FontWeight.w600,

@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
@@ -12,13 +10,13 @@ import 'package:remessa_app/widgets/user_avatar_widget.dart';
 class BeneficiaryListItemWidget extends StatelessWidget {
   final Beneficiary beneficiary;
 
-  BeneficiaryListItemWidget({
+  const BeneficiaryListItemWidget({
     Key key,
     @required this.beneficiary,
     this.onTap,
   })  : assert(beneficiary != null),
         super(key: key);
-  final i18n = GetIt.I<I18n>();
+
   final Function onTap;
 
   get isDisabled => beneficiary?.isDisabled != null && beneficiary.isDisabled;
