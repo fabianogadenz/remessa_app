@@ -1,5 +1,7 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
@@ -34,6 +36,8 @@ class SimulatorBeneficiariesWidget extends StatefulWidget {
 class _SimulatorBeneficiariesWidgetState
     extends State<SimulatorBeneficiariesWidget>
     with SingleTickerProviderStateMixin {
+  final i18n = GetIt.I<I18n>();
+
   SimulatorStore get simulatorStore => widget.simulatorStore;
   SimulatorScreenAnimationStore get simulatorScreenAnimationStore =>
       widget.simulatorScreenAnimationStore;
@@ -81,7 +85,10 @@ class _SimulatorBeneficiariesWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Escolha um beneficiário',
+                    i18n.trans(
+                      'simulator_screen',
+                      ['beneficiary_selection', 'choose'],
+                    ),
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: StyleColors.BRAND_PRIMARY_20,
@@ -163,7 +170,10 @@ class _SimulatorBeneficiariesWidgetState
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'Envio para ',
+                  text: i18n.trans(
+                    'simulator_screen',
+                    ['beneficiary_selection', 'send_to'],
+                  ),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: StyleColors.BRAND_PRIMARY_20,

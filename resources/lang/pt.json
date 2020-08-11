@@ -26,6 +26,10 @@
     "password": "Senha",
     "forgotMyPassword": "Esqueci minha senha",
     "send_again": "Enviar novamente",
+    "fees": "Taxas",
+    "simulator": "Simulador",
+    "outbound": "Envios",
+    "beta": "BETA",
     "error": {
         "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
@@ -172,12 +176,43 @@
         },
         "action": "Ir para o site"
     },
-    "beneficiary_screen": {
-        "header": "Escolha um beneficiário",
-        "body": "Você ainda não tem nenhum beneficiário. Cadastre um para enviar sua primeira remessa.",
-        "action": "Começar",
-        "new_beneficiary": "Deseja enviar para outro beneficiário?",
-        "new_transaction": "Comece um novo envio",
-        "send_currency": "Enviar $currency"
+    "simulator_screen": {
+        "empty_state": "Cadastre um beneficiário para simular um envio.",
+        "currency_selection": {
+            "title": "Selecione a moeda para envio",
+            "most_useds": "Mais usadas",
+            "others": "Outras moedas"
+        },
+        "exchange_rate": "Seu câmbio: BRL $vet",
+        "default_currency_abbr": "USD",
+        "redirect_note": {
+            "title": "Sua cotação pode ser atualizada",
+            "description": "Confira o valor final na confirmação da remessa."
+        },
+        "local_currency_field": {
+            "label": "Você envia",
+            "currency_acronym": "BRL",
+            "field_name": "BRL_VALUE"
+        },
+        "foreign_currency_field": {
+            "label": "$beneficiaryFirstName recebe",
+            "field_name": "FOREIGN_VALUE"
+        },
+        "coupon_cta": {
+            "label": "Tem um desconto?",
+            "text": "Simule ou insira um cupom aqui"
+        },
+        "follow_up_cta": {
+            "label": "Acompanhe a evolução da moeda",
+            "text": "Ver o gráfico de $currency_abbreviation"
+        },
+        "send": "Enviar remessa",
+        "beneficiary": "Beneficiário",
+        "beneficiary_selection": {
+            "choose": "Escolha um beneficiário",
+            "send_to": "Envio para ",
+            "new_beneficiary": "Novo beneficiário",
+            "new_transaction": "Comece um novo envio"
+        }
     }
 }

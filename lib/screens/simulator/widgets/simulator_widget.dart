@@ -108,11 +108,14 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final beneficiaryFirstName =
-        simulatorStore?.beneficiary?.beneficiaryName != null
-            ? simulatorStore?.beneficiary?.beneficiaryName?.split(' ')[0] ??
-                'Beneficiário'
-            : 'Beneficiário';
+    String beneficiaryFirstName =
+        i18n.trans('simulator_screen', ['beneficiary']);
+    final beneficiaryName = simulatorStore?.beneficiary?.beneficiaryName;
+
+    if (beneficiaryName != null) {
+      beneficiaryFirstName =
+          beneficiaryName.split(' ')[0] ?? beneficiaryFirstName;
+    }
 
     final currency = widget.simulatorResponse?.currency;
 
@@ -164,11 +167,21 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                             children: <Widget>[
                               CustomCurrencyInputWidget(
                                 controller: brlCurrencyCtrl,
-                                label: 'Você envia',
-                                currencyAcronym: 'BRL',
+                                label: i18n.trans(
+                                  'simulator_screen',
+                                  ['local_currency_field', 'label'],
+                                ),
+                                currencyAcronym: i18n.trans(
+                                  'simulator_screen',
+                                  ['local_currency_field', 'currency_acronym'],
+                                ),
                                 isLoading: widget.isLoading,
-                                errorMessage:
-                                    _getFieldError('BRL_VALUE')?.message,
+                                errorMessage: _getFieldError(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['local_currency_field', 'field_name'],
+                                  ),
+                                )?.message,
                                 onChanged: (_) {
                                   final response =
                                       simulatorStore?.simulatorResponse;
@@ -192,7 +205,15 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               ),
                               CustomCurrencyInputWidget(
                                 controller: foreignCurrencyCtrl,
-                                label: '$beneficiaryFirstName recebe',
+                                label: i18n.populate(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['foreign_currency_field', 'label'],
+                                  ),
+                                  {
+                                    'beneficiaryFirstName': beneficiaryFirstName
+                                  },
+                                ),
                                 currencyImgUrl: currency?.flagUrl ?? '',
                                 currencyAcronym: currency?.abbreviation ?? '',
                                 isChangeable:
@@ -211,8 +232,12 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                   );
                                 },
                                 isLoading: widget.isLoading,
-                                errorMessage:
-                                    _getFieldError('FOREIGN_VALUE')?.message,
+                                errorMessage: _getFieldError(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['foreign_currency_field', 'field_name'],
+                                  ),
+                                )?.message,
                                 onChanged: (_) {
                                   final response =
                                       simulatorStore?.simulatorResponse;
@@ -244,8 +269,14 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               ),
                               IconLabelTextCTAWidget(
                                 icon: RemessaIcons.percent,
-                                label: 'Tem um desconto?',
-                                text: 'Simule ou insira um cupom aqui',
+                                label: i18n.trans(
+                                  'simulator_screen',
+                                  ['coupon_cta', 'label'],
+                                ),
+                                text: i18n.trans(
+                                  'simulator_screen',
+                                  ['coupon_cta', 'text'],
+                                ),
                                 isLoading: widget.isLoading,
                                 onTap: () {
                                   TrackEvents.log(
@@ -259,9 +290,20 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               ),
                               IconLabelTextCTAWidget(
                                 icon: RemessaIcons.graph,
-                                label: 'Acompanhe a evolução da moeda',
-                                text:
-                                    'Ver o gráfico de ${currency?.abbreviation}',
+                                label: i18n.trans(
+                                  'simulator_screen',
+                                  ['follow_up_cta', 'label'],
+                                ),
+                                text: i18n.populate(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['follow_up_cta', 'text'],
+                                  ),
+                                  {
+                                    'currency_abbreviation':
+                                        currency?.abbreviation ?? ''
+                                  },
+                                ),
                                 isLoading: widget.isLoading,
                                 onTap: () {
                                   TrackEvents.log(
@@ -292,7 +334,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                         height: 48,
                         width: MediaQuery.of(context).size.width - 48,
                         isDisabled: widget.isLoading,
-                        label: 'Enviar remessa',
+                        label: i18n.trans('simulator_screen', ['send']),
                         onPressed: () {
                           TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
                           redirect(
@@ -302,9 +344,14 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               ['description', 'recurrence'],
                             ),
                             note: Note(
-                              title: 'Sua cotação pode ser atualizada',
-                              description:
-                                  'Confira o valor final na confirmação da remessa.',
+                              title: i18n.trans(
+                                'simulator_screen',
+                                ['redirect_note', 'title'],
+                              ),
+                              description: i18n.trans(
+                                'simulator_screen',
+                                ['redirect_note', 'description'],
+                              ),
                             ),
                           );
                         },

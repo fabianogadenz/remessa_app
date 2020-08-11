@@ -83,7 +83,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
   Widget build(BuildContext context) {
     _tabs = <TabContent>[
       TabContent(
-        title: 'Envios',
+        title: i18n.trans('outbound'),
         iconData: RemessaIcons.send,
         widget: DashboardScreen(),
         action: () {
@@ -91,7 +91,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
         },
       ),
       TabContent(
-        title: 'Simulador',
+        title: i18n.trans('simulator'),
         iconData: RemessaIcons.simulador,
         widget: Container(),
         action: () {
