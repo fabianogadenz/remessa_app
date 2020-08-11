@@ -50,7 +50,9 @@ class SimulatorWidget extends StatefulWidget {
 class _SimulatorWidgetState extends State<SimulatorWidget> {
   final i18n = GetIt.I<I18n>();
   final brlCurrencyCtrl = MoneyMaskedTextController();
+  final brlCurrencyFocusNode = FocusNode();
   final foreignCurrencyCtrl = MoneyMaskedTextController();
+  final foreignCurrencyFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   SimulatorStore get simulatorStore => widget.simulatorStore;
@@ -96,6 +98,21 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
           foreignCurrencyCtrl.updateValue(foreignValue ?? 0);
       },
     );
+
+    brlCurrencyFocusNode.addListener(() {
+      if (brlCurrencyFocusNode.hasFocus)
+        TrackEvents.log(TrackEvents.SIMULATOR_SELECT_BRL_TEXT_FIELD);
+    });
+
+    foreignCurrencyFocusNode.addListener(() {
+      if (foreignCurrencyFocusNode.hasFocus)
+        TrackEvents.log(
+          TrackEvents.SIMULATOR_SELECT_FOREIGN_TEXT_FIELD,
+          {
+            'currency': widget.simulatorResponse?.currency?.abbreviation,
+          },
+        );
+    });
 
     super.initState();
   }
@@ -167,6 +184,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                             children: <Widget>[
                               CustomCurrencyInputWidget(
                                 controller: brlCurrencyCtrl,
+                                focusNode: brlCurrencyFocusNode,
                                 label: i18n.trans(
                                   'simulator_screen',
                                   ['local_currency_field', 'label'],
@@ -205,6 +223,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               ),
                               CustomCurrencyInputWidget(
                                 controller: foreignCurrencyCtrl,
+                                focusNode: foreignCurrencyFocusNode,
                                 label: i18n.populate(
                                   i18n.trans(
                                     'simulator_screen',
@@ -219,18 +238,11 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                 isChangeable:
                                     simulatorStore?.beneficiary?.currency ==
                                         null,
-                                changeableCallback: () {
-                                  TrackEvents.log(
-                                    TrackEvents.SIMULATOR_CHANGE_CURRENCY_CLICK,
-                                    {
-                                      'currency': currency?.abbreviation,
-                                    },
-                                  );
-                                  ModalHelper.showCurrencySelectionBottomSheet(
-                                    context,
-                                    simulatorStore,
-                                  );
-                                },
+                                changeableCallback: () => ModalHelper
+                                    .showCurrencySelectionBottomSheet(
+                                  context,
+                                  simulatorStore,
+                                ),
                                 isLoading: widget.isLoading,
                                 errorMessage: _getFieldError(
                                   i18n.trans(

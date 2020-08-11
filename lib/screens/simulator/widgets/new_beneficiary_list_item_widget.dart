@@ -2,6 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
@@ -20,12 +21,16 @@ class NewBeneficiaryListItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => GetIt.I<NavigatorHelper>().pushNamed(
-        Router.WEBSITE_REDIRECT_ROUTE,
-        arguments: WebsiteRedirectScreenArgs(
-          url: newBeneficiaryUrl,
-        ),
-      ),
+      onTap: () {
+        TrackEvents.log(TrackEvents.BENEFICIARY_NEW_TRANSACTION_CLICK);
+
+        return GetIt.I<NavigatorHelper>().pushNamed(
+          Router.WEBSITE_REDIRECT_ROUTE,
+          arguments: WebsiteRedirectScreenArgs(
+            url: newBeneficiaryUrl,
+          ),
+        );
+      },
       child: Container(
         decoration: BoxDecoration(
           border: Border(
