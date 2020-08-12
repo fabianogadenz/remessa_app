@@ -140,7 +140,7 @@ void main() async {
       test('should handle SocketException', () async {
         final dio = MockDio();
 
-        when(dio.request('network_connection'))
+        when(dio.fetch(any, any, any))
             .thenAnswer((_) async => throw SocketException(''));
 
         final DioError error = await ErrorHelper.dioErrorInterceptor(

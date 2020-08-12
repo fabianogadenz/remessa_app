@@ -15,6 +15,7 @@ import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
@@ -167,6 +168,10 @@ class SetUp {
     GetIt.I.registerLazySingleton<NavigatorHelper>(
       () => NavigatorHelper(),
     );
+
+    GetIt.I.registerLazySingleton<SnowplowHelper>(
+      () => SnowplowHelper(verbose: configs.environment != Environment.PROD),
+    );
   }
 
   _registerScreens() {
@@ -228,11 +233,11 @@ class SetUp {
 
     _registerDio();
 
+    _registerHelpers();
+
     await _registerServices();
 
     _registerStores();
-
-    _registerHelpers();
 
     await _registerOneSignal();
 

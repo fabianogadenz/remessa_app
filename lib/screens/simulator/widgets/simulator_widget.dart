@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/models/responses/simulator_response_model.dart';
@@ -49,6 +50,7 @@ class SimulatorWidget extends StatefulWidget {
 
 class _SimulatorWidgetState extends State<SimulatorWidget> {
   final i18n = GetIt.I<I18n>();
+  final _snowplow = GetIt.I<SnowplowHelper>();
   final brlCurrencyCtrl = MoneyMaskedTextController();
   final brlCurrencyFocusNode = FocusNode();
   final foreignCurrencyCtrl = MoneyMaskedTextController();
@@ -293,6 +295,13 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                 onTap: () {
                                   TrackEvents.log(
                                       TrackEvents.SIMULATOR_ADD_COUPON_CLICK);
+
+                                  _snowplow.track(
+                                    category: SnowplowHelper.OUTBOUND_CATEGORY,
+                                    action: SnowplowHelper.CLICK_ACTION,
+                                    label: SnowplowHelper.ADD_DISCOUNT,
+                                  );
+
                                   redirect(simulatorStore
                                       ?.simulatorResponse?.redirectUrl);
                                 },
@@ -349,6 +358,13 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                         label: i18n.trans('simulator_screen', ['send']),
                         onPressed: () {
                           TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
+
+                          _snowplow.track(
+                            category: SnowplowHelper.OUTBOUND_CATEGORY,
+                            action: SnowplowHelper.CLICK_ACTION,
+                            label: SnowplowHelper.SEND_OPERATION,
+                          );
+
                           redirect(
                             simulatorStore?.simulatorResponse?.redirectUrl,
                             description: i18n.trans(

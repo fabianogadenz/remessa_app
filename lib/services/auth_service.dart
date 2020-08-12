@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:remessa_app/helpers/error.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/models/hive/customer_model.dart';
 import 'package:remessa_app/models/responses/login_response_model.dart';
 import 'package:remessa_app/setup.dart';
@@ -12,6 +13,7 @@ import 'package:remessa_app/setup.dart';
 class AuthService {
   final Box _box;
   final _amplitude = GetIt.I<AmplitudeFlutter>();
+  final _snowplow = GetIt.I<SnowplowHelper>();
 
   Dio _dio;
 
@@ -42,6 +44,7 @@ class AuthService {
   Future<void> logout() async {
     _box.clear();
     _amplitude.setUserId(null);
+    _snowplow.setUserId(null);
     await OneSignal.shared.removeExternalUserId();
   }
 
@@ -61,6 +64,7 @@ class AuthService {
 
       saveUser(loginResponse.token, loginResponse.customer);
       _amplitude.setUserId(customer.id);
+      _snowplow.setUserId(customer.id);
       setUxCamUserIdentity();
       await SetUp.startOneSignal();
       await OneSignal.shared.setExternalUserId(customer.id.toString());
