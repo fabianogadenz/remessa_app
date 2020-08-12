@@ -5,6 +5,7 @@ import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/router.dart';
@@ -220,15 +221,20 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                               height: 48,
                               child: PrimaryButtonWidget(
                                 i18n.trans('start'),
-                                onPressed: () => navigator.pushNamed(
-                                  Router.WEBSITE_REDIRECT_ROUTE,
-                                  arguments: WebsiteRedirectScreenArgs(
-                                    url: beneficiaryStore
-                                            ?.beneficiaryResponseModel
-                                            ?.defaultUrl ??
-                                        '',
-                                  ),
-                                ),
+                                onPressed: () {
+                                  TrackEvents.log(TrackEvents
+                                      .BENEFICIARY_NEW_TRANSACTION_CLICK);
+
+                                  return navigator.pushNamed(
+                                    Router.WEBSITE_REDIRECT_ROUTE,
+                                    arguments: WebsiteRedirectScreenArgs(
+                                      url: beneficiaryStore
+                                              ?.beneficiaryResponseModel
+                                              ?.defaultUrl ??
+                                          '',
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           )

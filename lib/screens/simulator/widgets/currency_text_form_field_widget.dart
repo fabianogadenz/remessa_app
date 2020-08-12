@@ -12,11 +12,13 @@ class CurrencyTextFormFieldWidget extends StatelessWidget {
     this.onChanged,
     this.inputFormatters = const [],
     this.suffixIcon,
+    this.focusNode,
   })  : assert(controller != null),
         super(key: key);
 
   final TextEditingController controller;
   final List<TextInputFormatter> inputFormatters;
+  final FocusNode focusNode;
   final Function(String) validator;
   final Function(String) onChanged;
   final Widget suffixIcon;
@@ -43,6 +45,7 @@ class CurrencyTextFormFieldWidget extends StatelessWidget {
                 WhitelistingTextInputFormatter.digitsOnly,
                 ...inputFormatters,
               ],
+              focusNode: focusNode,
               onChanged: onChanged,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,

@@ -64,13 +64,6 @@ class TrackEvents {
   static const TRANSACTION_REPEAT_CLICK =
       'mobile_app.click.operation_repeat_remittance';
 
-  // Beneficiary Screen (New Transaction)
-  static const BENEFICIARY_NEW_TRANSACTION_CLICK =
-      'mobile_app.click.beneficiary_add_new_remittance';
-  static const BENEFICIARY_SELECT_CLICK = 'mobile_app.click.beneficiary_select';
-  static const BENEFICIARY_DISABLED_CLICK =
-      'mobile_app.click.beneficiary_status';
-
   // Website Redirect Screen
   static const WEBSITE_REDIRECT_CLICK =
       'mobile_app.click.redirect_go_to_website';
@@ -81,8 +74,6 @@ class TrackEvents {
       'mobile_app.click.simulate_send_remittance';
   static const SIMULATOR_BENEFICIARY_DROPDOWN_CLICK =
       'mobile_app.click.simulate_beneficiary_list';
-  static const SIMULATOR_CHANGE_CURRENCY_CLICK =
-      'mobile_app.click.simulate_currency_select';
   static const SIMULATOR_SELECT_CURRENCY_CLICK =
       'mobile_app.click.simulate_beneficiary_currency_select';
   static const SIMULATOR_TAXES_CLICK = 'mobile_app.click.simulate_expand_taxes';
@@ -90,6 +81,17 @@ class TrackEvents {
       'mobile_app.click.simulate_follow_up_exchange_rate';
   static const SIMULATOR_ADD_COUPON_CLICK =
       'mobile_app.click.simulate_add_discount_coupon';
+  static const SIMULATOR_SELECT_BRL_TEXT_FIELD =
+      'mobile_app.onfocus.simulate_BRL_currency';
+  static const SIMULATOR_SELECT_FOREIGN_TEXT_FIELD =
+      'mobile_app.onfocus.simulate_foreign_currency';
+
+  // Beneficiary Widget (Simulator Screen)
+  static const BENEFICIARY_NEW_TRANSACTION_CLICK =
+      'mobile_app.click.beneficiary_add_new_remittance';
+  static const BENEFICIARY_SELECT_CLICK = 'mobile_app.click.beneficiary_select';
+  static const BENEFICIARY_DISABLED_CLICK =
+      'mobile_app.click.beneficiary_status';
 
   // NavigationBar
   static const NAVBAR_SEND_CLICK = 'mobile_app.click_menu_sendings';
@@ -135,14 +137,11 @@ class TrackEvents {
       case TRANSACTION_TOOLTIP_CLICK:
         assert(properties['origin'] != null);
         continue log;
-      case BENEFICIARY_NEW_TRANSACTION_CLICK:
-        assert(properties['first_remittance'] != null);
-        continue log;
       case BENEFICIARY_DISABLED_CLICK:
         assert(properties['beneficiary_status'] != null);
         continue log;
-      case SIMULATOR_CHANGE_CURRENCY_CLICK:
       case SIMULATOR_SELECT_CURRENCY_CLICK:
+      case SIMULATOR_SELECT_FOREIGN_TEXT_FIELD:
         assert(properties['currency'] != null);
         continue log;
       log:
