@@ -5,6 +5,7 @@ import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
@@ -224,6 +225,13 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                                 onPressed: () {
                                   TrackEvents.log(TrackEvents
                                       .BENEFICIARY_NEW_TRANSACTION_CLICK);
+
+                                  GetIt.I<SnowplowHelper>().track(
+                                    category:
+                                        SnowplowHelper.BENEFICIARY_CATEGORY,
+                                    action: SnowplowHelper.CLICK_ACTION,
+                                    label: SnowplowHelper.ADD_NEW_BENEFICIARY,
+                                  );
 
                                   return navigator.pushNamed(
                                     Router.WEBSITE_REDIRECT_ROUTE,

@@ -2,6 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
@@ -23,6 +24,12 @@ class NewBeneficiaryListItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         TrackEvents.log(TrackEvents.BENEFICIARY_NEW_TRANSACTION_CLICK);
+
+        GetIt.I<SnowplowHelper>().track(
+          category: SnowplowHelper.BENEFICIARY_CATEGORY,
+          action: SnowplowHelper.CLICK_ACTION,
+          label: SnowplowHelper.ADD_NEW_BENEFICIARY,
+        );
 
         return GetIt.I<NavigatorHelper>().pushNamed(
           Router.WEBSITE_REDIRECT_ROUTE,
