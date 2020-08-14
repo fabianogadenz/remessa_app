@@ -8,11 +8,11 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/screens/login/login_screen_store.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:screens/screens.dart';
@@ -51,6 +51,17 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
   @override
   void didPopNext() {
     FlutterUxcam.tagScreenName(UxCamHelper.LOGIN);
+  }
+
+  _websiteRedirect(String url, {String log, UTM utm}) {
+    if (log != null) TrackEvents.log(log);
+
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    Router.websiteRedirect(
+      url,
+      utm: utm,
+    );
   }
 
   @override
@@ -113,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
     );
   }
 
-  Container _buildPrivacyTermsBanner(BuildContext context) {
+  Widget _buildPrivacyTermsBanner(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(10),
       width: double.infinity,
@@ -128,51 +139,41 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
             color: StyleColors.BRAND_SECONDARY_50,
           ),
           text: I18n.of(context)
-              .trans('login_screen', ['privacyBanner', 'intro']),
+              .trans('login_screen', ['privacy_banner', 'intro']),
           children: [
             TextSpan(
               text: I18n.of(context)
-                  .trans('login_screen', ['privacyBanner', 'privacyPolicy']),
+                  .trans('login_screen', ['privacy_banner', 'privacy_policy']),
               style: TextStyle(
                 fontWeight: FontWeight.w600,
               ),
               recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  TrackEvents.log(TrackEvents.LOGIN_PRIVACY_POLICY_CLICK);
-
-                  FocusScope.of(context).requestFocus(FocusNode());
-
-                  navigator.pushNamed(
-                    Router.WEBSITE_REDIRECT_ROUTE,
-                    arguments: WebsiteRedirectScreenArgs(
-                      url: UrlHelper.PRIVACY_POLICY_URL,
+                ..onTap = () => _websiteRedirect(
+                      UrlHelper.PRIVACY_POLICY_URL,
+                      utm: UTM(
+                        campaign: UTM.PRIVACY_POLICY_TERMS_CAMPAIGN,
+                      ),
+                      log: TrackEvents.LOGIN_PRIVACY_POLICY_CLICK,
                     ),
-                  );
-                },
             ),
             TextSpan(
               text: I18n.of(context)
-                  .trans('login_screen', ['privacyBanner', 'and']),
+                  .trans('login_screen', ['privacy_banner', 'and']),
             ),
             TextSpan(
-              text: I18n.of(context)
-                  .trans('login_screen', ['privacyBanner', 'useTerms']),
+              text: I18n.of(context).trans(
+                  'login_screen', ['privacy_banner', 'terms_of_service']),
               style: TextStyle(
                 fontWeight: FontWeight.w600,
               ),
               recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  TrackEvents.log(TrackEvents.LOGIN_USE_TERMS_CLICK);
-
-                  FocusScope.of(context).requestFocus(FocusNode());
-
-                  navigator.pushNamed(
-                    Router.WEBSITE_REDIRECT_ROUTE,
-                    arguments: WebsiteRedirectScreenArgs(
-                      url: UrlHelper.USE_TERMS_URL,
+                ..onTap = () => _websiteRedirect(
+                      UrlHelper.TERMS_OF_SERVICE_URL,
+                      utm: UTM(
+                        campaign: UTM.TERMS_OF_SERVICE_CAMPAIGN,
+                      ),
+                      log: TrackEvents.LOGIN_TERMS_OF_SERVICE_CLICK,
                     ),
-                  );
-                },
             ),
           ],
         ),

@@ -23,7 +23,8 @@ class TrackEvents {
       'mobile_app.alert.invalid_login_error';
   static const LOGIN_PRIVACY_POLICY_CLICK = 'mobile_app.click.privacy_policy';
   static const LOGIN_SUBMIT_LOGIN_VALID = 'mobile_app.submit.login_form';
-  static const LOGIN_USE_TERMS_CLICK = 'mobile_app.click.terms_of_use_link';
+  static const LOGIN_TERMS_OF_SERVICE_CLICK =
+      'mobile_app.click.terms_of_use_link';
   static const LOGIN_REGISTER_CLICK =
       'mobile_app.click.new_registration_button';
 

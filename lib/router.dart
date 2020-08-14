@@ -1,10 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/screens/initial_stepper/initial_stepper_screen.dart';
 import 'package:remessa_app/screens/login/login_screen.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen.dart';
+import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/simulator/simulator_screen.dart';
 import 'package:remessa_app/screens/simulator/simulator_screen_args.dart';
 import 'package:remessa_app/screens/splash/splash_screen.dart';
@@ -124,4 +127,16 @@ class Router {
           child: child,
         );
       };
+
+  static websiteRedirect(String url, {String description, Note note, UTM utm}) {
+    GetIt.I<NavigatorHelper>().pushNamed(
+      Router.WEBSITE_REDIRECT_ROUTE,
+      arguments: WebsiteRedirectScreenArgs(
+        url: url,
+        description: description,
+        note: note,
+        utm: utm,
+      ),
+    );
+  }
 }

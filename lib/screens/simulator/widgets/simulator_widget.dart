@@ -5,11 +5,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
-import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/models/responses/simulator_response_model.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
@@ -59,17 +59,6 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
 
   SimulatorStore get simulatorStore => widget.simulatorStore;
   ReactionDisposer reactionDisposer;
-
-  void redirect(String url, {String description, Note note}) {
-    GetIt.I<NavigatorHelper>().pushNamed(
-      Router.WEBSITE_REDIRECT_ROUTE,
-      arguments: WebsiteRedirectScreenArgs(
-        url: url,
-        description: description,
-        note: note,
-      ),
-    );
-  }
 
   ErrorResponseModel _getFieldError(String fieldName) {
     if (simulatorStore?.fieldErrors == null) return null;
@@ -123,6 +112,64 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   void dispose() {
     reactionDisposer();
     super.dispose();
+  }
+
+  _onSimulateClick() {
+    TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
+
+    _snowplow.track(
+      category: SnowplowHelper.OUTBOUND_CATEGORY,
+      action: SnowplowHelper.CLICK_ACTION,
+      label: SnowplowHelper.SEND_OPERATION,
+    );
+
+    Router.websiteRedirect(
+      simulatorStore?.simulatorResponse?.redirectUrl,
+      description: i18n.trans(
+        'website_redirect_screen',
+        ['description', 'recurrence'],
+      ),
+      note: Note(
+        title: i18n.trans(
+          'simulator_screen',
+          ['redirect_note', 'title'],
+        ),
+        description: i18n.trans(
+          'simulator_screen',
+          ['redirect_note', 'description'],
+        ),
+      ),
+      utm: UTM(
+        campaign: UTM.SEND_OPERATION_CAMPAIGN,
+      ),
+    );
+  }
+
+  _onFollowUpClick() {
+    TrackEvents.log(TrackEvents.SIMULATOR_FOLLOW_UP_CLICK);
+    Router.websiteRedirect(
+      widget.simulatorResponse?.quotationUrl ?? '',
+      utm: UTM(
+        campaign: UTM.FOLLOW_UP_EXCHANGE_RATE_CAMPAIGN,
+      ),
+    );
+  }
+
+  _onCouponClick() {
+    TrackEvents.log(TrackEvents.SIMULATOR_ADD_COUPON_CLICK);
+
+    _snowplow.track(
+      category: SnowplowHelper.OUTBOUND_CATEGORY,
+      action: SnowplowHelper.CLICK_ACTION,
+      label: SnowplowHelper.ADD_DISCOUNT,
+    );
+
+    Router.websiteRedirect(
+      simulatorStore?.simulatorResponse?.redirectUrl,
+      utm: UTM(
+        campaign: UTM.ADD_DISCOUNT_CAMPAIGN,
+      ),
+    );
   }
 
   @override
@@ -292,19 +339,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                   ['coupon_cta', 'text'],
                                 ),
                                 isLoading: widget.isLoading,
-                                onTap: () {
-                                  TrackEvents.log(
-                                      TrackEvents.SIMULATOR_ADD_COUPON_CLICK);
-
-                                  _snowplow.track(
-                                    category: SnowplowHelper.OUTBOUND_CATEGORY,
-                                    action: SnowplowHelper.CLICK_ACTION,
-                                    label: SnowplowHelper.ADD_DISCOUNT,
-                                  );
-
-                                  redirect(simulatorStore
-                                      ?.simulatorResponse?.redirectUrl);
-                                },
+                                onTap: _onCouponClick,
                               ),
                               SizedBox(
                                 height: 32,
@@ -326,13 +361,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                   },
                                 ),
                                 isLoading: widget.isLoading,
-                                onTap: () {
-                                  TrackEvents.log(
-                                      TrackEvents.SIMULATOR_FOLLOW_UP_CLICK);
-                                  redirect(
-                                      widget.simulatorResponse?.quotationUrl ??
-                                          '');
-                                },
+                                onTap: _onFollowUpClick,
                               ),
                               SizedBox(
                                 height: 100,
@@ -356,33 +385,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                         width: MediaQuery.of(context).size.width - 48,
                         isDisabled: widget.isLoading,
                         label: i18n.trans('simulator_screen', ['send']),
-                        onPressed: () {
-                          TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
-
-                          _snowplow.track(
-                            category: SnowplowHelper.OUTBOUND_CATEGORY,
-                            action: SnowplowHelper.CLICK_ACTION,
-                            label: SnowplowHelper.SEND_OPERATION,
-                          );
-
-                          redirect(
-                            simulatorStore?.simulatorResponse?.redirectUrl,
-                            description: i18n.trans(
-                              'website_redirect_screen',
-                              ['description', 'recurrence'],
-                            ),
-                            note: Note(
-                              title: i18n.trans(
-                                'simulator_screen',
-                                ['redirect_note', 'title'],
-                              ),
-                              description: i18n.trans(
-                                'simulator_screen',
-                                ['redirect_note', 'description'],
-                              ),
-                            ),
-                          );
-                        },
+                        onPressed: _onSimulateClick,
                       ),
                     ),
                   ),

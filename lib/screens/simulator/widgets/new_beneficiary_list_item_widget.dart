@@ -1,12 +1,11 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class NewBeneficiaryListItemWidget extends StatelessWidget {
@@ -22,22 +21,7 @@ class NewBeneficiaryListItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        TrackEvents.log(TrackEvents.BENEFICIARY_NEW_TRANSACTION_CLICK);
-
-        GetIt.I<SnowplowHelper>().track(
-          category: SnowplowHelper.BENEFICIARY_CATEGORY,
-          action: SnowplowHelper.CLICK_ACTION,
-          label: SnowplowHelper.ADD_NEW_BENEFICIARY,
-        );
-
-        return GetIt.I<NavigatorHelper>().pushNamed(
-          Router.WEBSITE_REDIRECT_ROUTE,
-          arguments: WebsiteRedirectScreenArgs(
-            url: newBeneficiaryUrl,
-          ),
-        );
-      },
+      onTap: _onTap,
       child: Container(
         decoration: BoxDecoration(
           border: Border(
@@ -117,6 +101,23 @@ class NewBeneficiaryListItemWidget extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _onTap() {
+    TrackEvents.log(TrackEvents.BENEFICIARY_NEW_TRANSACTION_CLICK);
+
+    GetIt.I<SnowplowHelper>().track(
+      category: SnowplowHelper.BENEFICIARY_CATEGORY,
+      action: SnowplowHelper.CLICK_ACTION,
+      label: SnowplowHelper.ADD_NEW_BENEFICIARY,
+    );
+
+    Router.websiteRedirect(
+      newBeneficiaryUrl,
+      utm: UTM(
+        campaign: UTM.ADD_NEW_BENEFICIARY_CAMPAIGN,
       ),
     );
   }

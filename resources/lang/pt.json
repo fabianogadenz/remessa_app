@@ -5,7 +5,7 @@
     "enter": "Entrar",
     "continue": "Continuar",
     "or": "ou",
-    "requiredField": "Campo obrigatório.",
+    "required_field": "Campo obrigatório.",
     "summary": "Resumo",
     "name": "Nome",
     "beneficiary": "Favorecido",
@@ -24,7 +24,7 @@
     "next": "Próximo",
     "skip": "Pular",
     "password": "Senha",
-    "forgotMyPassword": "Esqueci minha senha",
+    "forgot_my_password": "Esqueci minha senha",
     "send_again": "Enviar novamente",
     "fees": "Taxas",
     "simulator": "Simulador",
@@ -89,13 +89,13 @@
     "login_screen": {
         "title": "Olá, entre ou cadastre-se",
         "register": "Cadastre-se no site",
-        "privacyBanner": {
+        "privacy_banner": {
             "intro": "Ao logar você concorda com nossa\n",
-            "privacyPolicy": "Política de Privacidade",
+            "privacy_policy": "Política de Privacidade",
             "and": " e nossos ",
-            "useTerms": "Termos de Uso"
+            "terms_of_service": "Termos de Uso"
         },
-        "invalidCPF": "CPF incorreto, confira e tente novamente."
+        "invalid_cpf": "CPF incorreto, confira e tente novamente."
     },
     "dashboard_screen": {
         "title": "Acompanhe suas remessas em tempo real",
@@ -155,18 +155,18 @@
     },
     "transaction_calculation_screen": {
         "title": "Confira as taxas da sua remessa",
-        "foreignTotalAmount": "$beneficiaryName recebe",
+        "foreign_total_amount": "$beneficiaryName recebe",
         "spread": {
             "title": "Nosso custo",
             "description": "É a taxa de spread cambial que cobramos para enviar seu dinheiro, uma das menores do mercado."
         },
-        "exchangeRate": "Taxa de Câmbio",
-        "tradingQuotation": {
+        "exchange_rate": "Taxa de Câmbio",
+        "trading_quotation": {
             "title": "Câmbio Comercial",
             "description": "Usamos a cotação comercial da moeda estrangeira, sem taxas e impostos embutidos."
         },
-        "totalFees": "Tarifas",
-        "totalAmount": "Você paga"
+        "total_fees": "Tarifas",
+        "total_amount": "Você paga"
     },
     "website_redirect_screen": {
         "title": "Você será redirecionado para o site",

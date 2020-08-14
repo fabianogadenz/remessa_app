@@ -7,10 +7,10 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/login/keys.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/divider_with_text_widget.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
@@ -52,6 +52,47 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     super.initState();
   }
 
+  _login(BuildContext context) async {
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    if (_formKey.currentState.validate()) {
+      final cpf = cpfCtrl.value.text;
+      final password = passwordCtrl.value.text;
+
+      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_VALID);
+
+      await widget.login(cpf, password);
+    } else {
+      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_INVALID);
+    }
+
+    passwordCtrl.clear();
+  }
+
+  _forgotPassword() {
+    TrackEvents.log(TrackEvents.LOGIN_FORGOT_PASSWORD_CLICK);
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    Router.websiteRedirect(
+      UrlHelper.FORGOT_PASSWORD_URL,
+      utm: UTM(
+        campaign: UTM.FORGOT_PASSWORD_CAMPAIGN,
+      ),
+    );
+  }
+
+  _register() {
+    TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    Router.websiteRedirect(
+      UrlHelper.REGISTER_URL,
+      utm: UTM(
+        campaign: UTM.PRE_SIGNUP_CAMPAIGN,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -85,13 +126,13 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       cpfHasError = true;
                     });
 
-                    return i18n.trans('requiredField');
+                    return i18n.trans('required_field');
                   } else if (!CPFValidator.isValid(value)) {
                     setState(() {
                       cpfHasError = true;
                     });
 
-                    return i18n.trans('login_screen', ['invalidCPF']);
+                    return i18n.trans('login_screen', ['invalid_cpf']);
                   }
 
                   setState(() {
@@ -108,7 +149,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 labelText: i18n.trans('password'),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return i18n.trans('requiredField');
+                    return i18n.trans('required_field');
                   }
                   return null;
                 },
@@ -125,7 +166,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 padding: const EdgeInsets.only(top: 16),
                 child: GestureDetector(
                   child: Text(
-                    i18n.trans('forgotMyPassword'),
+                    i18n.trans('forgot_my_password'),
                     style: Theme.of(context).textTheme.button.copyWith(
                           color: StyleColors.BRAND_PRIMARY_40,
                           fontSize: 16,
@@ -160,45 +201,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  _login(BuildContext context) async {
-    FocusScope.of(context).requestFocus(FocusNode());
-
-    if (_formKey.currentState.validate()) {
-      final cpf = cpfCtrl.value.text;
-      final password = passwordCtrl.value.text;
-
-      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_VALID);
-
-      await widget.login(cpf, password);
-    } else {
-      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_INVALID);
-    }
-
-    passwordCtrl.clear();
-  }
-
-  _forgotPassword() {
-    TrackEvents.log(TrackEvents.LOGIN_FORGOT_PASSWORD_CLICK);
-    FocusScope.of(context).requestFocus(FocusNode());
-    navigator.pushNamed(
-      Router.WEBSITE_REDIRECT_ROUTE,
-      arguments: WebsiteRedirectScreenArgs(
-        url: UrlHelper.FORGOT_PASSWORD_URL,
-      ),
-    );
-  }
-
-  _register() {
-    TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
-    FocusScope.of(context).requestFocus(FocusNode());
-    navigator.pushNamed(
-      Router.WEBSITE_REDIRECT_ROUTE,
-      arguments: WebsiteRedirectScreenArgs(
-        url: UrlHelper.REGISTER_URL,
       ),
     );
   }
