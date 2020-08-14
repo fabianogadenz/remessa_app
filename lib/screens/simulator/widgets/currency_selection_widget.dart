@@ -6,8 +6,6 @@ import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/currency_model.dart';
 import 'package:remessa_app/models/responses/simulator_default_values_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
-import 'package:remessa_app/router.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/simulator/widgets/currency_item_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/list_section_label_widget.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
@@ -25,13 +23,6 @@ class CurrencySelectionWidget extends StatelessWidget {
   final i18n = GetIt.I<I18n>();
   final navigator = GetIt.I<NavigatorHelper>();
   Currencies get currencies => simulatorStore?.currencies;
-
-  websiteRedirect(String url) => navigator.pushNamed(
-        Router.WEBSITE_REDIRECT_ROUTE,
-        arguments: WebsiteRedirectScreenArgs(
-          url: url,
-        ),
-      );
 
   CurrencyItemWidget _mapCurrency(currency) => CurrencyItemWidget(
         currencyImageUrl: currency.flagUrl,

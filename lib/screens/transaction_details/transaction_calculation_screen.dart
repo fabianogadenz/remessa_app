@@ -108,7 +108,7 @@ class _TransactionCalculationScreenState
                     spotlightIcon: RemessaIcons.user_fill,
                     label: i18n.populate(
                         i18n.trans('transaction_calculation_screen',
-                            ['foreignTotalAmount']),
+                            ['foreign_total_amount']),
                         {
                           'beneficiaryName': beneficiaryName?.split(' ')[0],
                         }),
@@ -121,7 +121,7 @@ class _TransactionCalculationScreenState
                     spotlightRow: TransactionCalculationSpotlightRowWidget(
                       spotlightIcon: RemessaIcons.close,
                       label: i18n.trans(
-                          'transaction_calculation_screen', ['exchangeRate']),
+                          'transaction_calculation_screen', ['exchange_rate']),
                       value: CurrencyHelper.withPrefix(
                         quote.nationalCurrency,
                         quote.exchangeRate.toString(),
@@ -156,7 +156,7 @@ class _TransactionCalculationScreenState
                       ),
                       TransactionCalculationRowWidget(
                         label: i18n.trans('transaction_calculation_screen',
-                            ['tradingQuotation', 'title']),
+                            ['trading_quotation', 'title']),
                         labelSuffix: showTimer
                             ? Container(
                                 width: 25,
@@ -172,9 +172,9 @@ class _TransactionCalculationScreenState
                         onTapInfo: () => _onTapInfo(
                           context,
                           i18n.trans('transaction_calculation_screen',
-                              ['tradingQuotation', 'title']),
+                              ['trading_quotation', 'title']),
                           i18n.trans('transaction_calculation_screen',
-                              ['tradingQuotation', 'description']),
+                              ['trading_quotation', 'description']),
                         ),
                       ),
                     ],
@@ -183,7 +183,7 @@ class _TransactionCalculationScreenState
                     spotlightRow: TransactionCalculationSpotlightRowWidget(
                       spotlightIcon: RemessaIcons.add,
                       label: i18n.trans(
-                          'transaction_calculation_screen', ['totalFees']),
+                          'transaction_calculation_screen', ['total_fees']),
                       value: CurrencyHelper.withPrefix(
                         quote.nationalCurrency,
                         (quote.totalTaxes ??
@@ -235,7 +235,7 @@ class _TransactionCalculationScreenState
                       isPrimary: true,
                       spotlightIcon: RemessaIcons.equal,
                       label: i18n.trans(
-                          'transaction_calculation_screen', ['totalAmount']),
+                          'transaction_calculation_screen', ['total_amount']),
                       value: CurrencyHelper.withPrefix(
                         quote.nationalCurrency,
                         quote.nationalCurrencyTotalAmount.toString(),

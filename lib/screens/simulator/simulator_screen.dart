@@ -9,8 +9,8 @@ import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/router.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/simulator/simulator_screen_animation_store.dart';
 import 'package:remessa_app/screens/simulator/widgets/simulator_beneficiaries_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/simulator_header_widget.dart';
@@ -222,27 +222,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                               height: 48,
                               child: PrimaryButtonWidget(
                                 i18n.trans('start'),
-                                onPressed: () {
-                                  TrackEvents.log(TrackEvents
-                                      .BENEFICIARY_NEW_TRANSACTION_CLICK);
-
-                                  GetIt.I<SnowplowHelper>().track(
-                                    category:
-                                        SnowplowHelper.BENEFICIARY_CATEGORY,
-                                    action: SnowplowHelper.CLICK_ACTION,
-                                    label: SnowplowHelper.ADD_NEW_BENEFICIARY,
-                                  );
-
-                                  return navigator.pushNamed(
-                                    Router.WEBSITE_REDIRECT_ROUTE,
-                                    arguments: WebsiteRedirectScreenArgs(
-                                      url: beneficiaryStore
-                                              ?.beneficiaryResponseModel
-                                              ?.defaultUrl ??
-                                          '',
-                                    ),
-                                  );
-                                },
+                                onPressed: _onStartClick,
                               ),
                             ),
                           )
@@ -260,7 +240,24 @@ class _SimulatorScreenState extends State<SimulatorScreen>
     });
   }
 
-  GestureDetector buildSimulatorOverflow(BuildContext context, bool isLoading) {
+  _onStartClick() {
+    TrackEvents.log(TrackEvents.BENEFICIARY_NEW_TRANSACTION_CLICK);
+
+    GetIt.I<SnowplowHelper>().track(
+      category: SnowplowHelper.BENEFICIARY_CATEGORY,
+      action: SnowplowHelper.CLICK_ACTION,
+      label: SnowplowHelper.ADD_NEW_BENEFICIARY,
+    );
+
+    Router.websiteRedirect(
+      beneficiaryStore?.beneficiaryResponseModel?.defaultUrl,
+      utm: UTM(
+        campaign: UTM.ADD_NEW_BENEFICIARY_CAMPAIGN,
+      ),
+    );
+  }
+
+  Widget buildSimulatorOverflow(BuildContext context, bool isLoading) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: SizedBox.expand(
