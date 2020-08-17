@@ -40,6 +40,11 @@
             "title": "App desatualizado",
             "content": "Baixe a versão atualizada em sua loja de aplicativos.",
             "button": "Fechar"
+        },
+        "maintenance_mode": {
+            "title": "Aplicativo em manutenção",
+            "content": "Estamos atualizando o app para melhorar sua experiência, tente novamente mais tarde.",
+            "button": "Fechar"
         }
     },
     "stepper1": {

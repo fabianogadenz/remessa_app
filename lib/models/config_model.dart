@@ -6,20 +6,22 @@ import 'package:version/version.dart';
 class ConfigModel {
   bool isUpToDate = true;
   Environment environment;
+  int timeout = 20000;
   bool isChatEnabled = true;
   bool isEnvironmentFlagEnabled = true;
   bool isUxCamEnabled = false;
   bool isBetaSimulator = false;
-  int timeout = 20000;
+  bool isMaintenanceModeEnabled = false;
 
   ConfigModel({
     this.isUpToDate = true,
     this.environment,
+    this.timeout = 20000,
     this.isChatEnabled = true,
     this.isEnvironmentFlagEnabled = true,
     this.isUxCamEnabled = false,
     this.isBetaSimulator = false,
-    this.timeout = 20000,
+    this.isMaintenanceModeEnabled = false,
   });
 
   _isUpToDate(String minVersionStr, String currentVersionStr) {
@@ -38,6 +40,7 @@ class ConfigModel {
     isEnvironmentFlagEnabled = remoteConfig.getBool('isEnvironmentFlagEnabled');
     isUxCamEnabled = remoteConfig.getBool('isUxCamEnabled');
     isBetaSimulator = remoteConfig.getBool('isBetaSimulator');
+    isMaintenanceModeEnabled = remoteConfig.getBool('isMaintenanceModeEnabled');
 
     final remoteTimeout = remoteConfig.getInt('timeout');
 
@@ -52,6 +55,7 @@ class ConfigModel {
     isBetaSimulator = json['isBetaSimulator'];
     timeout = json['timeout'];
     isUxCamEnabled = json['isUxCamEnabled'];
+    isMaintenanceModeEnabled = json['isMaintenanceModeEnabled'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +67,7 @@ class ConfigModel {
     data['isBetaSimulator'] = this.isBetaSimulator;
     data['timeout'] = this.timeout;
     data['isUxCamEnabled'] = this.isUxCamEnabled;
+    data['isMaintenanceModeEnabled'] = this.isMaintenanceModeEnabled;
     return data;
   }
 }
