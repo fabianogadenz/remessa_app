@@ -1,4 +1,4 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
@@ -12,7 +12,7 @@ import 'package:remessa_app/setup.dart';
 
 class AuthService {
   final Box _box;
-  final _amplitude = GetIt.I<AmplitudeFlutter>();
+  final _amplitude = GetIt.I<Amplitude>();
   final _snowplow = GetIt.I<SnowplowHelper>();
 
   Dio _dio;
@@ -48,7 +48,10 @@ class AuthService {
     await OneSignal.shared.removeExternalUserId();
   }
 
-  bool get isLoggedIn => (token != null);
+  bool get isLoggedIn {
+    print(customer?.id);
+    return (token != null);
+  }
 
   login(String cpf, String password) async {
     try {
@@ -63,7 +66,7 @@ class AuthService {
       final loginResponse = LoginResponseModel.fromJson(response.data);
 
       saveUser(loginResponse.token, loginResponse.customer);
-      _amplitude.setUserId(customer.id);
+      _amplitude.setUserId(customer.id.toString());
       _snowplow.setUserId(customer.id);
       setUxCamUserIdentity();
       await SetUp.startOneSignal();

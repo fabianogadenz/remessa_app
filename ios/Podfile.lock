@@ -1,10 +1,10 @@
 PODS:
+  - Amplitude (5.2.1)
   - amplitude_flutter (0.0.1):
+    - Amplitude (= 5.2.1)
     - Flutter
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
-  - device_info (0.0.1):
-    - Flutter
   - Fabric (1.10.2)
   - Firebase/Core (6.29.0):
     - Firebase/CoreOnly
@@ -108,8 +108,6 @@ PODS:
   - PromisesObjC (1.2.9)
   - share_extend (0.0.1):
     - Flutter
-  - shared_preferences (0.0.1):
-    - Flutter
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
@@ -130,7 +128,6 @@ PODS:
 
 DEPENDENCIES:
   - amplitude_flutter (from `.symlinks/plugins/amplitude_flutter/ios`)
-  - device_info (from `.symlinks/plugins/device_info/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_crashlytics (from `.symlinks/plugins/firebase_crashlytics/ios`)
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
@@ -142,13 +139,13 @@ DEPENDENCIES:
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - share_extend (from `.symlinks/plugins/share_extend/ios`)
-  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - zendesk (from `.symlinks/plugins/zendesk/ios`)
 
 SPEC REPOS:
   trunk:
+    - Amplitude
     - Crashlytics
     - Fabric
     - Firebase
@@ -171,8 +168,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   amplitude_flutter:
     :path: ".symlinks/plugins/amplitude_flutter/ios"
-  device_info:
-    :path: ".symlinks/plugins/device_info/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_crashlytics:
@@ -193,8 +188,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   share_extend:
     :path: ".symlinks/plugins/share_extend/ios"
-  shared_preferences:
-    :path: ".symlinks/plugins/shared_preferences/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
@@ -203,9 +196,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/zendesk/ios"
 
 SPEC CHECKSUMS:
-  amplitude_flutter: d6cc84a75b7f67fb7ce2d99415fc1692180224ed
+  Amplitude: 9774e93d48d9f41f271a4479e06369a30ab31db1
+  amplitude_flutter: 5b9cab3f48db637a37d67b93e5dc49fa9b206686
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   Firebase: 57957c8d6eb3d8b80a560b1dc58be24724b89ff2
   firebase_core: 0d8be0e0d14c4902953aeb5ac5d7316d1fe4b978
@@ -231,7 +224,6 @@ SPEC CHECKSUMS:
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   share_extend: b6748dc53695587891126a89533b862b92548c7b
-  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
   UXCam: d9fe256ef297c6b41d411d1654e51acdc198c157

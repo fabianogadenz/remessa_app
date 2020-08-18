@@ -1,4 +1,4 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
@@ -103,13 +103,13 @@ class TrackEvents {
 
   // Actions
   static log(String name, [Map<String, dynamic> properties]) {
-    final amplitude = GetIt.I<AmplitudeFlutter>();
+    final amplitude = GetIt.I<Amplitude>();
     final appStore = GetIt.I<AppStore>();
 
     if (appStore?.configs?.environment == Environment.PROD) {
       amplitude.logEvent(
-        name: name,
-        properties: {
+        name,
+        eventProperties: {
           'event_properties': properties,
         },
       );
@@ -148,8 +148,8 @@ class TrackEvents {
       log:
       default:
         amplitude.logEvent(
-          name: name,
-          properties: {
+          name,
+          eventProperties: {
             'event_properties': properties,
           },
         );
