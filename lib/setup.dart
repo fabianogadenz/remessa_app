@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:amplitude_flutter/amplitude_flutter.dart';
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -91,10 +91,8 @@ class SetUp {
   }
 
   _registerAmplitude() {
-    GetIt.I.registerLazySingleton<AmplitudeFlutter>(
-      () => AmplitudeFlutter(
-        constants.amplitude['apiKey'],
-      ),
+    GetIt.I.registerLazySingleton<Amplitude>(
+      () => Amplitude.getInstance()..init(constants.amplitude['apiKey']),
     );
   }
 
