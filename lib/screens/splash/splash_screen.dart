@@ -24,11 +24,12 @@ class _SplashScreenState extends State<SplashScreen> {
   final _appStore = GetIt.I<AppStore>();
   final navigator = GetIt.I<NavigatorHelper>();
   ReactionDisposer reactionDisposer;
+  I18n i18n;
 
   @override
   void initState() {
     try {
-      GetIt.I<I18n>();
+      i18n = GetIt.I<I18n>();
     } catch (_) {
       SetUp.registerI18n(context);
 
@@ -37,11 +38,20 @@ class _SplashScreenState extends State<SplashScreen> {
       ]);
     }
 
-    reactionDisposer = autorun(checkAppVersionAndLogin);
+    reactionDisposer = autorun(handleAppBlocksAndLogin);
 
     TrackEvents.log(TrackEvents.SPLASH_VIEW);
 
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (i18n == null) {
+      i18n = GetIt.I<I18n>();
+    }
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -50,23 +60,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
-  checkAppVersionAndLogin(_) =>
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        final i18n = GetIt.I<I18n>();
-
-        if (!(_appStore?.configs?.isUpToDate ?? true)) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: Text(
-                i18n.trans('error', ['app_version', 'title']),
-                style: TextStyle(
-                  color: StyleColors.BRAND_PRIMARY_40,
-                ),
-              ),
-              content: Text(
-                i18n.trans('error', ['app_version', 'content']),
-              ),
+  handleAppBlocksAndLogin(_) => WidgetsBinding.instance.addPostFrameCallback(
+        (_) async {
+          if (!(_appStore?.configs?.isUpToDate ?? true)) {
+            showBlockDialog(
+              title: i18n.trans('error', ['app_version', 'title']),
+              content: i18n.trans('error', ['app_version', 'content']),
               actions: <Widget>[
                 FlatButton(
                   child: Text(
@@ -75,13 +74,49 @@ class _SplashScreenState extends State<SplashScreen> {
                   onPressed: () => exit(0),
                 ),
               ],
-            ),
-          );
-        } else {
-          await Future.delayed(Duration(milliseconds: 300));
-          navigator.pushReplacementNamed(Router.CHECK_LOGIN_ROUTE);
-        }
-      });
+            );
+          }
+          if (_appStore?.configs?.isMaintenanceModeEnabled ?? false) {
+            showBlockDialog(
+              title: i18n.trans('error', ['maintenance_mode', 'title']),
+              content: i18n.trans('error', ['maintenance_mode', 'content']),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    i18n.trans('error', ['maintenance_mode', 'button']),
+                  ),
+                  onPressed: () => exit(0),
+                ),
+              ],
+            );
+          } else {
+            await Future.delayed(Duration(milliseconds: 300));
+            navigator.pushReplacementNamed(Router.CHECK_LOGIN_ROUTE);
+          }
+        },
+      );
+
+  void showBlockDialog({
+    String title = '',
+    String content = '',
+    List<Widget> actions = const [],
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          title,
+          style: TextStyle(
+            color: StyleColors.BRAND_PRIMARY_40,
+            fontSize: 24,
+          ),
+        ),
+        content: Text(content),
+        actions: actions,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
