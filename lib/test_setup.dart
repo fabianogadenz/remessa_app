@@ -30,12 +30,22 @@ class MockAuthService implements AuthService {
   void saveUser(String token, Customer customer) {}
 
   @override
-  Future<void> setUxCamUserIdentity() {
+  String get token => throw UnimplementedError();
+
+  @override
+  removeUserIdentity() {
     throw UnimplementedError();
   }
 
   @override
-  String get token => throw UnimplementedError();
+  setUserIdentity(Customer customer) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> setUxCamUserIdentity(Customer customer) {
+    throw UnimplementedError();
+  }
 }
 
 class TestSetUp {

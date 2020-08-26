@@ -36,7 +36,7 @@ class SnowplowHelper {
     return GetIt.I<Dio>().post(
       '/snowplow',
       data: {
-        'user_id': _userId ?? GetIt.I<AuthService>()?.customer?.id,
+        'userId': _userId ?? GetIt.I<AuthService>()?.customer?.id,
         'category': category,
         'action': action,
         'label': label,

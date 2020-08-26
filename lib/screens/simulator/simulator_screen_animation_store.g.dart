@@ -6,7 +6,7 @@ part of 'simulator_screen_animation_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SimulatorScreenAnimationStore
     on _SimulatorScreenAnimationStoreBase, Store {
@@ -15,17 +15,15 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   AnimationController get controller {
-    _$controllerAtom.context.enforceReadPolicy(_$controllerAtom);
-    _$controllerAtom.reportObserved();
+    _$controllerAtom.reportRead();
     return super.controller;
   }
 
   @override
   set controller(AnimationController value) {
-    _$controllerAtom.context.conditionallyRunInAction(() {
+    _$controllerAtom.reportWrite(value, super.controller, () {
       super.controller = value;
-      _$controllerAtom.reportChanged();
-    }, _$controllerAtom, name: '${_$controllerAtom.name}_set');
+    });
   }
 
   final _$isExpandedAtom =
@@ -33,17 +31,15 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   bool get isExpanded {
-    _$isExpandedAtom.context.enforceReadPolicy(_$isExpandedAtom);
-    _$isExpandedAtom.reportObserved();
+    _$isExpandedAtom.reportRead();
     return super.isExpanded;
   }
 
   @override
   set isExpanded(bool value) {
-    _$isExpandedAtom.context.conditionallyRunInAction(() {
+    _$isExpandedAtom.reportWrite(value, super.isExpanded, () {
       super.isExpanded = value;
-      _$isExpandedAtom.reportChanged();
-    }, _$isExpandedAtom, name: '${_$isExpandedAtom.name}_set');
+    });
   }
 
   final _$isScrollDisabledAtom =
@@ -51,17 +47,15 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   bool get isScrollDisabled {
-    _$isScrollDisabledAtom.context.enforceReadPolicy(_$isScrollDisabledAtom);
-    _$isScrollDisabledAtom.reportObserved();
+    _$isScrollDisabledAtom.reportRead();
     return super.isScrollDisabled;
   }
 
   @override
   set isScrollDisabled(bool value) {
-    _$isScrollDisabledAtom.context.conditionallyRunInAction(() {
+    _$isScrollDisabledAtom.reportWrite(value, super.isScrollDisabled, () {
       super.isScrollDisabled = value;
-      _$isScrollDisabledAtom.reportChanged();
-    }, _$isScrollDisabledAtom, name: '${_$isScrollDisabledAtom.name}_set');
+    });
   }
 
   final _$draggableScrollablePositionAtom = Atom(
@@ -69,19 +63,16 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   double get draggableScrollablePosition {
-    _$draggableScrollablePositionAtom.context
-        .enforceReadPolicy(_$draggableScrollablePositionAtom);
-    _$draggableScrollablePositionAtom.reportObserved();
+    _$draggableScrollablePositionAtom.reportRead();
     return super.draggableScrollablePosition;
   }
 
   @override
   set draggableScrollablePosition(double value) {
-    _$draggableScrollablePositionAtom.context.conditionallyRunInAction(() {
+    _$draggableScrollablePositionAtom
+        .reportWrite(value, super.draggableScrollablePosition, () {
       super.draggableScrollablePosition = value;
-      _$draggableScrollablePositionAtom.reportChanged();
-    }, _$draggableScrollablePositionAtom,
-        name: '${_$draggableScrollablePositionAtom.name}_set');
+    });
   }
 
   final _$resetDraggableScrollableFunctionAtom = Atom(
@@ -90,19 +81,16 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   Function get resetDraggableScrollableFunction {
-    _$resetDraggableScrollableFunctionAtom.context
-        .enforceReadPolicy(_$resetDraggableScrollableFunctionAtom);
-    _$resetDraggableScrollableFunctionAtom.reportObserved();
+    _$resetDraggableScrollableFunctionAtom.reportRead();
     return super.resetDraggableScrollableFunction;
   }
 
   @override
   set resetDraggableScrollableFunction(Function value) {
-    _$resetDraggableScrollableFunctionAtom.context.conditionallyRunInAction(() {
+    _$resetDraggableScrollableFunctionAtom
+        .reportWrite(value, super.resetDraggableScrollableFunction, () {
       super.resetDraggableScrollableFunction = value;
-      _$resetDraggableScrollableFunctionAtom.reportChanged();
-    }, _$resetDraggableScrollableFunctionAtom,
-        name: '${_$resetDraggableScrollableFunctionAtom.name}_set');
+    });
   }
 
   final _$_SimulatorScreenAnimationStoreBaseActionController =
@@ -110,8 +98,8 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   dynamic setController(AnimationController value) {
-    final _$actionInfo =
-        _$_SimulatorScreenAnimationStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorScreenAnimationStoreBaseActionController
+        .startAction(name: '_SimulatorScreenAnimationStoreBase.setController');
     try {
       return super.setController(value);
     } finally {
@@ -122,8 +110,8 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   dynamic setIsExpanded(bool value) {
-    final _$actionInfo =
-        _$_SimulatorScreenAnimationStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorScreenAnimationStoreBaseActionController
+        .startAction(name: '_SimulatorScreenAnimationStoreBase.setIsExpanded');
     try {
       return super.setIsExpanded(value);
     } finally {
@@ -135,7 +123,8 @@ mixin _$SimulatorScreenAnimationStore
   @override
   dynamic setIsScrollDisabled(bool value) {
     final _$actionInfo =
-        _$_SimulatorScreenAnimationStoreBaseActionController.startAction();
+        _$_SimulatorScreenAnimationStoreBaseActionController.startAction(
+            name: '_SimulatorScreenAnimationStoreBase.setIsScrollDisabled');
     try {
       return super.setIsScrollDisabled(value);
     } finally {
@@ -147,7 +136,9 @@ mixin _$SimulatorScreenAnimationStore
   @override
   dynamic setDraggableScrollablePosition(double value) {
     final _$actionInfo =
-        _$_SimulatorScreenAnimationStoreBaseActionController.startAction();
+        _$_SimulatorScreenAnimationStoreBaseActionController.startAction(
+            name:
+                '_SimulatorScreenAnimationStoreBase.setDraggableScrollablePosition');
     try {
       return super.setDraggableScrollablePosition(value);
     } finally {
@@ -159,7 +150,9 @@ mixin _$SimulatorScreenAnimationStore
   @override
   dynamic setResetDraggableScrollableFunction(Function value) {
     final _$actionInfo =
-        _$_SimulatorScreenAnimationStoreBaseActionController.startAction();
+        _$_SimulatorScreenAnimationStoreBaseActionController.startAction(
+            name:
+                '_SimulatorScreenAnimationStoreBase.setResetDraggableScrollableFunction');
     try {
       return super.setResetDraggableScrollableFunction(value);
     } finally {
@@ -170,8 +163,8 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   dynamic handleExpanded({bool disableScroll = false}) {
-    final _$actionInfo =
-        _$_SimulatorScreenAnimationStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorScreenAnimationStoreBaseActionController
+        .startAction(name: '_SimulatorScreenAnimationStoreBase.handleExpanded');
     try {
       return super.handleExpanded(disableScroll: disableScroll);
     } finally {
@@ -182,8 +175,12 @@ mixin _$SimulatorScreenAnimationStore
 
   @override
   String toString() {
-    final string =
-        'controller: ${controller.toString()},isExpanded: ${isExpanded.toString()},isScrollDisabled: ${isScrollDisabled.toString()},draggableScrollablePosition: ${draggableScrollablePosition.toString()},resetDraggableScrollableFunction: ${resetDraggableScrollableFunction.toString()}';
-    return '{$string}';
+    return '''
+controller: ${controller},
+isExpanded: ${isExpanded},
+isScrollDisabled: ${isScrollDisabled},
+draggableScrollablePosition: ${draggableScrollablePosition},
+resetDraggableScrollableFunction: ${resetDraggableScrollableFunction}
+    ''';
   }
 }

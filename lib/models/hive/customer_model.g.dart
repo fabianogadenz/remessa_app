@@ -8,13 +8,13 @@ part of 'customer_model.dart';
 
 class CustomerAdapter extends TypeAdapter<Customer> {
   @override
-  final typeId = 0;
+  final int typeId = 0;
 
   @override
   Customer read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Customer(
       id: fields[0] as int,
@@ -46,4 +46,14 @@ class CustomerAdapter extends TypeAdapter<Customer> {
       ..writeByte(6)
       ..write(obj.phone);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CustomerAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }

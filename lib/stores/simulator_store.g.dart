@@ -6,150 +6,135 @@ part of 'simulator_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SimulatorStore on _SimulatorStoreBase, Store {
   Computed<Currencies> _$currenciesComputed;
 
   @override
   Currencies get currencies =>
-      (_$currenciesComputed ??= Computed<Currencies>(() => super.currencies))
+      (_$currenciesComputed ??= Computed<Currencies>(() => super.currencies,
+              name: '_SimulatorStoreBase.currencies'))
           .value;
 
   final _$beneficiaryAtom = Atom(name: '_SimulatorStoreBase.beneficiary');
 
   @override
   Beneficiary get beneficiary {
-    _$beneficiaryAtom.context.enforceReadPolicy(_$beneficiaryAtom);
-    _$beneficiaryAtom.reportObserved();
+    _$beneficiaryAtom.reportRead();
     return super.beneficiary;
   }
 
   @override
   set beneficiary(Beneficiary value) {
-    _$beneficiaryAtom.context.conditionallyRunInAction(() {
+    _$beneficiaryAtom.reportWrite(value, super.beneficiary, () {
       super.beneficiary = value;
-      _$beneficiaryAtom.reportChanged();
-    }, _$beneficiaryAtom, name: '${_$beneficiaryAtom.name}_set');
+    });
   }
 
   final _$isReverseAtom = Atom(name: '_SimulatorStoreBase.isReverse');
 
   @override
   bool get isReverse {
-    _$isReverseAtom.context.enforceReadPolicy(_$isReverseAtom);
-    _$isReverseAtom.reportObserved();
+    _$isReverseAtom.reportRead();
     return super.isReverse;
   }
 
   @override
   set isReverse(bool value) {
-    _$isReverseAtom.context.conditionallyRunInAction(() {
+    _$isReverseAtom.reportWrite(value, super.isReverse, () {
       super.isReverse = value;
-      _$isReverseAtom.reportChanged();
-    }, _$isReverseAtom, name: '${_$isReverseAtom.name}_set');
+    });
   }
 
   final _$shouldRefreshAtom = Atom(name: '_SimulatorStoreBase.shouldRefresh');
 
   @override
   bool get shouldRefresh {
-    _$shouldRefreshAtom.context.enforceReadPolicy(_$shouldRefreshAtom);
-    _$shouldRefreshAtom.reportObserved();
+    _$shouldRefreshAtom.reportRead();
     return super.shouldRefresh;
   }
 
   @override
   set shouldRefresh(bool value) {
-    _$shouldRefreshAtom.context.conditionallyRunInAction(() {
+    _$shouldRefreshAtom.reportWrite(value, super.shouldRefresh, () {
       super.shouldRefresh = value;
-      _$shouldRefreshAtom.reportChanged();
-    }, _$shouldRefreshAtom, name: '${_$shouldRefreshAtom.name}_set');
+    });
   }
 
   final _$quantityAtom = Atom(name: '_SimulatorStoreBase.quantity');
 
   @override
   double get quantity {
-    _$quantityAtom.context.enforceReadPolicy(_$quantityAtom);
-    _$quantityAtom.reportObserved();
+    _$quantityAtom.reportRead();
     return super.quantity;
   }
 
   @override
   set quantity(double value) {
-    _$quantityAtom.context.conditionallyRunInAction(() {
+    _$quantityAtom.reportWrite(value, super.quantity, () {
       super.quantity = value;
-      _$quantityAtom.reportChanged();
-    }, _$quantityAtom, name: '${_$quantityAtom.name}_set');
+    });
   }
 
   final _$totalValueAtom = Atom(name: '_SimulatorStoreBase.totalValue');
 
   @override
   double get totalValue {
-    _$totalValueAtom.context.enforceReadPolicy(_$totalValueAtom);
-    _$totalValueAtom.reportObserved();
+    _$totalValueAtom.reportRead();
     return super.totalValue;
   }
 
   @override
   set totalValue(double value) {
-    _$totalValueAtom.context.conditionallyRunInAction(() {
+    _$totalValueAtom.reportWrite(value, super.totalValue, () {
       super.totalValue = value;
-      _$totalValueAtom.reportChanged();
-    }, _$totalValueAtom, name: '${_$totalValueAtom.name}_set');
+    });
   }
 
   final _$hasErrorAtom = Atom(name: '_SimulatorStoreBase.hasError');
 
   @override
   bool get hasError {
-    _$hasErrorAtom.context.enforceReadPolicy(_$hasErrorAtom);
-    _$hasErrorAtom.reportObserved();
+    _$hasErrorAtom.reportRead();
     return super.hasError;
   }
 
   @override
   set hasError(bool value) {
-    _$hasErrorAtom.context.conditionallyRunInAction(() {
+    _$hasErrorAtom.reportWrite(value, super.hasError, () {
       super.hasError = value;
-      _$hasErrorAtom.reportChanged();
-    }, _$hasErrorAtom, name: '${_$hasErrorAtom.name}_set');
+    });
   }
 
   final _$isLoadingAtom = Atom(name: '_SimulatorStoreBase.isLoading');
 
   @override
   bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
+    _$isLoadingAtom.reportRead();
     return super.isLoading;
   }
 
   @override
   set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+    });
   }
 
   final _$fieldErrorsAtom = Atom(name: '_SimulatorStoreBase.fieldErrors');
 
   @override
   List<ErrorResponseModel> get fieldErrors {
-    _$fieldErrorsAtom.context.enforceReadPolicy(_$fieldErrorsAtom);
-    _$fieldErrorsAtom.reportObserved();
+    _$fieldErrorsAtom.reportRead();
     return super.fieldErrors;
   }
 
   @override
   set fieldErrors(List<ErrorResponseModel> value) {
-    _$fieldErrorsAtom.context.conditionallyRunInAction(() {
+    _$fieldErrorsAtom.reportWrite(value, super.fieldErrors, () {
       super.fieldErrors = value;
-      _$fieldErrorsAtom.reportChanged();
-    }, _$fieldErrorsAtom, name: '${_$fieldErrorsAtom.name}_set');
+    });
   }
 
   final _$simulatorResponseAtom =
@@ -157,17 +142,15 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   SimulatorResponseModel get simulatorResponse {
-    _$simulatorResponseAtom.context.enforceReadPolicy(_$simulatorResponseAtom);
-    _$simulatorResponseAtom.reportObserved();
+    _$simulatorResponseAtom.reportRead();
     return super.simulatorResponse;
   }
 
   @override
   set simulatorResponse(SimulatorResponseModel value) {
-    _$simulatorResponseAtom.context.conditionallyRunInAction(() {
+    _$simulatorResponseAtom.reportWrite(value, super.simulatorResponse, () {
       super.simulatorResponse = value;
-      _$simulatorResponseAtom.reportChanged();
-    }, _$simulatorResponseAtom, name: '${_$simulatorResponseAtom.name}_set');
+    });
   }
 
   final _$simulatorDefaultValuesResponseModelAtom =
@@ -175,31 +158,28 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   SimulatorDefaultValuesResponseModel get simulatorDefaultValuesResponseModel {
-    _$simulatorDefaultValuesResponseModelAtom.context
-        .enforceReadPolicy(_$simulatorDefaultValuesResponseModelAtom);
-    _$simulatorDefaultValuesResponseModelAtom.reportObserved();
+    _$simulatorDefaultValuesResponseModelAtom.reportRead();
     return super.simulatorDefaultValuesResponseModel;
   }
 
   @override
   set simulatorDefaultValuesResponseModel(
       SimulatorDefaultValuesResponseModel value) {
-    _$simulatorDefaultValuesResponseModelAtom.context.conditionallyRunInAction(
-        () {
+    _$simulatorDefaultValuesResponseModelAtom
+        .reportWrite(value, super.simulatorDefaultValuesResponseModel, () {
       super.simulatorDefaultValuesResponseModel = value;
-      _$simulatorDefaultValuesResponseModelAtom.reportChanged();
-    }, _$simulatorDefaultValuesResponseModelAtom,
-        name: '${_$simulatorDefaultValuesResponseModelAtom.name}_set');
+    });
   }
 
-  final _$simulateAsyncAction = AsyncAction('simulate');
+  final _$simulateAsyncAction = AsyncAction('_SimulatorStoreBase.simulate');
 
   @override
   Future simulate() {
     return _$simulateAsyncAction.run(() => super.simulate());
   }
 
-  final _$getDefaultValuesAsyncAction = AsyncAction('getDefaultValues');
+  final _$getDefaultValuesAsyncAction =
+      AsyncAction('_SimulatorStoreBase.getDefaultValues');
 
   @override
   Future getDefaultValues({Currency currency}) {
@@ -212,7 +192,8 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   dynamic setBeneficiary(Beneficiary value) {
-    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction(
+        name: '_SimulatorStoreBase.setBeneficiary');
     try {
       return super.setBeneficiary(value);
     } finally {
@@ -222,7 +203,8 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   dynamic setQuantity(double value) {
-    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction(
+        name: '_SimulatorStoreBase.setQuantity');
     try {
       return super.setQuantity(value);
     } finally {
@@ -232,7 +214,8 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   dynamic setTotalValue(double value) {
-    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction(
+        name: '_SimulatorStoreBase.setTotalValue');
     try {
       return super.setTotalValue(value);
     } finally {
@@ -242,7 +225,8 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   dynamic setHasError(bool value) {
-    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction(
+        name: '_SimulatorStoreBase.setHasError');
     try {
       return super.setHasError(value);
     } finally {
@@ -252,7 +236,8 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   dynamic setFieldErrors(List<ErrorResponseModel> value) {
-    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction();
+    final _$actionInfo = _$_SimulatorStoreBaseActionController.startAction(
+        name: '_SimulatorStoreBase.setFieldErrors');
     try {
       return super.setFieldErrors(value);
     } finally {
@@ -262,8 +247,18 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
 
   @override
   String toString() {
-    final string =
-        'beneficiary: ${beneficiary.toString()},isReverse: ${isReverse.toString()},shouldRefresh: ${shouldRefresh.toString()},quantity: ${quantity.toString()},totalValue: ${totalValue.toString()},hasError: ${hasError.toString()},isLoading: ${isLoading.toString()},fieldErrors: ${fieldErrors.toString()},simulatorResponse: ${simulatorResponse.toString()},simulatorDefaultValuesResponseModel: ${simulatorDefaultValuesResponseModel.toString()},currencies: ${currencies.toString()}';
-    return '{$string}';
+    return '''
+beneficiary: ${beneficiary},
+isReverse: ${isReverse},
+shouldRefresh: ${shouldRefresh},
+quantity: ${quantity},
+totalValue: ${totalValue},
+hasError: ${hasError},
+isLoading: ${isLoading},
+fieldErrors: ${fieldErrors},
+simulatorResponse: ${simulatorResponse},
+simulatorDefaultValuesResponseModel: ${simulatorDefaultValuesResponseModel},
+currencies: ${currencies}
+    ''';
   }
 }

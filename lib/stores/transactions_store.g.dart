@@ -6,7 +6,7 @@ part of 'transactions_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TransactionsStore on _TransactionsStoreBase, Store {
   final _$isLoadingTransactionsAtom =
@@ -14,19 +14,16 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
 
   @override
   bool get isLoadingTransactions {
-    _$isLoadingTransactionsAtom.context
-        .enforceReadPolicy(_$isLoadingTransactionsAtom);
-    _$isLoadingTransactionsAtom.reportObserved();
+    _$isLoadingTransactionsAtom.reportRead();
     return super.isLoadingTransactions;
   }
 
   @override
   set isLoadingTransactions(bool value) {
-    _$isLoadingTransactionsAtom.context.conditionallyRunInAction(() {
+    _$isLoadingTransactionsAtom.reportWrite(value, super.isLoadingTransactions,
+        () {
       super.isLoadingTransactions = value;
-      _$isLoadingTransactionsAtom.reportChanged();
-    }, _$isLoadingTransactionsAtom,
-        name: '${_$isLoadingTransactionsAtom.name}_set');
+    });
   }
 
   final _$openTransactionsPaginationAtom =
@@ -34,19 +31,16 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
 
   @override
   PaginationModel get openTransactionsPagination {
-    _$openTransactionsPaginationAtom.context
-        .enforceReadPolicy(_$openTransactionsPaginationAtom);
-    _$openTransactionsPaginationAtom.reportObserved();
+    _$openTransactionsPaginationAtom.reportRead();
     return super.openTransactionsPagination;
   }
 
   @override
   set openTransactionsPagination(PaginationModel value) {
-    _$openTransactionsPaginationAtom.context.conditionallyRunInAction(() {
+    _$openTransactionsPaginationAtom
+        .reportWrite(value, super.openTransactionsPagination, () {
       super.openTransactionsPagination = value;
-      _$openTransactionsPaginationAtom.reportChanged();
-    }, _$openTransactionsPaginationAtom,
-        name: '${_$openTransactionsPaginationAtom.name}_set');
+    });
   }
 
   final _$openTransactionsAtom =
@@ -54,17 +48,15 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
 
   @override
   ObservableList<Transaction> get openTransactions {
-    _$openTransactionsAtom.context.enforceReadPolicy(_$openTransactionsAtom);
-    _$openTransactionsAtom.reportObserved();
+    _$openTransactionsAtom.reportRead();
     return super.openTransactions;
   }
 
   @override
   set openTransactions(ObservableList<Transaction> value) {
-    _$openTransactionsAtom.context.conditionallyRunInAction(() {
+    _$openTransactionsAtom.reportWrite(value, super.openTransactions, () {
       super.openTransactions = value;
-      _$openTransactionsAtom.reportChanged();
-    }, _$openTransactionsAtom, name: '${_$openTransactionsAtom.name}_set');
+    });
   }
 
   final _$closedTransactionsPaginationAtom =
@@ -72,19 +64,16 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
 
   @override
   PaginationModel get closedTransactionsPagination {
-    _$closedTransactionsPaginationAtom.context
-        .enforceReadPolicy(_$closedTransactionsPaginationAtom);
-    _$closedTransactionsPaginationAtom.reportObserved();
+    _$closedTransactionsPaginationAtom.reportRead();
     return super.closedTransactionsPagination;
   }
 
   @override
   set closedTransactionsPagination(PaginationModel value) {
-    _$closedTransactionsPaginationAtom.context.conditionallyRunInAction(() {
+    _$closedTransactionsPaginationAtom
+        .reportWrite(value, super.closedTransactionsPagination, () {
       super.closedTransactionsPagination = value;
-      _$closedTransactionsPaginationAtom.reportChanged();
-    }, _$closedTransactionsPaginationAtom,
-        name: '${_$closedTransactionsPaginationAtom.name}_set');
+    });
   }
 
   final _$closedTransactionsAtom =
@@ -92,21 +81,19 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
 
   @override
   ObservableList<Transaction> get closedTransactions {
-    _$closedTransactionsAtom.context
-        .enforceReadPolicy(_$closedTransactionsAtom);
-    _$closedTransactionsAtom.reportObserved();
+    _$closedTransactionsAtom.reportRead();
     return super.closedTransactions;
   }
 
   @override
   set closedTransactions(ObservableList<Transaction> value) {
-    _$closedTransactionsAtom.context.conditionallyRunInAction(() {
+    _$closedTransactionsAtom.reportWrite(value, super.closedTransactions, () {
       super.closedTransactions = value;
-      _$closedTransactionsAtom.reportChanged();
-    }, _$closedTransactionsAtom, name: '${_$closedTransactionsAtom.name}_set');
+    });
   }
 
-  final _$getOpenTransactionsAsyncAction = AsyncAction('getOpenTransactions');
+  final _$getOpenTransactionsAsyncAction =
+      AsyncAction('_TransactionsStoreBase.getOpenTransactions');
 
   @override
   Future getOpenTransactions(int page) {
@@ -115,7 +102,7 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
   }
 
   final _$getClosedTransactionsAsyncAction =
-      AsyncAction('getClosedTransactions');
+      AsyncAction('_TransactionsStoreBase.getClosedTransactions');
 
   @override
   Future getClosedTransactions(int page) {
@@ -123,7 +110,8 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
         .run(() => super.getClosedTransactions(page));
   }
 
-  final _$getTransactionsAsyncAction = AsyncAction('getTransactions');
+  final _$getTransactionsAsyncAction =
+      AsyncAction('_TransactionsStoreBase.getTransactions');
 
   @override
   Future getTransactions(
@@ -138,7 +126,8 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
 
   @override
   dynamic setIsLoadingTransactions(bool value) {
-    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction();
+    final _$actionInfo = _$_TransactionsStoreBaseActionController.startAction(
+        name: '_TransactionsStoreBase.setIsLoadingTransactions');
     try {
       return super.setIsLoadingTransactions(value);
     } finally {
@@ -148,8 +137,12 @@ mixin _$TransactionsStore on _TransactionsStoreBase, Store {
 
   @override
   String toString() {
-    final string =
-        'isLoadingTransactions: ${isLoadingTransactions.toString()},openTransactionsPagination: ${openTransactionsPagination.toString()},openTransactions: ${openTransactions.toString()},closedTransactionsPagination: ${closedTransactionsPagination.toString()},closedTransactions: ${closedTransactions.toString()}';
-    return '{$string}';
+    return '''
+isLoadingTransactions: ${isLoadingTransactions},
+openTransactionsPagination: ${openTransactionsPagination},
+openTransactions: ${openTransactions},
+closedTransactionsPagination: ${closedTransactionsPagination},
+closedTransactions: ${closedTransactions}
+    ''';
   }
 }

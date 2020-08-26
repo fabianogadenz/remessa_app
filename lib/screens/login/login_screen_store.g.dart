@@ -6,44 +6,40 @@ part of 'login_screen_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginScreenStore on _LoginScreenStoreBase, Store {
   final _$isLoadingAtom = Atom(name: '_LoginScreenStoreBase.isLoading');
 
   @override
   bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
+    _$isLoadingAtom.reportRead();
     return super.isLoading;
   }
 
   @override
   set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+    });
   }
 
   final _$errorMessageAtom = Atom(name: '_LoginScreenStoreBase.errorMessage');
 
   @override
   String get errorMessage {
-    _$errorMessageAtom.context.enforceReadPolicy(_$errorMessageAtom);
-    _$errorMessageAtom.reportObserved();
+    _$errorMessageAtom.reportRead();
     return super.errorMessage;
   }
 
   @override
   set errorMessage(String value) {
-    _$errorMessageAtom.context.conditionallyRunInAction(() {
+    _$errorMessageAtom.reportWrite(value, super.errorMessage, () {
       super.errorMessage = value;
-      _$errorMessageAtom.reportChanged();
-    }, _$errorMessageAtom, name: '${_$errorMessageAtom.name}_set');
+    });
   }
 
-  final _$loginAsyncAction = AsyncAction('login');
+  final _$loginAsyncAction = AsyncAction('_LoginScreenStoreBase.login');
 
   @override
   Future login(String cpf, String password) {
@@ -55,7 +51,8 @@ mixin _$LoginScreenStore on _LoginScreenStoreBase, Store {
 
   @override
   dynamic setIsLoading(bool value) {
-    final _$actionInfo = _$_LoginScreenStoreBaseActionController.startAction();
+    final _$actionInfo = _$_LoginScreenStoreBaseActionController.startAction(
+        name: '_LoginScreenStoreBase.setIsLoading');
     try {
       return super.setIsLoading(value);
     } finally {
@@ -65,7 +62,8 @@ mixin _$LoginScreenStore on _LoginScreenStoreBase, Store {
 
   @override
   dynamic setErrorMessage(String value) {
-    final _$actionInfo = _$_LoginScreenStoreBaseActionController.startAction();
+    final _$actionInfo = _$_LoginScreenStoreBaseActionController.startAction(
+        name: '_LoginScreenStoreBase.setErrorMessage');
     try {
       return super.setErrorMessage(value);
     } finally {
@@ -75,8 +73,9 @@ mixin _$LoginScreenStore on _LoginScreenStoreBase, Store {
 
   @override
   String toString() {
-    final string =
-        'isLoading: ${isLoading.toString()},errorMessage: ${errorMessage.toString()}';
-    return '{$string}';
+    return '''
+isLoading: ${isLoading},
+errorMessage: ${errorMessage}
+    ''';
   }
 }

@@ -43,9 +43,7 @@ class AuthService {
 
   Future<void> logout() async {
     _box.clear();
-    _amplitude.setUserId(null);
-    _snowplow.setUserId(null);
-    await OneSignal.shared.removeExternalUserId();
+    removeUserIdentity();
   }
 
   bool get isLoggedIn {
@@ -66,9 +64,7 @@ class AuthService {
       final loginResponse = LoginResponseModel.fromJson(response.data);
 
       saveUser(loginResponse.token, loginResponse.customer);
-      _amplitude.setUserId(customer.id.toString());
-      _snowplow.setUserId(customer.id);
-      setUxCamUserIdentity();
+      setUserIdentity(customer);
       await SetUp.startOneSignal();
       await OneSignal.shared.setExternalUserId(customer.id.toString());
     } on DioError catch (e) {
@@ -80,10 +76,22 @@ class AuthService {
     }
   }
 
-  Future<void> setUxCamUserIdentity() async {
+  Future<void> setUxCamUserIdentity(Customer customer) async {
     if (!await FlutterUxcam.isRecording()) return;
     FlutterUxcam.setUserIdentity(customer.id.toString());
     FlutterUxcam.setUserProperty('name', customer.name);
     FlutterUxcam.setUserProperty('email', customer.email);
+  }
+
+  setUserIdentity(Customer customer) {
+    _amplitude.setUserId(customer.id.toString());
+    _snowplow.setUserId(customer.id);
+    setUxCamUserIdentity(customer);
+  }
+
+  removeUserIdentity() {
+    _amplitude.setUserId(null);
+    _snowplow.setUserId(null);
+    OneSignal.shared.removeExternalUserId();
   }
 }

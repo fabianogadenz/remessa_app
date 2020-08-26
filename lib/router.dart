@@ -53,43 +53,52 @@ class Router {
       ? _handleStepperRoute()
       : _handleLoginRoute();
 
-  static Map<String, Widget Function(BuildContext)> routes() => {
-        SPLASH_ROUTE: (context) {
-          FlutterUxcam.tagScreenName(UxCamHelper.SPLASH);
-          return SplashScreen();
-        },
-        CHECK_LOGIN_ROUTE: (context) => GetIt.I<AuthStore>().isLoggedIn
-            ? _handleDashboardRoute()
-            : _handleInitialRoute(),
-        WEBSITE_REDIRECT_ROUTE: (context) {
-          FlutterUxcam.tagScreenName(UxCamHelper.REDIRECT);
-          return WebsiteRedirectScreen();
-        },
-        INITIAL_ROUTE: (context) => _handleInitialRoute(),
-        STEPPER_ROUTE: (context) => _handleStepperRoute(),
-        LOGIN_ROUTE: (context) => _handleLoginRoute(),
-        DASHBOARD_ROUTE: (context) => _handleDashboardRoute(),
-        TRANSACTION_DETAILS_ROUTE: (context) {
-          FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
-          return TransactionDetailsScreen();
-        },
-        TD_HOW_TO_PAY_ROUTE: (context) {
-          FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
-          return HowToPayScreen();
-        },
-        TD_CALCULATION_ROUTE: (context) {
-          FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
-          return TransactionCalculationScreen();
-        },
-        TD_BENEFICIARY_ROUTE: (context) {
-          FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
-          return BeneficiaryDataScreen();
-        },
-        SIMULATOR_CALCULATION_ROUTE: (context) {
-          FlutterUxcam.tagScreenName(UxCamHelper.SIMULATOR_TAXES);
-          return TransactionCalculationScreen();
-        },
-      };
+  static Map<String, Widget Function(BuildContext)> routes() {
+    final _authStore = GetIt.I<AuthStore>();
+
+    return {
+      SPLASH_ROUTE: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.SPLASH);
+        return SplashScreen();
+      },
+      CHECK_LOGIN_ROUTE: (context) {
+        if (_authStore.isLoggedIn) {
+          _authStore.refreshUserIdentity();
+          return _handleDashboardRoute();
+        }
+
+        return _handleInitialRoute();
+      },
+      WEBSITE_REDIRECT_ROUTE: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.REDIRECT);
+        return WebsiteRedirectScreen();
+      },
+      INITIAL_ROUTE: (context) => _handleInitialRoute(),
+      STEPPER_ROUTE: (context) => _handleStepperRoute(),
+      LOGIN_ROUTE: (context) => _handleLoginRoute(),
+      DASHBOARD_ROUTE: (context) => _handleDashboardRoute(),
+      TRANSACTION_DETAILS_ROUTE: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
+        return TransactionDetailsScreen();
+      },
+      TD_HOW_TO_PAY_ROUTE: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
+        return HowToPayScreen();
+      },
+      TD_CALCULATION_ROUTE: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
+        return TransactionCalculationScreen();
+      },
+      TD_BENEFICIARY_ROUTE: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.OPERATION);
+        return BeneficiaryDataScreen();
+      },
+      SIMULATOR_CALCULATION_ROUTE: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.SIMULATOR_TAXES);
+        return TransactionCalculationScreen();
+      },
+    };
+  }
 
   static Route<dynamic> Function(RouteSettings) onGenerateRoute() =>
       (RouteSettings settings) {

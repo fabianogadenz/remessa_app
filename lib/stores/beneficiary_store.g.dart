@@ -6,41 +6,37 @@ part of 'beneficiary_store.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$BeneficiaryStore on _BeneficiaryStoreBase, Store {
   final _$hasErrorAtom = Atom(name: '_BeneficiaryStoreBase.hasError');
 
   @override
   bool get hasError {
-    _$hasErrorAtom.context.enforceReadPolicy(_$hasErrorAtom);
-    _$hasErrorAtom.reportObserved();
+    _$hasErrorAtom.reportRead();
     return super.hasError;
   }
 
   @override
   set hasError(bool value) {
-    _$hasErrorAtom.context.conditionallyRunInAction(() {
+    _$hasErrorAtom.reportWrite(value, super.hasError, () {
       super.hasError = value;
-      _$hasErrorAtom.reportChanged();
-    }, _$hasErrorAtom, name: '${_$hasErrorAtom.name}_set');
+    });
   }
 
   final _$isLoadingAtom = Atom(name: '_BeneficiaryStoreBase.isLoading');
 
   @override
   bool get isLoading {
-    _$isLoadingAtom.context.enforceReadPolicy(_$isLoadingAtom);
-    _$isLoadingAtom.reportObserved();
+    _$isLoadingAtom.reportRead();
     return super.isLoading;
   }
 
   @override
   set isLoading(bool value) {
-    _$isLoadingAtom.context.conditionallyRunInAction(() {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
       super.isLoading = value;
-      _$isLoadingAtom.reportChanged();
-    }, _$isLoadingAtom, name: '${_$isLoadingAtom.name}_set');
+    });
   }
 
   final _$beneficiaryResponseModelAtom =
@@ -48,22 +44,20 @@ mixin _$BeneficiaryStore on _BeneficiaryStoreBase, Store {
 
   @override
   BeneficiaryResponseModel get beneficiaryResponseModel {
-    _$beneficiaryResponseModelAtom.context
-        .enforceReadPolicy(_$beneficiaryResponseModelAtom);
-    _$beneficiaryResponseModelAtom.reportObserved();
+    _$beneficiaryResponseModelAtom.reportRead();
     return super.beneficiaryResponseModel;
   }
 
   @override
   set beneficiaryResponseModel(BeneficiaryResponseModel value) {
-    _$beneficiaryResponseModelAtom.context.conditionallyRunInAction(() {
+    _$beneficiaryResponseModelAtom
+        .reportWrite(value, super.beneficiaryResponseModel, () {
       super.beneficiaryResponseModel = value;
-      _$beneficiaryResponseModelAtom.reportChanged();
-    }, _$beneficiaryResponseModelAtom,
-        name: '${_$beneficiaryResponseModelAtom.name}_set');
+    });
   }
 
-  final _$getBeneficiariesAsyncAction = AsyncAction('getBeneficiaries');
+  final _$getBeneficiariesAsyncAction =
+      AsyncAction('_BeneficiaryStoreBase.getBeneficiaries');
 
   @override
   Future getBeneficiaries() {
@@ -72,8 +66,10 @@ mixin _$BeneficiaryStore on _BeneficiaryStoreBase, Store {
 
   @override
   String toString() {
-    final string =
-        'hasError: ${hasError.toString()},isLoading: ${isLoading.toString()},beneficiaryResponseModel: ${beneficiaryResponseModel.toString()}';
-    return '{$string}';
+    return '''
+hasError: ${hasError},
+isLoading: ${isLoading},
+beneficiaryResponseModel: ${beneficiaryResponseModel}
+    ''';
   }
 }
