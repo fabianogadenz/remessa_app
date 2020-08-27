@@ -1,17 +1,19 @@
-import 'package:amplitude_flutter/amplitude_flutter.dart';
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:remessa_app/helpers/error.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/models/hive/customer_model.dart';
 import 'package:remessa_app/models/responses/login_response_model.dart';
 import 'package:remessa_app/setup.dart';
 
 class AuthService {
   final Box _box;
-  final _amplitude = GetIt.I<AmplitudeFlutter>();
+  final _amplitude = GetIt.I<Amplitude>();
+  final _snowplow = GetIt.I<SnowplowHelper>();
 
   Dio _dio;
 
@@ -41,11 +43,13 @@ class AuthService {
 
   Future<void> logout() async {
     _box.clear();
-    _amplitude.setUserId(null);
-    await OneSignal.shared.removeExternalUserId();
+    removeUserIdentity();
   }
 
-  bool get isLoggedIn => (token != null);
+  bool get isLoggedIn {
+    print(customer?.id);
+    return (token != null);
+  }
 
   login(String cpf, String password) async {
     try {
@@ -60,8 +64,7 @@ class AuthService {
       final loginResponse = LoginResponseModel.fromJson(response.data);
 
       saveUser(loginResponse.token, loginResponse.customer);
-      _amplitude.setUserId(customer.id);
-      setUxCamUserIdentity();
+      setUserIdentity(customer);
       await SetUp.startOneSignal();
       await OneSignal.shared.setExternalUserId(customer.id.toString());
     } on DioError catch (e) {
@@ -73,10 +76,22 @@ class AuthService {
     }
   }
 
-  Future<void> setUxCamUserIdentity() async {
+  Future<void> setUxCamUserIdentity(Customer customer) async {
     if (!await FlutterUxcam.isRecording()) return;
     FlutterUxcam.setUserIdentity(customer.id.toString());
     FlutterUxcam.setUserProperty('name', customer.name);
     FlutterUxcam.setUserProperty('email', customer.email);
+  }
+
+  setUserIdentity(Customer customer) {
+    _amplitude.setUserId(customer.id.toString());
+    _snowplow.setUserId(customer.id);
+    setUxCamUserIdentity(customer);
+  }
+
+  removeUserIdentity() {
+    _amplitude.setUserId(null);
+    _snowplow.setUserId(null);
+    OneSignal.shared.removeExternalUserId();
   }
 }

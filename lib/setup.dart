@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:amplitude_flutter/amplitude_flutter.dart';
+import 'package:amplitude_flutter/amplitude.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -15,6 +15,7 @@ import 'package:remessa_app/constants.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
@@ -90,10 +91,8 @@ class SetUp {
   }
 
   _registerAmplitude() {
-    GetIt.I.registerLazySingleton<AmplitudeFlutter>(
-      () => AmplitudeFlutter(
-        constants.amplitude['apiKey'],
-      ),
+    GetIt.I.registerLazySingleton<Amplitude>(
+      () => Amplitude.getInstance()..init(constants.amplitude['apiKey']),
     );
   }
 
@@ -167,6 +166,10 @@ class SetUp {
     GetIt.I.registerLazySingleton<NavigatorHelper>(
       () => NavigatorHelper(),
     );
+
+    GetIt.I.registerLazySingleton<SnowplowHelper>(
+      () => SnowplowHelper(verbose: configs.environment != Environment.PROD),
+    );
   }
 
   _registerScreens() {
@@ -228,11 +231,11 @@ class SetUp {
 
     _registerDio();
 
+    _registerHelpers();
+
     await _registerServices();
 
     _registerStores();
-
-    _registerHelpers();
 
     await _registerOneSignal();
 

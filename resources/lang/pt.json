@@ -5,7 +5,7 @@
     "enter": "Entrar",
     "continue": "Continuar",
     "or": "ou",
-    "requiredField": "Campo obrigatório.",
+    "required_field": "Campo obrigatório.",
     "summary": "Resumo",
     "name": "Nome",
     "beneficiary": "Favorecido",
@@ -24,8 +24,12 @@
     "next": "Próximo",
     "skip": "Pular",
     "password": "Senha",
-    "forgotMyPassword": "Esqueci minha senha",
+    "forgot_my_password": "Esqueci minha senha",
     "send_again": "Enviar novamente",
+    "fees": "Taxas",
+    "simulator": "Simulador",
+    "outbound": "Envios",
+    "beta": "BETA",
     "error": {
         "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
@@ -35,6 +39,11 @@
         "app_version": {
             "title": "App desatualizado",
             "content": "Baixe a versão atualizada em sua loja de aplicativos.",
+            "button": "Fechar"
+        },
+        "maintenance_mode": {
+            "title": "Aplicativo em manutenção",
+            "content": "Estamos atualizando o app para melhorar sua experiência, tente novamente mais tarde.",
             "button": "Fechar"
         }
     },
@@ -85,13 +94,13 @@
     "login_screen": {
         "title": "Olá, entre ou cadastre-se",
         "register": "Cadastre-se no site",
-        "privacyBanner": {
+        "privacy_banner": {
             "intro": "Ao logar você concorda com nossa\n",
-            "privacyPolicy": "Política de Privacidade",
+            "privacy_policy": "Política de Privacidade",
             "and": " e nossos ",
-            "useTerms": "Termos de Uso"
+            "terms_of_service": "Termos de Uso"
         },
-        "invalidCPF": "CPF incorreto, confira e tente novamente."
+        "invalid_cpf": "CPF incorreto, confira e tente novamente."
     },
     "dashboard_screen": {
         "title": "Acompanhe suas remessas em tempo real",
@@ -151,18 +160,18 @@
     },
     "transaction_calculation_screen": {
         "title": "Confira as taxas da sua remessa",
-        "foreignTotalAmount": "$beneficiaryName recebe",
+        "foreign_total_amount": "$beneficiaryName recebe",
         "spread": {
             "title": "Nosso custo",
             "description": "É a taxa de spread cambial que cobramos para enviar seu dinheiro, uma das menores do mercado."
         },
-        "exchangeRate": "Taxa de Câmbio",
-        "tradingQuotation": {
+        "exchange_rate": "Taxa de Câmbio",
+        "trading_quotation": {
             "title": "Câmbio Comercial",
             "description": "Usamos a cotação comercial da moeda estrangeira, sem taxas e impostos embutidos."
         },
-        "totalFees": "Tarifas",
-        "totalAmount": "Você paga"
+        "total_fees": "Tarifas",
+        "total_amount": "Você paga"
     },
     "website_redirect_screen": {
         "title": "Você será redirecionado para o site",
@@ -172,12 +181,43 @@
         },
         "action": "Ir para o site"
     },
-    "beneficiary_screen": {
-        "header": "Escolha um beneficiário",
-        "body": "Você ainda não tem nenhum beneficiário. Cadastre um para enviar sua primeira remessa.",
-        "action": "Começar",
-        "new_beneficiary": "Deseja enviar para outro beneficiário?",
-        "new_transaction": "Comece um novo envio",
-        "send_currency": "Enviar $currency"
+    "simulator_screen": {
+        "empty_state": "Cadastre um beneficiário para simular um envio.",
+        "currency_selection": {
+            "title": "Selecione a moeda para envio",
+            "most_useds": "Mais usadas",
+            "others": "Outras moedas"
+        },
+        "exchange_rate": "Seu câmbio: BRL $vet",
+        "default_currency_abbr": "USD",
+        "redirect_note": {
+            "title": "Sua cotação pode ser atualizada",
+            "description": "Confira o valor final na confirmação da remessa."
+        },
+        "local_currency_field": {
+            "label": "Você envia",
+            "currency_acronym": "BRL",
+            "field_name": "BRL_VALUE"
+        },
+        "foreign_currency_field": {
+            "label": "$beneficiaryFirstName recebe",
+            "field_name": "FOREIGN_VALUE"
+        },
+        "coupon_cta": {
+            "label": "Tem um desconto?",
+            "text": "Simule ou insira um cupom aqui"
+        },
+        "follow_up_cta": {
+            "label": "Acompanhe a evolução da moeda",
+            "text": "Ver o gráfico de $currency_abbreviation"
+        },
+        "send": "Enviar remessa",
+        "beneficiary": "Beneficiário",
+        "beneficiary_selection": {
+            "choose": "Escolha um beneficiário",
+            "send_to": "Envio para ",
+            "new_beneficiary": "Novo beneficiário",
+            "new_transaction": "Comece um novo envio"
+        }
     }
 }

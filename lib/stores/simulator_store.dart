@@ -1,3 +1,4 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/models/currency_model.dart';
@@ -17,6 +18,7 @@ class SimulatorStore = _SimulatorStoreBase with _$SimulatorStore;
 
 abstract class _SimulatorStoreBase with Store {
   final _tabControllerStore = GetIt.I<TabControllerStore>();
+  final i18n = GetIt.I<I18n>();
 
   @observable
   Beneficiary beneficiary;
@@ -118,7 +120,8 @@ abstract class _SimulatorStoreBase with Store {
             simulatorDefaultValuesResponseModel
                 ?.precification?.quote?.nationalCurrencyTotalAmount,
         idCurrency: currency.id ?? 1,
-        abbreviation: currency.abbreviation ?? 'USD',
+        abbreviation: currency.abbreviation ??
+            i18n.trans('simulator_screen', ['default_currency_abbr']),
       ),
     );
   }

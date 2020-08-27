@@ -1,13 +1,16 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
+import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/router.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/simulator/simulator_screen_animation_store.dart';
 import 'package:remessa_app/screens/simulator/widgets/simulator_beneficiaries_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/simulator_header_widget.dart';
@@ -33,6 +36,7 @@ class SimulatorScreen extends StatefulWidget {
 class _SimulatorScreenState extends State<SimulatorScreen>
     with TickerProviderStateMixin, RouteAware {
   final navigator = GetIt.I<NavigatorHelper>();
+  final i18n = GetIt.I<I18n>();
 
   final beneficiaryStore = BeneficiaryStore()..getBeneficiaries();
   final simulatorStore = SimulatorStore();
@@ -42,25 +46,29 @@ class _SimulatorScreenState extends State<SimulatorScreen>
 
   int get _preSelectedBeneficiaryId => widget.preSelectedBeneficiaryId;
 
-  final emptyState = Container(
-    width: 235,
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Image.asset('images/simulator_empty.png'),
-        SizedBox(
-          height: 26,
-        ),
-        Text(
-          'Cadastre um beneficiário para simular um envio.',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: StyleColors.SUPPORT_NEUTRAL_10,
+  Widget emptyState;
+
+  _SimulatorScreenState() {
+    emptyState = Container(
+      width: 235,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset('images/simulator_empty.png'),
+          SizedBox(
+            height: 26,
           ),
-        ),
-      ],
-    ),
-  );
+          Text(
+            i18n.trans('simulator_screen', ['empty_state']),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: StyleColors.SUPPORT_NEUTRAL_10,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   final List<ReactionDisposer> reactionDesposers = [];
 
@@ -213,16 +221,8 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                               width: double.infinity,
                               height: 48,
                               child: PrimaryButtonWidget(
-                                'Começar',
-                                onPressed: () => navigator.pushNamed(
-                                  Router.WEBSITE_REDIRECT_ROUTE,
-                                  arguments: WebsiteRedirectScreenArgs(
-                                    url: beneficiaryStore
-                                            ?.beneficiaryResponseModel
-                                            ?.defaultUrl ??
-                                        '',
-                                  ),
-                                ),
+                                i18n.trans('start'),
+                                onPressed: _onStartClick,
                               ),
                             ),
                           )
@@ -240,7 +240,24 @@ class _SimulatorScreenState extends State<SimulatorScreen>
     });
   }
 
-  GestureDetector buildSimulatorOverflow(BuildContext context, bool isLoading) {
+  _onStartClick() {
+    TrackEvents.log(TrackEvents.BENEFICIARY_NEW_TRANSACTION_CLICK);
+
+    GetIt.I<SnowplowHelper>().track(
+      category: SnowplowHelper.BENEFICIARY_CATEGORY,
+      action: SnowplowHelper.CLICK_ACTION,
+      label: SnowplowHelper.ADD_NEW_BENEFICIARY,
+    );
+
+    Router.websiteRedirect(
+      beneficiaryStore?.beneficiaryResponseModel?.defaultUrl,
+      utm: UTM(
+        campaign: UTM.ADD_NEW_BENEFICIARY_CAMPAIGN,
+      ),
+    );
+  }
+
+  Widget buildSimulatorOverflow(BuildContext context, bool isLoading) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: SizedBox.expand(

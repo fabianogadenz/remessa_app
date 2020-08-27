@@ -5,10 +5,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
-import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/models/responses/simulator_response_model.dart';
+import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
@@ -49,23 +50,15 @@ class SimulatorWidget extends StatefulWidget {
 
 class _SimulatorWidgetState extends State<SimulatorWidget> {
   final i18n = GetIt.I<I18n>();
+  final _snowplow = GetIt.I<SnowplowHelper>();
   final brlCurrencyCtrl = MoneyMaskedTextController();
+  final brlCurrencyFocusNode = FocusNode();
   final foreignCurrencyCtrl = MoneyMaskedTextController();
+  final foreignCurrencyFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   SimulatorStore get simulatorStore => widget.simulatorStore;
   ReactionDisposer reactionDisposer;
-
-  void redirect(String url, {String description, Note note}) {
-    GetIt.I<NavigatorHelper>().pushNamed(
-      Router.WEBSITE_REDIRECT_ROUTE,
-      arguments: WebsiteRedirectScreenArgs(
-        url: url,
-        description: description,
-        note: note,
-      ),
-    );
-  }
 
   ErrorResponseModel _getFieldError(String fieldName) {
     if (simulatorStore?.fieldErrors == null) return null;
@@ -97,6 +90,21 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
       },
     );
 
+    brlCurrencyFocusNode.addListener(() {
+      if (brlCurrencyFocusNode.hasFocus)
+        TrackEvents.log(TrackEvents.SIMULATOR_SELECT_BRL_TEXT_FIELD);
+    });
+
+    foreignCurrencyFocusNode.addListener(() {
+      if (foreignCurrencyFocusNode.hasFocus)
+        TrackEvents.log(
+          TrackEvents.SIMULATOR_SELECT_FOREIGN_TEXT_FIELD,
+          {
+            'currency': widget.simulatorResponse?.currency?.abbreviation,
+          },
+        );
+    });
+
     super.initState();
   }
 
@@ -106,13 +114,74 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
     super.dispose();
   }
 
+  _onSimulateClick() {
+    TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
+
+    _snowplow.track(
+      category: SnowplowHelper.OUTBOUND_CATEGORY,
+      action: SnowplowHelper.CLICK_ACTION,
+      label: SnowplowHelper.SEND_OPERATION,
+    );
+
+    Router.websiteRedirect(
+      simulatorStore?.simulatorResponse?.redirectUrl,
+      description: i18n.trans(
+        'website_redirect_screen',
+        ['description', 'recurrence'],
+      ),
+      note: Note(
+        title: i18n.trans(
+          'simulator_screen',
+          ['redirect_note', 'title'],
+        ),
+        description: i18n.trans(
+          'simulator_screen',
+          ['redirect_note', 'description'],
+        ),
+      ),
+      utm: UTM(
+        campaign: UTM.SEND_OPERATION_CAMPAIGN,
+      ),
+    );
+  }
+
+  _onFollowUpClick() {
+    TrackEvents.log(TrackEvents.SIMULATOR_FOLLOW_UP_CLICK);
+    Router.websiteRedirect(
+      widget.simulatorResponse?.quotationUrl ?? '',
+      utm: UTM(
+        campaign: UTM.FOLLOW_UP_EXCHANGE_RATE_CAMPAIGN,
+      ),
+    );
+  }
+
+  _onCouponClick() {
+    TrackEvents.log(TrackEvents.SIMULATOR_ADD_COUPON_CLICK);
+
+    _snowplow.track(
+      category: SnowplowHelper.OUTBOUND_CATEGORY,
+      action: SnowplowHelper.CLICK_ACTION,
+      label: SnowplowHelper.ADD_DISCOUNT,
+    );
+
+    Router.websiteRedirect(
+      simulatorStore?.simulatorResponse?.redirectUrl,
+      utm: UTM(
+        campaign: UTM.ADD_DISCOUNT_CAMPAIGN,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final beneficiaryFirstName =
-        simulatorStore?.beneficiary?.beneficiaryName != null
-            ? simulatorStore?.beneficiary?.beneficiaryName?.split(' ')[0] ??
-                'Beneficiário'
-            : 'Beneficiário';
+    String beneficiaryFirstName =
+        i18n.trans('simulator_screen', ['beneficiary']);
+    final beneficiaryName = simulatorStore?.beneficiary?.beneficiaryName;
+
+    if (beneficiaryName != null) {
+      beneficiaryFirstName =
+          beneficiaryName.split(' ')[0] ?? beneficiaryFirstName;
+    }
 
     final currency = widget.simulatorResponse?.currency;
 
@@ -164,11 +233,22 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                             children: <Widget>[
                               CustomCurrencyInputWidget(
                                 controller: brlCurrencyCtrl,
-                                label: 'Você envia',
-                                currencyAcronym: 'BRL',
+                                focusNode: brlCurrencyFocusNode,
+                                label: i18n.trans(
+                                  'simulator_screen',
+                                  ['local_currency_field', 'label'],
+                                ),
+                                currencyAcronym: i18n.trans(
+                                  'simulator_screen',
+                                  ['local_currency_field', 'currency_acronym'],
+                                ),
                                 isLoading: widget.isLoading,
-                                errorMessage:
-                                    _getFieldError('BRL_VALUE')?.message,
+                                errorMessage: _getFieldError(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['local_currency_field', 'field_name'],
+                                  ),
+                                )?.message,
                                 onChanged: (_) {
                                   final response =
                                       simulatorStore?.simulatorResponse;
@@ -192,27 +272,33 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               ),
                               CustomCurrencyInputWidget(
                                 controller: foreignCurrencyCtrl,
-                                label: '$beneficiaryFirstName recebe',
+                                focusNode: foreignCurrencyFocusNode,
+                                label: i18n.populate(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['foreign_currency_field', 'label'],
+                                  ),
+                                  {
+                                    'beneficiaryFirstName': beneficiaryFirstName
+                                  },
+                                ),
                                 currencyImgUrl: currency?.flagUrl ?? '',
                                 currencyAcronym: currency?.abbreviation ?? '',
                                 isChangeable:
                                     simulatorStore?.beneficiary?.currency ==
                                         null,
-                                changeableCallback: () {
-                                  TrackEvents.log(
-                                    TrackEvents.SIMULATOR_CHANGE_CURRENCY_CLICK,
-                                    {
-                                      'currency': currency?.abbreviation,
-                                    },
-                                  );
-                                  ModalHelper.showCurrencySelectionBottomSheet(
-                                    context,
-                                    simulatorStore,
-                                  );
-                                },
+                                changeableCallback: () => ModalHelper
+                                    .showCurrencySelectionBottomSheet(
+                                  context,
+                                  simulatorStore,
+                                ),
                                 isLoading: widget.isLoading,
-                                errorMessage:
-                                    _getFieldError('FOREIGN_VALUE')?.message,
+                                errorMessage: _getFieldError(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['foreign_currency_field', 'field_name'],
+                                  ),
+                                )?.message,
                                 onChanged: (_) {
                                   final response =
                                       simulatorStore?.simulatorResponse;
@@ -244,32 +330,38 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               ),
                               IconLabelTextCTAWidget(
                                 icon: RemessaIcons.percent,
-                                label: 'Tem um desconto?',
-                                text: 'Simule ou insira um cupom aqui',
+                                label: i18n.trans(
+                                  'simulator_screen',
+                                  ['coupon_cta', 'label'],
+                                ),
+                                text: i18n.trans(
+                                  'simulator_screen',
+                                  ['coupon_cta', 'text'],
+                                ),
                                 isLoading: widget.isLoading,
-                                onTap: () {
-                                  TrackEvents.log(
-                                      TrackEvents.SIMULATOR_ADD_COUPON_CLICK);
-                                  redirect(simulatorStore
-                                      ?.simulatorResponse?.redirectUrl);
-                                },
+                                onTap: _onCouponClick,
                               ),
                               SizedBox(
                                 height: 32,
                               ),
                               IconLabelTextCTAWidget(
                                 icon: RemessaIcons.graph,
-                                label: 'Acompanhe a evolução da moeda',
-                                text:
-                                    'Ver o gráfico de ${currency?.abbreviation}',
+                                label: i18n.trans(
+                                  'simulator_screen',
+                                  ['follow_up_cta', 'label'],
+                                ),
+                                text: i18n.populate(
+                                  i18n.trans(
+                                    'simulator_screen',
+                                    ['follow_up_cta', 'text'],
+                                  ),
+                                  {
+                                    'currency_abbreviation':
+                                        currency?.abbreviation ?? ''
+                                  },
+                                ),
                                 isLoading: widget.isLoading,
-                                onTap: () {
-                                  TrackEvents.log(
-                                      TrackEvents.SIMULATOR_FOLLOW_UP_CLICK);
-                                  redirect(
-                                      widget.simulatorResponse?.quotationUrl ??
-                                          '');
-                                },
+                                onTap: _onFollowUpClick,
                               ),
                               SizedBox(
                                 height: 100,
@@ -292,22 +384,8 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                         height: 48,
                         width: MediaQuery.of(context).size.width - 48,
                         isDisabled: widget.isLoading,
-                        label: 'Enviar remessa',
-                        onPressed: () {
-                          TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
-                          redirect(
-                            simulatorStore?.simulatorResponse?.redirectUrl,
-                            description: i18n.trans(
-                              'website_redirect_screen',
-                              ['description', 'recurrence'],
-                            ),
-                            note: Note(
-                              title: 'Sua cotação pode ser atualizada',
-                              description:
-                                  'Confira o valor final na confirmação da remessa.',
-                            ),
-                          );
-                        },
+                        label: i18n.trans('simulator_screen', ['send']),
+                        onPressed: _onSimulateClick,
                       ),
                     ),
                   ),

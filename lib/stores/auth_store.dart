@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:remessa_app/models/hive/customer_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
 import 'package:remessa_app/services/system_service.dart';
 
@@ -19,6 +20,12 @@ abstract class _AuthStoreBase with Store {
 
   @action
   refreshIsLoggedIn() => isLoggedIn = _authService.isLoggedIn;
+
+  @computed
+  Customer get customer => _authService.customer;
+
+  @action
+  refreshUserIdentity() => _authService.setUserIdentity(customer);
 
   @action
   Future<void> logout() async {

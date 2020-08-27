@@ -20,6 +20,7 @@ class CustomCurrencyInputWidget extends StatelessWidget {
     this.changeableCallback,
     this.inputFormatters = const [],
     this.errorMessage,
+    this.focusNode,
   })  : assert(label != null),
         assert(currencyImgUrl != null),
         assert(currencyAcronym != null),
@@ -36,6 +37,7 @@ class CustomCurrencyInputWidget extends StatelessWidget {
   final String currencyAcronym;
   final bool isChangeable;
   final bool isLoading;
+  final FocusNode focusNode;
 
   final _errorColor = StyleColors.SUPPORT_DANGER_40;
   bool get _hasError => errorMessage != null;
@@ -93,6 +95,7 @@ class CustomCurrencyInputWidget extends StatelessWidget {
                     ),
                     CurrencyTextFormFieldWidget(
                       controller: controller,
+                      focusNode: focusNode,
                       inputFormatters: inputFormatters,
                       validator: validator,
                       onChanged: onChanged,
