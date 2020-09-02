@@ -171,6 +171,21 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
     });
   }
 
+  final _$voucherCodeAtom = Atom(name: '_SimulatorStoreBase.voucherCode');
+
+  @override
+  String get voucherCode {
+    _$voucherCodeAtom.reportRead();
+    return super.voucherCode;
+  }
+
+  @override
+  set voucherCode(String value) {
+    _$voucherCodeAtom.reportWrite(value, super.voucherCode, () {
+      super.voucherCode = value;
+    });
+  }
+
   final _$simulateAsyncAction = AsyncAction('_SimulatorStoreBase.simulate');
 
   @override
@@ -185,6 +200,15 @@ mixin _$SimulatorStore on _SimulatorStoreBase, Store {
   Future getDefaultValues({Currency currency}) {
     return _$getDefaultValuesAsyncAction
         .run(() => super.getDefaultValues(currency: currency));
+  }
+
+  final _$applyVoucherAsyncAction =
+      AsyncAction('_SimulatorStoreBase.applyVoucher');
+
+  @override
+  Future<ErrorResponseModel> applyVoucher(String _voucherCode) {
+    return _$applyVoucherAsyncAction
+        .run(() => super.applyVoucher(_voucherCode));
   }
 
   final _$_SimulatorStoreBaseActionController =
@@ -258,6 +282,7 @@ isLoading: ${isLoading},
 fieldErrors: ${fieldErrors},
 simulatorResponse: ${simulatorResponse},
 simulatorDefaultValuesResponseModel: ${simulatorDefaultValuesResponseModel},
+voucherCode: ${voucherCode},
 currencies: ${currencies}
     ''';
   }

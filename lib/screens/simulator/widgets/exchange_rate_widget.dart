@@ -112,20 +112,68 @@ class _ExchangeRateWidgetState extends State<ExchangeRateWidget> {
                   Observer(builder: (_) {
                     final quote =
                         widget.simulatorStore?.simulatorResponse?.quote;
+                    quoteStore.setQuote(quote);
+
                     final vet = CurrencyHelper.format(
                         quote?.vet?.toString() ?? '0',
                         CurrencyHelper.currencyFormat + '00');
-                    quoteStore.setQuote(quote);
 
-                    return Text(
-                      i18n.populate(
-                        i18n.trans('simulator_screen', ['exchange_rate']),
-                        {'vet': vet},
-                      ),
-                      style: TextStyle(
-                        color: StyleColors.BRAND_SECONDARY_50,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    if (quote?.vet == quote?.originalVet) {
+                      return Text(
+                        i18n.populate(
+                          i18n.trans('simulator_screen', ['exchange_rate']),
+                          {'vet': vet},
+                        ),
+                        style: TextStyle(
+                          color: StyleColors.BRAND_SECONDARY_50,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      );
+                    }
+
+                    final originalVet = CurrencyHelper.format(
+                        quote?.originalVet?.toString() ?? '0',
+                        CurrencyHelper.currencyFormat + '00');
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          i18n.trans('simulator_screen',
+                              ['exchange_rate_with_coupon']),
+                          style: TextStyle(
+                            color: StyleColors.BRAND_SECONDARY_50,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '${i18n.trans("simulator_screen", [
+                                "local_currency_field",
+                                "currency_acronym"
+                              ])} $originalVet',
+                              style: TextStyle(
+                                color: StyleColors.BRAND_SECONDARY_30,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            Text(
+                              '${i18n.trans("simulator_screen", [
+                                "local_currency_field",
+                                "currency_acronym"
+                              ])} $vet',
+                              style: TextStyle(
+                                color: StyleColors.BRAND_SECONDARY_50,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     );
                   }),
                   Row(

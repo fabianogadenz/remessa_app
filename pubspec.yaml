@@ -41,6 +41,7 @@ dependencies:
   easy_i18n: ^1.0.0
   screens: ^2.3.4
   cached_network_image: ^2.2.0+1
+  equatable: ^1.2.4
 
   # Plugins
   amplitude_flutter: ^2.2.0

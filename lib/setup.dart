@@ -23,7 +23,6 @@ import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
-import 'package:remessa_app/test_setup.dart';
 import 'package:remessa_app/widgets/error_dialog/error_dialog_widget.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:screens/screens.dart';
@@ -213,7 +212,6 @@ class SetUp {
 
   init() async {
     if (configs.environment == Environment.TEST) {
-      await TestSetUp.init();
       return;
     }
 

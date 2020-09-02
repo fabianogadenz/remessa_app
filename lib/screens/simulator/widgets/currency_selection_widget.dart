@@ -5,11 +5,11 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/currency_model.dart';
 import 'package:remessa_app/models/responses/simulator_default_values_response_model.dart';
-import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/simulator/widgets/currency_item_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/list_section_label_widget.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/close_button_widget.dart';
 import 'package:screens/overlay_widget.dart';
 
 class CurrencySelectionWidget extends StatelessWidget {
@@ -121,14 +121,7 @@ class CurrencySelectionWidget extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                GestureDetector(
-                  onTap: navigator.pop,
-                  child: Icon(
-                    RemessaIcons.close,
-                    color: StyleColors.BRAND_PRIMARY_40,
-                    size: 16,
-                  ),
-                ),
+                CloseButtonWidget(),
               ],
             ),
           ),

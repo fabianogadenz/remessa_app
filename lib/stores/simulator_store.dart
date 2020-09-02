@@ -94,8 +94,34 @@ abstract class _SimulatorStoreBase with Store {
         setHasError(true);
       }
     }).listen((event) {
-      if (event is SimulatorResponseModel) simulatorResponse = event;
+      if (event is SimulatorResponseModel) {
+        simulatorResponse = event;
+        voucherCode = simulatorResponse?.quote?.voucherCode;
+      }
     });
+  }
+
+  get request {
+    final Currency currency = beneficiary?.currency ??
+        simulatorDefaultValuesResponseModel?.precification?.currency;
+
+    return SimulatorRequestModel(
+      idOperationType: 1,
+      idBeneficiary: beneficiary?.id,
+      reverse: isReverse ?? false,
+      quantity: quantity ??
+          simulatorDefaultValuesResponseModel
+              ?.precification?.quote?.foreignCurrencyAmount,
+      totalValue: totalValue ??
+          simulatorDefaultValuesResponseModel
+              ?.precification?.quote?.nationalCurrencyTotalAmount,
+      idCurrency: currency.id ?? 1,
+      abbreviation: currency.abbreviation ??
+          i18n.trans('simulator_screen', ['default_currency_abbr']),
+      voucherCode: voucherCode ??
+          simulatorDefaultValuesResponseModel
+              ?.precification?.quote?.voucherCode,
+    );
   }
 
   @action
@@ -105,25 +131,7 @@ abstract class _SimulatorStoreBase with Store {
     setHasError(false);
     setFieldErrors(null);
 
-    final Currency currency = beneficiary?.currency ??
-        simulatorDefaultValuesResponseModel?.precification?.currency;
-
-    _requests.add(
-      SimulatorRequestModel(
-        idOperationType: 1,
-        idBeneficiary: beneficiary?.id,
-        reverse: isReverse ?? false,
-        quantity: quantity ??
-            simulatorDefaultValuesResponseModel
-                ?.precification?.quote?.foreignCurrencyAmount,
-        totalValue: totalValue ??
-            simulatorDefaultValuesResponseModel
-                ?.precification?.quote?.nationalCurrencyTotalAmount,
-        idCurrency: currency.id ?? 1,
-        abbreviation: currency.abbreviation ??
-            i18n.trans('simulator_screen', ['default_currency_abbr']),
-      ),
-    );
+    _requests.add(request);
   }
 
   @observable
@@ -156,6 +164,28 @@ abstract class _SimulatorStoreBase with Store {
     } finally {
       isLoading = false;
     }
+  }
+
+  @observable
+  String voucherCode;
+
+  @action
+  Future<ErrorResponseModel> applyVoucher(String _voucherCode) async {
+    ErrorResponseModel voucherError;
+
+    voucherCode = _voucherCode;
+
+    try {
+      simulatorResponse = await SimulatorService.simulate(request);
+    } on ErrorModel catch (e) {
+      voucherCode = null;
+      voucherError = e.mainError;
+    } catch (e) {
+      _tabControllerStore.setErrorMessage(e?.message ?? '');
+      hasError = true;
+    }
+
+    return voucherError;
   }
 
   dispose() {

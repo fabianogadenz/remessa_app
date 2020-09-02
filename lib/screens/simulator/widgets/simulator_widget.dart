@@ -14,6 +14,7 @@ import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/simulator/simulator_screen_animation_store.dart';
+import 'package:remessa_app/screens/simulator/widgets/coupon_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/custom_currency_input_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/exchange_rate_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/icon_label_text_cta_widget.dart';
@@ -164,10 +165,12 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
       label: SnowplowHelper.ADD_DISCOUNT,
     );
 
-    Router.websiteRedirect(
-      simulatorStore?.simulatorResponse?.redirectUrl,
-      utm: UTM(
-        campaign: UTM.ADD_DISCOUNT_CAMPAIGN,
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) => CouponWidget(
+        simulatorStore: simulatorStore,
       ),
     );
   }
@@ -187,6 +190,9 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
 
     return Observer(
       builder: (_) {
+        final voucherCode =
+            simulatorStore?.simulatorResponse?.quote?.voucherCode;
+
         return AbsorbPointer(
           absorbing: widget.isLoading ||
               (widget?.simulatorScreenAnimationStore?.isExpanded ?? false),
@@ -328,18 +334,38 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                               SizedBox(
                                 height: 32,
                               ),
-                              IconLabelTextCTAWidget(
-                                icon: RemessaIcons.percent,
-                                label: i18n.trans(
-                                  'simulator_screen',
-                                  ['coupon_cta', 'label'],
-                                ),
-                                text: i18n.trans(
-                                  'simulator_screen',
-                                  ['coupon_cta', 'text'],
-                                ),
-                                isLoading: widget.isLoading,
-                                onTap: _onCouponClick,
+                              Builder(
+                                builder: (context) {
+                                  final isSuccess = voucherCode != null;
+
+                                  String label = i18n.trans(
+                                    'simulator_screen',
+                                    ['coupon_cta', 'label', 'default'],
+                                  );
+
+                                  String actionText = i18n.trans(
+                                    'simulator_screen',
+                                    ['coupon_cta', 'text'],
+                                  );
+
+                                  if (isSuccess) {
+                                    label = i18n.trans(
+                                      'simulator_screen',
+                                      ['coupon_cta', 'label', 'success'],
+                                    );
+                                    actionText = i18n.trans('edit');
+                                  }
+
+                                  return IconLabelTextCTAWidget(
+                                    icon: RemessaIcons.percent,
+                                    isSuccess: isSuccess,
+                                    label: label,
+                                    actionText: actionText,
+                                    value: voucherCode,
+                                    isLoading: widget.isLoading,
+                                    onTap: _onCouponClick,
+                                  );
+                                },
                               ),
                               SizedBox(
                                 height: 32,
@@ -350,7 +376,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                   'simulator_screen',
                                   ['follow_up_cta', 'label'],
                                 ),
-                                text: i18n.populate(
+                                actionText: i18n.populate(
                                   i18n.trans(
                                     'simulator_screen',
                                     ['follow_up_cta', 'text'],

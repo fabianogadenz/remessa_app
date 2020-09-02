@@ -3,20 +3,16 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
-import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:easy_i18n/easy_i18n.dart';
-import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
-import 'package:remessa_app/setup.dart';
-import 'package:remessa_app/test_setup.dart';
 import 'package:test/test.dart';
 
-void main() async {
-  final remoteConfigs = ConfigModel(environment: Environment.TEST);
+import '../../test.dart';
 
-  await SetUp(remoteConfigs).init();
+void main() async {
+  await Test.init();
 
   group('ErrorHelper', () {
     group('parseErrorResponse', () {
@@ -84,7 +80,7 @@ void main() async {
     group('formatError', () {
       final mainError = ErrorResponseModel(message: 'Error message!');
       final fieldError = ErrorResponseModel(
-        message: 'Field error messageq!',
+        message: 'Field error message!',
         field: 'field_name',
       );
 

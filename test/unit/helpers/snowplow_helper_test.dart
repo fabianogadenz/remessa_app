@@ -2,17 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
-import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
-import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
-import 'package:remessa_app/setup.dart';
-import 'package:remessa_app/test_setup.dart';
+
+import '../../test.dart';
 
 void main() async {
-  final remoteConfigs = ConfigModel(environment: Environment.TEST);
-
-  await SetUp(remoteConfigs).init();
+  await Test.init();
 
   group('SnowplowHelper', () {
     group('track', () {
@@ -23,7 +19,7 @@ void main() async {
           final userId = 123456;
 
           when(GetIt.I<MockDio>().fetch(any, any, any)).thenAnswer((i) async {
-            expect(i.positionalArguments[0].data['user_id'], userId);
+            expect(i.positionalArguments[0].data['userId'], userId);
             return Future.value(ResponseBody.fromString('', 200));
           });
 
@@ -42,7 +38,7 @@ void main() async {
           final snowplow = SnowplowHelper();
 
           when(GetIt.I<MockDio>().fetch(any, any, any)).thenAnswer((i) async {
-            expect(i.positionalArguments[0].data['user_id'],
+            expect(i.positionalArguments[0].data['userId'],
                 GetIt.I<AuthService>().customer.id);
             return Future.value(ResponseBody.fromString('', 200));
           });

@@ -86,6 +86,8 @@ class TrackEvents {
       'mobile_app.onfocus.simulate_BRL_currency';
   static const SIMULATOR_SELECT_FOREIGN_TEXT_FIELD =
       'mobile_app.onfocus.simulate_foreign_currency';
+  static const SIMULATOR_VALIDATE_COUPON =
+      'mobile_app.click.simulate_validate_coupon';
 
   // Beneficiary Widget (Simulator Screen)
   static const BENEFICIARY_NEW_TRANSACTION_CLICK =
@@ -144,6 +146,9 @@ class TrackEvents {
       case SIMULATOR_SELECT_CURRENCY_CLICK:
       case SIMULATOR_SELECT_FOREIGN_TEXT_FIELD:
         assert(properties['currency'] != null);
+        continue log;
+      case SIMULATOR_VALIDATE_COUPON:
+        assert(properties['is_valid'] != null);
         continue log;
       log:
       default:
