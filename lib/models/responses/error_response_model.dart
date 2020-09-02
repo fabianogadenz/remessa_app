@@ -1,4 +1,7 @@
-class ErrorResponseModel {
+import 'package:equatable/equatable.dart';
+
+// ignore: must_be_immutable
+class ErrorResponseModel extends Equatable {
   String field;
   String message;
   String code;
@@ -18,4 +21,7 @@ class ErrorResponseModel {
     data['code'] = this.code;
     return data;
   }
+
+  @override
+  List<Object> get props => [field, message, code];
 }

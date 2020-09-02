@@ -33,7 +33,7 @@ class ErrorHelper {
               .toList()
           : [];
 
-  static formatError(List<ErrorResponseModel> errors) {
+  static ErrorModel formatError(List<ErrorResponseModel> errors) {
     ErrorResponseModel mainError;
     List<ErrorResponseModel> fieldErrors = [];
 

@@ -2,9 +2,8 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
-import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/close_button_widget.dart';
 
 class SimulatorHeaderWidget extends StatelessWidget {
   SimulatorHeaderWidget({
@@ -49,18 +48,7 @@ class SimulatorHeaderWidget extends StatelessWidget {
                 : Container(),
           ],
         ),
-        GestureDetector(
-          onTap: GetIt.I<NavigatorHelper>().pop,
-          behavior: HitTestBehavior.opaque,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
-            child: Icon(
-              RemessaIcons.close,
-              color: StyleColors.BRAND_PRIMARY_20,
-              size: 15,
-            ),
-          ),
-        ),
+        CloseButtonWidget(color: StyleColors.BRAND_PRIMARY_20),
       ],
     );
   }

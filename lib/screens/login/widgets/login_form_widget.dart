@@ -8,7 +8,6 @@ import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/utm_model.dart';
-import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -104,18 +103,12 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               TextInputWidget(
                 key: Key(LoginScreenKeys.cpfInput),
                 controller: cpfCtrl,
+                hasError: cpfHasError,
                 decoration: InputDecoration(
                   suffixIconConstraints: BoxConstraints(
                     maxHeight: 0,
                     minWidth: 25,
                   ),
-                  suffixIcon: cpfHasError
-                      ? Icon(
-                          RemessaIcons.warning,
-                          size: 16,
-                          color: StyleColors.SUPPORT_DANGER_40,
-                        )
-                      : null,
                   labelText: i18n.trans('document', ['cpf', 'label']),
                   hintText: i18n.trans('document', ['cpf', 'mask']),
                 ),

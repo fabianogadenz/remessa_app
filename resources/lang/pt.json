@@ -30,6 +30,8 @@
     "simulator": "Simulador",
     "outbound": "Envios",
     "beta": "BETA",
+    "coupon": "Cupom",
+    "edit": "Editar",
     "error": {
         "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
@@ -189,6 +191,7 @@
             "others": "Outras moedas"
         },
         "exchange_rate": "Seu câmbio: BRL $vet",
+        "exchange_rate_with_coupon": "Seu câmbio:",
         "default_currency_abbr": "USD",
         "redirect_note": {
             "title": "Sua cotação pode ser atualizada",
@@ -204,7 +207,10 @@
             "field_name": "FOREIGN_VALUE"
         },
         "coupon_cta": {
-            "label": "Tem um desconto?",
+            "label": {
+                "default": "Tem um desconto?",
+                "success": "Cupom de desconto"
+            },
             "text": "Simule ou insira um cupom aqui"
         },
         "follow_up_cta": {
@@ -218,6 +224,13 @@
             "send_to": "Envio para ",
             "new_beneficiary": "Novo beneficiário",
             "new_transaction": "Comece um novo envio"
+        },
+        "coupon": {
+            "title": "Insira o seu cupom de desconto",
+            "action": {
+                "default": "Aplicar cupom",
+                "success": "Desconto aplicado"
+            }
         }
     }
 }
