@@ -1,7 +1,8 @@
+import 'dart:io';
+
 class UTM {
   final String source;
   final String campaign;
-  final String medium;
 
   static const PRE_SIGNUP_CAMPAIGN = 'pre_signup';
   static const FORGOT_PASSWORD_CAMPAIGN = 'forgot_password';
@@ -15,12 +16,11 @@ class UTM {
   const UTM({
     this.source = 'app',
     this.campaign,
-    this.medium = 'android/ios/outros',
   });
 
   Map<String, String> toMap() => {
         'utm_source': source,
         'utm_campaign': campaign,
-        'utm_medium': medium,
+        'utm_medium': Platform.operatingSystem,
       };
 }
