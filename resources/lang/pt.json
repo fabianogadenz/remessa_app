@@ -232,5 +232,12 @@
                 "success": "Desconto aplicado"
             }
         }
+    },
+    "info": {
+        "addressMissingFields": {
+            "title": "Endereço pendente",
+            "description": "Fique atento: você precisará adicionar o endereço deste beneficiário para poder continuar enviando remessas.",
+            "action": "Adicionar endereço agora"
+        }
     }
 }
