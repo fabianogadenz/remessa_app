@@ -78,7 +78,7 @@ class _CouponWidgetState extends State<CouponWidget> {
     _voucherError = await simulatorStore.applyVoucher(_voucherCode);
 
     TrackEvents.log(
-      TrackEvents.SIMULATOR_VALIDATE_COUPON,
+      TrackEvents.SIMULATOR_VALIDATE_COUPON_CLICK,
       {'is_valid': !_hasError},
     );
 

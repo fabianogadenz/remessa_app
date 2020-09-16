@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:remessa_app/actions/address_missing_fields_action.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/user_avatar_widget.dart';
 
@@ -94,100 +98,163 @@ class BeneficiaryListItemWidget extends StatelessWidget {
           ),
         ),
         padding: EdgeInsets.symmetric(vertical: 25),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Stack(
-              overflow: Overflow.visible,
-              children: <Widget>[
-                UserAvatarWidget(
-                  userName: beneficiary.beneficiaryName,
-                  isDisabled: beneficiary.isDisabled,
-                  backgroundColor: StyleColors.BRAND_PRIMARY_50,
-                  lettersColor: StyleColors.BRAND_PRIMARY_20,
+        child: IntrinsicHeight(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Stack(
+                overflow: Overflow.visible,
+                children: <Widget>[
+                  UserAvatarWidget(
+                    userName: beneficiary.beneficiaryName,
+                    isDisabled: beneficiary.isDisabled,
+                    backgroundColor: StyleColors.BRAND_PRIMARY_50,
+                    lettersColor: StyleColors.BRAND_PRIMARY_20,
+                  ),
+                  Positioned(
+                    top: 28,
+                    right: -2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          width: 2,
+                          color: StyleColors.BRAND_PRIMARY_60,
+                        ),
+                      ),
+                      child: currencyCountryFlag != null
+                          ? ClipOval(
+                              child: Stack(
+                                children: <Widget>[
+                                  Container(
+                                    width: 14,
+                                    height: 14,
+                                    child: currencyCountryFlag,
+                                  ),
+                                  isDisabled
+                                      ? Container(
+                                          width: 14,
+                                          height: 14,
+                                          color: StyleColors.BRAND_PRIMARY_60
+                                              .withOpacity(.5),
+                                        )
+                                      : Container(),
+                                ],
+                              ),
+                            )
+                          : Container(),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 12,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    StringHelper.handleLimiterWithEllipsisFromTextWidthAndStyle(
+                      beneficiary.beneficiaryName,
+                      limitTextWidth,
+                      beneficiaryNameTextStyle,
+                    ),
+                    style: beneficiaryNameTextStyle,
+                  ),
+                  Text(
+                    StringHelper.handleLimiterWithEllipsisFromTextWidthAndStyle(
+                      beneficiary.bankName,
+                      limitTextWidth,
+                      beneficiaryBankTextStyle,
+                    ),
+                    style: beneficiaryBankTextStyle,
+                  ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  isDisabled
+                      ? Container(
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: StyleColors.SUPPORT_WARNING_10,
+                          ),
+                          child: Text(
+                            beneficiary.statusName.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: StyleColors.SUPPORT_WARNING_60,
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ],
+              ),
+              (beneficiary?.hasAddressMissingFields ?? false)
+                  ? _buildAddressMissingFieldsAlert(context)
+                  : Container(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Expanded _buildAddressMissingFieldsAlert(BuildContext context) {
+    return Expanded(
+      child: Container(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(
+          bottom: 8,
+          top: 8,
+          left: 8,
+        ),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            final i18n = GetIt.I<I18n>();
+
+            final addBeneficiaryAction =
+                AddressMissingFieldsAction(beneficiary);
+
+            return ModalHelper.showInfoBottomSheet(
+                context,
+                i18n.trans('info', ['addressMissingFields', 'title']),
+                i18n.trans('info', ['addressMissingFields', 'description']),
+                Icon(
+                  Icons.info,
+                  size: 20,
                 ),
-                Positioned(
-                  top: 28,
-                  right: -2,
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: addBeneficiaryAction.action,
                   child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        width: 2,
-                        color: StyleColors.BRAND_PRIMARY_60,
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 16,
+                    ),
+                    child: Text(
+                      addBeneficiaryAction.name,
+                      style: TextStyle(
+                        color: StyleColors.SUPPORT_NEUTRAL_10,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    child: currencyCountryFlag != null
-                        ? ClipOval(
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  width: 14,
-                                  height: 14,
-                                  child: currencyCountryFlag,
-                                ),
-                                isDisabled
-                                    ? Container(
-                                        width: 14,
-                                        height: 14,
-                                        color: StyleColors.BRAND_PRIMARY_60
-                                            .withOpacity(.5),
-                                      )
-                                    : Container(),
-                              ],
-                            ),
-                          )
-                        : Container(),
                   ),
-                ),
-              ],
+                ));
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: StyleColors.SUPPORT_WARNING_10,
             ),
-            SizedBox(
-              width: 12,
+            child: Icon(
+              RemessaIcons.attention,
+              color: Colors.black,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  StringHelper.handleLimiterWithEllipsisFromTextWidthAndStyle(
-                    beneficiary.beneficiaryName,
-                    limitTextWidth,
-                    beneficiaryNameTextStyle,
-                  ),
-                  style: beneficiaryNameTextStyle,
-                ),
-                Text(
-                  StringHelper.handleLimiterWithEllipsisFromTextWidthAndStyle(
-                    beneficiary.bankName,
-                    limitTextWidth,
-                    beneficiaryBankTextStyle,
-                  ),
-                  style: beneficiaryBankTextStyle,
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                isDisabled
-                    ? Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: StyleColors.SUPPORT_WARNING_10,
-                        ),
-                        child: Text(
-                          beneficiary.statusName.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: StyleColors.SUPPORT_WARNING_60,
-                          ),
-                        ),
-                      )
-                    : Container(),
-              ],
-            ),
-          ],
+          ),
         ),
       ),
     );

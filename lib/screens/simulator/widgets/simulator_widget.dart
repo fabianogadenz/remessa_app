@@ -4,9 +4,11 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:remessa_app/actions/address_missing_fields_action.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/models/responses/simulator_response_model.dart';
 import 'package:remessa_app/models/utm_model.dart';
@@ -21,6 +23,7 @@ import 'package:remessa_app/screens/simulator/widgets/icon_label_text_cta_widget
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/widgets/warning_action_widget.dart';
 
 class SimulatorWidget extends StatefulWidget {
   const SimulatorWidget({
@@ -58,7 +61,8 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   final foreignCurrencyFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
-  SimulatorStore get simulatorStore => widget.simulatorStore;
+  SimulatorStore get simulatorStore => widget?.simulatorStore;
+  Beneficiary get beneficiary => simulatorStore?.beneficiary;
   ReactionDisposer reactionDisposer;
 
   ErrorResponseModel _getFieldError(String fieldName) {
@@ -179,7 +183,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   Widget build(BuildContext context) {
     String beneficiaryFirstName =
         i18n.trans('simulator_screen', ['beneficiary']);
-    final beneficiaryName = simulatorStore?.beneficiary?.beneficiaryName;
+    final beneficiaryName = beneficiary?.beneficiaryName;
 
     if (beneficiaryName != null) {
       beneficiaryFirstName =
@@ -290,9 +294,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                 ),
                                 currencyImgUrl: currency?.flagUrl ?? '',
                                 currencyAcronym: currency?.abbreviation ?? '',
-                                isChangeable:
-                                    simulatorStore?.beneficiary?.currency ==
-                                        null,
+                                isChangeable: beneficiary?.currency == null,
                                 changeableCallback: () => ModalHelper
                                     .showCurrencySelectionBottomSheet(
                                   context,
@@ -389,6 +391,17 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                 isLoading: widget.isLoading,
                                 onTap: _onFollowUpClick,
                               ),
+                              (beneficiary?.hasAddressMissingFields ?? false)
+                                  ? WarningActionWidget(
+                                      description: i18n.trans(
+                                        'info',
+                                        ['addressMissingFields', 'description'],
+                                      ),
+                                      linkAction: AddressMissingFieldsAction(
+                                        beneficiary,
+                                      ),
+                                    )
+                                  : Container(),
                               SizedBox(
                                 height: 100,
                               ),

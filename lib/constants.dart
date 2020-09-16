@@ -16,6 +16,10 @@ const Map<String, String> prod_amplitude = {
   'apiKey': 'ee6caed71b8515f3aabc21b4d3582a19',
 };
 
+const dev_url = 'https://out-dev.eurodolar.xyz';
+const release_url = 'https://release-app.eurodolar.xyz';
+const prod_url = 'https://beetech.global';
+
 const Map<String, dynamic> dev_api = {
   'url': 'https://out-dev-app.pesoreal.xyz/v1/app',
 };
@@ -39,6 +43,7 @@ final Map<Environment, Constants> constantsMap = {
     api: dev_api,
     zendesk: zendesk,
     uxcam: uxcam,
+    url: dev_url,
   ),
   Environment.RELEASE: Constants(
     onesignal: onesignal,
@@ -46,6 +51,7 @@ final Map<Environment, Constants> constantsMap = {
     api: release_api,
     zendesk: zendesk,
     uxcam: uxcam,
+    url: release_url,
   ),
   Environment.PROD: Constants(
     onesignal: onesignal,
@@ -53,6 +59,7 @@ final Map<Environment, Constants> constantsMap = {
     api: prod_api,
     zendesk: zendesk,
     uxcam: uxcam,
+    url: prod_url,
   ),
 };
 
@@ -62,6 +69,7 @@ class Constants {
   final Map<String, dynamic> api;
   final Map<String, String> zendesk;
   final Map<String, String> uxcam;
+  final String url;
 
   Constants({
     @required this.onesignal,
@@ -69,11 +77,13 @@ class Constants {
     @required this.zendesk,
     @required this.api,
     @required this.uxcam,
+    @required this.url,
   })  : assert(onesignal != null),
         assert(amplitude != null),
         assert(zendesk != null),
         assert(api != null),
-        assert(uxcam != null);
+        assert(uxcam != null),
+        assert(url != null);
 
   static Constants get(Environment env) => constantsMap[env];
 }

@@ -33,10 +33,14 @@ class RemessaIcons {
   static const IconData share = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData download = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData document = IconData(0xe80b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData icon_percent__3_ = IconData(0xe80c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData simulador = IconData(0xe80d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData timer = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData graph = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData percent = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData user_fill = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData arrow_down = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData check2 = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData dotline = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData attention = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
