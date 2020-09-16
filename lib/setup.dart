@@ -32,7 +32,9 @@ class SetUp {
   final Constants constants;
   final ConfigModel configs;
 
-  SetUp(this.configs) : constants = Constants.get(configs.environment);
+  SetUp(this.configs) : constants = Constants.get(configs.environment) {
+    GetIt.I.registerSingleton<Constants>(constants);
+  }
 
   static Future<ConfigService> registerConfig() async {
     final configService = ConfigService();

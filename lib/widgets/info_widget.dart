@@ -7,6 +7,7 @@ class InfoWidget extends StatelessWidget {
     @required this.title,
     @required this.description,
     this.icon,
+    this.footer,
   })  : assert(title != null),
         assert(description != null),
         super(key: key);
@@ -14,6 +15,7 @@ class InfoWidget extends StatelessWidget {
   final String title;
   final String description;
   final Icon icon;
+  final Widget footer;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class InfoWidget extends StatelessWidget {
       padding: EdgeInsets.all(24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,7 +75,8 @@ class InfoWidget extends StatelessWidget {
                 color: StyleColors.SUPPORT_NEUTRAL_10,
               ),
             ),
-          )
+          ),
+          footer ?? Container()
         ],
       ),
     );

@@ -6,13 +6,14 @@ import 'package:remessa_app/widgets/info_widget.dart';
 class ModalHelper {
   static void showInfoBottomSheet(
           BuildContext context, String title, String description,
-          [Icon icon]) =>
+          [Icon icon, Widget footer]) =>
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) => InfoWidget(
           title: title,
           description: description,
           icon: icon,
+          footer: footer,
         ),
       );
 
