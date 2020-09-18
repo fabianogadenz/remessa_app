@@ -57,6 +57,7 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -79,26 +80,26 @@ android {
         }
     }
 
-    configurations.all {
-         resolutionStrategy {
-             force 'com.google.firebase:firebase-common:16.1.0'
-             force 'com.google.firebase:firebase-iid:17.1.2'
-             force 'com.google.firebase:firebase-messaging:17.6.0'
-             force 'androidx.arch.core:core-runtime:2.0.0'
-             force 'androidx.customview:customview:1.0.0'
-             force 'androidx.lifecycle:lifecycle-viewmodel:2.1.0'
-             force 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'
-             force 'androidx.drawerlayout:drawerlayout:1.0.0'
-             force 'androidx.core:core:1.1.0'
-             force 'androidx.loader:loader:1.0.0'
-             force 'androidx.lifecycle:lifecycle-runtime:2.1.0'
-             force 'androidx.cursoradapter:cursoradapter:1.0.0'
-             force 'androidx.viewpager:viewpager:1.0.0'
-             force 'androidx.interpolator:interpolator:1.0.0'
-             force 'androidx.fragment:fragment:1.1.0'
-             force 'androidx.appcompat:appcompat:1.1.0'
-         }
-     }
+    // configurations.all {
+    //      resolutionStrategy {
+    //          force 'com.google.firebase:firebase-common:16.1.0'
+    //          force 'com.google.firebase:firebase-iid:17.1.2'
+    //          force 'com.google.firebase:firebase-messaging:17.6.0'
+    //          force 'androidx.arch.core:core-runtime:2.0.0'
+    //          force 'androidx.customview:customview:1.0.0'
+    //          force 'androidx.lifecycle:lifecycle-viewmodel:2.1.0'
+    //          force 'androidx.lifecycle:lifecycle-livedata-core:2.0.0'
+    //          force 'androidx.drawerlayout:drawerlayout:1.0.0'
+    //          force 'androidx.core:core:1.1.0'
+    //          force 'androidx.loader:loader:1.0.0'
+    //          force 'androidx.lifecycle:lifecycle-runtime:2.1.0'
+    //          force 'androidx.cursoradapter:cursoradapter:1.0.0'
+    //          force 'androidx.viewpager:viewpager:1.0.0'
+    //          force 'androidx.interpolator:interpolator:1.0.0'
+    //          force 'androidx.fragment:fragment:1.1.0'
+    //          force 'androidx.appcompat:appcompat:1.1.0'
+    //      }
+    //  }
 }
 
 flutter {
