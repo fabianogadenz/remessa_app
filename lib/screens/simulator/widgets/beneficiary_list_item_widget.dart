@@ -27,7 +27,7 @@ class BeneficiaryListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final limitTextWidth = MediaQuery.of(context).size.width * .9;
+    final limitTextWidth = MediaQuery.of(context).size.width * .6;
 
     Color beneficiaryNameColor = StyleColors.SUPPORT_NEUTRAL_10;
     Color beneficiaryBankColor = StyleColors.SUPPORT_NEUTRAL_10;

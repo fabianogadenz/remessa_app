@@ -107,17 +107,22 @@ class TrackEvents {
   static const SPLASH_VIEW = 'mobile_app.view.splash_screen';
 
   // Actions
-  static log(String name, [Map<String, dynamic> properties]) {
+  static logEvent(String name, [Map<String, dynamic> properties]) {
     final amplitude = GetIt.I<Amplitude>();
+
+    amplitude.logEvent(
+      name,
+      eventProperties: {
+        'event_properties': properties,
+      },
+    );
+  }
+
+  static log(String name, [Map<String, dynamic> properties]) {
     final appStore = GetIt.I<AppStore>();
 
     if (appStore?.configs?.environment == Environment.PROD) {
-      amplitude.logEvent(
-        name,
-        eventProperties: {
-          'event_properties': properties,
-        },
-      );
+      logEvent(name, properties);
       return;
     }
 
@@ -155,12 +160,7 @@ class TrackEvents {
         continue log;
       log:
       default:
-        amplitude.logEvent(
-          name,
-          eventProperties: {
-            'event_properties': properties,
-          },
-        );
+        logEvent(name, properties);
     }
   }
 }

@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -55,7 +57,12 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme(),
       navigatorKey: navigator.navigatorKey,
-      navigatorObservers: [navigator.routeObserver],
+      navigatorObservers: [
+        navigator.routeObserver,
+        FirebaseAnalyticsObserver(
+          analytics: FirebaseAnalytics(),
+        ),
+      ],
       initialRoute: Router.SPLASH_ROUTE,
       routes: Router.routes(),
       onGenerateRoute: Router.onGenerateRoute(),
