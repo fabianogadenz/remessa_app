@@ -7,14 +7,14 @@ class IconLabelTextCTAWidget extends StatelessWidget {
     Key key,
     @required this.icon,
     @required this.label,
-    @required this.actionText,
+    this.actionText,
     this.isLoading = false,
     this.isSuccess = false,
     this.value,
     this.onTap,
   })  : assert(icon != null),
         assert(label != null),
-        assert(actionText != null),
+        assert(actionText != null || value != null),
         super(key: key);
 
   final IconData icon;
@@ -47,13 +47,15 @@ class IconLabelTextCTAWidget extends StatelessWidget {
       ),
     );
 
-    Widget actionTextWidget = Text(
-      actionText,
-      style: TextStyle(
-        color: StyleColors.BRAND_PRIMARY_40,
-        fontWeight: FontWeight.w600,
-      ),
-    );
+    Widget actionTextWidget = actionText != null
+        ? Text(
+            actionText,
+            style: TextStyle(
+              color: StyleColors.BRAND_PRIMARY_40,
+              fontWeight: FontWeight.w600,
+            ),
+          )
+        : Container();
 
     List<Widget> textWidgets = <Widget>[
       Text(

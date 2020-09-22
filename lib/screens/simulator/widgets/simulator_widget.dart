@@ -333,6 +333,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                 timerCallback: widget.refreshFunction,
                                 simulatorStore: simulatorStore,
                               ),
+                              ...handleDiscountList(),
                               SizedBox(
                                 height: 32,
                               ),
@@ -350,12 +351,27 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                     ['coupon_cta', 'text'],
                                   );
 
+                                  var value;
+
                                   if (isSuccess) {
                                     label = i18n.trans(
                                       'simulator_screen',
                                       ['coupon_cta', 'label', 'success'],
                                     );
                                     actionText = i18n.trans('edit');
+
+                                    var voucherDiscount = simulatorStore
+                                        ?.simulatorResponse
+                                        ?.quote
+                                        ?.voucherDiscount;
+
+                                    if (voucherDiscount != null) {
+                                      voucherDiscount = ' ' + voucherDiscount;
+                                    } else {
+                                      voucherDiscount = '';
+                                    }
+
+                                    value = '$voucherCode$voucherDiscount';
                                   }
 
                                   return IconLabelTextCTAWidget(
@@ -363,7 +379,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                     isSuccess: isSuccess,
                                     label: label,
                                     actionText: actionText,
-                                    value: voucherCode,
+                                    value: value,
                                     isLoading: widget.isLoading,
                                     onTap: _onCouponClick,
                                   );
@@ -391,7 +407,8 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                 isLoading: widget.isLoading,
                                 onTap: _onFollowUpClick,
                               ),
-                              (beneficiary?.hasAddressMissingFields ?? false)
+                              (beneficiary?.hasAddressMissingFields ?? false) &&
+                                      !widget.isLoading
                                   ? WarningActionWidget(
                                       description: i18n.trans(
                                         'info',
@@ -403,7 +420,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                     )
                                   : Container(),
                               SizedBox(
-                                height: 100,
+                                height: 125,
                               ),
                             ],
                           ),
@@ -420,8 +437,8 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: GradientButtonWidget(
-                        height: 48,
-                        width: MediaQuery.of(context).size.width - 48,
+                        height: 50,
+                        width: MediaQuery.of(context).size.width - 50,
                         isDisabled: widget.isLoading,
                         label: i18n.trans('simulator_screen', ['send']),
                         onPressed: _onSimulateClick,
@@ -436,4 +453,24 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
       },
     );
   }
+
+  List<Widget> handleDiscountList() => widget.isLoading
+      ? []
+      : (simulatorStore?.simulatorResponse?.quote?.costDescription?.home ?? [])
+          .map(
+            (description) => Column(
+              children: [
+                SizedBox(
+                  height: 32,
+                ),
+                IconLabelTextCTAWidget(
+                  icon: description.icon,
+                  label: description.label,
+                  value: description.description,
+                  isSuccess: true,
+                ),
+              ],
+            ),
+          )
+          .toList();
 }

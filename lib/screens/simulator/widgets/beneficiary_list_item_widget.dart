@@ -253,6 +253,7 @@ class BeneficiaryListItemWidget extends StatelessWidget {
             child: Icon(
               RemessaIcons.attention,
               color: Colors.black,
+              size: 16,
             ),
           ),
         ),

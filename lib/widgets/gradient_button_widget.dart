@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class GradientButtonWidget extends StatelessWidget {
@@ -56,7 +57,8 @@ class GradientButtonWidget extends StatelessWidget {
                   ? Row(
                       children: [
                         Icon(
-                          Icons.check,
+                          RemessaIcons.check,
+                          size: 12,
                           color: _successColor,
                         ),
                         SizedBox(
@@ -81,7 +83,7 @@ class GradientButtonWidget extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: isSuccess
               ? StyleColors.SUPPORT_SUCCESS_10.withOpacity(.4)

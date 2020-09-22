@@ -16,6 +16,7 @@ import 'package:remessa_app/screens/transaction_details/widgets/transaction_calc
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_calculation_spotlight_row_widget.dart';
 import 'package:remessa_app/stores/quote_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
+import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
 import 'package:remessa_app/widgets/timer_widget.dart';
 import 'package:screens/screens.dart';
@@ -132,9 +133,31 @@ class _TransactionCalculationScreenState
                       TransactionCalculationRowWidget(
                         label: i18n.trans('transaction_calculation_screen',
                             ['spread', 'title']),
-                        labelSpotlight: quote.voucherCode != null &&
-                                quote.voucherCode.isNotEmpty
-                            ? 'Cupom ${quote.voucherCode}'
+                        spotlightList: quote?.costDescription?.details,
+                        spotlightWidgetList: quote?.voucherCode != null
+                            ? [
+                                SpotlightItemWidget(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      text: 'Cupom ',
+                                      children: [
+                                        TextSpan(
+                                          text: quote.voucherCode,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' ${quote?.voucherDiscount}',
+                                        ),
+                                      ],
+                                      style: TextStyle(
+                                        color: StyleColors.SUPPORT_SUCCESS_50,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ]
                             : null,
                         value: CurrencyHelper.withSuffix(
                           quote.spread.toString(),
