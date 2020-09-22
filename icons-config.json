@@ -260,7 +260,7 @@
     },
     {
       "uid": "43181c108f7f0ada8c3cb757a41b0bca",
-      "css": "icon_percent-(3)",
+      "css": "medal",
       "code": 59404,
       "src": "custom_icons",
       "selected": true,
@@ -269,7 +269,7 @@
         "width": 1000
       },
       "search": [
-        "icon_percent-(3)"
+        "medal"
       ]
     },
     {
@@ -288,7 +288,7 @@
     },
     {
       "uid": "6e69f927c5167aa2d9f32462b87a18f7",
-      "css": "check2",
+      "css": "check",
       "code": 59411,
       "src": "custom_icons",
       "selected": true,
@@ -297,7 +297,7 @@
         "width": 1000
       },
       "search": [
-        "check2"
+        "check"
       ]
     },
     {
