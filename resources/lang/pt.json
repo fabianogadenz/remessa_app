@@ -208,7 +208,7 @@
         },
         "coupon_cta": {
             "label": {
-                "default": "Tem um desconto?",
+                "default": "Tem um cupom desconto?",
                 "success": "Cupom de desconto"
             },
             "text": "Simule ou insira um cupom aqui"

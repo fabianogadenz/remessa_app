@@ -19,17 +19,14 @@ class InitialStepperWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Container(
           width: double.infinity,
           child: Image.asset(
             imagePath,
-            height: 360,
+            height: MediaQuery.of(context).size.height * 0.5,
           ),
-        ),
-        SizedBox(
-          height: 30,
         ),
         Column(
           children: <Widget>[

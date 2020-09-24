@@ -148,7 +148,9 @@ class _TransactionCalculationScreenState
                                           ),
                                         ),
                                         TextSpan(
-                                          text: ' ${quote?.voucherDiscount}',
+                                          text: quote?.voucherDiscount != null
+                                              ? ' (${quote?.voucherDiscount})'
+                                              : '',
                                         ),
                                       ],
                                       style: TextStyle(
