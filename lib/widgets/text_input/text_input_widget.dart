@@ -60,6 +60,8 @@ class TextInputWidget extends StatelessWidget {
         focusNode: focusNode ?? FocusNode(),
         obscureText: obscureText,
         readOnly: isDisabled,
+        autocorrect: false,
+        enableSuggestions: false,
         decoration: _decoration.copyWith(
           suffixIcon: hasError
               ? Icon(
@@ -71,6 +73,7 @@ class TextInputWidget extends StatelessWidget {
         ),
         style: TextStyle(
           color: StyleColors.BRAND_PRIMARY_80,
+          decoration: TextDecoration.none,
         ),
         keyboardType: keyboardType,
         validator: validator,

@@ -366,7 +366,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                         ?.voucherDiscount;
 
                                     if (voucherDiscount != null) {
-                                      voucherDiscount = ' ' + voucherDiscount;
+                                      voucherDiscount = ' ($voucherDiscount)';
                                     } else {
                                       voucherDiscount = '';
                                     }
