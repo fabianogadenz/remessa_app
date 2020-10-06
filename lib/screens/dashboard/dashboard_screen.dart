@@ -53,7 +53,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
       onPressed: () {
         TrackEvents.log(TrackEvents.DASHBOARD_NEW_TRANSACTION_CLICK);
 
-        navigator.pushNamed(Router.SIMULATOR_ROUTE);
+        navigator.pushNamed(AppRouter.SIMULATOR_ROUTE);
       },
     );
 

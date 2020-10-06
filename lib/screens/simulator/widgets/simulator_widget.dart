@@ -128,7 +128,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
       label: SnowplowHelper.SEND_OPERATION,
     );
 
-    Router.websiteRedirect(
+    AppRouter.websiteRedirect(
       simulatorStore?.simulatorResponse?.redirectUrl,
       description: i18n.trans(
         'website_redirect_screen',
@@ -152,7 +152,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
 
   _onFollowUpClick() {
     TrackEvents.log(TrackEvents.SIMULATOR_FOLLOW_UP_CLICK);
-    Router.websiteRedirect(
+    AppRouter.websiteRedirect(
       widget.simulatorResponse?.quotationUrl ?? '',
       utm: UTM(
         campaign: UTM.FOLLOW_UP_EXCHANGE_RATE_CAMPAIGN,

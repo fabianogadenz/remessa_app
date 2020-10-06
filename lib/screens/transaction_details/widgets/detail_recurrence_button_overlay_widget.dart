@@ -36,7 +36,7 @@ class DetailRecurrenceButtonOverlayWidget implements CustomOverlay {
               onPressed: () {
                 TrackEvents.log(TrackEvents.TRANSACTION_REPEAT_CLICK);
                 GetIt.I<NavigatorHelper>().pushNamed(
-                  Router.SIMULATOR_ROUTE,
+                  AppRouter.SIMULATOR_ROUTE,
                   arguments: SimulatorScreenArgs(
                     beneficiaryId: beneficiaryId,
                   ),

@@ -249,7 +249,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
       label: SnowplowHelper.ADD_NEW_BENEFICIARY,
     );
 
-    Router.websiteRedirect(
+    AppRouter.websiteRedirect(
       beneficiaryStore?.beneficiaryResponseModel?.defaultUrl,
       utm: UTM(
         campaign: UTM.ADD_NEW_BENEFICIARY_CAMPAIGN,

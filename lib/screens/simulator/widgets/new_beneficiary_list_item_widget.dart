@@ -114,7 +114,7 @@ class NewBeneficiaryListItemWidget extends StatelessWidget {
       label: SnowplowHelper.ADD_NEW_BENEFICIARY,
     );
 
-    Router.websiteRedirect(
+    AppRouter.websiteRedirect(
       newBeneficiaryUrl,
       utm: UTM(
         campaign: UTM.ADD_NEW_BENEFICIARY_CAMPAIGN,

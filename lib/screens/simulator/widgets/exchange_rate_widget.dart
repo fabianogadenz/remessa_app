@@ -77,7 +77,7 @@ class _ExchangeRateWidgetState extends State<ExchangeRateWidget> {
         TrackEvents.log(TrackEvents.SIMULATOR_TAXES_CLICK);
         quoteStore.setQuote(widget.simulatorStore?.simulatorResponse?.quote);
         GetIt.I<NavigatorHelper>().pushNamed(
-          Router.SIMULATOR_CALCULATION_ROUTE,
+          AppRouter.SIMULATOR_CALCULATION_ROUTE,
           arguments: TransactionCalculationScreenArgs(
             quoteStore: quoteStore,
             beneficiaryName:

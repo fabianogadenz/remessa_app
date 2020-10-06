@@ -19,7 +19,7 @@ import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/widgets/tab_controller/tab_controller_widget.dart';
 
-class Router {
+class AppRouter {
   static const SPLASH_ROUTE = '/';
   static const CHECK_LOGIN_ROUTE = '/check_login';
   static const WEBSITE_REDIRECT_ROUTE = '/website_redirect';
@@ -103,7 +103,7 @@ class Router {
   static Route<dynamic> Function(RouteSettings) onGenerateRoute() =>
       (RouteSettings settings) {
         switch (settings.name) {
-          case Router.SIMULATOR_ROUTE:
+          case AppRouter.SIMULATOR_ROUTE:
             return PageRouteBuilder(
               pageBuilder: (_, __, ___) {
                 FlutterUxcam.tagScreenName(UxCamHelper.SIMULATOR);
@@ -139,7 +139,7 @@ class Router {
 
   static websiteRedirect(String url, {String description, Note note, UTM utm}) {
     GetIt.I<NavigatorHelper>().pushNamed(
-      Router.WEBSITE_REDIRECT_ROUTE,
+      AppRouter.WEBSITE_REDIRECT_ROUTE,
       arguments: WebsiteRedirectScreenArgs(
         url: url,
         description: description,
