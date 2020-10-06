@@ -58,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
 
     FocusScope.of(context).requestFocus(FocusNode());
 
-    Router.websiteRedirect(
+    AppRouter.websiteRedirect(
       url,
       utm: utm,
     );
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
                         FocusScope.of(context).requestFocus(FocusNode());
 
                         navigator.pushReplacementNamed(
-                          Router.STEPPER_ROUTE,
+                          AppRouter.STEPPER_ROUTE,
                         );
                       },
                     )

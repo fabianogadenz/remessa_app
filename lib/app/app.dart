@@ -16,7 +16,7 @@ class App extends StatelessWidget {
   final reactionDesposer = reaction(
     (_) => GetIt.I<AuthStore>().isLoggedIn,
     (bool isLoggedIn) => GetIt.I<NavigatorHelper>()
-        .pushReplacementNamed(Router.CHECK_LOGIN_ROUTE),
+        .pushReplacementNamed(AppRouter.CHECK_LOGIN_ROUTE),
   );
   final navigator = GetIt.I<NavigatorHelper>();
 
@@ -63,9 +63,9 @@ class App extends StatelessWidget {
           analytics: FirebaseAnalytics(),
         ),
       ],
-      initialRoute: Router.SPLASH_ROUTE,
-      routes: Router.routes(),
-      onGenerateRoute: Router.onGenerateRoute(),
+      initialRoute: AppRouter.SPLASH_ROUTE,
+      routes: AppRouter.routes(),
+      onGenerateRoute: AppRouter.onGenerateRoute(),
     );
   }
 }

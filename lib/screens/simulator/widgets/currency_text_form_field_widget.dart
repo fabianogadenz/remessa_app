@@ -42,7 +42,7 @@ class CurrencyTextFormFieldWidget extends StatelessWidget {
           : TextFormField(
               controller: controller,
               inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.digitsOnly,
                 ...inputFormatters,
               ],
               focusNode: focusNode,

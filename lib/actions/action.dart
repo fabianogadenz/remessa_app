@@ -19,7 +19,7 @@ class LinkAction {
         prevAction();
       }
 
-      Router.websiteRedirect(url);
+      AppRouter.websiteRedirect(url);
     };
   }
 }

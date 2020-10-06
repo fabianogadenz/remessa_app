@@ -17,17 +17,17 @@ import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:screens/screens.dart';
 
 class TabContent {
-  final String title;
+  final String label;
   final IconData iconData;
   final Widget widget;
   final Function action;
 
   TabContent({
-    @required this.title,
+    @required this.label,
     @required this.iconData,
     @required this.widget,
     this.action,
-  })  : assert(title != null),
+  })  : assert(label != null),
         assert(iconData != null),
         assert(widget != null);
 }
@@ -69,7 +69,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       }
 
       navigator.pushNamed(
-        Router.TRANSACTION_DETAILS_ROUTE,
+        AppRouter.TRANSACTION_DETAILS_ROUTE,
         arguments: TransactionDetailsScreenArgs(
           transactionId: _appStore.transactionId,
         ),
@@ -83,7 +83,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
   Widget build(BuildContext context) {
     _tabs = <TabContent>[
       TabContent(
-        title: i18n.trans('outbound'),
+        label: i18n.trans('outbound'),
         iconData: RemessaIcons.send,
         widget: DashboardScreen(),
         action: () {
@@ -91,16 +91,16 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
         },
       ),
       TabContent(
-        title: i18n.trans('simulator'),
+        label: i18n.trans('simulator'),
         iconData: RemessaIcons.simulador,
         widget: Container(),
         action: () {
           TrackEvents.log(TrackEvents.NAVBAR_SIMULATOR_CLICK);
-          navigator.pushNamed(Router.SIMULATOR_ROUTE);
+          navigator.pushNamed(AppRouter.SIMULATOR_ROUTE);
         },
       ),
       // TabContent(
-      //   title: 'Perfil',
+      //   label: 'Perfil',
       //   iconData: RemessaIcons.user_fill,
       //   widget: DashboardScreen(),
       // ),
@@ -109,7 +109,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
     if (_appStore?.configs?.isChatEnabled ?? true) {
       _tabs.add(
         TabContent(
-          title: i18n.trans('help'),
+          label: i18n.trans('help'),
           iconData: RemessaIcons.chat,
           widget: Container(),
           action: () {
@@ -145,7 +145,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
                             tab.iconData,
                             size: 18,
                           ),
-                          title: Text(tab.title),
+                          label: tab.label,
                         ),
                       )
                       .toList(),

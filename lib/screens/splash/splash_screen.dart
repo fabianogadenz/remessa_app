@@ -91,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
             );
           } else {
             await Future.delayed(Duration(milliseconds: 300));
-            navigator.pushReplacementNamed(Router.CHECK_LOGIN_ROUTE);
+            navigator.pushReplacementNamed(AppRouter.CHECK_LOGIN_ROUTE);
           }
         },
       );

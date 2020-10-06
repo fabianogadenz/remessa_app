@@ -69,9 +69,6 @@ dev_dependencies:
   mockito: ^4.1.1
   mobx_codegen: ^1.1.0+1
 
-dependency_overrides:
-  analyzer: 0.39.14
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

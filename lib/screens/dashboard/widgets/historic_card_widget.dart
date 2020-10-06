@@ -45,7 +45,7 @@ class HistoricCardWidget extends StatelessWidget {
         );
 
         navigator.pushNamed(
-          Router.TRANSACTION_DETAILS_ROUTE,
+          AppRouter.TRANSACTION_DETAILS_ROUTE,
           arguments: TransactionDetailsScreenArgs(
             transactionId: transaction.id,
           ),

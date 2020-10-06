@@ -72,7 +72,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     TrackEvents.log(TrackEvents.LOGIN_FORGOT_PASSWORD_CLICK);
     FocusScope.of(context).requestFocus(FocusNode());
 
-    Router.websiteRedirect(
+    AppRouter.websiteRedirect(
       UrlHelper.FORGOT_PASSWORD_URL,
       utm: UTM(
         campaign: UTM.FORGOT_PASSWORD_CAMPAIGN,
@@ -84,7 +84,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
     FocusScope.of(context).requestFocus(FocusNode());
 
-    Router.websiteRedirect(
+    AppRouter.websiteRedirect(
       UrlHelper.REGISTER_URL,
       utm: UTM(
         campaign: UTM.PRE_SIGNUP_CAMPAIGN,

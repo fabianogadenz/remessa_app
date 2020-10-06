@@ -240,7 +240,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
             _log(TrackEvents.TRANSACTION_HOW_TO_PAY_CLICK);
 
             navigator.pushNamed(
-              Router.TD_HOW_TO_PAY_ROUTE,
+              AppRouter.TD_HOW_TO_PAY_ROUTE,
               arguments: HowToPayScreenArgs(
                 paymentDeadline: transactionDetails.paymentDeadline,
               ),
@@ -330,7 +330,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
                 ..setQuote(transactionDetails?.quote);
 
               navigator.pushNamed(
-                Router.TD_CALCULATION_ROUTE,
+                AppRouter.TD_CALCULATION_ROUTE,
                 arguments: TransactionCalculationScreenArgs(
                   quoteStore: quoteStore,
                   beneficiaryName: transactionDetails.counterpart.name,
@@ -353,7 +353,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
               _log(TrackEvents.TRANSACTION_BENEFICIARY_INFO_CLICK);
 
               navigator.pushNamed(
-                Router.TD_BENEFICIARY_ROUTE,
+                AppRouter.TD_BENEFICIARY_ROUTE,
                 arguments: BeneficiaryDataScreenArgs(
                   transactionDetails: transactionDetails,
                 ),

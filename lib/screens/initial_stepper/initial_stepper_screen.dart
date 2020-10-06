@@ -112,7 +112,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
                     {'tutorial_step': _currentLogIndex},
                   );
 
-                  navigator.pushReplacementNamed(Router.LOGIN_ROUTE);
+                  navigator.pushReplacementNamed(AppRouter.LOGIN_ROUTE);
                 },
               ),
             ),
@@ -125,7 +125,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
                   TrackEvents.log(
                       TrackEvents.INITIAL_STEPPER_FINISH_BUTTON_CLICK);
 
-                  navigator.pushReplacementNamed(Router.LOGIN_ROUTE);
+                  navigator.pushReplacementNamed(AppRouter.LOGIN_ROUTE);
                   return;
                 }
 
