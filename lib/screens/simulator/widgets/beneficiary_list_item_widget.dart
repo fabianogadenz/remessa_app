@@ -220,30 +220,15 @@ class BeneficiaryListItemWidget extends StatelessWidget {
                 AddressMissingFieldsAction(beneficiary);
 
             return ModalHelper.showInfoBottomSheet(
-                context,
-                i18n.trans('info', ['addressMissingFields', 'title']),
-                i18n.trans('info', ['addressMissingFields', 'description']),
-                Icon(
-                  Icons.info,
-                  size: 20,
-                ),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: addBeneficiaryAction.action,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                    ),
-                    child: Text(
-                      addBeneficiaryAction.name,
-                      style: TextStyle(
-                        color: StyleColors.SUPPORT_NEUTRAL_10,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ));
+              context,
+              i18n.trans('info', ['addressMissingFields', 'title']),
+              i18n.trans('info', ['addressMissingFields', 'description']),
+              Icon(
+                Icons.info,
+                size: 20,
+              ),
+              addBeneficiaryAction,
+            );
           },
           child: Container(
             decoration: BoxDecoration(
