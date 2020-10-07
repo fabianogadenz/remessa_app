@@ -7,6 +7,7 @@ import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/models/link_action_model.dart';
 import 'package:remessa_app/models/quote_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen_args.dart';
@@ -76,7 +77,8 @@ class _TransactionCalculationScreenState
     super.dispose();
   }
 
-  _onTapInfo(BuildContext context, String title, String description) {
+  _onTapInfo(BuildContext context, String title, String description,
+      [LinkActionModel linkActionModel]) {
     TrackEvents.log(
       TrackEvents.TRANSACTION_CALCULATION_INFO_CLICK,
       {'label': title},
@@ -86,6 +88,8 @@ class _TransactionCalculationScreenState
       context,
       title,
       description,
+      null,
+      linkActionModel?.toAction() ?? null,
     );
   }
 
@@ -229,6 +233,7 @@ class _TransactionCalculationScreenState
                               context,
                               fee.label,
                               fee.description,
+                              fee.action,
                             ),
                           ),
                         )

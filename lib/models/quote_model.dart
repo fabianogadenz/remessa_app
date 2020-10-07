@@ -1,4 +1,5 @@
 import 'package:remessa_app/models/cost_description_model.dart';
+import 'package:remessa_app/models/link_action_model.dart';
 
 class Quote {
   String foreignCurrency;
@@ -94,6 +95,7 @@ class FeeTaxes {
   String label;
   String description;
   double value;
+  LinkActionModel action;
 
   FeeTaxes({this.label, this.description, this.value});
 
@@ -101,6 +103,9 @@ class FeeTaxes {
     label = json['label'];
     description = json['description'];
     value = json['value'].toDouble();
+    action = json['action'] != null
+        ? new LinkActionModel.fromJson(json['action'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -108,6 +113,9 @@ class FeeTaxes {
     data['label'] = this.label;
     data['description'] = this.description;
     data['value'] = this.value;
+    if (this.action != null) {
+      data['action'] = this.action.toJson();
+    }
     return data;
   }
 }
