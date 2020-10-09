@@ -12,6 +12,7 @@ class ConfigModel {
   bool isUxCamEnabled = false;
   bool isBetaSimulator = false;
   bool isMaintenanceModeEnabled = false;
+  bool isCouponEnabled = false;
 
   ConfigModel({
     this.isUpToDate = true,
@@ -22,6 +23,7 @@ class ConfigModel {
     this.isUxCamEnabled = false,
     this.isBetaSimulator = false,
     this.isMaintenanceModeEnabled = false,
+    this.isCouponEnabled = false,
   });
 
   _isUpToDate(String minVersionStr, String currentVersionStr) {
@@ -41,6 +43,7 @@ class ConfigModel {
     isUxCamEnabled = remoteConfig.getBool('isUxCamEnabled');
     isBetaSimulator = remoteConfig.getBool('isBetaSimulator');
     isMaintenanceModeEnabled = remoteConfig.getBool('isMaintenanceModeEnabled');
+    isCouponEnabled = remoteConfig.getBool('isCouponEnabled');
 
     final remoteTimeout = remoteConfig.getInt('timeout');
 
@@ -56,6 +59,7 @@ class ConfigModel {
     timeout = json['timeout'];
     isUxCamEnabled = json['isUxCamEnabled'];
     isMaintenanceModeEnabled = json['isMaintenanceModeEnabled'];
+    isCouponEnabled = json['isCouponEnabled'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +72,7 @@ class ConfigModel {
     data['timeout'] = this.timeout;
     data['isUxCamEnabled'] = this.isUxCamEnabled;
     data['isMaintenanceModeEnabled'] = this.isMaintenanceModeEnabled;
+    data['isCouponEnabled'] = this.isCouponEnabled;
     return data;
   }
 }

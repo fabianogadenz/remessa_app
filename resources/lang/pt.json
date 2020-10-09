@@ -207,11 +207,15 @@
             "field_name": "FOREIGN_VALUE"
         },
         "coupon_cta": {
+            "old": {
+                "label": "Tem um desconto?",
+                "text": "Simule ou insira um cupom aqui"
+            },
             "label": {
                 "default": "Tem um cupom desconto?",
                 "success": "Cupom de desconto"
             },
-            "text": "Simule ou insira um cupom aqui"
+            "text": "Insira aqui"
         },
         "follow_up_cta": {
             "label": "Acompanhe a evolução da moeda",

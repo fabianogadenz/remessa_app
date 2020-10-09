@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/actions/address_missing_fields_action.dart';
+import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
@@ -54,6 +55,7 @@ class SimulatorWidget extends StatefulWidget {
 
 class _SimulatorWidgetState extends State<SimulatorWidget> {
   final i18n = GetIt.I<I18n>();
+  final _appStore = GetIt.I<AppStore>();
   final _snowplow = GetIt.I<SnowplowHelper>();
   final brlCurrencyCtrl = MoneyMaskedTextController();
   final brlCurrencyFocusNode = FocusNode();
@@ -169,12 +171,23 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
       label: SnowplowHelper.ADD_DISCOUNT,
     );
 
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) => CouponWidget(
-        simulatorStore: simulatorStore,
+    if (_appStore?.configs?.isCouponEnabled ?? false) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext context) => CouponWidget(
+          simulatorStore: simulatorStore,
+        ),
+      );
+
+      return;
+    }
+
+    AppRouter.websiteRedirect(
+      simulatorStore?.simulatorResponse?.redirectUrl,
+      utm: UTM(
+        campaign: UTM.ADD_DISCOUNT_CAMPAIGN,
       ),
     );
   }
@@ -343,13 +356,26 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
 
                                   String label = i18n.trans(
                                     'simulator_screen',
-                                    ['coupon_cta', 'label', 'default'],
+                                    ['coupon_cta', 'old', 'label'],
                                   );
 
                                   String actionText = i18n.trans(
                                     'simulator_screen',
-                                    ['coupon_cta', 'text'],
+                                    ['coupon_cta', 'old', 'text'],
                                   );
+
+                                  if (_appStore?.configs?.isCouponEnabled ??
+                                      false) {
+                                    label = i18n.trans(
+                                      'simulator_screen',
+                                      ['coupon_cta', 'label', 'default'],
+                                    );
+
+                                    actionText = i18n.trans(
+                                      'simulator_screen',
+                                      ['coupon_cta', 'text'],
+                                    );
+                                  }
 
                                   var value;
 
