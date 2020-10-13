@@ -50,6 +50,7 @@ class InfoWidget extends StatelessWidget {
                 ],
               ),
               GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   child: Container(
                     padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(

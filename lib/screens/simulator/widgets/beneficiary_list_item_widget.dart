@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:remessa_app/actions/address_missing_fields_action.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/models/missing_fields_information_model.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -192,8 +190,11 @@ class BeneficiaryListItemWidget extends StatelessWidget {
                       : Container(),
                 ],
               ),
-              (beneficiary?.hasAddressMissingFields ?? false)
-                  ? _buildAddressMissingFieldsAlert(context)
+              (beneficiary?.hasMissingFieldsInformation ?? false)
+                  ? _buildMissingFieldsAlert(
+                      context,
+                      beneficiary.missingFieldsInformation.beneficiary,
+                    )
                   : Container(),
             ],
           ),
@@ -202,7 +203,8 @@ class BeneficiaryListItemWidget extends StatelessWidget {
     );
   }
 
-  Expanded _buildAddressMissingFieldsAlert(BuildContext context) {
+  Expanded _buildMissingFieldsAlert(BuildContext context,
+      MissingFieldsInformationStructureModel beneficiaryMissingFields) {
     return Expanded(
       child: Container(
         alignment: Alignment.centerRight,
@@ -213,23 +215,16 @@ class BeneficiaryListItemWidget extends StatelessWidget {
         ),
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () {
-            final i18n = GetIt.I<I18n>();
-
-            final addBeneficiaryAction =
-                AddressMissingFieldsAction(beneficiary);
-
-            return ModalHelper.showInfoBottomSheet(
-              context,
-              i18n.trans('info', ['addressMissingFields', 'title']),
-              i18n.trans('info', ['addressMissingFields', 'description']),
-              Icon(
-                Icons.info,
-                size: 20,
-              ),
-              addBeneficiaryAction,
-            );
-          },
+          onTap: () => ModalHelper.showInfoBottomSheet(
+            context,
+            beneficiaryMissingFields.title,
+            beneficiaryMissingFields.description,
+            Icon(
+              Icons.info,
+              size: 20,
+            ),
+            beneficiaryMissingFields.action.toAction(),
+          ),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),

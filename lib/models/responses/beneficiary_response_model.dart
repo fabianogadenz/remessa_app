@@ -1,4 +1,5 @@
 import 'package:remessa_app/models/currency_model.dart';
+import 'package:remessa_app/models/missing_fields_information_model.dart';
 
 class BeneficiaryResponseModel {
   List<Beneficiary> beneficiaries;
@@ -41,12 +42,9 @@ class Beneficiary {
   bool isDisabled;
   List<MissingFields> missingFields;
   List<MissingFields> addressMissingFields;
+  MissingFieldsInformationModel missingFieldsInformation;
 
-  bool get hasMissingFields =>
-      missingFields != null && missingFields.length > 0;
-
-  bool get hasAddressMissingFields =>
-      addressMissingFields != null && addressMissingFields.length > 0;
+  bool get hasMissingFieldsInformation => missingFieldsInformation != null;
 
   Beneficiary({
     this.id,
@@ -62,6 +60,7 @@ class Beneficiary {
     this.isDisabled,
     this.missingFields,
     this.addressMissingFields,
+    this.missingFieldsInformation,
   });
 
   Beneficiary.fromJson(Map<String, dynamic> json) {
@@ -91,6 +90,11 @@ class Beneficiary {
         addressMissingFields.add(new MissingFields.fromJson(v));
       });
     }
+    missingFieldsInformation = json['missingFieldsInformation'] != null
+        ? new MissingFieldsInformationModel.fromJson(
+            json['missingFieldsInformation'],
+          )
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -119,6 +123,9 @@ class Beneficiary {
     if (this.addressMissingFields != null) {
       data['addressMissingFields'] =
           this.addressMissingFields.map((v) => v.toJson()).toList();
+    }
+    if (this.missingFieldsInformation != null) {
+      data['missingFieldsInformation'] = this.missingFieldsInformation.toJson();
     }
     return data;
   }
