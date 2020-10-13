@@ -6,7 +6,7 @@ class WarningActionWidget extends StatelessWidget {
   const WarningActionWidget({
     Key key,
     @required this.description,
-    @required this.linkAction,
+    this.linkAction,
   }) : super(key: key);
 
   final String description;
@@ -14,6 +14,10 @@ class WarningActionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sBox = SizedBox(
+      height: 8,
+    );
+
     return Column(
       children: [
         SizedBox(
@@ -35,20 +39,28 @@ class WarningActionWidget extends StatelessWidget {
                   color: StyleColors.SUPPORT_WARNING_60,
                 ),
               ),
-              SizedBox(
-                height: 8,
-              ),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: linkAction.action,
-                child: Text(
-                  linkAction.name,
-                  style: TextStyle(
-                    color: StyleColors.SUPPORT_WARNING_60,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+              linkAction != null
+                  ? GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: linkAction.action,
+                      child: Container(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            sBox,
+                            Text(
+                              linkAction.name,
+                              style: TextStyle(
+                                color: StyleColors.SUPPORT_WARNING_60,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : sBox,
             ],
           ),
         ),

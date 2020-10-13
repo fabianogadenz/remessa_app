@@ -4,7 +4,6 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:remessa_app/actions/address_missing_fields_action.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
@@ -433,17 +432,10 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                 isLoading: widget.isLoading,
                                 onTap: _onFollowUpClick,
                               ),
-                              (beneficiary?.hasAddressMissingFields ?? false) &&
+                              (beneficiary?.hasMissingFieldsInformation ??
+                                          false) &&
                                       !widget.isLoading
-                                  ? WarningActionWidget(
-                                      description: i18n.trans(
-                                        'info',
-                                        ['addressMissingFields', 'description'],
-                                      ),
-                                      linkAction: AddressMissingFieldsAction(
-                                        beneficiary,
-                                      ),
-                                    )
+                                  ? _buildWarningActionWidget()
                                   : Container(),
                               SizedBox(
                                 height: 125,
@@ -462,13 +454,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                     alignment: Alignment.bottomCenter,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: GradientButtonWidget(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width - 50,
-                        isDisabled: widget.isLoading,
-                        label: i18n.trans('simulator_screen', ['send']),
-                        onPressed: _onSimulateClick,
-                      ),
+                      child: _handleActionButton(context),
                     ),
                   ),
                 ),
@@ -477,6 +463,44 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildWarningActionWidget() {
+    if (beneficiary?.missingFieldsInformation == null) return Container();
+
+    final missingFieldsInformation = beneficiary?.missingFieldsInformation;
+    final simulatorMissingFields = missingFieldsInformation?.simulator;
+
+    return WarningActionWidget(
+      description: simulatorMissingFields.description,
+      linkAction: !missingFieldsInformation.isBlocked
+          ? beneficiary.missingFieldsInformation.simulator.action.toAction()
+          : null,
+    );
+  }
+
+  Widget _handleActionButton(BuildContext context) {
+    final missingFieldsInformation = beneficiary?.missingFieldsInformation;
+    final simulatorMissingFields = missingFieldsInformation?.simulator;
+
+    var label = i18n.trans('simulator_screen', ['send']);
+    var action = _onSimulateClick;
+
+    if (missingFieldsInformation != null &&
+        missingFieldsInformation.isBlocked) {
+      final _linkAction = simulatorMissingFields.action.toAction();
+
+      label = _linkAction.name;
+      action = _linkAction.action;
+    }
+
+    return GradientButtonWidget(
+      height: 50,
+      width: MediaQuery.of(context).size.width - 50,
+      isDisabled: widget.isLoading,
+      label: label,
+      onPressed: action,
     );
   }
 
