@@ -23,7 +23,7 @@ class ConfigModel {
     this.isUxCamEnabled = false,
     this.isBetaSimulator = false,
     this.isMaintenanceModeEnabled = false,
-    this.isCouponEnabled = false,
+    this.isCouponEnabled = true,
   });
 
   _isUpToDate(String minVersionStr, String currentVersionStr) {
