@@ -136,7 +136,7 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
 
                 carousel.nextPage(
                   duration: Duration(milliseconds: 300),
-                  curve: Curves.linear,
+                  curve: Curves.easeIn,
                 );
               },
             ),

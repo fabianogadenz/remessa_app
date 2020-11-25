@@ -1,4 +1,4 @@
-import 'package:remessa_app/models/link_action_model.dart';
+import 'package:remessa_app/models/actions/link_action_model.dart';
 
 class MissingFieldsInformationModel {
   MissingFieldsInformationStructureModel beneficiary;

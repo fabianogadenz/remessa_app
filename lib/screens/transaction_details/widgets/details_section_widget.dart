@@ -39,7 +39,7 @@ class DetailSectionWidget extends StatelessWidget {
           DetailSectionTitleWidget(title),
           ...detailItems,
           sectionLink != null
-              ? DetailSectionLink(
+              ? DetailSectionLinkWidget(
                   sectionLink.label,
                   action: sectionLink.action,
                 )

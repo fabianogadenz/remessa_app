@@ -7,6 +7,7 @@ import 'package:remessa_app/helpers/uri_helper.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/redirect/widgets/website_redirect_note_widget.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/app_bar_widget.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
 import 'package:screens/screens.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,7 +37,6 @@ class _WebsiteRedirectScreenState extends State<WebsiteRedirectScreen> {
 
   void _onBackButtonClick() {
     TrackEvents.log(TrackEvents.WEBSITE_GO_BACK_CLICK);
-    GetIt.I<NavigatorHelper>().pop();
   }
 
   @override
@@ -45,13 +45,9 @@ class _WebsiteRedirectScreenState extends State<WebsiteRedirectScreen> {
       isAccent: true,
       showAppBar: true,
       statusBarBrightness: Brightness.light,
-      appBarWidget: AppBar(
-        brightness: Brightness.light,
+      appBarWidget: AppBarWidget(
+        prevAction: _onBackButtonClick,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: _onBackButtonClick,
-        ),
       ),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30),

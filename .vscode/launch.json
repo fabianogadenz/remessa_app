@@ -11,6 +11,12 @@
             "program": "${workspaceRoot}/lib/main.dart"
         },
         {
+            "name": "DASHBOOK",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceRoot}/lib/dashbook.dart"
+        },
+        {
             "name": "DEV",
             "request": "launch",
             "type": "dart",

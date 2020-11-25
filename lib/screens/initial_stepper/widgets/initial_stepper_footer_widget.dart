@@ -2,6 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/dot_indicator_widget.dart';
 import 'package:remessa_app/widgets/primary_button_widget.dart';
 
 class InitialStepperFooterWidget extends StatelessWidget {
@@ -30,20 +31,9 @@ class InitialStepperFooterWidget extends StatelessWidget {
         children: <Widget>[
           Container(
             margin: EdgeInsets.only(left: 24),
-            child: Row(
-              children: List.generate(
-                length,
-                (int currentIndex) => Container(
-                  decoration: BoxDecoration(
-                    color: StyleColors.SUPPORT_NEUTRAL_10
-                        .withOpacity(currentIndex == index ? 1 : 0.2),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  width: 8,
-                  height: 8,
-                  margin: EdgeInsets.symmetric(horizontal: 4),
-                ),
-              ),
+            child: DotIndicatorsWidget(
+              length: length,
+              currentIndex: index,
             ),
           ),
           Container(

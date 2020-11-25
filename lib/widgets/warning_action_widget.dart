@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remessa_app/actions/action.dart';
+import 'package:remessa_app/actions/link_action.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class WarningActionWidget extends StatelessWidget {

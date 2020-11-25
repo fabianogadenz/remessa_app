@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/link_widget.dart';
 
 class SectionLink {
   final String label;
@@ -8,8 +8,8 @@ class SectionLink {
   SectionLink(this.label, this.action);
 }
 
-class DetailSectionLink extends StatelessWidget {
-  const DetailSectionLink(
+class DetailSectionLinkWidget extends StatelessWidget {
+  const DetailSectionLinkWidget(
     this.label, {
     Key key,
     this.action,
@@ -20,18 +20,10 @@ class DetailSectionLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return LinkWidget(
       padding: EdgeInsets.only(top: 16),
-      child: InkWell(
-        onTap: () => action(),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            color: StyleColors.BRAND_PRIMARY_40,
-          ),
-        ),
-      ),
+      label: label,
+      action: action,
     );
   }
 }

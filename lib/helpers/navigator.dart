@@ -26,7 +26,10 @@ class NavigatorHelper {
       );
 
   Future<dynamic> pushNamed(String routeName, {Object arguments}) =>
-      navigatorKey.currentState.pushNamed(routeName, arguments: arguments);
+      navigatorKey.currentState.pushNamed(
+        routeName,
+        arguments: arguments,
+      );
 
   Future<dynamic> pushReplacement(Widget screen) =>
       navigatorKey.currentState.pushReplacement(
@@ -35,8 +38,19 @@ class NavigatorHelper {
         ),
       );
 
-  Future<dynamic> pushReplacementNamed(String routeName) =>
-      navigatorKey.currentState.pushReplacementNamed(routeName);
+  Future<dynamic> pushReplacementNamed(String routeName, {Object arguments}) =>
+      navigatorKey.currentState.pushReplacementNamed(
+        routeName,
+        arguments: arguments,
+      );
+
+  Future<dynamic> pushNamedAndRemoveUntil(String routeName,
+          {bool Function(Route<dynamic>) predicate, Object arguments}) =>
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
+        routeName,
+        predicate ?? (_) => false,
+        arguments: arguments,
+      );
 
   static bool isCurrent(BuildContext context) =>
       ModalRoute.of(context).isCurrent;

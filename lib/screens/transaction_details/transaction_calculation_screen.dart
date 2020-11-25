@@ -7,7 +7,7 @@ import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
-import 'package:remessa_app/models/link_action_model.dart';
+import 'package:remessa_app/models/actions/link_action_model.dart';
 import 'package:remessa_app/models/quote_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen_args.dart';

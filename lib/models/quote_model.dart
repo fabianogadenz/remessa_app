@@ -1,5 +1,5 @@
 import 'package:remessa_app/models/cost_description_model.dart';
-import 'package:remessa_app/models/link_action_model.dart';
+import 'package:remessa_app/models/actions/link_action_model.dart';
 
 class Quote {
   String foreignCurrency;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
+import 'package:remessa_app/widgets/app_bar_widget.dart';
 import 'package:screens/screens.dart';
 
 class BeneficiaryDataScreen extends StatelessWidget {
@@ -20,7 +21,9 @@ class BeneficiaryDataScreen extends StatelessWidget {
       isAccent: true,
       showAppBar: true,
       statusBarBrightness: Brightness.light,
-      appBarText: i18n.trans('beneficiary_data'),
+      appBarWidget: AppBarWidget(
+        text: i18n.trans('beneficiary_data'),
+      ),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
         child: Column(
