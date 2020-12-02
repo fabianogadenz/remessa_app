@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/skeleton_line_widget.dart';
 
@@ -43,6 +44,7 @@ class CurrencyTextFormFieldWidget extends StatelessWidget {
               controller: controller,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
+                CurrencyHelper.mask,
                 ...inputFormatters,
               ],
               focusNode: focusNode,

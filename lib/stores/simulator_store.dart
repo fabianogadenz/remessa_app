@@ -87,9 +87,7 @@ abstract class _SimulatorStoreBase with Store {
   SimulatorResponseModel simulatorResponse;
 
   _SimulatorStoreBase() {
-    _requests
-        .debounceTime(const Duration(milliseconds: 500))
-        .switchMap<SimulatorResponseModel>((request) async* {
+    _requests.switchMap<SimulatorResponseModel>((request) async* {
       try {
         yield await SimulatorService.simulate(request);
       } on ErrorModel catch (e) {
