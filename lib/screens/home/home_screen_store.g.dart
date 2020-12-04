@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tab_controller_store.dart';
+part of 'home_screen_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'tab_controller_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$TabControllerStore on _TabControllerStoreBase, Store {
+mixin _$HomeScreenStore on _HomeScreenStoreBase, Store {
   final _$currentTabIndexAtom =
-      Atom(name: '_TabControllerStoreBase.currentTabIndex');
+      Atom(name: '_HomeScreenStoreBase.currentTabIndex');
 
   @override
   int get currentTabIndex {
@@ -25,7 +25,7 @@ mixin _$TabControllerStore on _TabControllerStoreBase, Store {
     });
   }
 
-  final _$errorMessageAtom = Atom(name: '_TabControllerStoreBase.errorMessage');
+  final _$errorMessageAtom = Atom(name: '_HomeScreenStoreBase.errorMessage');
 
   @override
   String get errorMessage {
@@ -40,7 +40,7 @@ mixin _$TabControllerStore on _TabControllerStoreBase, Store {
     });
   }
 
-  final _$isLoadingAtom = Atom(name: '_TabControllerStoreBase.isLoading');
+  final _$isLoadingAtom = Atom(name: '_HomeScreenStoreBase.isLoading');
 
   @override
   bool get isLoading {
@@ -55,39 +55,39 @@ mixin _$TabControllerStore on _TabControllerStoreBase, Store {
     });
   }
 
-  final _$_TabControllerStoreBaseActionController =
-      ActionController(name: '_TabControllerStoreBase');
+  final _$_HomeScreenStoreBaseActionController =
+      ActionController(name: '_HomeScreenStoreBase');
 
   @override
   dynamic setCurrentTabIndex(int index) {
-    final _$actionInfo = _$_TabControllerStoreBaseActionController.startAction(
-        name: '_TabControllerStoreBase.setCurrentTabIndex');
+    final _$actionInfo = _$_HomeScreenStoreBaseActionController.startAction(
+        name: '_HomeScreenStoreBase.setCurrentTabIndex');
     try {
       return super.setCurrentTabIndex(index);
     } finally {
-      _$_TabControllerStoreBaseActionController.endAction(_$actionInfo);
+      _$_HomeScreenStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setErrorMessage(String value) {
-    final _$actionInfo = _$_TabControllerStoreBaseActionController.startAction(
-        name: '_TabControllerStoreBase.setErrorMessage');
+    final _$actionInfo = _$_HomeScreenStoreBaseActionController.startAction(
+        name: '_HomeScreenStoreBase.setErrorMessage');
     try {
       return super.setErrorMessage(value);
     } finally {
-      _$_TabControllerStoreBaseActionController.endAction(_$actionInfo);
+      _$_HomeScreenStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setIsLoading(bool value) {
-    final _$actionInfo = _$_TabControllerStoreBaseActionController.startAction(
-        name: '_TabControllerStoreBase.setIsLoading');
+    final _$actionInfo = _$_HomeScreenStoreBaseActionController.startAction(
+        name: '_HomeScreenStoreBase.setIsLoading');
     try {
       return super.setIsLoading(value);
     } finally {
-      _$_TabControllerStoreBaseActionController.endAction(_$actionInfo);
+      _$_HomeScreenStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

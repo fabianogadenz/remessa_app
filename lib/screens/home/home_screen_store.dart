@@ -1,10 +1,10 @@
 import 'package:mobx/mobx.dart';
 
-part 'tab_controller_store.g.dart';
+part 'home_screen_store.g.dart';
 
-class TabControllerStore = _TabControllerStoreBase with _$TabControllerStore;
+class HomeScreenStore = _HomeScreenStoreBase with _$HomeScreenStore;
 
-abstract class _TabControllerStoreBase with Store {
+abstract class _HomeScreenStoreBase with Store {
   @observable
   int currentTabIndex = 0;
 

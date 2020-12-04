@@ -8,8 +8,8 @@ import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/models/responses/simulator_default_values_response_model.dart';
 import 'package:remessa_app/models/responses/simulator_response_model.dart';
+import 'package:remessa_app/screens/home/home_screen_store.dart';
 import 'package:remessa_app/services/simulator_service.dart';
-import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'simulator_store.g.dart';
@@ -17,7 +17,7 @@ part 'simulator_store.g.dart';
 class SimulatorStore = _SimulatorStoreBase with _$SimulatorStore;
 
 abstract class _SimulatorStoreBase with Store {
-  final _tabControllerStore = GetIt.I<TabControllerStore>();
+  final _homeScreenStore = GetIt.I<HomeScreenStore>();
   final i18n = GetIt.I<I18n>();
 
   @observable
@@ -86,11 +86,11 @@ abstract class _SimulatorStoreBase with Store {
         if (e?.fieldErrors != null) {
           setFieldErrors(e?.fieldErrors);
         } else {
-          _tabControllerStore.setErrorMessage(e?.mainError?.message ?? '');
+          _homeScreenStore.setErrorMessage(e?.mainError?.message ?? '');
         }
         setHasError(true);
       } catch (e) {
-        if (e?.message != null) _tabControllerStore.setErrorMessage(e?.message);
+        if (e?.message != null) _homeScreenStore.setErrorMessage(e?.message);
         setHasError(true);
       }
     }).listen((event) {
@@ -156,10 +156,10 @@ abstract class _SimulatorStoreBase with Store {
 
       simulatorResponse = simulatorDefaultValuesResponseModel?.precification;
     } on ErrorModel catch (e) {
-      _tabControllerStore.setErrorMessage(e?.mainError?.message);
+      _homeScreenStore.setErrorMessage(e?.mainError?.message);
       hasError = true;
     } catch (e) {
-      _tabControllerStore.setErrorMessage(e?.message ?? '');
+      _homeScreenStore.setErrorMessage(e?.message ?? '');
       hasError = true;
     } finally {
       isLoading = false;
@@ -181,7 +181,7 @@ abstract class _SimulatorStoreBase with Store {
       voucherCode = null;
       voucherError = e.mainError;
     } catch (e) {
-      _tabControllerStore.setErrorMessage(e?.message ?? '');
+      _homeScreenStore.setErrorMessage(e?.message ?? '');
       hasError = true;
     }
 

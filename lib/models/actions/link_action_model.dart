@@ -1,5 +1,5 @@
-import 'package:remessa_app/actions/action.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/actions/link_action.dart';
+import 'package:remessa_app/parsers/action_parser.dart';
 
 class LinkActionModel {
   String label;
@@ -29,6 +29,6 @@ class LinkActionModel {
   LinkAction toAction() => LinkAction(
         name: this.label,
         url: this.url,
-        prevAction: () => TrackEvents.logEvent(this.trackEvent),
+        prevAction: ActionParser.trackEventFunction(trackEvent),
       );
 }

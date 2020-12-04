@@ -18,13 +18,14 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/config_model.dart';
+import 'package:remessa_app/screens/home/home_screen_store.dart';
 import 'package:remessa_app/services/auth_service.dart';
 import 'package:remessa_app/services/config_service.dart';
 import 'package:remessa_app/services/services.dart';
 import 'package:remessa_app/stores/auth_store.dart';
+import 'package:remessa_app/stores/info_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/widgets/error_dialog/error_dialog_widget.dart';
-import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:screens/screens.dart';
 import 'package:zendesk/zendesk.dart';
 
@@ -141,8 +142,12 @@ class SetUp {
       () => AuthStore(),
     );
 
-    GetIt.I.registerLazySingleton<TabControllerStore>(
-      () => TabControllerStore(),
+    GetIt.I.registerLazySingleton<InfoStore>(
+      () => InfoStore(),
+    );
+
+    GetIt.I.registerLazySingleton<HomeScreenStore>(
+      () => HomeScreenStore(),
     );
 
     GetIt.I.registerLazySingleton<TimerAnimationStore>(
@@ -214,6 +219,8 @@ class SetUp {
 
   init() async {
     if (configs.environment == Environment.TEST) {
+      _registerScreens();
+
       return;
     }
 

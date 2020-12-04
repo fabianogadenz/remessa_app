@@ -11,9 +11,11 @@ import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 
 import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
+import 'package:remessa_app/screens/home/home_screen_store.dart';
+// import 'package:remessa_app/screens/loader_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
+// import 'package:remessa_app/stores/info_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 import 'package:screens/screens.dart';
 
 class TabContent {
@@ -32,16 +34,16 @@ class TabContent {
         assert(widget != null);
 }
 
-class TabControllerWidget extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _TabControllerWidgetState createState() => _TabControllerWidgetState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _TabControllerWidgetState extends State<TabControllerWidget> {
+class _HomeScreenState extends State<HomeScreen> {
   final i18n = GetIt.I<I18n>();
-  final _tabControllerStore = GetIt.I<TabControllerStore>()
-    ..setErrorMessage(null);
+  final _homeScreenStore = GetIt.I<HomeScreenStore>()..setErrorMessage(null);
   final _appStore = GetIt.I<AppStore>();
+  // final _infoStore = GetIt.I<InfoStore>();
   final navigator = GetIt.I<NavigatorHelper>();
 
   List<TabContent> _tabs = [];
@@ -50,37 +52,9 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      reactionDisposer = autorun(openTransactionDetails);
+      reactionDisposer = autorun(_handleInfoToShow);
     });
 
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    reactionDisposer();
-    super.dispose();
-  }
-
-  openTransactionDetails(_) {
-    if (_appStore.transactionId != null) {
-      if (Navigator.canPop(context)) {
-        Navigator.popUntil(context, (route) => route.isFirst);
-      }
-
-      navigator.pushNamed(
-        AppRouter.TRANSACTION_DETAILS_ROUTE,
-        arguments: TransactionDetailsScreenArgs(
-          transactionId: _appStore.transactionId,
-        ),
-      );
-
-      _appStore.setTransactionId(null);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     _tabs = <TabContent>[
       TabContent(
         label: i18n.trans('outbound'),
@@ -120,13 +94,58 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       );
     }
 
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    reactionDisposer();
+    super.dispose();
+  }
+
+  _handleInfoToShow(_) async {
+    // TODO: Uncomment this code
+    // await _infoStore.check();
+
+    // if (_infoStore.hasInfoToShow) {
+    //   navigator.pushReplacementNamed(
+    //     AppRouter.GENERATED_VIEW_ROUTE,
+    //     arguments: _infoStore.info,
+    //   );
+
+    //   return;
+    // }
+
+    if (_appStore.transactionId != null) {
+      if (Navigator.canPop(context)) {
+        Navigator.popUntil(context, (route) => route.isFirst);
+      }
+
+      navigator.pushNamed(
+        AppRouter.TRANSACTION_DETAILS_ROUTE,
+        arguments: TransactionDetailsScreenArgs(
+          transactionId: _appStore.transactionId,
+        ),
+      );
+
+      _appStore.setTransactionId(null);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
+        // TODO: Uncomment this code
+        // if (_infoStore.hasInfoToShow || _infoStore.isLoading) {
+        //   return LoaderScreen();
+        // }
+
         return GetIt.I<Screens>().widget(
           isStatic: true,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          child: _tabs[_tabControllerStore.currentTabIndex].widget,
+          child: _tabs[_homeScreenStore.currentTabIndex].widget,
           bottomNavigationBar: _tabs.length >= 2
               ? BottomNavigationBar(
                   selectedItemColor: StyleColors.SUPPORT_NEUTRAL_10,
@@ -134,7 +153,7 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                   elevation: 100,
                   iconSize: 30,
-                  currentIndex: _tabControllerStore.currentTabIndex,
+                  currentIndex: _homeScreenStore.currentTabIndex,
                   onTap: (int index) {
                     onTabTapped(context, index);
                   },
@@ -152,8 +171,8 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
                 )
               : null,
         )
-          ..errorStreamController.add(_tabControllerStore.errorMessage)
-          ..loaderStreamController.add(_tabControllerStore.isLoading);
+          ..errorStreamController.add(_homeScreenStore.errorMessage)
+          ..loaderStreamController.add(_homeScreenStore.isLoading);
       },
     );
   }
@@ -163,6 +182,6 @@ class _TabControllerWidgetState extends State<TabControllerWidget> {
       return _tabs[index].action();
     }
 
-    _tabControllerStore.setCurrentTabIndex(index);
+    _homeScreenStore.setCurrentTabIndex(index);
   }
 }

@@ -31,7 +31,8 @@ class GradientButtonWidget extends StatelessWidget {
     this.isSuccess = false,
     this.isLoading = false,
     this.onPressed,
-  }) : super(key: key);
+  })  : assert(child != null || label != null),
+        super(key: key);
 
   Widget handleChild(BuildContext context) {
     if (isLoading)

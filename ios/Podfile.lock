@@ -16,12 +16,12 @@ PODS:
   - Firebase/RemoteConfig (6.26.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 4.5.0)
-  - firebase_analytics (6.0.0):
+  - firebase_analytics (6.0.2):
     - Firebase/Analytics (~> 6.26.0)
     - Firebase/CoreOnly (~> 6.26.0)
     - firebase_core
     - Flutter
-  - firebase_core (0.5.0):
+  - firebase_core (0.5.0-1):
     - Firebase/CoreOnly (~> 6.26.0)
     - Flutter
   - firebase_crashlytics (0.0.1):
@@ -29,7 +29,7 @@ PODS:
     - Fabric
     - Firebase/Core
     - Flutter
-  - firebase_remote_config (0.4.0):
+  - firebase_remote_config (0.4.0-2):
     - Firebase/CoreOnly (~> 6.26.0)
     - Firebase/RemoteConfig (~> 6.26.0)
     - firebase_core
@@ -74,9 +74,9 @@ PODS:
   - Flutter (1.0.0)
   - flutter_statusbarcolor (0.0.1):
     - Flutter
-  - flutter_uxcam (1.1.1):
+  - flutter_uxcam (1.2.1):
     - Flutter
-    - UXCam (~> 3.1.15)
+    - UXCam (~> 3.2.5)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -112,10 +112,10 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
-  - OneSignal (2.13.1)
-  - onesignal_flutter (2.4.1):
+  - OneSignal (2.15.2)
+  - onesignal_flutter (2.6.1):
     - Flutter
-    - OneSignal (= 2.13.1)
+    - OneSignal (= 2.15.2)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -129,7 +129,7 @@ PODS:
     - FMDB (~> 2.7.2)
   - url_launcher (0.0.1):
     - Flutter
-  - UXCam (3.1.15)
+  - UXCam (3.2.6)
   - ZDCChat (1.4.7):
     - ZDCChat/API (= 1.4.7)
     - ZDCChat/Localization (= 1.4.7)
@@ -220,13 +220,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Amplitude: 9774e93d48d9f41f271a4479e06369a30ab31db1
   amplitude_flutter: 5b9cab3f48db637a37d67b93e5dc49fa9b206686
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
-  firebase_analytics: 3ad65aa7be059752b2c1a6392bfafe030b4ab9fa
-  firebase_core: 3134fe79d257d430f163b558caf52a10a87efe8a
+  firebase_analytics: 31b66f23a42fa62bdf6a134af1d3a3a50bf5ac3e
+  firebase_core: 00e54a4744164a6b5a250b96dd1ad5afaba7a342
   firebase_crashlytics: cc468e94e5a637364aeeeec5c8a96d92ea75ec7b
-  firebase_remote_config: d593fc7402e689b6f6337d7d69028be008ee8c03
+  firebase_remote_config: 7973ef8891d1bcd592c08d8c2fd72b81218c3a2c
   FirebaseABTesting: 821a3a3e4a145987e80fee3657c4de1cb9adf693
   FirebaseAnalytics: 96634d356482d4f3af8fe459a0ebf19a99c71b75
   FirebaseAnalyticsInterop: 3f86269c38ae41f47afeb43ebf32a001f58fcdae
@@ -237,25 +237,25 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfig: 1725314c4b89d8853c876099ded037f11bee26db
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_statusbarcolor: 8afb1071ed8c58be929f1e32b36c629771fd2259
-  flutter_uxcam: 8b15d9328d7c4e6df1afada38b95cd07ad14a9dc
+  flutter_uxcam: 7e94272f05d168ba61bc89758655f08fcb076eeb
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   GoogleAppMeasurement: 67458367830514fb20fd9e233496f1eef9d90185
   GoogleDataTransport: 672fb0ce96fe7f7f31d43672fca62ad2c9c86f7b
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
-  OneSignal: fa98eaa90372bb367b6a4a1c1622ffb9832c7600
-  onesignal_flutter: fc5794fdcfdbd3f17426cb63c78281a3f51c85ff
-  package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
-  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  OneSignal: 9531e385388565f4d31797ddadbe0fcc786430ec
+  onesignal_flutter: b4412973eac419ccce07363e43e0d6057c583a96
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
   share_extend: b6748dc53695587891126a89533b862b92548c7b
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
-  url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
-  UXCam: d9fe256ef297c6b41d411d1654e51acdc198c157
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  UXCam: 99f4310d7e0f4aad0a73306124a8c2d104ccaf9d
   ZDCChat: 46e070452e4543fab9f39913210dfff6527081d1
   zendesk: cb7101c6cc005b76116b24635880a416e83214aa
 
 PODFILE CHECKSUM: c7ceee343e3d9e12f01ef0ac9ecd8a29872913dd
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

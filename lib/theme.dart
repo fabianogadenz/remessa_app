@@ -31,6 +31,7 @@ class AppTheme {
           button: TextStyle(
             color: StyleColors.SUPPORT_NEUTRAL_10,
             fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
         ),
         iconTheme: IconThemeData(

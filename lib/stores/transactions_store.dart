@@ -4,15 +4,15 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/pagination_model.dart';
 import 'package:remessa_app/models/responses/transaction_response_model.dart';
+import 'package:remessa_app/screens/home/home_screen_store.dart';
 import 'package:remessa_app/services/transaction_service.dart';
-import 'package:remessa_app/widgets/tab_controller/tab_controller_store.dart';
 
 part 'transactions_store.g.dart';
 
 class TransactionsStore = _TransactionsStoreBase with _$TransactionsStore;
 
 abstract class _TransactionsStoreBase with Store {
-  final _tabControllerStore = GetIt.I<TabControllerStore>();
+  final _homeScreenStore = GetIt.I<HomeScreenStore>();
 
   @observable
   bool isLoadingTransactions = true;
@@ -84,7 +84,7 @@ abstract class _TransactionsStoreBase with Store {
     openTransactionsPagination = null;
     closedTransactionsPagination = null;
 
-    _tabControllerStore.setErrorMessage('');
+    _homeScreenStore.setErrorMessage('');
   }
 
   @action
@@ -98,9 +98,9 @@ abstract class _TransactionsStoreBase with Store {
       await getOpenTransactions(openTransactionsPage);
       await getClosedTransactions(closedTransactionsPage);
     } on ErrorModel catch (e) {
-      _tabControllerStore.setErrorMessage(e?.mainError?.message);
+      _homeScreenStore.setErrorMessage(e?.mainError?.message);
     } catch (e) {
-      _tabControllerStore.setErrorMessage(e?.message);
+      _homeScreenStore.setErrorMessage(e?.message);
     }
 
     setIsLoadingTransactions(false);

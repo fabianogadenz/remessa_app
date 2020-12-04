@@ -52,7 +52,7 @@ class TransactionDetailsFooterWidget extends StatelessWidget {
                   DetailSectionTitleWidget(
                     i18n.trans('transaction_details_screen', ['doubts']),
                   ),
-                  DetailSectionLink(
+                  DetailSectionLinkWidget(
                     i18n.trans('transaction_details_screen', ['talk_with_us']),
                     action: onTap,
                   ),
