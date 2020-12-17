@@ -32,6 +32,21 @@ mixin _$InfoStore on _InfoStoreBase, Store {
     });
   }
 
+  final _$shownAtom = Atom(name: '_InfoStoreBase.shown');
+
+  @override
+  bool get shown {
+    _$shownAtom.reportRead();
+    return super.shown;
+  }
+
+  @override
+  set shown(bool value) {
+    _$shownAtom.reportWrite(value, super.shown, () {
+      super.shown = value;
+    });
+  }
+
   final _$infoResponseModelAtom =
       Atom(name: '_InfoStoreBase.infoResponseModel');
 
@@ -92,9 +107,21 @@ mixin _$InfoStore on _InfoStoreBase, Store {
   }
 
   @override
+  dynamic setShown(bool value) {
+    final _$actionInfo = _$_InfoStoreBaseActionController.startAction(
+        name: '_InfoStoreBase.setShown');
+    try {
+      return super.setShown(value);
+    } finally {
+      _$_InfoStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
+shown: ${shown},
 infoResponseModel: ${infoResponseModel},
 info: ${info},
 hasInfoToShow: ${hasInfoToShow}

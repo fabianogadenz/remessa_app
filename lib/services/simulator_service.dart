@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/error.dart';
@@ -43,5 +45,24 @@ class SimulatorService {
     } catch (e) {
       throw e;
     }
+  }
+
+  static Future<bool> applyVoucher(SimulatorRequestModel data) async {
+    try {
+      Response response = await GetIt.I<Dio>().post(
+        '/simulator/validate-voucher',
+        data: data.toJson(),
+        options: options,
+      );
+
+      if (response.statusCode == HttpStatus.noContent ||
+          response.statusCode == HttpStatus.ok) return true;
+    } on DioError catch (e) {
+      ErrorHelper.throwFormattedErrorResponse(e);
+    } catch (e) {
+      throw e;
+    }
+
+    return false;
   }
 }

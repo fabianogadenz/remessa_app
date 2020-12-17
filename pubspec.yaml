@@ -45,7 +45,7 @@ dependencies:
   equatable: ^1.2.5
 
   # Plugins
-  amplitude_flutter: ^2.2.0
+  amplitude_flutter: ^2.2.3
   url_launcher: ^5.4.2
   onesignal_flutter: ^2.6.1
   zendesk: ^1.0.2
