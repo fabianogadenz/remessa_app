@@ -80,6 +80,7 @@ class _InfoStepperScreenState extends State<InfoStepperScreen> {
       isStatic: true,
       isAccent: true,
       statusBarBrightness: Brightness.light,
+      padding: const EdgeInsets.all(24),
       child: Column(
         children: [
           Expanded(

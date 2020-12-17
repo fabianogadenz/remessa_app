@@ -5,10 +5,12 @@ import 'package:remessa_app/style/colors.dart';
 
 class CachedNetworkImageWigdet extends StatelessWidget {
   final String imageURL;
+  final Color loaderColor;
 
   const CachedNetworkImageWigdet({
     Key key,
     @required this.imageURL,
+    this.loaderColor,
   }) : super(key: key);
 
   @override
@@ -16,7 +18,10 @@ class CachedNetworkImageWigdet extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageURL,
       progressIndicatorBuilder: (context, url, downloadProgress) =>
-          CircularProgressIndicator(value: downloadProgress.progress),
+          CircularProgressIndicator(
+        value: downloadProgress.progress,
+        valueColor: AlwaysStoppedAnimation<Color>(loaderColor),
+      ),
       errorWidget: (context, url, error) => Center(
         child: Icon(
           Icons.error,

@@ -31,8 +31,11 @@ class InfoScreen extends StatelessWidget implements View<InfoModel> {
             child: Container(
               width: 70,
               alignment: Alignment.center,
-              child: CachedNetworkImageWigdet(
-                imageURL: model.imageURL,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 85),
+                child: CachedNetworkImageWigdet(
+                  imageURL: model.imageURL,
+                ),
               ),
             ),
           ),
@@ -46,7 +49,8 @@ class InfoScreen extends StatelessWidget implements View<InfoModel> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(24),
+              padding:
+                  const EdgeInsets.all(24) + const EdgeInsets.only(bottom: 24),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
