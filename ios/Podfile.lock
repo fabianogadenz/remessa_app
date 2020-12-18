@@ -1,7 +1,7 @@
 PODS:
-  - Amplitude (5.2.1)
+  - Amplitude (7.2.0)
   - amplitude_flutter (0.0.1):
-    - Amplitude (= 5.2.1)
+    - Amplitude (= 7.2.0)
     - Flutter
   - Crashlytics (3.14.0):
     - Fabric (~> 1.10.2)
@@ -120,8 +120,8 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
-  - PromisesObjC (1.2.10)
-  - Protobuf (3.13.0)
+  - PromisesObjC (1.2.11)
+  - Protobuf (3.14.0)
   - share_extend (0.0.1):
     - Flutter
   - sqflite (0.0.1):
@@ -218,8 +218,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/zendesk/ios"
 
 SPEC CHECKSUMS:
-  Amplitude: 9774e93d48d9f41f271a4479e06369a30ab31db1
-  amplitude_flutter: 5b9cab3f48db637a37d67b93e5dc49fa9b206686
+  Amplitude: c948c6f99c7f798c196523b2a5584367401d910f
+  amplitude_flutter: 5c934cf8331619b62bbd5a69f3cfea9090b3ca94
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
@@ -247,8 +247,8 @@ SPEC CHECKSUMS:
   onesignal_flutter: b4412973eac419ccce07363e43e0d6057c583a96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
-  Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  Protobuf: 0cde852566359049847168e51bd1c690e0f70056
   share_extend: b6748dc53695587891126a89533b862b92548c7b
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef

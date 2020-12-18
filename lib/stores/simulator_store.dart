@@ -20,11 +20,21 @@ abstract class _SimulatorStoreBase with Store {
   final _homeScreenStore = GetIt.I<HomeScreenStore>();
   final i18n = GetIt.I<I18n>();
 
+  _clearState() {
+    voucherCode = null;
+  }
+
   @observable
   Beneficiary beneficiary;
 
   @action
-  setBeneficiary(Beneficiary value) => beneficiary = value;
+  setBeneficiary(Beneficiary value) {
+    if (beneficiary == null || beneficiary.id != value.id) {
+      isLoading = false;
+      beneficiary = value;
+      _clearState();
+    }
+  }
 
   @observable
   bool isReverse;
@@ -63,7 +73,7 @@ abstract class _SimulatorStoreBase with Store {
   setHasError(bool value) => hasError = value;
 
   @observable
-  bool isLoading = false;
+  bool isLoading = true;
 
   @observable
   List<ErrorResponseModel> fieldErrors;
@@ -176,7 +186,12 @@ abstract class _SimulatorStoreBase with Store {
     voucherCode = _voucherCode;
 
     try {
-      simulatorResponse = await SimulatorService.simulate(request);
+      final voucherValidationResponse =
+          await SimulatorService.applyVoucher(request);
+
+      if (voucherValidationResponse) {
+        simulatorResponse = await SimulatorService.simulate(request);
+      }
     } on ErrorModel catch (e) {
       voucherCode = null;
       voucherError = e.mainError;
