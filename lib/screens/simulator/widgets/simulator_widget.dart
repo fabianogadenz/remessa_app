@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
+import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
@@ -56,15 +58,16 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   final i18n = GetIt.I<I18n>();
   final _appStore = GetIt.I<AppStore>();
   final _snowplow = GetIt.I<SnowplowHelper>();
-  final brlCurrencyCtrl = MoneyMaskedTextController();
+  final brlCurrencyCtrl = TextEditingController();
   final brlCurrencyFocusNode = FocusNode();
-  final foreignCurrencyCtrl = MoneyMaskedTextController();
+  final foreignCurrencyCtrl = TextEditingController();
   final foreignCurrencyFocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   SimulatorStore get simulatorStore => widget?.simulatorStore;
   Beneficiary get beneficiary => simulatorStore?.beneficiary;
   ReactionDisposer reactionDisposer;
+  Timer _debounce;
 
   ErrorResponseModel _getFieldError(String fieldName) {
     if (simulatorStore?.fieldErrors == null) return null;
@@ -75,6 +78,31 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
     } catch (_) {
       return null;
     }
+  }
+
+  _onValueChanged(String value, [bool isNationalCurrency = true]) {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 1500), () {
+      final response = simulatorStore?.simulatorResponse;
+
+      if (!(response is SimulatorResponseModel)) return;
+
+      final numValue = CurrencyHelper.toDouble(value);
+
+      if (isNationalCurrency) {
+        if (numValue != response.quote.nationalCurrencyTotalAmount &&
+            numValue != simulatorStore.totalValue) {
+          simulatorStore.setTotalValue(numValue);
+          widget.refreshFunction();
+        }
+      } else {
+        if (numValue != response.quote.foreignCurrencyAmount &&
+            numValue != simulatorStore.quantity) {
+          simulatorStore.setQuantity(numValue);
+          widget.refreshFunction();
+        }
+      }
+    });
   }
 
   @override
@@ -88,13 +116,19 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
         final brlValue = response.quote.nationalCurrencyTotalAmount;
         final foreignValue = response.quote.foreignCurrencyAmount;
 
-        if (brlValue != brlCurrencyCtrl.numberValue)
-          brlCurrencyCtrl.updateValue(brlValue ?? 0);
+        if (brlValue != CurrencyHelper.toDouble(brlCurrencyCtrl.text))
+          brlCurrencyCtrl.text =
+              CurrencyHelper.format((brlValue ?? 0).toString());
 
-        if (foreignValue != foreignCurrencyCtrl.numberValue)
-          foreignCurrencyCtrl.updateValue(foreignValue ?? 0);
+        if (foreignValue != CurrencyHelper.toDouble(foreignCurrencyCtrl.text))
+          foreignCurrencyCtrl.text =
+              CurrencyHelper.format((foreignValue ?? 0).toString());
       },
     );
+
+    brlCurrencyCtrl.addListener(() => _onValueChanged(brlCurrencyCtrl.text));
+    foreignCurrencyCtrl
+        .addListener(() => _onValueChanged(foreignCurrencyCtrl.text, false));
 
     brlCurrencyFocusNode.addListener(() {
       if (brlCurrencyFocusNode.hasFocus)
@@ -117,6 +151,11 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   @override
   void dispose() {
     reactionDisposer();
+    brlCurrencyCtrl.dispose();
+    foreignCurrencyCtrl.dispose();
+    brlCurrencyFocusNode.dispose();
+    foreignCurrencyFocusNode.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -271,23 +310,6 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                     ['local_currency_field', 'field_name'],
                                   ),
                                 )?.message,
-                                onChanged: (_) {
-                                  final response =
-                                      simulatorStore?.simulatorResponse;
-
-                                  if (!(response is SimulatorResponseModel))
-                                    return;
-
-                                  if (brlCurrencyCtrl.numberValue !=
-                                          response.quote
-                                              .nationalCurrencyTotalAmount ||
-                                      brlCurrencyCtrl.numberValue !=
-                                          simulatorStore.totalValue) {
-                                    simulatorStore.setTotalValue(
-                                        brlCurrencyCtrl.numberValue);
-                                    widget.refreshFunction();
-                                  }
-                                },
                               ),
                               SizedBox(
                                 height: 16,
@@ -319,23 +341,6 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                                     ['foreign_currency_field', 'field_name'],
                                   ),
                                 )?.message,
-                                onChanged: (_) {
-                                  final response =
-                                      simulatorStore?.simulatorResponse;
-
-                                  if (!(response is SimulatorResponseModel))
-                                    return;
-
-                                  if (foreignCurrencyCtrl.numberValue !=
-                                          response
-                                              .quote.foreignCurrencyAmount &&
-                                      foreignCurrencyCtrl.numberValue !=
-                                          simulatorStore.quantity) {
-                                    simulatorStore.setQuantity(
-                                        foreignCurrencyCtrl.numberValue);
-                                    widget.refreshFunction();
-                                  }
-                                },
                               ),
                               SizedBox(
                                 height: 24,
