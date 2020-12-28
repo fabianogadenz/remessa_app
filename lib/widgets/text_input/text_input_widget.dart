@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
 
@@ -16,6 +17,8 @@ class TextInputWidget extends StatelessWidget {
     this.focusNode,
     this.hasError = false,
     this.isDisabled = false,
+    this.inputFormatters = const [],
+    this.maxLength,
   });
 
   final String labelText;
@@ -29,6 +32,8 @@ class TextInputWidget extends StatelessWidget {
   final FocusNode focusNode;
   final bool hasError;
   final bool isDisabled;
+  final List<TextInputFormatter> inputFormatters;
+  final int maxLength;
 
   final _errorColor = StyleColors.SUPPORT_DANGER_40;
 
@@ -60,9 +65,14 @@ class TextInputWidget extends StatelessWidget {
         focusNode: focusNode ?? FocusNode(),
         obscureText: obscureText,
         readOnly: isDisabled,
+        maxLength: maxLength,
         autocorrect: false,
         enableSuggestions: false,
+        inputFormatters: [
+          ...inputFormatters,
+        ],
         decoration: _decoration.copyWith(
+          counterText: '',
           suffixIcon: hasError
               ? Icon(
                   RemessaIcons.warning,

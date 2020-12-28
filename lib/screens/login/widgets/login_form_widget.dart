@@ -1,8 +1,9 @@
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
+import 'package:remessa_app/formatters/cpf_input_mask_formatter.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
@@ -33,12 +34,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   final navigator = GetIt.I<NavigatorHelper>();
   final _formKey = GlobalKey<FormState>();
 
-  final cpfCtrl = MaskedTextController(
-    mask: GetIt.I<I18n>().trans(
-      'document',
-      ['cpf', 'mask'],
-    ),
-  );
+  final cpfCtrl = TextEditingController();
 
   final passwordFocus = FocusNode();
   final passwordCtrl = TextEditingController();
@@ -104,6 +100,11 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 key: Key(LoginScreenKeys.cpfInput),
                 controller: cpfCtrl,
                 hasError: cpfHasError,
+                maxLength: 14,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CPFInputFormatter(),
+                ],
                 decoration: InputDecoration(
                   suffixIconConstraints: BoxConstraints(
                     maxHeight: 0,
