@@ -27,8 +27,8 @@
     "forgot_my_password": "Esqueci minha senha",
     "send_again": "Enviar novamente",
     "fees": "Taxas",
-    "simulator": "Simulador",
-    "outbound": "Envios",
+    "simulator": "Enviar",
+    "outbound": "Remessas",
     "beta": "BETA",
     "coupon": "Cupom",
     "edit": "Editar",
@@ -105,15 +105,15 @@
         "invalid_cpf": "CPF incorreto, confira e tente novamente."
     },
     "dashboard_screen": {
-        "title": "Acompanhe suas remessas em tempo real",
+        "title": "Remessas",
         "open_transactions": "Em andamento",
-        "close_transactions": "Histórico",
+        "close_transactions": "Enviadas",
         "open_empty_state": "Você não tem remessas em andamento",
         "closed_empty_state": "Você ainda não tem remessas concluídas",
         "create_transaction": "Simular um envio"
     },
     "transaction": {
-        "paid_at": "Pago em"
+        "paid_at": "Enviada em"
     },
     "transaction_details_screen": {
         "title": "Remessa #$transactionId",
@@ -221,7 +221,7 @@
             "label": "Acompanhe a evolução da moeda",
             "text": "Ver o gráfico de $currency_abbreviation"
         },
-        "send": "Enviar remessa",
+        "send": "Ir para confirmação",
         "beneficiary": "Beneficiário",
         "beneficiary_selection": {
             "choose": "Escolha um beneficiário",
