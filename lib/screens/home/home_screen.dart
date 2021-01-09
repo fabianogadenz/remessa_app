@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _tabs = <TabContent>[
       TabContent(
         label: i18n.trans('outbound'),
-        iconData: RemessaIcons.send,
+        iconData: RemessaIcons.list,
         widget: DashboardScreen(),
         action: () {
           TrackEvents.log(TrackEvents.NAVBAR_SEND_CLICK);
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       TabContent(
         label: i18n.trans('simulator'),
-        iconData: RemessaIcons.simulador,
+        iconData: RemessaIcons.send,
         widget: Container(),
         action: () {
           TrackEvents.log(TrackEvents.NAVBAR_SIMULATOR_CLICK);

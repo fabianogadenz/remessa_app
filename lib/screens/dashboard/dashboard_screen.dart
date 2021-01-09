@@ -231,7 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
               'dashboard_screen',
               ['title'],
             ),
-            style: theme.textTheme.headline6.copyWith(fontSize: 25),
+            style: theme.textTheme.headline6.copyWith(fontSize: 32),
           ),
         ),
       ),
