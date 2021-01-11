@@ -73,7 +73,7 @@ abstract class _SimulatorStoreBase with Store {
   setHasError(bool value) => hasError = value;
 
   @observable
-  bool isLoading = true;
+  bool isLoading = false;
 
   @observable
   List<ErrorResponseModel> fieldErrors;
