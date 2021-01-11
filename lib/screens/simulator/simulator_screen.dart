@@ -117,6 +117,8 @@ class _SimulatorScreenState extends State<SimulatorScreen>
             final beneficiaries =
                 beneficiaryStore.beneficiaryResponseModel.beneficiaries;
 
+            if (beneficiaries.isEmpty) return;
+
             if (_preSelectedBeneficiaryId != null) {
               final _beneficiary = beneficiaries.firstWhere(
                 (Beneficiary beneficiary) =>
