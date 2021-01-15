@@ -19,15 +19,20 @@ import 'package:remessa_app/stores/beneficiary_store.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
 import 'package:remessa_app/widgets/primary_button_widget.dart';
 import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
 
 class SimulatorScreen extends StatefulWidget {
   final int preSelectedBeneficiaryId;
+  final TransactionPresenter transactionPresenter;
 
-  const SimulatorScreen({Key key, this.preSelectedBeneficiaryId})
-      : super(key: key);
+  const SimulatorScreen({
+    Key key,
+    this.preSelectedBeneficiaryId,
+    @required this.transactionPresenter,
+  }) : super(key: key);
 
   @override
   _SimulatorScreenState createState() => _SimulatorScreenState();
@@ -284,6 +289,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
             builder: (context, scrollCtrl) {
               return SimulatorWidget(
                 simulatorStore: simulatorStore,
+                transactionPresenter: widget.transactionPresenter,
                 simulatorScreenAnimationStore: simulatorScreenAnimationStore,
                 isScrollDisabled: true,
                 // simulatorScreenAnimationStore.isScrollDisabled,
