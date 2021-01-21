@@ -10,6 +10,7 @@ import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/models/currency_model.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/models/responses/simulator_response_model.dart';
@@ -24,24 +25,12 @@ import 'package:remessa_app/screens/simulator/widgets/exchange_rate_widget.dart'
 import 'package:remessa_app/screens/simulator/widgets/icon_label_text_cta_widget.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/transaction_creation_viewmodel.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
 import 'package:remessa_app/widgets/warning_action_widget.dart';
 
 class SimulatorWidget extends StatefulWidget {
-  const SimulatorWidget({
-    Key key,
-    this.isScrollDisabled = false,
-    this.isLoading = false,
-    @required this.controller,
-    @required this.simulatorStore,
-    @required this.refreshFunction,
-    this.simulatorResponse,
-    this.simulatorScreenAnimationStore,
-  })  : assert(refreshFunction != null),
-        assert(simulatorStore != null),
-        assert(controller != null),
-        super(key: key);
-
   final bool isScrollDisabled;
   final bool isLoading;
   final SimulatorScreenAnimationStore simulatorScreenAnimationStore;
@@ -49,6 +38,22 @@ class SimulatorWidget extends StatefulWidget {
   final Function refreshFunction;
   final SimulatorResponseModel simulatorResponse;
   final SimulatorStore simulatorStore;
+  final TransactionPresenter transactionPresenter;
+
+  const SimulatorWidget({
+    Key key,
+    this.isScrollDisabled = false,
+    this.isLoading = false,
+    @required this.controller,
+    @required this.simulatorStore,
+    @required this.transactionPresenter,
+    @required this.refreshFunction,
+    this.simulatorResponse,
+    this.simulatorScreenAnimationStore,
+  })  : assert(refreshFunction != null),
+        assert(simulatorStore != null),
+        assert(controller != null),
+        super(key: key);
 
   @override
   _SimulatorWidgetState createState() => _SimulatorWidgetState();
@@ -65,6 +70,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   final _formKey = GlobalKey<FormState>();
 
   SimulatorStore get simulatorStore => widget?.simulatorStore;
+  TransactionPresenter get transactionPresenter => widget?.transactionPresenter;
   Beneficiary get beneficiary => simulatorStore?.beneficiary;
   ReactionDisposer reactionDisposer;
   Timer _debounce;
@@ -159,13 +165,37 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
     super.dispose();
   }
 
-  _onSimulateClick() {
+  _onSimulateClick() async {
     TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
 
     _snowplow.track(
       category: SnowplowHelper.OUTBOUND_CATEGORY,
       action: SnowplowHelper.CLICK_ACTION,
       label: SnowplowHelper.SEND_OPERATION,
+    );
+
+    final Currency currency = beneficiary?.currency ??
+        simulatorStore
+            .simulatorDefaultValuesResponseModel?.precification?.currency;
+
+    await transactionPresenter.create(
+      TransactionCreationViewModel(
+        operationType: 1,
+        beneficiaryId: beneficiary?.id,
+        reverse: simulatorStore.isReverse ?? false,
+        quantity: simulatorStore.quantity ??
+            simulatorStore.simulatorDefaultValuesResponseModel?.precification
+                ?.quote?.foreignCurrencyAmount,
+        totalValue: simulatorStore.totalValue ??
+            simulatorStore.simulatorDefaultValuesResponseModel?.precification
+                ?.quote?.nationalCurrencyTotalAmount,
+        currencyId: currency.id ?? 1,
+        currencyAbbreviation: currency.abbreviation ??
+            i18n.trans('simulator_screen', ['default_currency_abbr']),
+        voucher: simulatorStore.voucherCode ??
+            simulatorStore.simulatorDefaultValuesResponseModel?.precification
+                ?.quote?.voucherCode,
+      ),
     );
 
     AppRouter.websiteRedirect(

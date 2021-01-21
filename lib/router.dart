@@ -19,6 +19,7 @@ import 'package:remessa_app/screens/transaction_details/transaction_calculation_
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/stores/auth_store.dart';
+import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
 
 class AppRouter {
   static const SPLASH_ROUTE = 'splash';
@@ -118,6 +119,7 @@ class AppRouter {
 
                 return SimulatorScreen(
                   preSelectedBeneficiaryId: args?.beneficiaryId,
+                  transactionPresenter: TransactionPresenterFactory().call(),
                 );
               },
               transitionsBuilder: _slideUpTB(),
