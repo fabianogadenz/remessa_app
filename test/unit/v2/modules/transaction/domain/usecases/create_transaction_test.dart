@@ -19,7 +19,7 @@ main() {
       usecase = CreateTransaction(repository);
     });
 
-    test('Should return a TransactionModel with correct values on success',
+    test('Should return a TransactionEntity with correct values on success',
         () async {
       final transactionId = faker.randomGenerator.integer(4);
 
