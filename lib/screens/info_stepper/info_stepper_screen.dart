@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/actions/action.dart' as ac;
+import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/models/view_generators/info_stepper_model.dart';
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/screens/info_stepper/widgets/info_stepper_actions_widget.dart';

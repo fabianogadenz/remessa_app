@@ -1,4 +1,4 @@
-import 'package:remessa_app/actions/content_action.dart';
+import 'package:remessa_app/v2/core/actions/content_action.dart';
 import 'package:remessa_app/parsers/action_parser.dart';
 
 class ContentActionModel {

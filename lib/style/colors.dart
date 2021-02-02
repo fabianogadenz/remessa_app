@@ -53,6 +53,10 @@ class StyleColors {
   static const SUPPORT_NEUTRAL_20 = const Color(0xfff2f2f2);
   static const SUPPORT_NEUTRAL_10 = const Color(0xffffffff);
 
+  // Support Shadow
+  static const SUPPORT_SHADOW_60 = const Color(0xff041333);
+  static const SUPPORT_SHADOW_50 = const Color(0xff13316D);
+
   // Skeleton
   static const SKELETON_PRIMARY_BACKGROUND = const Color(0xff4b66fc);
 }

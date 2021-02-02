@@ -19,6 +19,8 @@ class GradientButtonWidget extends StatelessWidget {
     this.label,
     this.child,
     this.gradient = const LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
       colors: <Color>[
         StyleColors.BRAND_PRIMARY_40,
         StyleColors.BRAND_PRIMARY_60,

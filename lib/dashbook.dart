@@ -12,6 +12,7 @@ import 'package:remessa_app/screens/info/info_screen.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
+import 'package:remessa_app/v2/modules/transaction/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
 
 void main() async {
@@ -124,6 +125,23 @@ void main() async {
             body: Container(
               margin: const EdgeInsets.all(20),
               child: CheckoutTaxDetailsWidget(),
+            ),
+          ),
+        ),
+      );
+
+  dashbook
+      .storiesOf('CheckoutConfirmationWidget')
+      .decorator(CenterDecorator())
+      .add(
+        'default',
+        (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          home: Scaffold(
+            body: Container(
+              margin: const EdgeInsets.all(20),
+              child: CheckoutConfirmationWidget(),
             ),
           ),
         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remessa_app/actions/link_action.dart';
+import 'package:remessa_app/v2/core/actions/link_action.dart';
 import 'package:remessa_app/screens/simulator/widgets/currency_selection_widget.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
