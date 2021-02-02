@@ -67,4 +67,6 @@ class RemessaIcons {
       IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData list =
       IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData arrow_up =
+      IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
