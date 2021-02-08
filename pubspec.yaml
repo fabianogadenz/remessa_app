@@ -42,6 +42,7 @@ dependencies:
   screens: ^2.3.6
   cached_network_image: ^2.2.0+1
   equatable: ^1.2.5
+  dotted_line: ^2.0.2
   easy_mask:
     git:
       url: https://github.com/zeucxb/flutter-textfield-mask
