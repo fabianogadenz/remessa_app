@@ -178,7 +178,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
         simulatorStore
             .simulatorDefaultValuesResponseModel?.precification?.currency;
 
-    await transactionPresenter.create(
+    await transactionPresenter.createTransaction(
       TransactionCreationViewModel(
         operationType: 1,
         beneficiaryId: beneficiary?.id,
@@ -197,6 +197,8 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
                 ?.quote?.voucherCode,
       ),
     );
+
+    await transactionPresenter.confirmTransaction();
 
     AppRouter.websiteRedirect(
       simulatorStore?.simulatorResponse?.redirectUrl,

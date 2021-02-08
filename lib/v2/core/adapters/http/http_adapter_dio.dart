@@ -10,4 +10,11 @@ class HttpAdapterDio implements HttpAdapter {
 
     return response.data;
   }
+
+  Future<Map<String, dynamic>> put(String path, {dynamic data}) async {
+    final response =
+        await GetIt.I<Dio>().put<Map<String, dynamic>>(path, data: data);
+
+    return response.data;
+  }
 }
