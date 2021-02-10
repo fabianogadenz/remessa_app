@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
@@ -7,6 +6,7 @@ import 'package:remessa_app/models/missing_fields_information_model.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/cached_network_image_widget.dart';
 import 'package:remessa_app/widgets/user_avatar_widget.dart';
 
 class BeneficiaryListItemWidget extends StatelessWidget {
@@ -36,19 +36,7 @@ class BeneficiaryListItemWidget extends StatelessWidget {
     }
 
     final currencyCountryFlag = beneficiary?.country?.flagUrl != null
-        ? CachedNetworkImage(
-            imageUrl: beneficiary.country.flagUrl,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                CircularProgressIndicator(value: downloadProgress.progress),
-            errorWidget: (context, url, error) => Center(
-              child: Icon(
-                Icons.error,
-                size: 14,
-                color: StyleColors.SUPPORT_DANGER_40,
-              ),
-            ),
-            fit: BoxFit.fill,
-          )
+        ? CachedNetworkImageWigdet(imageURL: beneficiary.country.flagUrl)
         : null;
 
     final beneficiaryNameTextStyle = TextStyle(

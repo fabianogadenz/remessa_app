@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/models/view_generators/info_stepper_model.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/cached_network_image_widget.dart';
 import 'package:remessa_app/widgets/link_widget.dart';
 
 class InfoStepperContentWidget extends StatelessWidget {
@@ -80,9 +81,11 @@ class InfoStepperContentWidget extends StatelessWidget {
     Widget image = Container();
 
     if (imageURL != null) {
-      image = Image.network(
-        imageURL,
+      image = Container(
         height: 80,
+        child: CachedNetworkImageWigdet(
+          imageURL: imageURL,
+        ),
       );
     }
 
