@@ -1,4 +1,4 @@
-import 'package:remessa_app/actions/action.dart' as ac;
+import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/parsers/action_parser.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';

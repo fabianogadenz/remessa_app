@@ -1,5 +1,5 @@
-import 'package:remessa_app/actions/action.dart' as ac;
-import 'package:remessa_app/actions/actions.dart';
+import 'package:remessa_app/v2/core/actions/action.dart' as ac;
+import 'package:remessa_app/v2/core/actions/actions.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/actions/action_model.dart';
 import 'package:remessa_app/models/actions/content_action_model.dart';

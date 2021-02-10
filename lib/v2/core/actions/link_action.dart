@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:remessa_app/actions/action.dart';
+import 'package:remessa_app/v2/core/actions/action.dart';
 import 'package:remessa_app/router.dart';
 
 class LinkAction extends Action {

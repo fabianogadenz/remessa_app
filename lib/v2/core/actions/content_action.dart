@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
-import 'package:remessa_app/actions/action.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/services/view_generator_service.dart';
+import 'package:remessa_app/v2/core/actions/action.dart';
 
 class ContentAction extends Action {
   final String name;

@@ -69,4 +69,12 @@ class RemessaIcons {
       IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData arrow_up =
       IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData arrow_right =
+      IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData calendar =
+      IconData(0xe819, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData deadline =
+      IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData user =
+      IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

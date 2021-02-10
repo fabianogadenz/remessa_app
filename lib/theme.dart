@@ -30,7 +30,7 @@ class AppTheme {
           ),
           button: TextStyle(
             color: StyleColors.SUPPORT_NEUTRAL_10,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
             fontSize: 16,
           ),
         ),
