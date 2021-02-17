@@ -173,7 +173,7 @@ void main() async {
                   'imageURL',
                   'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
                 ),
-                hasCloseButton: context.boolProperty('closeButton', true),
+                isDismissible: context.boolProperty('closeButton', true),
                 primaryAction: ac.Action(name: 'Inserir um valor menor'),
                 secondaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
@@ -207,7 +207,7 @@ void main() async {
                   'imageURL',
                   'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
                 ),
-                hasCloseButton: context.boolProperty('closeButton', true),
+                isDismissible: context.boolProperty('closeButton', true),
                 primaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
             });
@@ -240,7 +240,7 @@ void main() async {
                   'imageURL',
                   'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
                 ),
-                hasCloseButton: context.boolProperty('closeButton', true),
+                isDismissible: context.boolProperty('closeButton', true),
                 secondaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
             });
@@ -273,7 +273,7 @@ void main() async {
                   'imageURL',
                   'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
                 ),
-                hasCloseButton: context.boolProperty('closeButton', true),
+                isDismissible: context.boolProperty('closeButton', true),
               );
             });
 

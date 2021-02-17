@@ -56,7 +56,7 @@ class ModalHelper {
     String title,
     String content,
     String imageURL,
-    bool hasCloseButton,
+    bool isDismissible,
     ac.Action primaryAction,
     ac.Action secondaryAction,
   }) {
@@ -64,11 +64,13 @@ class ModalHelper {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      isDismissible: isDismissible,
+      enableDrag: isDismissible,
       builder: (BuildContext context) => WarningModalWidget(
         title: title,
         content: content,
         imageURL: imageURL,
-        hasCloseButton: hasCloseButton,
+        hasCloseButton: isDismissible,
         primaryAction: primaryAction,
         secondaryAction: secondaryAction,
       ),
