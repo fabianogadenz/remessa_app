@@ -14,6 +14,7 @@ import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/widgets/divider_with_text_widget.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/widgets/outline_button_widget.dart';
 import 'package:remessa_app/widgets/text_input/text_input_widget.dart';
 
 class LoginFormWidget extends StatefulWidget {
@@ -175,23 +176,11 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   i18n.trans('or'),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 20),
-                child: OutlineButton(
-                  padding: EdgeInsets.all(15),
-                  borderSide: BorderSide(
-                    color: StyleColors.BRAND_PRIMARY_40,
-                  ),
-                  onPressed: _register,
-                  child: Text(
-                    i18n.trans('login_screen', ['register']),
-                    style: Theme.of(context).textTheme.button.copyWith(
-                          color: StyleColors.BRAND_PRIMARY_40,
-                        ),
-                  ),
-                ),
+              OutlineButtonWidget(
+                label: i18n.trans('login_screen', ['register']),
+                onPressed: _register,
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:dashbook/dashbook.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
+import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/models/actions/action_model.dart';
 import 'package:remessa_app/models/actions/content_action_model.dart';
 import 'package:remessa_app/models/actions/link_action_model.dart';
@@ -14,6 +15,8 @@ import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
 import 'package:remessa_app/v2/modules/transaction/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
+
+import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 void main() async {
   final remoteConfigs = ConfigModel(environment: Environment.DEV);
@@ -146,6 +149,140 @@ void main() async {
           ),
         ),
       );
+
+  dashbook.storiesOf('WarningModalWidget').decorator(CenterDecorator()).add(
+    'default',
+    (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme(),
+        home: Scaffold(
+          body: Builder(builder: (bContext) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ModalHelper.showWarningBottomSheet(
+                bContext,
+                title: context.textProperty(
+                  'title',
+                  'O valor ultrapassa o limite de transferência de peso argentino',
+                ),
+                content: context.textProperty(
+                  'content',
+                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                ),
+                imageURL: context.textProperty(
+                  'imageURL',
+                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                ),
+                isDismissible: context.boolProperty('closeButton', true),
+                primaryAction: ac.Action(name: 'Inserir um valor menor'),
+                secondaryAction: ac.Action(name: 'Inserir um valor menor'),
+              );
+            });
+
+            return Container();
+          }),
+        ),
+      );
+    },
+  ).add(
+    'primary action only',
+    (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme(),
+        home: Scaffold(
+          body: Builder(builder: (bContext) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ModalHelper.showWarningBottomSheet(
+                bContext,
+                title: context.textProperty(
+                  'title',
+                  'O valor ultrapassa o limite de transferência de peso argentino',
+                ),
+                content: context.textProperty(
+                  'content',
+                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                ),
+                imageURL: context.textProperty(
+                  'imageURL',
+                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                ),
+                isDismissible: context.boolProperty('closeButton', true),
+                primaryAction: ac.Action(name: 'Inserir um valor menor'),
+              );
+            });
+
+            return Container();
+          }),
+        ),
+      );
+    },
+  ).add(
+    'secondary action only',
+    (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme(),
+        home: Scaffold(
+          body: Builder(builder: (bContext) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ModalHelper.showWarningBottomSheet(
+                bContext,
+                title: context.textProperty(
+                  'title',
+                  'O valor ultrapassa o limite de transferência de peso argentino',
+                ),
+                content: context.textProperty(
+                  'content',
+                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                ),
+                imageURL: context.textProperty(
+                  'imageURL',
+                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                ),
+                isDismissible: context.boolProperty('closeButton', true),
+                secondaryAction: ac.Action(name: 'Inserir um valor menor'),
+              );
+            });
+
+            return Container();
+          }),
+        ),
+      );
+    },
+  ).add(
+    'without action',
+    (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme(),
+        home: Scaffold(
+          body: Builder(builder: (bContext) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ModalHelper.showWarningBottomSheet(
+                bContext,
+                title: context.textProperty(
+                  'title',
+                  'O valor ultrapassa o limite de transferência de peso argentino',
+                ),
+                content: context.textProperty(
+                  'content',
+                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                ),
+                imageURL: context.textProperty(
+                  'imageURL',
+                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                ),
+                isDismissible: context.boolProperty('closeButton', true),
+              );
+            });
+
+            return Container();
+          }),
+        ),
+      );
+    },
+  );
 
   runApp(dashbook);
 }

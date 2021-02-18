@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/models/view_generators/info_model.dart';
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/cached_network_image_widget.dart';
 import 'package:remessa_app/widgets/gradient_button_widget.dart';
 import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
@@ -28,10 +29,10 @@ class InfoScreen extends StatelessWidget implements View<InfoModel> {
             alignment: Alignment.topCenter,
             height: 150,
             child: Container(
+              width: 70,
               alignment: Alignment.center,
-              child: Image.network(
-                model.imageURL,
-                width: 70,
+              child: CachedNetworkImageWigdet(
+                imageURL: model.imageURL,
               ),
             ),
           ),
