@@ -77,4 +77,8 @@ class RemessaIcons {
       IconData(0xe81a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData user =
       IconData(0xe81b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData owner =
+      IconData(0xe81d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData attention_oval_outline =
+      IconData(0xe81f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -46,6 +46,7 @@ dependencies:
   easy_mask:
     git:
       url: https://github.com/zeucxb/flutter-textfield-mask
+  flutter_html: ^1.2.0
 
   # Plugins
   amplitude_flutter: ^2.2.3
