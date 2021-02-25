@@ -9,14 +9,17 @@ import 'package:remessa_app/models/actions/link_action_model.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/models/view_generators/info_model.dart';
 import 'package:remessa_app/models/view_generators/info_stepper_model.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/info/info_screen.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
 
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
+import 'package:remessa_app/v2/modules/transaction/widgets/payment_rules/payment_rules_widget.dart';
 
 void main() async {
   final remoteConfigs = ConfigModel(environment: Environment.DEV);
@@ -283,6 +286,117 @@ void main() async {
       );
     },
   );
+
+  dashbook
+      .storiesOf('PaymentRulesWidget')
+      .decorator(CenterDecorator())
+      .add(
+        'simple',
+        (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          home: Scaffold(
+            body: Container(
+              color: Colors.white,
+              child: PaymentRulesWidget(
+                paymentRules: [
+                  PaymentRulesViewModel(
+                    icon: RemessaIcons.deadline,
+                    value:
+                        'Você tem até as 16h30 do dia 13/06 para realizar o pagamento via TED.',
+                    hasDivider: true,
+                  ),
+                  PaymentRulesViewModel(
+                    icon: RemessaIcons.owner,
+                    value:
+                        'A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a href="https://google.com">comprove sua titularidade no site.</a>',
+                    hasDivider: true,
+                  ),
+                  PaymentRulesViewModel(
+                    icon: RemessaIcons.attention_oval_outline,
+                    value:
+                        'Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada.',
+                    hasDivider: false,
+                    isWarning: true,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      )
+      .add(
+        'complete',
+        (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          home: Scaffold(
+            body: Container(
+              color: Colors.white,
+              child: PaymentRulesWidget(
+                title: 'Antes de fazer o pagamento, confira as regras',
+                action: ac.Action(
+                  name: 'Aceito as regras de pagamento',
+                ),
+                paymentRules: [
+                  PaymentRulesViewModel(
+                    icon: RemessaIcons.deadline,
+                    value:
+                        'Você tem até as 16h30 do dia 13/06 para realizar o pagamento via TED.',
+                    hasDivider: true,
+                  ),
+                  PaymentRulesViewModel(
+                    icon: RemessaIcons.owner,
+                    value:
+                        'A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a>comprove sua titularidade no site.</a>',
+                    hasDivider: true,
+                  ),
+                  PaymentRulesViewModel(
+                    icon: RemessaIcons.attention_oval_outline,
+                    value:
+                        'Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada.',
+                    hasDivider: false,
+                    isWarning: true,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      )
+      .add(
+        'dark',
+        (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          home: Scaffold(
+            body: PaymentRulesWidget(
+              isDarkMode: true,
+              paymentRules: [
+                PaymentRulesViewModel(
+                  icon: RemessaIcons.deadline,
+                  value:
+                      'Você tem até as 16h30 do dia 13/06 para realizar o pagamento via TED.',
+                  hasDivider: true,
+                ),
+                PaymentRulesViewModel(
+                  icon: RemessaIcons.owner,
+                  value:
+                      'A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a>comprove sua titularidade no site.</a>',
+                  hasDivider: true,
+                ),
+                PaymentRulesViewModel(
+                  icon: RemessaIcons.attention_oval_outline,
+                  value:
+                      'Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada.',
+                  hasDivider: false,
+                  isWarning: true,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
 
   runApp(dashbook);
 }
