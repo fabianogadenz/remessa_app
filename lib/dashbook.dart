@@ -14,12 +14,16 @@ import 'package:remessa_app/screens/info/info_screen.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/account_info_viewmodel.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/intermediary_bank_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/beneficiary_data_screen.dart';
 
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
-import 'package:remessa_app/v2/modules/transaction/widgets/payment_rules/payment_rules_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/payment_rules_widget.dart';
 
 void main() async {
   final remoteConfigs = ConfigModel(environment: Environment.DEV);
@@ -391,6 +395,33 @@ void main() async {
                       'Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada.',
                   hasDivider: false,
                   isWarning: true,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+
+  dashbook.storiesOf('BeneficiaryDataScreen').decorator(CenterDecorator()).add(
+        'default',
+        (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          home: BeneficiaryDataScreen(
+            beneficiary: BeneficiaryViewModel(
+              name: 'Reinaldo Antunes',
+              bankName: 'Bank of New York',
+              country: 'Estados Unidos',
+              accountInfo: [
+                AccountInfoViewModel(
+                  label: 'Campo dinâmico Account Info',
+                  value: '1',
+                ),
+              ],
+              intermediaryBankInfo: [
+                IntermediaryBankInfoViewModel(
+                  label: 'Campo dinâmico Intermediary Bank Info',
+                  value: '2',
                 ),
               ],
             ),
