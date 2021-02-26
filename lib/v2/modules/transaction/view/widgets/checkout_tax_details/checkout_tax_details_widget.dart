@@ -2,11 +2,11 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/tax_details_column_section_widget.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/tax_details_row_widget.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/tax_details_spotlight_row_widget.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/toggle_tax_button_widget.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/transaction_value_by_currency_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_column_section_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_row_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_spotlight_row_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/toggle_tax_button_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/transaction_value_by_currency_widget.dart';
 
 class CheckoutTaxDetailsWidget extends StatefulWidget {
   @override

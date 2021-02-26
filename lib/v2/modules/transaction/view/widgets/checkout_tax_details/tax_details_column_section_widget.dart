@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/tax_details_row_widget.dart';
-import 'package:remessa_app/v2/modules/transaction/widgets/checkout_tax_details/tax_details_spotlight_row_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_row_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_spotlight_row_widget.dart';
 
 class TaxDetailsColumnSectionWidget extends StatelessWidget {
   const TaxDetailsColumnSectionWidget({
