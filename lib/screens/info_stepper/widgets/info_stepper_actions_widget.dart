@@ -34,7 +34,7 @@ class InfoStepperActionsWidget extends StatelessWidget {
                     LinkWidget(
                       padding: const EdgeInsets.only(top: 4),
                       label: linkAction.name,
-                      action: linkAction.action,
+                      onTap: linkAction.action,
                     ),
                   ],
                 )

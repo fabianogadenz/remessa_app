@@ -90,19 +90,7 @@ flutter:
   - resources/lang/pt.json
   - resources/lang/en.json
   - resources/images/splash_logo.png
-  - images/initial_screen.png
-  - images/full_icon.png
-  - images/wallet.png
-  - images/historic.png
-  - images/send_remittance.png
-  - images/transaction_details_doubts.png
-  - images/step1.png
-  - images/step2.png
-  - images/step3.png
-  - images/website_redirect.png
-  - images/new_transaction_empty_state.png
-  - images/simulator_empty.png
-  - images/flag_brazil.png
+  - images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

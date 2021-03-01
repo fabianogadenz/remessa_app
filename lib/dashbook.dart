@@ -21,6 +21,7 @@ import 'package:remessa_app/v2/modules/transaction/application/viewmodels/paymen
 import 'package:remessa_app/v2/modules/transaction/view/screens/beneficiary_data_screen.dart';
 
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_success_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/payment_rules_widget.dart';
@@ -426,6 +427,15 @@ void main() async {
               ],
             ),
           ),
+        ),
+      );
+
+  dashbook.storiesOf('CheckoutSuccessScreen').decorator(CenterDecorator()).add(
+        'default',
+        (context) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.theme(),
+          home: CheckoutSuccessScreen(),
         ),
       );
 
