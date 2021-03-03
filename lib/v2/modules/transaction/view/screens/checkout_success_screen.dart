@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/promotional_card_widget.dart';
+import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
 import 'package:remessa_app/widgets/outline_button_widget.dart';
 
 class CheckoutSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AccentAppBarWidget(
+        title: 'Remessa em andamento',
+        steps: 4,
+        currentStep: 4,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

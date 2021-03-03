@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dashbook/dashbook.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/models/actions/action_model.dart';
@@ -25,6 +26,7 @@ import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_success
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/payment_rules_widget.dart';
+import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
 
 void main() async {
   final remoteConfigs = ConfigModel(environment: Environment.DEV);
@@ -429,6 +431,85 @@ void main() async {
           ),
         ),
       );
+
+  dashbook
+      .storiesOf('ProgressAppBarWidget')
+      .decorator(CenterDecorator())
+      .add('default', (_) {
+    final screen = Scaffold(
+      appBar: AccentAppBarWidget(
+        title: 'lalala',
+        steps: 3,
+        currentStep: 1,
+      ),
+      body: Container(
+        color: Colors.red,
+        width: double.infinity,
+        height: 900,
+      ),
+    );
+
+    final screen2 = Scaffold(
+      appBar: AccentAppBarWidget(
+        title: 'dsads',
+        steps: 3,
+        currentStep: 2,
+      ),
+      body: Builder(builder: (context) {
+        // progressAppBarStore.load();
+        return Container(
+          color: Colors.green,
+          width: double.infinity,
+          height: 900,
+          child: Center(
+            child: Column(
+              children: [
+                FlatButton(
+                  child: Text('Go'),
+                  onPressed: () {
+                    return Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => Scaffold(
+                          appBar: AccentAppBarWidget(
+                            title: 'dsads',
+                            steps: 3,
+                            currentStep: 3,
+                          ),
+                          body: Container(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                FlatButton(
+                  child: Text('Back'),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
+    );
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.theme(),
+      home: Builder(builder: (context) {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => screen2,
+            ),
+          );
+        });
+
+        return screen;
+      }),
+    );
+  });
 
   dashbook.storiesOf('CheckoutSuccessScreen').decorator(CenterDecorator()).add(
         'default',
