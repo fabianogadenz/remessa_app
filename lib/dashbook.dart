@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:dashbook/dashbook.dart';
-import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/models/actions/action_model.dart';

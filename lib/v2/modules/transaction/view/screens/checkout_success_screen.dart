@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/promotional_card_widget.dart';
 import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
 import 'package:remessa_app/widgets/outline_button_widget.dart';
+import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 class CheckoutSuccessScreen extends StatelessWidget {
   @override
@@ -48,7 +50,13 @@ class CheckoutSuccessScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 32),
-                  PromotionalCardWidget(),
+                  PromotionalCardWidget(
+                    title: 'Convide seus amigos e ganhe desconto',
+                    content:
+                        'Ganhe até 50% de desconto no custo das suas remessas',
+                    iconData: RemessaIcons.percent,
+                    action: ac.Action(name: 'Convidar no site'),
+                  ),
                   SizedBox(height: 32),
                   OutlineButtonWidget(
                     label: 'Ir para Envios',
