@@ -1,6 +1,10 @@
+import 'package:easy_i18n/easy_i18n.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dashbook/dashbook.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/models/actions/action_model.dart';
@@ -14,6 +18,7 @@ import 'package:remessa_app/screens/info/info_screen.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
+import 'package:remessa_app/v2/core/models/label_value_model.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/account_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/intermediary_bank_info_viewmodel.dart';
@@ -21,6 +26,7 @@ import 'package:remessa_app/v2/modules/transaction/application/viewmodels/paymen
 import 'package:remessa_app/v2/modules/transaction/view/screens/beneficiary_data_screen.dart';
 
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_payment_data_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_success_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
@@ -518,6 +524,114 @@ void main() async {
           home: CheckoutSuccessScreen(),
         ),
       );
+
+  dashbook
+      .storiesOf('CheckoutPaymentDataScreen')
+      .decorator(CenterDecorator())
+      .add(
+    'default',
+    (context) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme(),
+        localizationsDelegates: [
+          I18nDelegate(locales: ['pt']),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          // const Locale('en', ''),
+          const Locale('pt', ''),
+        ],
+        localeResolutionCallback:
+            (Locale locale, Iterable<Locale> supportedLocales) {
+          if (locale == null) return supportedLocales.first;
+
+          for (Locale supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale.languageCode ||
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
+          }
+
+          return supportedLocales.first;
+        },
+        home: Builder(
+          builder: (context) {
+            GetIt.I.reset();
+            SetUp.registerI18n(context);
+
+            return CheckoutPaymentDataScreen(
+              paymentRules: [
+                PaymentRulesViewModel(
+                  icon: RemessaIcons.deadline,
+                  value:
+                      'Você tem até as 16h30 do dia 13/06 para realizar o pagamento via TED.',
+                  hasDivider: true,
+                ),
+                PaymentRulesViewModel(
+                  icon: RemessaIcons.owner,
+                  value:
+                      'A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a>comprove sua titularidade no site.</a>',
+                  hasDivider: true,
+                ),
+                PaymentRulesViewModel(
+                  icon: RemessaIcons.attention_oval_outline,
+                  value:
+                      'Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada.',
+                  hasDivider: false,
+                  isWarning: true,
+                ),
+              ],
+              data: [
+                LabelValueModel(
+                  label: 'Valor',
+                  value: 'R\$ 5.143,22',
+                  isCopiable: true,
+                ),
+                LabelValueModel(
+                  label: 'Banco',
+                  value: 'Banco Máxima (243)',
+                  isCopiable: true,
+                ),
+                LabelValueModel(
+                  label: 'Agência',
+                  value: '0001',
+                  isCopiable: true,
+                ),
+                LabelValueModel(
+                  label: 'Conta corrente',
+                  value: '4990501-7',
+                  isCopiable: true,
+                ),
+                LabelValueModel(
+                  label: 'Favorecido',
+                  value: 'Banco Maxima SA',
+                  isCopiable: true,
+                ),
+                LabelValueModel(
+                  label: 'CNPJ',
+                  value: '07.679.404/0001-00',
+                  isCopiable: true,
+                ),
+                LabelValueModel(
+                  label: 'Tipo de conta',
+                  value: 'Conta Corrente',
+                ),
+                LabelValueModel(
+                  label: 'Finalidade da TED',
+                  value: 'Crédito em Conta Corrente',
+                  hasDivider: false,
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    },
+  );
 
   runApp(dashbook);
 }

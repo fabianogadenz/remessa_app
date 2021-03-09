@@ -44,6 +44,7 @@ class ToggleTaxButtonWidget extends StatelessWidget {
     }
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onPressed,
       child: Container(
         padding: EdgeInsets.all(16),
