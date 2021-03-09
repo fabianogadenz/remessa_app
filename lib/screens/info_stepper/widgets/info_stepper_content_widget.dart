@@ -63,7 +63,7 @@ class InfoStepperContentWidget extends StatelessWidget {
                 ),
                 LinkWidget(
                   label: linkAction.name,
-                  action: linkAction.action,
+                  onTap: linkAction.action,
                 ),
               ],
             ),

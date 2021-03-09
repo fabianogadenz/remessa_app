@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/widgets/progress_app_bar/progress_app_bar_line_widget.dart';
 
 class AccentAppBarWidget extends StatelessWidget
     implements PreferredSizeWidget {
   final Function prevAction;
   final String title;
+  final int steps;
+  final int currentStep;
+
+  bool get isProgressive => steps != null && currentStep != null;
 
   const AccentAppBarWidget({
     Key key,
     @required this.title,
     this.prevAction,
+    this.steps,
+    this.currentStep,
   })  : assert(title != null),
         super(key: key);
 
@@ -24,13 +29,16 @@ class AccentAppBarWidget extends StatelessWidget
         color: StyleColors.SUPPORT_NEUTRAL_10,
       ),
       elevation: 0,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          if (prevAction != null) prevAction();
-          GetIt.I<NavigatorHelper>().pop();
-        },
-      ),
+      automaticallyImplyLeading: false,
+      leading: Navigator.canPop(context)
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                if (prevAction != null) prevAction();
+                Navigator.pop(context);
+              },
+            )
+          : null,
       title: Text(
         title,
         style: TextStyle(
@@ -38,6 +46,12 @@ class AccentAppBarWidget extends StatelessWidget
           color: StyleColors.SUPPORT_NEUTRAL_10,
         ),
       ),
+      bottom: isProgressive
+          ? ProgressAppBarLineWidget(
+              steps: steps,
+              currentStep: currentStep,
+            )
+          : null,
     );
   }
 

@@ -23,7 +23,7 @@ class DetailSectionLinkWidget extends StatelessWidget {
     return LinkWidget(
       padding: EdgeInsets.only(top: 16),
       label: label,
-      action: action,
+      onTap: action,
     );
   }
 }

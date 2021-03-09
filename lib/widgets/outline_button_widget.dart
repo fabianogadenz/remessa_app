@@ -6,10 +6,12 @@ class OutlineButtonWidget extends StatelessWidget {
     Key key,
     @required this.label,
     this.onPressed,
+    this.isAccent = false,
   }) : super(key: key);
 
   final String label;
   final Function onPressed;
+  final bool isAccent;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +20,17 @@ class OutlineButtonWidget extends StatelessWidget {
       child: OutlineButton(
         padding: EdgeInsets.all(15),
         borderSide: BorderSide(
-          color: StyleColors.BRAND_PRIMARY_40,
+          color: isAccent
+              ? StyleColors.SUPPORT_NEUTRAL_10
+              : StyleColors.BRAND_PRIMARY_40,
         ),
         onPressed: onPressed,
         child: Text(
           label,
           style: Theme.of(context).textTheme.button.copyWith(
-                color: StyleColors.BRAND_PRIMARY_40,
+                color: isAccent
+                    ? StyleColors.SUPPORT_NEUTRAL_10
+                    : StyleColors.BRAND_PRIMARY_40,
               ),
         ),
       ),

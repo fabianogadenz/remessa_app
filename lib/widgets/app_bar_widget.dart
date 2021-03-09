@@ -19,13 +19,16 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       brightness: Brightness.light,
       elevation: elevation,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          if (prevAction != null) prevAction();
-          GetIt.I<NavigatorHelper>().pop();
-        },
-      ),
+      automaticallyImplyLeading: false,
+      leading: Navigator.canPop(context)
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                if (prevAction != null) prevAction();
+                GetIt.I<NavigatorHelper>().pop();
+              },
+            )
+          : null,
       title: Text(text),
     );
   }
