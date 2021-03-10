@@ -1,10 +1,11 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/text_value_widget.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/handlers/copy_text_handler.dart';
 
 class DetailItemWidget extends StatelessWidget {
   DetailItemWidget({
@@ -38,25 +39,7 @@ class DetailItemWidget extends StatelessWidget {
       {'label': label},
     );
 
-    Clipboard.setData(
-      ClipboardData(text: copyableValue ?? value),
-    );
-
-    final snackBar = SnackBar(
-      content: Text(
-        i18n.populate(
-          i18n.trans('transaction_details_screen', ['copied']),
-          {'label': label},
-        ),
-      ),
-      action: SnackBarAction(
-        textColor: StyleColors.BRAND_PRIMARY_30,
-        label: i18n.trans('ok').toUpperCase(),
-        onPressed: () {},
-      ),
-    );
-
-    Scaffold.of(context).showSnackBar(snackBar);
+    CopyTextHandler.exec(context, label, copyableValue ?? value);
   }
 
   @override
@@ -142,9 +125,9 @@ class DetailItemWidget extends StatelessWidget {
                       GestureDetector(
                         onTap: () => copy(context),
                         child: Icon(
-                          Icons.content_copy,
+                          RemessaIcons.copy,
                           color: StyleColors.BRAND_PRIMARY_40,
-                          size: 15,
+                          size: 16,
                         ),
                       ),
                       SizedBox(
