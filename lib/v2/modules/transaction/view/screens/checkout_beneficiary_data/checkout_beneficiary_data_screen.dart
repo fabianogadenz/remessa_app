@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/beneficiary_data/beneficiary_data_widget.dart';
-import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
 
-class BeneficiaryDataScreen extends StatelessWidget {
+class CheckoutBeneficiaryDataScreen extends StatelessWidget {
   final BeneficiaryViewModel beneficiary;
 
-  const BeneficiaryDataScreen({
-    Key key,
-    @required this.beneficiary,
-  })  : assert(beneficiary != null),
+  const CheckoutBeneficiaryDataScreen({Key key, @required this.beneficiary})
+      : assert(beneficiary != null),
         super(key: key);
 
   @override

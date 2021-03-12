@@ -7,7 +7,7 @@ import 'package:remessa_app/models/responses/transaction_response_model.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/transaction_status_widget.dart';
+import 'package:remessa_app/v2/core/widgets/transaction_status_widget.dart';
 
 class TransactionCardWidget extends StatelessWidget {
   final Transaction transaction;

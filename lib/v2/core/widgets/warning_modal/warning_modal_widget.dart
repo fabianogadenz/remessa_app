@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/cached_network_image_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/cached_network_image_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
-import 'package:remessa_app/widgets/outline_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/outline_button_widget.dart';
 
 class WarningModalWidget extends StatelessWidget {
   final String title;

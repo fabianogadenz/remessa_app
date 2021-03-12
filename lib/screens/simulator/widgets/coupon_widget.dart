@@ -6,9 +6,9 @@ import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/close_button_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
-import 'package:remessa_app/widgets/text_input/text_input_widget.dart';
+import 'package:remessa_app/v2/core/widgets/close_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/text_input/text_input_widget.dart';
 
 class CouponWidget extends StatefulWidget {
   final SimulatorStore simulatorStore;

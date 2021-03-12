@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/icon_highlight_widget.dart';
-import 'package:remessa_app/widgets/link_widget.dart';
+import 'package:remessa_app/v2/core/widgets/link_widget.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 class PromotionalCardWidget extends StatelessWidget {

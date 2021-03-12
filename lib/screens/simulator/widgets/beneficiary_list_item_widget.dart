@@ -6,8 +6,8 @@ import 'package:remessa_app/models/missing_fields_information_model.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/cached_network_image_widget.dart';
-import 'package:remessa_app/widgets/user_avatar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/cached_network_image_widget.dart';
+import 'package:remessa_app/v2/core/widgets/user_avatar_widget.dart';
 
 class BeneficiaryListItemWidget extends StatelessWidget {
   final Beneficiary beneficiary;

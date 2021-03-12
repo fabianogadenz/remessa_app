@@ -7,8 +7,8 @@ import 'package:remessa_app/helpers/uri_helper.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/redirect/widgets/website_redirect_note_widget.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/app_bar_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
 import 'package:screens/screens.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
-import 'package:remessa_app/formatters/cpf_input_mask_formatter.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
@@ -12,10 +11,11 @@ import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/login/keys.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/divider_with_text_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
-import 'package:remessa_app/widgets/outline_button_widget.dart';
-import 'package:remessa_app/widgets/text_input/text_input_widget.dart';
+import 'package:remessa_app/v2/core/formatters/cpf_input_mask_formatter.dart';
+import 'package:remessa_app/v2/core/widgets/divider_with_text_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/outline_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/text_input/text_input_widget.dart';
 
 class LoginFormWidget extends StatefulWidget {
   LoginFormWidget({

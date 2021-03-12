@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
-import 'package:remessa_app/widgets/link_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/link_widget.dart';
 
 class InfoStepperActionsWidget extends StatelessWidget {
   final ac.Action action;

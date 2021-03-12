@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/skeleton_line_widget.dart';
+import 'package:remessa_app/v2/core/widgets/skeleton_line_widget.dart';
 
 class CurrencyTextFormFieldWidget extends StatelessWidget {
   const CurrencyTextFormFieldWidget({

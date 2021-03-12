@@ -18,7 +18,7 @@ import 'package:remessa_app/screens/dashboard/widgets/transactions_carousel_widg
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/primary_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/primary_button_widget.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override

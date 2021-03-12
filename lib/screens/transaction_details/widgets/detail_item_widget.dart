@@ -32,6 +32,7 @@ class DetailItemWidget extends StatelessWidget {
   final Function onTapInfo;
 
   final i18n = GetIt.I<I18n>();
+  final copyTextHandler = CopyTextHandler();
 
   copy(BuildContext context) {
     TrackEvents.log(
@@ -39,7 +40,7 @@ class DetailItemWidget extends StatelessWidget {
       {'label': label},
     );
 
-    CopyTextHandler.exec(context, label, copyableValue ?? value);
+    copyTextHandler(context, label, copyableValue ?? value);
   }
 
   @override

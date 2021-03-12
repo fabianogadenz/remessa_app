@@ -13,8 +13,8 @@ import 'package:remessa_app/stores/quote_store.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/skeleton_line_widget.dart';
-import 'package:remessa_app/widgets/timer_widget.dart';
+import 'package:remessa_app/v2/core/widgets/skeleton_line_widget.dart';
+import 'package:remessa_app/v2/core/widgets/timer_widget.dart';
 
 class ExchangeRateWidget extends StatefulWidget {
   const ExchangeRateWidget({

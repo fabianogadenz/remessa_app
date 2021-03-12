@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/skeleton_line_widget.dart';
+import 'package:remessa_app/v2/core/widgets/skeleton_line_widget.dart';
 
 class SkeletonListWidget extends StatelessWidget {
   const SkeletonListWidget({

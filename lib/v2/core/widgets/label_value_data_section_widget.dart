@@ -63,10 +63,12 @@ class LabelValueDataSectionWidget extends StatelessWidget {
   }
 
   Widget buildCopyButton(BuildContext context) {
+    final copyTextHandler = CopyTextHandler();
+
     return data.isCopiable
         ? GestureDetector(
             behavior: HitTestBehavior.opaque,
-            onTap: () => CopyTextHandler.exec(
+            onTap: () => copyTextHandler(
               context,
               data.label,
               data.value,

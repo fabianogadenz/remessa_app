@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/models/currency_model.dart';
@@ -17,7 +18,6 @@ import 'package:remessa_app/models/responses/simulator_response_model.dart';
 import 'package:remessa_app/models/utm_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
-import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/simulator/simulator_screen_animation_store.dart';
 import 'package:remessa_app/screens/simulator/widgets/coupon_widget.dart';
 import 'package:remessa_app/screens/simulator/widgets/custom_currency_input_widget.dart';
@@ -27,8 +27,8 @@ import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/transaction_creation_viewmodel.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
-import 'package:remessa_app/widgets/warning_action_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/warning_action_widget.dart';
 
 class SimulatorWidget extends StatefulWidget {
   final bool isScrollDisabled;
@@ -165,7 +165,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
     super.dispose();
   }
 
-  _onSimulateClick() async {
+  _onConfirmationClick() async {
     TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
 
     _snowplow.track(
@@ -198,27 +198,34 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
       ),
     );
 
-    await transactionPresenter.confirmTransaction();
+    // await transactionPresenter.confirmTransaction();
 
-    AppRouter.websiteRedirect(
-      simulatorStore?.simulatorResponse?.redirectUrl,
-      description: i18n.trans(
-        'website_redirect_screen',
-        ['description', 'recurrence'],
-      ),
-      note: Note(
-        title: i18n.trans(
-          'simulator_screen',
-          ['redirect_note', 'title'],
-        ),
-        description: i18n.trans(
-          'simulator_screen',
-          ['redirect_note', 'description'],
-        ),
-      ),
-      utm: UTM(
-        campaign: UTM.SEND_OPERATION_CAMPAIGN,
-      ),
+    // AppRouter.websiteRedirect(
+    //   simulatorStore?.simulatorResponse?.redirectUrl,
+    //   description: i18n.trans(
+    //     'website_redirect_screen',
+    //     ['description', 'recurrence'],
+    //   ),
+    //   note: Note(
+    //     title: i18n.trans(
+    //       'simulator_screen',
+    //       ['redirect_note', 'title'],
+    //     ),
+    //     description: i18n.trans(
+    //       'simulator_screen',
+    //       ['redirect_note', 'description'],
+    //     ),
+    //   ),
+    //   utm: UTM(
+    //     campaign: UTM.SEND_OPERATION_CAMPAIGN,
+    //   ),
+    // );
+
+    GetIt.I<NavigatorHelper>().pushNamed(
+      AppRouter.CHECKOUT_CONFIRMATION,
+      // arguments: TransactionDetailsScreenArgs(
+      //   transactionId: transaction.id,
+      // ),
     );
   }
 
@@ -522,7 +529,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
     final simulatorMissingFields = missingFieldsInformation?.simulator;
 
     var label = i18n.trans('simulator_screen', ['send']);
-    var action = _onSimulateClick;
+    var action = _onConfirmationClick;
 
     if (missingFieldsInformation != null &&
         missingFieldsInformation.isBlocked) {

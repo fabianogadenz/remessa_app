@@ -6,7 +6,7 @@ import 'package:remessa_app/helpers/track_events.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/simulator/simulator_screen_args.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
 import 'package:screens/custom_overlay.dart';
 
 class DetailRecurrenceButtonOverlayWidget implements CustomOverlay {

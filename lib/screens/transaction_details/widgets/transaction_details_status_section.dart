@@ -5,7 +5,7 @@ import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/transaction_status_widget.dart';
+import 'package:remessa_app/v2/core/widgets/transaction_status_widget.dart';
 
 class TransactionDetailStatusSectionWidget extends StatelessWidget {
   const TransactionDetailStatusSectionWidget({

@@ -3,7 +3,7 @@ import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/rule_section_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
 
 class PaymentRulesWidget extends StatelessWidget {
   final List<PaymentRulesViewModel> paymentRules;

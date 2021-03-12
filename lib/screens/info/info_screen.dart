@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/models/view_generators/info_model.dart';
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/cached_network_image_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/cached_network_image_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
 import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
 

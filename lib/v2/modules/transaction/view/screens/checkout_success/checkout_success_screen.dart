@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
+import 'package:remessa_app/router.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/promotional_card_widget.dart';
-import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
-import 'package:remessa_app/widgets/outline_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/outline_button_widget.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 class CheckoutSuccessScreen extends StatelessWidget {
@@ -61,7 +64,11 @@ class CheckoutSuccessScreen extends StatelessWidget {
                   OutlineButtonWidget(
                     label: 'Ir para Envios',
                     isAccent: true,
-                    onPressed: () {},
+                    onPressed: () {
+                      GetIt.I<NavigatorHelper>().pushNamedAndRemoveUntil(
+                        AppRouter.DASHBOARD_ROUTE,
+                      );
+                    },
                   ),
                 ],
               ),

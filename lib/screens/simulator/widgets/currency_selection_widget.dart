@@ -9,7 +9,7 @@ import 'package:remessa_app/screens/simulator/widgets/currency_item_widget.dart'
 import 'package:remessa_app/screens/simulator/widgets/list_section_label_widget.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/close_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/close_button_widget.dart';
 import 'package:screens/overlay_widget.dart';
 
 class CurrencySelectionWidget extends StatelessWidget {
