@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/screens/simulator/widgets/coupon_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
 
 import '../../../test.dart';
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/models/label_value_model.dart';
 import 'package:remessa_app/v2/core/widgets/label_value_data_section_widget.dart';
-import 'package:remessa_app/widgets/gradient_button_widget.dart';
-import 'package:remessa_app/widgets/outline_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/gradient_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/outline_button_widget.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 class CopyableDataSectionWidget extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/models/view_generators/info_stepper_model.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/cached_network_image_widget.dart';
-import 'package:remessa_app/widgets/link_widget.dart';
+import 'package:remessa_app/v2/core/widgets/cached_network_image_widget.dart';
+import 'package:remessa_app/v2/core/widgets/link_widget.dart';
 
 class InfoStepperContentWidget extends StatelessWidget {
   final InfoStepperHeader header;

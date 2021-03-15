@@ -12,6 +12,7 @@ class UxCamHelper {
   static const SIMULATOR = 'Simulator';
   static const SIMULATOR_TAXES = 'Simulator taxes';
   static const INFO_STEPPER = 'Info Stepper';
+  static const CHECKOUT = 'Checkout';
 
   static void protectField(FocusNode focusNode) async =>
       await FlutterUxcam.isRecording()

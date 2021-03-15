@@ -6,7 +6,6 @@ import 'package:dashbook/dashbook.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
-import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/models/actions/action_model.dart';
 import 'package:remessa_app/models/actions/content_action_model.dart';
 import 'package:remessa_app/models/actions/link_action_model.dart';
@@ -18,20 +17,20 @@ import 'package:remessa_app/screens/info/info_screen.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
-import 'package:remessa_app/v2/core/models/label_value_model.dart';
+import 'package:remessa_app/v2/core/handlers/show_warning_modal_handler.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/account_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/intermediary_bank_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
-import 'package:remessa_app/v2/modules/transaction/view/screens/beneficiary_data_screen.dart';
 
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
-import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_payment_data_screen.dart';
-import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_success_screen.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_payment_data/checkout_payment_data_screen.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_success/checkout_success_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/payment_rules_widget.dart';
-import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
 
 void main() async {
   final remoteConfigs = ConfigModel(environment: Environment.DEV);
@@ -174,8 +173,7 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              ModalHelper.showWarningBottomSheet(
-                bContext,
+              final show = ShowWarningModalHandler(
                 title: context.textProperty(
                   'title',
                   'O valor ultrapassa o limite de transferência de peso argentino',
@@ -192,6 +190,8 @@ void main() async {
                 primaryAction: ac.Action(name: 'Inserir um valor menor'),
                 secondaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
+
+              show(bContext);
             });
 
             return Container();
@@ -208,8 +208,7 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              ModalHelper.showWarningBottomSheet(
-                bContext,
+              final show = ShowWarningModalHandler(
                 title: context.textProperty(
                   'title',
                   'O valor ultrapassa o limite de transferência de peso argentino',
@@ -225,6 +224,8 @@ void main() async {
                 isDismissible: context.boolProperty('closeButton', true),
                 primaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
+
+              show(bContext);
             });
 
             return Container();
@@ -241,8 +242,7 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              ModalHelper.showWarningBottomSheet(
-                bContext,
+              final show = ShowWarningModalHandler(
                 title: context.textProperty(
                   'title',
                   'O valor ultrapassa o limite de transferência de peso argentino',
@@ -258,6 +258,8 @@ void main() async {
                 isDismissible: context.boolProperty('closeButton', true),
                 secondaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
+
+              show(bContext);
             });
 
             return Container();
@@ -274,8 +276,7 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              ModalHelper.showWarningBottomSheet(
-                bContext,
+              final show = ShowWarningModalHandler(
                 title: context.textProperty(
                   'title',
                   'O valor ultrapassa o limite de transferência de peso argentino',
@@ -290,6 +291,8 @@ void main() async {
                 ),
                 isDismissible: context.boolProperty('closeButton', true),
               );
+
+              show(bContext);
             });
 
             return Container();
@@ -415,7 +418,7 @@ void main() async {
         (context) => MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.theme(),
-          home: BeneficiaryDataScreen(
+          home: CheckoutBeneficiaryDataScreen(
             beneficiary: BeneficiaryViewModel(
               name: 'Reinaldo Antunes',
               bankName: 'Bank of New York',
@@ -563,70 +566,7 @@ void main() async {
             GetIt.I.reset();
             SetUp.registerI18n(context);
 
-            return CheckoutPaymentDataScreen(
-              paymentRules: [
-                PaymentRulesViewModel(
-                  icon: RemessaIcons.deadline,
-                  value:
-                      'Você tem até as 16h30 do dia 13/06 para realizar o pagamento via TED.',
-                  hasDivider: true,
-                ),
-                PaymentRulesViewModel(
-                  icon: RemessaIcons.owner,
-                  value:
-                      'A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a>comprove sua titularidade no site.</a>',
-                  hasDivider: true,
-                ),
-                PaymentRulesViewModel(
-                  icon: RemessaIcons.attention_oval_outline,
-                  value:
-                      'Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada.',
-                  hasDivider: false,
-                  isWarning: true,
-                ),
-              ],
-              data: [
-                LabelValueModel(
-                  label: 'Valor',
-                  value: 'R\$ 5.143,22',
-                  isCopiable: true,
-                ),
-                LabelValueModel(
-                  label: 'Banco',
-                  value: 'Banco Máxima (243)',
-                  isCopiable: true,
-                ),
-                LabelValueModel(
-                  label: 'Agência',
-                  value: '0001',
-                  isCopiable: true,
-                ),
-                LabelValueModel(
-                  label: 'Conta corrente',
-                  value: '4990501-7',
-                  isCopiable: true,
-                ),
-                LabelValueModel(
-                  label: 'Favorecido',
-                  value: 'Banco Maxima SA',
-                  isCopiable: true,
-                ),
-                LabelValueModel(
-                  label: 'CNPJ',
-                  value: '07.679.404/0001-00',
-                  isCopiable: true,
-                ),
-                LabelValueModel(
-                  label: 'Tipo de conta',
-                  value: 'Conta Corrente',
-                ),
-                LabelValueModel(
-                  label: 'Finalidade da TED',
-                  value: 'Crédito em Conta Corrente',
-                  hasDivider: false,
-                ),
-              ],
-            );
+            return CheckoutPaymentDataScreen();
           },
         ),
       );

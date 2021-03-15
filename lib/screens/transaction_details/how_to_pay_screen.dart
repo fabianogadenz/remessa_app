@@ -5,7 +5,7 @@ import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/transaction_details/how_to_pay_screen_args.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
-import 'package:remessa_app/widgets/app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/app_bar_widget.dart';
 import 'package:screens/screens.dart';
 
 class HowToPayScreen extends StatelessWidget {

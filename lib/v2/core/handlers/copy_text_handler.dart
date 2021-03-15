@@ -5,9 +5,9 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/style/colors.dart';
 
 class CopyTextHandler {
-  static exec(BuildContext context, String label, String value) {
-    final i18n = GetIt.I<I18n>();
+  final i18n = GetIt.I<I18n>();
 
+  call(BuildContext context, String label, String value) {
     Clipboard.setData(
       ClipboardData(text: value),
     );

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widget.dart';
-import 'package:remessa_app/widgets/app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/app_bar_widget.dart';
 import 'package:screens/screens.dart';
 
 class BeneficiaryDataScreen extends StatelessWidget {

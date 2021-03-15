@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/progress_app_bar/progress_app_bar_line_widget.dart';
+import 'package:remessa_app/v2/core/widgets/progress_app_bar/progress_app_bar_line_widget.dart';
 
 class AccentAppBarWidget extends StatelessWidget
     implements PreferredSizeWidget {
@@ -8,8 +8,10 @@ class AccentAppBarWidget extends StatelessWidget
   final String title;
   final int steps;
   final int currentStep;
+  final bool isProgressive;
 
-  bool get isProgressive => steps != null && currentStep != null;
+  bool get isProgressiveAppBar =>
+      steps != null && currentStep != null && isProgressive;
 
   const AccentAppBarWidget({
     Key key,
@@ -17,6 +19,7 @@ class AccentAppBarWidget extends StatelessWidget
     this.prevAction,
     this.steps,
     this.currentStep,
+    this.isProgressive = true,
   })  : assert(title != null),
         super(key: key);
 
@@ -46,7 +49,7 @@ class AccentAppBarWidget extends StatelessWidget
           color: StyleColors.SUPPORT_NEUTRAL_10,
         ),
       ),
-      bottom: isProgressive
+      bottom: isProgressiveAppBar
           ? ProgressAppBarLineWidget(
               steps: steps,
               currentStep: currentStep,

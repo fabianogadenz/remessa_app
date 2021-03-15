@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remessa_app/widgets/link_widget.dart';
+import 'package:remessa_app/v2/core/widgets/link_widget.dart';
 
 class SectionLink {
   final String label;

@@ -20,7 +20,7 @@ import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
-import 'package:remessa_app/widgets/primary_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/primary_button_widget.dart';
 import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
 

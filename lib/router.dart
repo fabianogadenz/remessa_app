@@ -20,6 +20,13 @@ import 'package:remessa_app/screens/transaction_details/transaction_details_scre
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen_args.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_confirmation/checkout_confirmation_screen.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_payment_data/checkout_payment_data_screen.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_payment_rules/checkout_payment_rules_screen_args.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_success/checkout_success_screen.dart';
+import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_payment_rules/checkout_payment_rules_screen.dart';
 
 class AppRouter {
   static const SPLASH_ROUTE = 'splash';
@@ -31,11 +38,16 @@ class AppRouter {
   static const DASHBOARD_ROUTE = 'dashboard';
   static const SIMULATOR_ROUTE = 'simulator';
   static const TRANSACTION_DETAILS_ROUTE = 'transaction_details';
+  static const GENERATED_VIEW_ROUTE = 'generated_view';
   static const TD_HOW_TO_PAY_ROUTE = 'transaction_details/how_to_pay';
   static const TD_CALCULATION_ROUTE = 'transaction_details/calculation';
   static const TD_BENEFICIARY_ROUTE = 'transaction_details/beneficiary_data';
   static const SIMULATOR_CALCULATION_ROUTE = 'simulator/calculation';
-  static const GENERATED_VIEW_ROUTE = 'generated_view';
+  static const CHECKOUT_CONFIRMATION = 'checkout/confirmation';
+  static const CHECKOUT_PAYMENT_RULES = 'checkout/payment_rules';
+  static const CHECKOUT_PAYMENT_DATA = 'checkout/payment_data';
+  static const CHECKOUT_SUCCESS = 'checkout/success';
+  static const CHECKOUT_BENEFICIARY_DATA = 'checkout/beneficiary_data';
 
   static Widget _handleDashboardRoute() {
     FlutterUxcam.tagScreenName(UxCamHelper.DASHBOARD);
@@ -105,6 +117,32 @@ class AppRouter {
 
         return viewGenerator.generate();
       },
+      CHECKOUT_CONFIRMATION: (context) {
+        FlutterUxcam.tagScreenName(UxCamHelper.CHECKOUT);
+        return CheckoutConfirmationScreen();
+      },
+      CHECKOUT_PAYMENT_RULES: (context) {
+        final args =
+            NavigatorHelper.getArgs<CheckoutPaymentRulesScreenArgs>(context);
+
+        return CheckoutPaymentRulesScreen(
+          isProgressive: args?.isProgressive ?? false,
+        );
+      },
+      CHECKOUT_PAYMENT_DATA: (context) {
+        return CheckoutPaymentDataScreen();
+      },
+      CHECKOUT_SUCCESS: (context) {
+        return CheckoutSuccessScreen();
+      },
+      CHECKOUT_BENEFICIARY_DATA: (context) {
+        final args =
+            NavigatorHelper.getArgs<CheckoutBeneficiaryDataScreenArgs>(context);
+
+        return CheckoutBeneficiaryDataScreen(
+          beneficiary: args?.beneficiary,
+        );
+      }
     };
   }
 

@@ -18,8 +18,8 @@ import 'package:remessa_app/screens/transaction_details/widgets/transaction_calc
 import 'package:remessa_app/stores/quote_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/accent_app_bar_widget.dart';
-import 'package:remessa_app/widgets/timer_widget.dart';
+import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/timer_widget.dart';
 import 'package:screens/screens.dart';
 
 class TransactionCalculationScreen extends StatefulWidget {

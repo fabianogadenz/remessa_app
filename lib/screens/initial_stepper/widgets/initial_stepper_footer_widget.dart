@@ -2,8 +2,8 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/dot_indicator_widget.dart';
-import 'package:remessa_app/widgets/primary_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/dot_indicator_widget.dart';
+import 'package:remessa_app/v2/core/widgets/primary_button_widget.dart';
 
 class InitialStepperFooterWidget extends StatelessWidget {
   InitialStepperFooterWidget({

@@ -1,5 +1,5 @@
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
-import 'package:remessa_app/parsers/action_parser.dart';
+import 'package:remessa_app/v2/core/parsers/action_parser.dart';
 
 class ActionModel {
   String type;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/close_button_widget.dart';
+import 'package:remessa_app/v2/core/widgets/close_button_widget.dart';
 
 class SimulatorHeaderWidget extends StatelessWidget {
   SimulatorHeaderWidget({

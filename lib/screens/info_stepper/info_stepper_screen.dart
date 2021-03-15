@@ -7,8 +7,8 @@ import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/screens/info_stepper/widgets/info_stepper_actions_widget.dart';
 import 'package:remessa_app/screens/info_stepper/widgets/info_stepper_content_widget.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/widgets/app_bar_widget.dart';
-import 'package:remessa_app/widgets/dot_indicator_widget.dart';
+import 'package:remessa_app/v2/core/widgets/app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/dot_indicator_widget.dart';
 import 'package:screens/screens.dart';
 
 class InfoStepperScreen extends StatefulWidget
