@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/rule_section_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules_toggle/payment_rules_toggle_header_widget.dart';
@@ -22,6 +23,10 @@ class _PaymentRulesToggleWidgetState extends State<PaymentRulesToggleWidget> {
   bool isExpanded = false;
 
   _toggle() {
+    if (!isExpanded) {
+      TrackingEvents.log(TrackingEvents.CHECKOUT_VIEW_TRANSFER_RULES_CLICK);
+    }
+
     setState(() {
       isExpanded = !isExpanded;
     });

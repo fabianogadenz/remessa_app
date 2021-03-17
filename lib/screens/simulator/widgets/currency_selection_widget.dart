@@ -2,7 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/currency_model.dart';
 import 'package:remessa_app/models/responses/simulator_default_values_response_model.dart';
 import 'package:remessa_app/screens/simulator/widgets/currency_item_widget.dart';
@@ -29,8 +29,8 @@ class CurrencySelectionWidget extends StatelessWidget {
         currencyName: currency.name,
         currencyAcronym: currency.abbreviation,
         onTap: () {
-          TrackEvents.log(
-            TrackEvents.SIMULATOR_SELECT_CURRENCY_CLICK,
+          TrackingEvents.log(
+            TrackingEvents.SIMULATOR_SELECT_CURRENCY_CLICK,
             {
               'currency': currency?.abbreviation,
             },

@@ -2,7 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/details_section_widget.dart';
@@ -27,7 +27,7 @@ class ReceiptDownloadWidget extends StatelessWidget {
   final TransactionDetailsScreenStore transactionDetailsScreenStore;
 
   Future<void> shareFile() async {
-    TrackEvents.log(TrackEvents.TRANSACTION_RECEIPT_SHARE_CLICK);
+    TrackingEvents.log(TrackingEvents.TRANSACTION_RECEIPT_SHARE_CLICK);
 
     transactionDetailsScreenStore.setErrorMessage(null);
     transactionDetailsScreenStore.setIsLoading(true);

@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/environment_model.dart';
 
-class TrackEvents {
+class TrackingEvents {
   // Stepper
   static const INITIAL_STEPPER_VIEW_STEPPER = 'mobile_app.view.tutorial_widget';
   static const INITIAL_STEPPER_NEXT_STEP_CLICK =
@@ -105,6 +105,37 @@ class TrackEvents {
 
   // Splash Screen
   static const SPLASH_VIEW = 'mobile_app.view.splash_screen';
+
+  // Checkout
+  static const CHECKOUT_EXPAND_TAXES_CLICK =
+      'mobile_app.click.checkout_expand_taxes';
+  static const CHECKOUT_VIEW_BENEFICIARY_DETAILS_CLICK =
+      'mobile_app.click.checkout_view_beneficiary_details';
+  static const CHECKOUT_VIEW_PAYMENT_RULES_CLICK =
+      'mobile_app.click.checkout_view_payment_rules';
+  static const CHECKOUT_CONFIRM_OPERATION_CLICK =
+      'mobile_app.click.checkout_confirm_operation_button';
+  static const CHECKOUT_ACCEPT_PAYMENT_RULES_CLICK =
+      'mobile_app.click.checkout_accept_payment_rules_button';
+  static const CHECKOUT_PROVE_ACCOUNT_CLICK =
+      'mobile_app.click.checkout_prove_account_ownership';
+  static const CHECKOUT_VIEW_TRANSFER_RULES_CLICK =
+      'mobile_app.click.checkout_view_transfer_rules';
+  static const CHECKOUT_ALREADY_PAID_CLICK =
+      'mobile_app.click.checkout_already_paid_button';
+  static const CHECKOUT_WILL_PAY_LATER_CLICK =
+      'mobile_app.click.checkout_will_pay_later_button';
+  static const CHECKOUT_INVITE_FRIENDS_CLICK =
+      'mobile_app.click.checkout_invite_friends';
+  static const CHECKOUT_GO_TO_REMITTANCES_CLICK =
+      'mobile_app.click.checkout_go_to_remittances_page_button';
+  static const CHECKOUT_OK_GO_TO_REMITTANCES_CLICK =
+      'mobile_app.click.checkout_ok_go_to_remittances_page_button';
+  static const CHECKOUT_QUOTE_EXPIRED_VIEW =
+      'mobile_app.view.checkout_quote_expired_popup';
+  static const CHECKOUT_QUOTE_EXPIRED_CLICK =
+      'mobile_app.click.checkout_quote_expired_button';
+  static const CHECKOUT_GO_BACK_CLICK = 'mobile_app.click.checkout_go_back';
 
   // Actions
   static logEvent(String name, [Map<String, dynamic> properties]) {

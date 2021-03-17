@@ -6,10 +6,11 @@ import 'package:remessa_app/router.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/handlers/show_warning_modal_handler.dart';
 import 'package:remessa_app/v2/core/models/label_value_model.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_appbar/checkout_appbar_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/copiable_data_section/copiable_data_section_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules_toggle/payment_rules_toggle_widget.dart';
-import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 class CheckoutPaymentDataScreen extends StatelessWidget {
@@ -22,6 +23,8 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
     isDismissible: true,
     primaryAction: ac.Action(
       name: 'Ok, ir para Remessas',
+      prevAction: () => TrackingEvents.log(
+          TrackingEvents.CHECKOUT_OK_GO_TO_REMITTANCES_CLICK),
       actionFunction: () => GetIt.I<NavigatorHelper>().pushNamedAndRemoveUntil(
         AppRouter.DASHBOARD_ROUTE,
       ),
@@ -31,7 +34,7 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AccentAppBarWidget(
+      appBar: CheckoutAppBar(
         title: 'Dados para pagamento',
         steps: 4,
         currentStep: 3,
@@ -123,6 +126,9 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
                     action: ac.Action(
                       name: 'Já fiz o pagamento',
                       actionFunction: () {
+                        TrackingEvents.log(
+                            TrackingEvents.CHECKOUT_ALREADY_PAID_CLICK);
+
                         GetIt.I<NavigatorHelper>().pushNamed(
                           AppRouter.CHECKOUT_SUCCESS,
                           // arguments: TransactionDetailsScreenArgs(
@@ -133,6 +139,8 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
                     ),
                     secondaryAction: ac.Action(
                       name: 'Vou pagar depois',
+                      prevAction: () => TrackingEvents.log(
+                          TrackingEvents.CHECKOUT_WILL_PAY_LATER_CLICK),
                       actionFunction: () => show(context),
                     ),
                   ),

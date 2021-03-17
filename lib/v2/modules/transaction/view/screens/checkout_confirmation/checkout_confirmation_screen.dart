@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_appbar/checkout_appbar_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_confirmation/checkout_confirmation_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/checkout_tax_details_widget.dart';
-import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
 
 class CheckoutConfirmationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AccentAppBarWidget(
+      appBar: CheckoutAppBar(
         title: 'Confirmação da remessa',
         currentStep: 1,
         steps: 4,

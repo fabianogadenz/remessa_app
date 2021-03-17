@@ -3,7 +3,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_footer_widget.dart';
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_widget.dart';
@@ -62,8 +62,8 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
           _currentLogIndex = _currentIndex + 1;
         });
 
-        TrackEvents.log(
-          TrackEvents.INITIAL_STEPPER_VIEW_STEPPER,
+        TrackingEvents.log(
+          TrackingEvents.INITIAL_STEPPER_VIEW_STEPPER,
           {'tutorial_step': _currentLogIndex},
         );
       },
@@ -107,8 +107,8 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
                   ),
                 ),
                 onTap: () {
-                  TrackEvents.log(
-                    TrackEvents.INITIAL_STEPPER_SKIP_STEPPER_CLICK,
+                  TrackingEvents.log(
+                    TrackingEvents.INITIAL_STEPPER_SKIP_STEPPER_CLICK,
                     {'tutorial_step': _currentLogIndex},
                   );
 
@@ -122,15 +122,15 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
               highlightedButton: _currentIndex == steppers.length - 1,
               onTap: () {
                 if (_currentIndex == steppers.length - 1) {
-                  TrackEvents.log(
-                      TrackEvents.INITIAL_STEPPER_FINISH_BUTTON_CLICK);
+                  TrackingEvents.log(
+                      TrackingEvents.INITIAL_STEPPER_FINISH_BUTTON_CLICK);
 
                   navigator.pushReplacementNamed(AppRouter.LOGIN_ROUTE);
                   return;
                 }
 
-                TrackEvents.log(
-                  TrackEvents.INITIAL_STEPPER_NEXT_STEP_CLICK,
+                TrackingEvents.log(
+                  TrackingEvents.INITIAL_STEPPER_NEXT_STEP_CLICK,
                   {'tutorial_step': _currentLogIndex},
                 );
 

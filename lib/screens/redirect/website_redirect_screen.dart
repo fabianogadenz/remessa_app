@@ -2,7 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/uri_helper.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
 import 'package:remessa_app/screens/redirect/widgets/website_redirect_note_widget.dart';
@@ -30,13 +30,13 @@ class _WebsiteRedirectScreenState extends State<WebsiteRedirectScreen> {
   }
 
   void redirect() async {
-    TrackEvents.log(TrackEvents.WEBSITE_REDIRECT_CLICK);
+    TrackingEvents.log(TrackingEvents.WEBSITE_REDIRECT_CLICK);
     GetIt.I<NavigatorHelper>().pop();
     launch(UriHelper.addQueryParams(args?.url, args?.utm?.toMap()));
   }
 
   void _onBackButtonClick() {
-    TrackEvents.log(TrackEvents.WEBSITE_GO_BACK_CLICK);
+    TrackingEvents.log(TrackingEvents.WEBSITE_GO_BACK_CLICK);
   }
 
   @override

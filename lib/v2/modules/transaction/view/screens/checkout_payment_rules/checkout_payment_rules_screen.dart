@@ -4,9 +4,10 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_appbar/checkout_appbar_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/payment_rules_widget.dart';
-import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 class CheckoutPaymentRulesScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class CheckoutPaymentRulesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AccentAppBarWidget(
+      appBar: CheckoutAppBar(
         title: 'Regras de pagamento',
         currentStep: 2,
         steps: 4,
@@ -54,6 +55,9 @@ class CheckoutPaymentRulesScreen extends StatelessWidget {
             ? ac.Action(
                 name: 'Aceito as regras de pagamento',
                 actionFunction: () {
+                  TrackingEvents.log(
+                      TrackingEvents.CHECKOUT_ACCEPT_PAYMENT_RULES_CLICK);
+
                   GetIt.I<NavigatorHelper>().pushNamed(
                     AppRouter.CHECKOUT_PAYMENT_DATA,
                     // arguments: TransactionDetailsScreenArgs(

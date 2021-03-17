@@ -10,7 +10,7 @@ import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/currency_model.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
@@ -138,13 +138,13 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
 
     brlCurrencyFocusNode.addListener(() {
       if (brlCurrencyFocusNode.hasFocus)
-        TrackEvents.log(TrackEvents.SIMULATOR_SELECT_BRL_TEXT_FIELD);
+        TrackingEvents.log(TrackingEvents.SIMULATOR_SELECT_BRL_TEXT_FIELD);
     });
 
     foreignCurrencyFocusNode.addListener(() {
       if (foreignCurrencyFocusNode.hasFocus)
-        TrackEvents.log(
-          TrackEvents.SIMULATOR_SELECT_FOREIGN_TEXT_FIELD,
+        TrackingEvents.log(
+          TrackingEvents.SIMULATOR_SELECT_FOREIGN_TEXT_FIELD,
           {
             'currency': widget.simulatorResponse?.currency?.abbreviation,
           },
@@ -166,7 +166,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   }
 
   _onConfirmationClick() async {
-    TrackEvents.log(TrackEvents.SIMULATOR_SIMULATE_CLICK);
+    TrackingEvents.log(TrackingEvents.SIMULATOR_SIMULATE_CLICK);
 
     _snowplow.track(
       category: SnowplowHelper.OUTBOUND_CATEGORY,
@@ -230,7 +230,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   }
 
   _onFollowUpClick() {
-    TrackEvents.log(TrackEvents.SIMULATOR_FOLLOW_UP_CLICK);
+    TrackingEvents.log(TrackingEvents.SIMULATOR_FOLLOW_UP_CLICK);
     AppRouter.websiteRedirect(
       widget.simulatorResponse?.quotationUrl ?? '',
       utm: UTM(
@@ -240,7 +240,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
   }
 
   _onCouponClick() {
-    TrackEvents.log(TrackEvents.SIMULATOR_ADD_COUPON_CLICK);
+    TrackingEvents.log(TrackingEvents.SIMULATOR_ADD_COUPON_CLICK);
 
     _snowplow.track(
       category: SnowplowHelper.OUTBOUND_CATEGORY,

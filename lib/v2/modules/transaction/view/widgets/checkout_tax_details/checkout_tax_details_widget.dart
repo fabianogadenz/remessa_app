@@ -2,6 +2,7 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_column_section_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_row_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_tax_details/tax_details_spotlight_row_widget.dart';
@@ -71,7 +72,11 @@ class _CheckoutTaxDetailsWidgetState extends State<CheckoutTaxDetailsWidget> {
                           label: 'Taxas',
                           icon: RemessaIcons.arrow_down,
                           content: 'Seu câmbio: BRL 5,1454',
-                          onPressed: _toggleDetails,
+                          onPressed: () {
+                            TrackingEvents.log(
+                                TrackingEvents.CHECKOUT_EXPAND_TAXES_CLICK);
+                            _toggleDetails();
+                          },
                         ),
                   secondChild: isExpanded
                       ? Container(

@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
@@ -51,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
     createTransactionButton = PrimaryButtonWidget(
       i18n.trans('dashboard_screen', ['create_transaction']),
       onPressed: () {
-        TrackEvents.log(TrackEvents.DASHBOARD_NEW_TRANSACTION_CLICK);
+        TrackingEvents.log(TrackingEvents.DASHBOARD_NEW_TRANSACTION_CLICK);
 
         navigator.pushNamed(AppRouter.SIMULATOR_ROUTE);
       },
@@ -92,7 +92,8 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
         ),
       ],
       title: GestureDetector(
-        onTap: () => TrackEvents.log(TrackEvents.DASHBOARD_HOME_LOGO_CLICK),
+        onTap: () =>
+            TrackingEvents.log(TrackingEvents.DASHBOARD_HOME_LOGO_CLICK),
         child: Icon(
           RemessaIcons.logo,
           size: 24,
@@ -213,7 +214,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
       );
 
   _logout() {
-    TrackEvents.log(TrackEvents.DASHBOARD_LOGOUT_CLICK);
+    TrackingEvents.log(TrackingEvents.DASHBOARD_LOGOUT_CLICK);
     GetIt.I<AuthStore>().logout();
   }
 
