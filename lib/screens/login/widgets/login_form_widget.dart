@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/utm_model.dart';
@@ -55,18 +55,18 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
       final cpf = cpfCtrl.value.text;
       final password = passwordCtrl.value.text;
 
-      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_VALID);
+      TrackingEvents.log(TrackingEvents.LOGIN_SUBMIT_LOGIN_VALID);
 
       await widget.login(cpf, password);
     } else {
-      TrackEvents.log(TrackEvents.LOGIN_SUBMIT_LOGIN_INVALID);
+      TrackingEvents.log(TrackingEvents.LOGIN_SUBMIT_LOGIN_INVALID);
     }
 
     passwordCtrl.clear();
   }
 
   _forgotPassword() {
-    TrackEvents.log(TrackEvents.LOGIN_FORGOT_PASSWORD_CLICK);
+    TrackingEvents.log(TrackingEvents.LOGIN_FORGOT_PASSWORD_CLICK);
     FocusScope.of(context).requestFocus(FocusNode());
 
     AppRouter.websiteRedirect(
@@ -78,7 +78,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   }
 
   _register() {
-    TrackEvents.log(TrackEvents.LOGIN_REGISTER_CLICK);
+    TrackingEvents.log(TrackingEvents.LOGIN_REGISTER_CLICK);
     FocusScope.of(context).requestFocus(FocusNode());
 
     AppRouter.websiteRedirect(

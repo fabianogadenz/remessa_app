@@ -4,6 +4,7 @@ import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/account_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/intermediary_bank_info_viewmodel.dart';
@@ -44,6 +45,9 @@ class CheckoutConfirmationWidget extends StatelessWidget {
             linkAction: ac.Action(
               name: 'Ver dados',
               actionFunction: () {
+                TrackingEvents.log(
+                    TrackingEvents.CHECKOUT_VIEW_BENEFICIARY_DETAILS_CLICK);
+
                 GetIt.I<NavigatorHelper>().pushNamed(
                   AppRouter.CHECKOUT_BENEFICIARY_DATA,
                   arguments: CheckoutBeneficiaryDataScreenArgs(
@@ -77,6 +81,9 @@ class CheckoutConfirmationWidget extends StatelessWidget {
             linkAction: ac.Action(
               name: 'Ver regras',
               actionFunction: () {
+                TrackingEvents.log(
+                    TrackingEvents.CHECKOUT_VIEW_PAYMENT_RULES_CLICK);
+
                 GetIt.I<NavigatorHelper>().pushNamed(
                   AppRouter.CHECKOUT_PAYMENT_RULES,
                 );
@@ -90,6 +97,9 @@ class CheckoutConfirmationWidget extends StatelessWidget {
             action: ac.Action(
               name: 'Confirmar remessa',
               actionFunction: () {
+                TrackingEvents.log(
+                    TrackingEvents.CHECKOUT_CONFIRM_OPERATION_CLICK);
+
                 GetIt.I<NavigatorHelper>().pushNamed(
                   AppRouter.CHECKOUT_PAYMENT_RULES,
                   arguments: CheckoutPaymentRulesScreenArgs(

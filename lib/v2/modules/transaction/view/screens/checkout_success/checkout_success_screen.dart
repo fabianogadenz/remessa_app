@@ -4,16 +4,17 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/actions/link_action.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/core/widgets/promotional_card_widget.dart';
-import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
 import 'package:remessa_app/v2/core/widgets/outline_button_widget.dart';
-import 'package:remessa_app/v2/core/actions/action.dart' as ac;
+import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_appbar/checkout_appbar_widget.dart';
 
 class CheckoutSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AccentAppBarWidget(
+      appBar: CheckoutAppBar(
         title: 'Remessa em andamento',
         steps: 4,
         currentStep: 4,
@@ -58,13 +59,23 @@ class CheckoutSuccessScreen extends StatelessWidget {
                     content:
                         'Ganhe até 50% de desconto no custo das suas remessas',
                     iconData: RemessaIcons.percent,
-                    action: ac.Action(name: 'Convidar no site'),
+                    action: LinkAction(
+                      name: 'Convidar no site',
+                      prevAction: () {
+                        TrackingEvents.log(
+                            TrackingEvents.CHECKOUT_INVITE_FRIENDS_CLICK);
+                      },
+                      url:
+                          'https://www.remessaonline.com.br/app/perfil/convide',
+                    ),
                   ),
                   SizedBox(height: 32),
                   OutlineButtonWidget(
                     label: 'Ir para Envios',
                     isAccent: true,
                     onPressed: () {
+                      TrackingEvents.log(
+                          TrackingEvents.CHECKOUT_GO_TO_REMITTANCES_CLICK);
                       GetIt.I<NavigatorHelper>().pushNamedAndRemoveUntil(
                         AppRouter.DASHBOARD_ROUTE,
                       );

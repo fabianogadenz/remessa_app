@@ -1,6 +1,6 @@
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/v2/core/actions/actions.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/actions/action_model.dart';
 import 'package:remessa_app/models/actions/content_action_model.dart';
 import 'package:remessa_app/models/actions/link_action_model.dart';
@@ -40,7 +40,7 @@ class ActionParser {
   }
 
   static Function trackEventFunction(String trackEvent) =>
-      (trackEvent != null) ? () => TrackEvents.logEvent(trackEvent) : null;
+      (trackEvent != null) ? () => TrackingEvents.logEvent(trackEvent) : null;
 
   static Function actionFunction(String action) {
     final emptyFunc = () {};

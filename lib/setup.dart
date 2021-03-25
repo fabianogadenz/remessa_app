@@ -16,7 +16,7 @@ import 'package:remessa_app/helpers/environment_model.dart';
 import 'package:remessa_app/helpers/error.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/config_model.dart';
 import 'package:remessa_app/screens/home/home_screen_store.dart';
 import 'package:remessa_app/services/auth_service.dart';
@@ -69,7 +69,7 @@ class SetUp {
     }
 
     OneSignal.shared.setNotificationOpenedHandler((openedResult) {
-      TrackEvents.log(TrackEvents.PUSH_NOTIFICATION_OPENED);
+      TrackingEvents.log(TrackingEvents.PUSH_NOTIFICATION_OPENED);
 
       final additionalData =
           openedResult?.notification?.payload?.additionalData;

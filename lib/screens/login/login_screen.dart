@@ -5,7 +5,7 @@ import 'package:flutter_uxcam/flutter_uxcam.dart';
 import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/url_helper.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/utm_model.dart';
@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
 
   @override
   void initState() {
-    TrackEvents.log(TrackEvents.LOGIN_VIEW);
+    TrackingEvents.log(TrackingEvents.LOGIN_VIEW);
     super.initState();
   }
 
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
   }
 
   _websiteRedirect(String url, {String log, UTM utm}) {
-    if (log != null) TrackEvents.log(log);
+    if (log != null) TrackingEvents.log(log);
 
     FocusScope.of(context).requestFocus(FocusNode());
 
@@ -84,8 +84,8 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
                       color: StyleColors.BRAND_PRIMARY_40,
                       iconSize: 18,
                       onPressed: () {
-                        TrackEvents.log(
-                            TrackEvents.LOGIN_BACK_TO_STEPPER_CLICK);
+                        TrackingEvents.log(
+                            TrackingEvents.LOGIN_BACK_TO_STEPPER_CLICK);
 
                         FocusScope.of(context).requestFocus(FocusNode());
 
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
                       utm: UTM(
                         campaign: UTM.PRIVACY_POLICY_TERMS_CAMPAIGN,
                       ),
-                      log: TrackEvents.LOGIN_PRIVACY_POLICY_CLICK,
+                      log: TrackingEvents.LOGIN_PRIVACY_POLICY_CLICK,
                     ),
             ),
             TextSpan(
@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> with RouteAware {
                       utm: UTM(
                         campaign: UTM.TERMS_OF_SERVICE_CAMPAIGN,
                       ),
-                      log: TrackEvents.LOGIN_TERMS_OF_SERVICE_CLICK,
+                      log: TrackingEvents.LOGIN_TERMS_OF_SERVICE_CLICK,
                     ),
             ),
           ],

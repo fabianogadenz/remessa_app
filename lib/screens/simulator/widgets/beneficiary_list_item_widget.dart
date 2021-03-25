@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/missing_fields_information_model.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
@@ -53,8 +53,8 @@ class BeneficiaryListItemWidget extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () {
         if (isDisabled) {
-          TrackEvents.log(
-            TrackEvents.BENEFICIARY_DISABLED_CLICK,
+          TrackingEvents.log(
+            TrackingEvents.BENEFICIARY_DISABLED_CLICK,
             {'beneficiary_status': beneficiary.statusName},
           );
           return ModalHelper.showInfoBottomSheet(
@@ -68,8 +68,8 @@ class BeneficiaryListItemWidget extends StatelessWidget {
           );
         }
 
-        TrackEvents.log(
-          TrackEvents.BENEFICIARY_SELECT_CLICK,
+        TrackingEvents.log(
+          TrackingEvents.BENEFICIARY_SELECT_CLICK,
           {'beneficiary_currency': beneficiary.currency},
         );
 

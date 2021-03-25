@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/responses/simulator_response_model.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_calculation_screen_args.dart';
@@ -74,7 +74,7 @@ class _ExchangeRateWidgetState extends State<ExchangeRateWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        TrackEvents.log(TrackEvents.SIMULATOR_TAXES_CLICK);
+        TrackingEvents.log(TrackingEvents.SIMULATOR_TAXES_CLICK);
         quoteStore.setQuote(widget.simulatorStore?.simulatorResponse?.quote);
         GetIt.I<NavigatorHelper>().pushNamed(
           AppRouter.SIMULATOR_CALCULATION_ROUTE,

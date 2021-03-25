@@ -6,7 +6,7 @@ import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         iconData: RemessaIcons.list,
         widget: DashboardScreen(),
         action: () {
-          TrackEvents.log(TrackEvents.NAVBAR_SEND_CLICK);
+          TrackingEvents.log(TrackingEvents.NAVBAR_SEND_CLICK);
         },
       ),
       TabContent(
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
         iconData: RemessaIcons.send,
         widget: Container(),
         action: () {
-          TrackEvents.log(TrackEvents.NAVBAR_SIMULATOR_CLICK);
+          TrackingEvents.log(TrackingEvents.NAVBAR_SIMULATOR_CLICK);
           navigator.pushNamed(AppRouter.SIMULATOR_ROUTE);
         },
       ),
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           iconData: RemessaIcons.chat,
           widget: Container(),
           action: () {
-            TrackEvents.log(TrackEvents.DASHBOARD_HELP_TAB_CLICK);
+            TrackingEvents.log(TrackingEvents.DASHBOARD_HELP_TAB_CLICK);
             ChatHelper().openChat();
           },
         ),

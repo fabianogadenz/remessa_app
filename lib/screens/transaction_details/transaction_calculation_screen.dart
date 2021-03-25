@@ -6,7 +6,7 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/actions/link_action_model.dart';
 import 'package:remessa_app/models/quote_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
@@ -79,8 +79,8 @@ class _TransactionCalculationScreenState
 
   _onTapInfo(BuildContext context, String title, String description,
       [LinkActionModel linkActionModel]) {
-    TrackEvents.log(
-      TrackEvents.TRANSACTION_CALCULATION_INFO_CLICK,
+    TrackingEvents.log(
+      TrackingEvents.TRANSACTION_CALCULATION_INFO_CLICK,
       {'label': title},
     );
 

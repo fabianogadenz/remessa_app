@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/responses/transaction_response_model.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
@@ -24,8 +24,8 @@ class TransactionCardWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        TrackEvents.log(
-          TrackEvents.DASHBOARD_OPEN_TRANSACTION_CARD_CLICK,
+        TrackingEvents.log(
+          TrackingEvents.DASHBOARD_OPEN_TRANSACTION_CARD_CLICK,
           {
             'operation_id': transaction.id,
             'operation_status_group': transaction.statusId,

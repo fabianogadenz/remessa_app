@@ -2,7 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/stores/simulator_store.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -77,8 +77,8 @@ class _CouponWidgetState extends State<CouponWidget> {
 
     _voucherError = await simulatorStore.applyVoucher(_voucherCode);
 
-    TrackEvents.log(
-      TrackEvents.SIMULATOR_VALIDATE_COUPON_CLICK,
+    TrackingEvents.log(
+      TrackingEvents.SIMULATOR_VALIDATE_COUPON_CLICK,
       {'is_valid': !_hasError},
     );
 

@@ -1,7 +1,7 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/text_value_widget.dart';
 import 'package:remessa_app/style/colors.dart';
@@ -35,8 +35,8 @@ class DetailItemWidget extends StatelessWidget {
   final copyTextHandler = CopyTextHandler();
 
   copy(BuildContext context) {
-    TrackEvents.log(
-      TrackEvents.TRANSACTION_COPY_LOCAL_BANCK_INFO,
+    TrackingEvents.log(
+      TrackingEvents.TRANSACTION_COPY_LOCAL_BANCK_INFO,
       {'label': label},
     );
 

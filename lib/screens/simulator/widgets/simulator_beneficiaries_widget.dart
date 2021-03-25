@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/simulator/widgets/beneficiary_list_item_widget.dart';
@@ -74,8 +74,8 @@ class _SimulatorBeneficiariesWidgetState
                     ? () {}
                     : () {
                         FocusScope.of(context).unfocus();
-                        TrackEvents.log(
-                            TrackEvents.SIMULATOR_BENEFICIARY_DROPDOWN_CLICK);
+                        TrackingEvents.log(TrackingEvents
+                            .SIMULATOR_BENEFICIARY_DROPDOWN_CLICK);
                         simulatorScreenAnimationStore.handleExpanded(
                             disableScroll: true);
                       },

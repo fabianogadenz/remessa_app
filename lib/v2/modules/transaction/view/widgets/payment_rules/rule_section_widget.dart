@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/core/widgets/icon_highlight_widget.dart';
 
 class RuleSectionWidget extends StatelessWidget {
@@ -65,7 +66,11 @@ class RuleSectionWidget extends StatelessWidget {
           Expanded(
             child: Html(
               data: value,
-              onLinkTap: (url) => AppRouter.websiteRedirect(url),
+              onLinkTap: (url) {
+                // TODO: Replace specific tracking with a generic one
+                TrackingEvents.log(TrackingEvents.CHECKOUT_PROVE_ACCOUNT_CLICK);
+                AppRouter.websiteRedirect(url);
+              },
               style: {
                 'div': Style(
                   lineHeight: 1.8,

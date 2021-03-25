@@ -9,7 +9,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
-import 'package:remessa_app/helpers/track_events.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
@@ -203,7 +203,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
                               TransactionStatus.FINISHED,
                           onTap: () => _openChatAndLogEvent(
                             eventName:
-                                TrackEvents.TRANSACTION_HELP_BANNER_CLICK,
+                                TrackingEvents.TRANSACTION_HELP_BANNER_CLICK,
                           ),
                         ),
                       ],
@@ -237,7 +237,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
         return TransactionDetailActionWidget(
           i18n.trans('transaction_details_screen', ['how_to_pay']),
           onPressed: () {
-            _log(TrackEvents.TRANSACTION_HOW_TO_PAY_CLICK);
+            _log(TrackingEvents.TRANSACTION_HOW_TO_PAY_CLICK);
 
             navigator.pushNamed(
               AppRouter.TD_HOW_TO_PAY_ROUTE,
@@ -264,7 +264,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
     }
   }
 
-  _log(String eventName) => TrackEvents.log(
+  _log(String eventName) => TrackingEvents.log(
         eventName,
         {
           'operation_id': transactionDetails.id,
@@ -274,7 +274,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
       );
 
   _openChatAndLogEvent(
-      {String eventName = TrackEvents.TRANSACTION_HELP_CTA_CLICK}) {
+      {String eventName = TrackingEvents.TRANSACTION_HELP_CTA_CLICK}) {
     _log(eventName);
 
     chatHelper.openChat();
@@ -307,8 +307,8 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
                   CurrencyHelper.currencyFormat + '00',
                 ),
                 onTapInfo: () {
-                  TrackEvents.log(
-                    TrackEvents.TRANSACTION_TOOLTIP_CLICK,
+                  TrackingEvents.log(
+                    TrackingEvents.TRANSACTION_TOOLTIP_CLICK,
                     {'origin': 'vet'},
                   );
 
@@ -324,7 +324,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
             i18n.trans(
                 'transaction_details_screen', ['transaction_calculation']),
             () {
-              _log(TrackEvents.TRANSACTION_CALCULATION_CLICK);
+              _log(TrackingEvents.TRANSACTION_CALCULATION_CLICK);
 
               final quoteStore = QuoteStore()
                 ..setQuote(transactionDetails?.quote);
@@ -350,7 +350,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
           sectionLink: SectionLink(
             i18n.trans('transaction_details_screen', ['beneficiary_data']),
             () {
-              _log(TrackEvents.TRANSACTION_BENEFICIARY_INFO_CLICK);
+              _log(TrackingEvents.TRANSACTION_BENEFICIARY_INFO_CLICK);
 
               navigator.pushNamed(
                 AppRouter.TD_BENEFICIARY_ROUTE,
@@ -394,8 +394,8 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
                 'transaction_details_screen', ['delivery_estimate', 'title']),
             value: deliveryEstimateValue,
             onTapInfo: () {
-              TrackEvents.log(
-                TrackEvents.TRANSACTION_TOOLTIP_CLICK,
+              TrackingEvents.log(
+                TrackingEvents.TRANSACTION_TOOLTIP_CLICK,
                 {'origin': 'deadline'},
               );
 
