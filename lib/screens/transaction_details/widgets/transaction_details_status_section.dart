@@ -4,17 +4,23 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
+import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
+import 'package:remessa_app/screens/transaction_details/widgets/receipt_download_widget.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/transaction_status_widget.dart';
 
 class TransactionDetailStatusSectionWidget extends StatelessWidget {
+  final TransactionDetailsScreenStore transactionDetailsScreenStore;
+  final TransactionDetailsResponseModel transactionDetails;
+  final bool showReceiptDownload;
+
   const TransactionDetailStatusSectionWidget({
     Key key,
     @required this.transactionDetails,
+    this.transactionDetailsScreenStore,
+    this.showReceiptDownload = false,
   })  : assert(transactionDetails != null),
         super(key: key);
-
-  final TransactionDetailsResponseModel transactionDetails;
 
   String _getStatusMessage() {
     final i18n = GetIt.I<I18n>();
@@ -52,13 +58,15 @@ class TransactionDetailStatusSectionWidget extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: StyleColors.SUPPORT_NEUTRAL_30,
-          ),
-        ),
-      ),
+      decoration: showReceiptDownload
+          ? null
+          : BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: StyleColors.SUPPORT_NEUTRAL_30,
+                ),
+              ),
+            ),
       padding: EdgeInsets.only(
         top: 24,
         left: 24,
@@ -85,6 +93,13 @@ class TransactionDetailStatusSectionWidget extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
+          showReceiptDownload
+              ? ReceiptDownloadWidget(
+                  transactionId: transactionDetails.id,
+                  label: transactionDetails.counterpart.name,
+                  transactionDetailsScreenStore: transactionDetailsScreenStore,
+                )
+              : Container(),
         ],
       ),
     );

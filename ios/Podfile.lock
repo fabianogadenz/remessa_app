@@ -112,10 +112,10 @@ PODS:
     - nanopb/encode (= 1.30905.0)
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
-  - OneSignal (2.15.2)
-  - onesignal_flutter (2.6.1):
+  - OneSignal (2.16.3)
+  - onesignal_flutter (2.6.3):
     - Flutter
-    - OneSignal (= 2.15.2)
+    - OneSignal (= 2.16.3)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -258,8 +258,8 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 672fb0ce96fe7f7f31d43672fca62ad2c9c86f7b
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
-  OneSignal: 9531e385388565f4d31797ddadbe0fcc786430ec
-  onesignal_flutter: b4412973eac419ccce07363e43e0d6057c583a96
+  OneSignal: fd223b247d46e0aa97c7712f3e031c29798d018a
+  onesignal_flutter: 605e4ed3c95a9705db9f5073a66ac6d0045b3fee
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f

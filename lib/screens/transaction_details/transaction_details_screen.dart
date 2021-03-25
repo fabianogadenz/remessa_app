@@ -23,7 +23,6 @@ import 'package:remessa_app/screens/transaction_details/widgets/detail_item_widg
 import 'package:remessa_app/screens/transaction_details/widgets/detail_recurrence_button_overlay_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_link_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/details_section_widget.dart';
-import 'package:remessa_app/screens/transaction_details/widgets/receipt_download_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_detail_action_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_footer_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/transaction_details_header_widget.dart';
@@ -186,16 +185,11 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
                     child: Column(
                       children: <Widget>[
                         TransactionDetailStatusSectionWidget(
+                          transactionDetailsScreenStore:
+                              _transactionsDetailsScreenStore,
                           transactionDetails: transactionDetails,
+                          showReceiptDownload: showReceiptDownload,
                         ),
-                        showReceiptDownload
-                            ? ReceiptDownloadWidget(
-                                transactionId: transactionDetails.id,
-                                label: transactionDetails.counterpart.name,
-                                transactionDetailsScreenStore:
-                                    _transactionsDetailsScreenStore,
-                              )
-                            : Container(),
                         _buildDetailAction(),
                         ...sections,
                         TransactionDetailsFooterWidget(

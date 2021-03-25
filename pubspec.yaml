@@ -51,7 +51,7 @@ dependencies:
   # Plugins
   amplitude_flutter: ^2.2.3
   url_launcher: ^5.4.2
-  onesignal_flutter: ^2.6.1
+  onesignal_flutter: ^2.6.3
   zendesk: ^1.0.2
   firebase_core: ^0.5.0
   firebase_crashlytics: ^0.1.4+1

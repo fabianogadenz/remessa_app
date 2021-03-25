@@ -1,7 +1,6 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_store.dart';
@@ -46,52 +45,53 @@ class ReceiptDownloadWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DetailSectionWidget(
-      showDivisor: false,
-      title: i18n.trans('transaction_details_screen', ['receipt']),
-      detailItems: [
-        GestureDetector(
-          onTap: shareFile,
-          child: Container(
-            margin: EdgeInsets.only(top: 16),
-            padding: EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: StyleColors.SUPPORT_NEUTRAL_40,
+    return Padding(
+      padding: const EdgeInsets.only(top: 6, bottom: 32),
+      child: DetailSectionWidget(
+        showDivisor: false,
+        hasPadding: false,
+        detailItems: [
+          GestureDetector(
+            onTap: shareFile,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: StyleColors.SUPPORT_NEUTRAL_30,
+                ),
+                borderRadius: BorderRadius.circular(4),
               ),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Icon(
-                        RemessaIcons.document,
-                        size: 18,
-                        color: StyleColors.SUPPORT_NEUTRAL_40,
-                      ),
-                      SizedBox(width: 4),
-                      Text(
-                        StringHelper
-                            .handleLimiterWithEllipsisFromTextWidthAndStyle(
-                          label,
-                          300,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(
+                          RemessaIcons.document,
+                          size: 18,
+                          color: StyleColors.SUPPORT_NEUTRAL_40,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 8),
+                        Text(
+                          i18n.trans('transaction_details_screen', ['receipt']),
+                          style: TextStyle(
+                            color: StyleColors.BRAND_SECONDARY_60,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Icon(
-                  RemessaIcons.share,
-                  size: 18,
-                  color: StyleColors.BRAND_PRIMARY_40,
-                ),
-              ],
+                  Icon(
+                    RemessaIcons.share,
+                    size: 18,
+                    color: StyleColors.BRAND_PRIMARY_40,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
