@@ -70,7 +70,7 @@
     },
     "status": {
         "waiting_payment": {
-            "description": "Pague sua remessa até as 16h do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
+            "description": "Pague sua remessa até as $paymentDeadlineHour do dia $paymentDeadline.\nA identificação é automática em até 2h úteis."
         },
         "payment_indetified": {
             "description": "Recebemos o seu pagamento. Agora é só aguardar a confirmação da remessa."
@@ -154,7 +154,7 @@
         },
         "deadline": {
             "title": "Não perca o prazo de pagamento",
-            "description": "O prazo limite para pagamento da sua remessa é até as 16h do dia $paymentDeadline."
+            "description": "O prazo limite para pagamento da sua remessa é até as $paymentDeadlineHour do dia $paymentDeadline."
         },
         "bank_account": {
             "title": "Lembre-se: o pagamento deve ser feito de uma conta de pessoa física em que você seja o titular",

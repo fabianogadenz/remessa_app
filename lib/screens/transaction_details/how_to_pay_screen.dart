@@ -1,6 +1,7 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/screens/transaction_details/how_to_pay_screen_args.dart';
@@ -12,6 +13,7 @@ class HowToPayScreen extends StatelessWidget {
   HowToPayScreen({Key key}) : super(key: key);
 
   final i18n = GetIt.I<I18n>();
+  final _appStore = GetIt.I<AppStore>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class HowToPayScreen extends StatelessWidget {
               value: i18n.populate(
                 i18n.trans('how_to_pay_screen', ['deadline', 'description']),
                 {
+                  'paymentDeadlineHour': _appStore.configs.paymentDeadlineHour,
                   'paymentDeadline': DateHelper.formatToBRShort(
                     DateHelper.stringToDate(args.paymentDeadline),
                   ),
