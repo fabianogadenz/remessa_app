@@ -32,6 +32,7 @@ import 'package:remessa_app/stores/quote_store.dart';
 import 'package:remessa_app/stores/transaction_details_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
+import 'package:remessa_app/v2/core/widgets/warning_action_widget.dart';
 import 'package:screens/safe_area_config.dart';
 import 'package:screens/screens.dart';
 
@@ -71,6 +72,9 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
   String completeArrivalEstimateMessage;
 
   ReactionDisposer loadingDisposer, popDisposer;
+
+  bool get _hasNotes =>
+      transactionDetails.notes != null && transactionDetails.notes.isNotEmpty;
 
   @override
   void initState() {
@@ -197,6 +201,13 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
                               )
                             : Container(),
                         _buildDetailAction(),
+                        if (_hasNotes)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 24),
+                            child: WarningActionWidget(
+                              description: transactionDetails.notes,
+                            ),
+                          ),
                         ...sections,
                         TransactionDetailsFooterWidget(
                           showExtraBottomMargin: transactionDetails?.status ==

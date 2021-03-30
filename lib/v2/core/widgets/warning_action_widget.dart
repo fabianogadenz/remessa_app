@@ -37,6 +37,8 @@ class WarningActionWidget extends StatelessWidget {
                 description,
                 style: TextStyle(
                   color: StyleColors.SUPPORT_WARNING_60,
+                  letterSpacing: .2,
+                  height: 1.8,
                 ),
               ),
               linkAction != null
