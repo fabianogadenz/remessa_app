@@ -5,6 +5,7 @@ class LinkActionModel {
   String label;
   String url;
   String trackEvent;
+  String action;
 
   LinkActionModel({
     this.label,
@@ -16,6 +17,7 @@ class LinkActionModel {
     label = json['label'];
     url = json['url'];
     trackEvent = json['trackEvent'];
+    action = json['action'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,12 +25,13 @@ class LinkActionModel {
     data['label'] = this.label;
     data['url'] = this.url;
     data['trackEvent'] = this.trackEvent;
+    data['action'] = this.action;
     return data;
   }
 
   LinkAction toAction() => LinkAction(
         name: this.label,
         url: this.url,
-        prevAction: ActionParser.trackEventFunction(trackEvent),
+        prevAction: ActionParser.eventAndActionFunction(trackEvent, action),
       );
 }

@@ -23,6 +23,9 @@ const prod_url = 'https://beetech.global';
 const Map<String, dynamic> dev_api = {
   'url': 'https://out-dev-app.pesoreal.xyz/v1/app',
 };
+const Map<String, dynamic> fns_api = {
+  'url': 'https://fns-app.pesoreal.xyz/v1/app',
+};
 const Map<String, dynamic> release_api = {
   'url': 'https://release-app.beetech.global/v1/app',
 };
@@ -40,7 +43,7 @@ final Map<Environment, Constants> constantsMap = {
   Environment.DEV: Constants(
     onesignal: onesignal,
     amplitude: dev_amplitude,
-    api: dev_api,
+    api: fns_api,
     zendesk: zendesk,
     uxcam: uxcam,
     url: dev_url,

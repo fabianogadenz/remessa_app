@@ -46,4 +46,10 @@ class ActionParser {
     final emptyFunc = () {};
     return (action != null) ? actions[action] ?? emptyFunc : emptyFunc;
   }
+
+  static Function eventAndActionFunction(String trackEvent, String action) =>
+      () {
+        ActionParser.trackEventFunction(trackEvent)();
+        ActionParser.actionFunction(action)();
+      };
 }

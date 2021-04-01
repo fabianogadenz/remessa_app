@@ -47,22 +47,6 @@ mixin _$InfoStore on _InfoStoreBase, Store {
     });
   }
 
-  final _$infoResponseModelAtom =
-      Atom(name: '_InfoStoreBase.infoResponseModel');
-
-  @override
-  InfoResponseModel get infoResponseModel {
-    _$infoResponseModelAtom.reportRead();
-    return super.infoResponseModel;
-  }
-
-  @override
-  set infoResponseModel(InfoResponseModel value) {
-    _$infoResponseModelAtom.reportWrite(value, super.infoResponseModel, () {
-      super.infoResponseModel = value;
-    });
-  }
-
   final _$infoAtom = Atom(name: '_InfoStoreBase.info');
 
   @override
@@ -83,13 +67,6 @@ mixin _$InfoStore on _InfoStoreBase, Store {
   @override
   Future check() {
     return _$checkAsyncAction.run(() => super.check());
-  }
-
-  final _$getInfoAsyncAction = AsyncAction('_InfoStoreBase.getInfo');
-
-  @override
-  Future getInfo(String url) {
-    return _$getInfoAsyncAction.run(() => super.getInfo(url));
   }
 
   final _$_InfoStoreBaseActionController =
@@ -122,7 +99,6 @@ mixin _$InfoStore on _InfoStoreBase, Store {
     return '''
 isLoading: ${isLoading},
 shown: ${shown},
-infoResponseModel: ${infoResponseModel},
 info: ${info},
 hasInfoToShow: ${hasInfoToShow}
     ''';

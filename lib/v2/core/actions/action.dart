@@ -9,12 +9,12 @@ class Action {
     Function actionFunction,
     Function prevAction,
   }) {
-    action = () {
+    action = () async {
       if (prevAction != null) {
-        prevAction();
+        await prevAction();
       }
 
-      actionFunction();
+      await actionFunction();
     };
   }
 }

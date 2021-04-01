@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
@@ -10,5 +11,8 @@ final Map<String, Function> actions = {
     GetIt.I<InfoStore>().setShown(true);
     GetIt.I<NavigatorHelper>()
         .pushNamedAndRemoveUntil(AppRouter.DASHBOARD_ROUTE);
-  }
+  },
+  'accept_terms': () async {
+    await GetIt.I<Dio>().post('/financial-institution/customer/registration');
+  },
 };
