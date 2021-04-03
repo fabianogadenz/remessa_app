@@ -19,6 +19,7 @@ class TransactionDetailsResponseModel {
   Counterpart counterpart;
   PaymentAccountInfo paymentAccountInfo;
   int analysisLevel;
+  String notes;
 
   TransactionDetailsResponseModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -43,6 +44,8 @@ class TransactionDetailsResponseModel {
     paymentAccountInfo = json['paymentAccountInfo'] != null
         ? new PaymentAccountInfo.fromJson(json['paymentAccountInfo'])
         : null;
+
+    notes = json['notes'];
   }
 
   Map<String, dynamic> toJson() {
@@ -69,6 +72,7 @@ class TransactionDetailsResponseModel {
     if (this.paymentAccountInfo != null) {
       data['paymentAccountInfo'] = this.paymentAccountInfo.toJson();
     }
+    data['notes'] = this.notes;
     return data;
   }
 }
