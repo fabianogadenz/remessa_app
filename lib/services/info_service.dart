@@ -13,7 +13,11 @@ class InfoService {
 
       return ViewModel.fromJson(response.data);
     } catch (_) {
-      return tryURLPattern(response);
+      if (response.data != null) {
+        return tryURLPattern(response);
+      }
+
+      return null;
     }
   }
 

@@ -14,12 +14,6 @@ abstract class _InfoStoreBase with Store {
   setIsLoading(bool value) => isLoading = value;
 
   @observable
-  bool shown = false;
-
-  @action
-  setShown(bool value) => shown = value;
-
-  @observable
   InfoStepperModel info;
 
   @action
@@ -29,5 +23,5 @@ abstract class _InfoStoreBase with Store {
   }
 
   @computed
-  get hasInfoToShow => !shown && info != null;
+  get hasInfoToShow => info != null;
 }
