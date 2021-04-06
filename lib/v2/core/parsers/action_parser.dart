@@ -48,8 +48,8 @@ class ActionParser {
   }
 
   static Function eventAndActionFunction(String trackEvent, String action) =>
-      () {
+      () async {
         ActionParser.trackEventFunction(trackEvent)();
-        ActionParser.actionFunction(action)();
+        await ActionParser.actionFunction(action)();
       };
 }

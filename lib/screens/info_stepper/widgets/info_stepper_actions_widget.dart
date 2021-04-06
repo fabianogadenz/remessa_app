@@ -22,7 +22,7 @@ class InfoStepperActionsWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           GradientButtonWidget(
-            onPressed: action.action,
+            onPressed: () => action.action(context),
             label: action.name,
           ),
           (linkAction != null)
@@ -34,7 +34,7 @@ class InfoStepperActionsWidget extends StatelessWidget {
                     LinkWidget(
                       padding: const EdgeInsets.only(top: 4),
                       label: linkAction.name,
-                      onTap: linkAction.action,
+                      onTap: () => linkAction.action(context),
                     ),
                   ],
                 )
