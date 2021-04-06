@@ -4,12 +4,12 @@ import 'package:remessa_app/screens/home/home_screen_store.dart';
 import 'package:remessa_app/services/auth_service.dart';
 import 'package:zendesk/zendesk.dart';
 
-class ChatHelper {
-  final _homeScreenStore = GetIt.I<HomeScreenStore>();
-  final zendesk = GetIt.I<Zendesk>();
-  final i18n = GetIt.I<I18n>();
+final _homeScreenStore = GetIt.I<HomeScreenStore>();
+final zendesk = GetIt.I<Zendesk>();
+final i18n = GetIt.I<I18n>();
 
-  openChat() async {
+class ChatHelper {
+  static openChat() async {
     try {
       final customer = GetIt.I<AuthService>().customer;
 

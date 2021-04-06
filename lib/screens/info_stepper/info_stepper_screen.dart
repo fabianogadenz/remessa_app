@@ -7,8 +7,10 @@ import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/screens/info_stepper/widgets/info_stepper_actions_widget.dart';
 import 'package:remessa_app/screens/info_stepper/widgets/info_stepper_content_widget.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/actions/error_action.dart';
 import 'package:remessa_app/v2/core/widgets/app_bar_widget.dart';
 import 'package:remessa_app/v2/core/widgets/dot_indicator_widget.dart';
+import 'package:screens/screen_widget.dart';
 import 'package:screens/screens.dart';
 
 class InfoStepperScreen extends StatefulWidget
@@ -29,6 +31,12 @@ class InfoStepperScreen extends StatefulWidget
 class _InfoStepperScreenState extends State<InfoStepperScreen> {
   int _currentIndex = 0;
   CarouselSlider carousel;
+  ScreenWidget screen;
+
+  bool _errorHandler(ActionErrorNotification notification) {
+    screen.errorStreamController.add(notification.message);
+    return true;
+  }
 
   get steppers => widget.model?.steppers;
   get hasSteppers => (steppers != null && steppers.length > 1);
@@ -72,7 +80,7 @@ class _InfoStepperScreenState extends State<InfoStepperScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GetIt.I<Screens>().widget(
+    screen = GetIt.I<Screens>().widget(
       showAppBar: widget.model.showAppBar ?? false,
       appBarWidget: AppBarWidget(
         elevation: 0,
@@ -80,28 +88,34 @@ class _InfoStepperScreenState extends State<InfoStepperScreen> {
       isStatic: true,
       isAccent: true,
       statusBarBrightness: Brightness.light,
-      child: Column(
-        children: [
-          Expanded(
-            child: carousel,
-          ),
-          _handleDotIndicators(),
-          SizedBox(
-            height: hasSteppers ? 155 : null,
-            child: InfoStepperActionsWidget(
-              action: steppers[_currentIndex]?.action ??
-                  ac.Action(
-                    name: 'Próximo',
-                    actionFunction: () => carousel.nextPage(
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeIn,
-                    ),
-                  ),
-              linkAction: steppers[_currentIndex]?.linkAction,
+      padding: const EdgeInsets.all(24),
+      child: NotificationListener<ActionErrorNotification>(
+        onNotification: _errorHandler,
+        child: Column(
+          children: [
+            Expanded(
+              child: carousel,
             ),
-          ),
-        ],
+            _handleDotIndicators(),
+            SizedBox(
+              height: hasSteppers ? 155 : null,
+              child: InfoStepperActionsWidget(
+                action: steppers[_currentIndex]?.action ??
+                    ac.Action(
+                      name: 'Próximo',
+                      actionFunction: () => carousel.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      ),
+                    ),
+                linkAction: steppers[_currentIndex]?.linkAction,
+              ),
+            ),
+          ],
+        ),
       ),
     );
+
+    return screen;
   }
 }

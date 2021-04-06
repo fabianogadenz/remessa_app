@@ -7,12 +7,14 @@ class ContentActionModel {
   String url;
   bool isReplacement;
   String trackEvent;
+  String action;
 
   ContentActionModel({
     this.label,
     this.content,
     this.isReplacement,
     this.trackEvent,
+    this.action,
   });
 
   ContentActionModel.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,7 @@ class ContentActionModel {
     url = json['url'];
     isReplacement = json['isReplacement'];
     trackEvent = json['trackEvent'];
+    action = json['action'];
   }
 
   Map<String, dynamic> toJson() {
@@ -30,6 +33,7 @@ class ContentActionModel {
     data['url'] = this.url;
     data['isReplacement'] = this.isReplacement;
     data['trackEvent'] = this.trackEvent;
+    data['action'] = this.action;
     return data;
   }
 
@@ -38,6 +42,6 @@ class ContentActionModel {
         content: this.content,
         url: this.url,
         isReplacement: isReplacement,
-        prevAction: ActionParser.trackEventFunction(trackEvent),
+        prevAction: ActionParser.eventAndActionFunction(trackEvent, action),
       );
 }

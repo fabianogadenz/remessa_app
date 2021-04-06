@@ -12,9 +12,9 @@ import 'package:remessa_app/router.dart';
 
 import 'package:remessa_app/screens/dashboard/dashboard_screen.dart';
 import 'package:remessa_app/screens/home/home_screen_store.dart';
-// import 'package:remessa_app/screens/loader_screen.dart';
+import 'package:remessa_app/screens/loader_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
-// import 'package:remessa_app/stores/info_store.dart';
+import 'package:remessa_app/stores/info_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:screens/screens.dart';
 
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final i18n = GetIt.I<I18n>();
   final _homeScreenStore = GetIt.I<HomeScreenStore>()..setErrorMessage(null);
   final _appStore = GetIt.I<AppStore>();
-  // final _infoStore = GetIt.I<InfoStore>();
+  final _infoStore = GetIt.I<InfoStore>();
   final navigator = GetIt.I<NavigatorHelper>();
 
   List<TabContent> _tabs = [];
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
           widget: Container(),
           action: () {
             TrackingEvents.log(TrackingEvents.DASHBOARD_HELP_TAB_CLICK);
-            ChatHelper().openChat();
+            ChatHelper.openChat();
           },
         ),
       );
@@ -104,17 +104,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _handleInfoToShow(_) async {
-    // TODO: Uncomment this code
-    // await _infoStore.check();
+    await _infoStore.check();
 
-    // if (_infoStore.hasInfoToShow) {
-    //   navigator.pushReplacementNamed(
-    //     AppRouter.GENERATED_VIEW_ROUTE,
-    //     arguments: _infoStore.info,
-    //   );
+    if (_infoStore.hasInfoToShow) {
+      navigator.pushReplacementNamed(
+        AppRouter.GENERATED_VIEW_ROUTE,
+        arguments: _infoStore.info,
+      );
 
-    //   return;
-    // }
+      return;
+    }
 
     if (_appStore.transactionId != null) {
       if (Navigator.canPop(context)) {
@@ -136,10 +135,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        // TODO: Uncomment this code
-        // if (_infoStore.hasInfoToShow || _infoStore.isLoading) {
-        //   return LoaderScreen();
-        // }
+        if (_infoStore.hasInfoToShow || _infoStore.isLoading) {
+          return LoaderScreen();
+        }
 
         return GetIt.I<Screens>().widget(
           isStatic: true,

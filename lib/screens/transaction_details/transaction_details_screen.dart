@@ -52,7 +52,6 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
   final navigator = GetIt.I<NavigatorHelper>();
   final _transactionsStore = TransactionDetailsStore();
   final _transactionsDetailsScreenStore = TransactionDetailsScreenStore();
-  final chatHelper = ChatHelper();
 
   TransactionDetailsScreenArgs args;
   bool showReceiptDownload;
@@ -288,7 +287,7 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen>
       {String eventName = TrackingEvents.TRANSACTION_HELP_CTA_CLICK}) {
     _log(eventName);
 
-    chatHelper.openChat();
+    ChatHelper.openChat();
   }
 
   List _buildDefaultStatusContent() => [

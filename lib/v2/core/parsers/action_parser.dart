@@ -40,10 +40,16 @@ class ActionParser {
   }
 
   static Function trackEventFunction(String trackEvent) =>
-      (trackEvent != null) ? () => TrackingEvents.logEvent(trackEvent) : null;
+      (trackEvent != null) ? () => TrackingEvents.logEvent(trackEvent) : () {};
 
   static Function actionFunction(String action) {
     final emptyFunc = () {};
     return (action != null) ? actions[action] ?? emptyFunc : emptyFunc;
   }
+
+  static Function eventAndActionFunction(String trackEvent, String action) =>
+      () async {
+        ActionParser.trackEventFunction(trackEvent)();
+        await ActionParser.actionFunction(action)();
+      };
 }

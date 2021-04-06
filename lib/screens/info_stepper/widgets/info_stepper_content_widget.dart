@@ -24,12 +24,10 @@ class InfoStepperContentWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 32),
       child: Column(
-        mainAxisAlignment: imageURL != null
-            ? MainAxisAlignment.spaceAround
-            : MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _buildHeader(),
-          _buildContent(),
+          imageURL != null ? Expanded(child: _buildContent()) : _buildContent(),
         ],
       ),
     );
@@ -78,43 +76,51 @@ class InfoStepperContentWidget extends StatelessWidget {
   }
 
   Widget _buildContent() {
-    Widget image = Container();
+    Widget imageWidget = Container();
 
     if (imageURL != null) {
-      image = Container(
-        height: 80,
+      imageWidget = ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: 5,
+          maxHeight: 85,
+          minWidth: 5,
+        ),
         child: CachedNetworkImageWigdet(
           imageURL: imageURL,
+          loaderColor: StyleColors.BRAND_PRIMARY_40,
         ),
       );
     }
 
-    return Column(
-      children: [
-        image,
-        SizedBox(
-          height: 24,
-        ),
-        Text(
-          title,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontWeight: FontWeight.w300,
-            color: StyleColors.BRAND_PRIMARY_80,
-            fontSize: 24,
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          imageWidget,
+          SizedBox(
+            height: 24,
           ),
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        Text(
-          content,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: StyleColors.BRAND_SECONDARY_50,
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.w300,
+              color: StyleColors.BRAND_PRIMARY_80,
+              fontSize: 24,
+            ),
           ),
-        ),
-      ],
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            content,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: StyleColors.BRAND_SECONDARY_50,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
