@@ -1,6 +1,7 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/transaction_status.dart';
 import 'package:remessa_app/models/responses/transaction_details_response_model.dart';
@@ -13,8 +14,10 @@ class TransactionDetailStatusSectionWidget extends StatelessWidget {
   final TransactionDetailsScreenStore transactionDetailsScreenStore;
   final TransactionDetailsResponseModel transactionDetails;
   final bool showReceiptDownload;
+  final _appStore = GetIt.I<AppStore>();
+  final i18n = GetIt.I<I18n>();
 
-  const TransactionDetailStatusSectionWidget({
+  TransactionDetailStatusSectionWidget({
     Key key,
     @required this.transactionDetails,
     this.transactionDetailsScreenStore,
@@ -23,13 +26,12 @@ class TransactionDetailStatusSectionWidget extends StatelessWidget {
         super(key: key);
 
   String _getStatusMessage() {
-    final i18n = GetIt.I<I18n>();
-
     switch (transactionDetails.status) {
       case TransactionStatus.WAITING_PAYMENT:
         return i18n.populate(
           i18n.trans('status', ['waiting_payment', 'description']),
           {
+            'paymentDeadlineHour': _appStore.configs.paymentDeadlineHour,
             'paymentDeadline': DateHelper.formatToBRShort(
               DateHelper.stringToDate(transactionDetails.paymentDeadline),
             ),
