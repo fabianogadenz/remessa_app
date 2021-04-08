@@ -10,14 +10,15 @@ class DetailSectionWidget extends StatelessWidget {
     this.detailItems,
     this.sectionLink,
     this.showDivisor = true,
-  })  : assert(title != null),
-        assert(detailItems != null),
+    this.hasPadding = true,
+  })  : assert(detailItems != null),
         super(key: key);
 
   final String title;
   final SectionLink sectionLink;
   final List<Widget> detailItems;
   final bool showDivisor;
+  final bool hasPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +32,12 @@ class DetailSectionWidget extends StatelessWidget {
               )
             : null,
       ),
-      padding: EdgeInsets.all(24),
+      padding: hasPadding ? EdgeInsets.all(24) : EdgeInsets.zero,
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          DetailSectionTitleWidget(title),
+          title != null ? DetailSectionTitleWidget(title) : Container(),
           ...detailItems,
           sectionLink != null
               ? DetailSectionLinkWidget(
