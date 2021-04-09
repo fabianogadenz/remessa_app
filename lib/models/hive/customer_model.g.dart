@@ -24,13 +24,14 @@ class CustomerAdapter extends TypeAdapter<Customer> {
       countryCode: fields[4] as String,
       mobilePhone: fields[5] as String,
       phone: fields[6] as String,
+      pushNotificationsEnabled: fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Customer obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class CustomerAdapter extends TypeAdapter<Customer> {
       ..writeByte(5)
       ..write(obj.mobilePhone)
       ..writeByte(6)
-      ..write(obj.phone);
+      ..write(obj.phone)
+      ..writeByte(7)
+      ..write(obj.pushNotificationsEnabled);
   }
 
   @override

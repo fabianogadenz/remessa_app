@@ -6,6 +6,7 @@ import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
@@ -16,6 +17,8 @@ import 'package:remessa_app/screens/loader_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
 import 'package:remessa_app/stores/info_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/modules/settings/application/presenters/notification_preferences_presenter.dart';
+import 'package:remessa_app/v2/modules/settings/application/viewmodels/notification_preferences_viewmodel.dart';
 import 'package:screens/screens.dart';
 
 class TabContent {
@@ -35,6 +38,13 @@ class TabContent {
 }
 
 class HomeScreen extends StatefulWidget {
+  final NotificationPreferencesPresenter notificationPreferencesPresenter;
+
+  const HomeScreen({
+    Key key,
+    @required this.notificationPreferencesPresenter,
+  }) : super(key: key);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -44,7 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final _homeScreenStore = GetIt.I<HomeScreenStore>()..setErrorMessage(null);
   final _appStore = GetIt.I<AppStore>();
   final _infoStore = GetIt.I<InfoStore>();
+  final _authStore = GetIt.I<AuthStore>();
   final navigator = GetIt.I<NavigatorHelper>();
+
+  NotificationPreferencesPresenter get _notificationPreferencesPresenter =>
+      widget.notificationPreferencesPresenter;
 
   List<TabContent> _tabs = [];
   ReactionDisposer reactionDisposer;
@@ -91,6 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ChatHelper.openChat();
           },
         ),
+      );
+    }
+
+    if (!(_authStore?.customer?.pushNotificationsEnabled ?? false)) {
+      _notificationPreferencesPresenter.updateNoficiationPreferences(
+        NotificationPreferencesViewModel(enablePushNotification: true),
       );
     }
 
@@ -169,7 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               : null,
         )
-          ..errorStreamController.add(_homeScreenStore.errorMessage)
+          ..errorStreamController.add(_homeScreenStore.errorMessage ??
+              _notificationPreferencesPresenter.errorMessage)
           ..loaderStreamController.add(_homeScreenStore.isLoading);
       },
     );

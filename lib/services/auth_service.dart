@@ -38,6 +38,10 @@ class AuthService {
 
   void saveUser(String token, Customer customer) {
     _box.put('token', token);
+    updateCustomer(customer);
+  }
+
+  void updateCustomer(Customer customer) {
     _box.put('customer', customer);
   }
 

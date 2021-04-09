@@ -25,6 +25,9 @@ class Customer extends HiveObject {
   @HiveField(6)
   String phone;
 
+  @HiveField(7)
+  bool pushNotificationsEnabled = false;
+
   Customer({
     this.id,
     this.name,
@@ -33,6 +36,7 @@ class Customer extends HiveObject {
     this.countryCode,
     this.mobilePhone,
     this.phone,
+    this.pushNotificationsEnabled,
   });
 
   Customer.fromJson(Map<String, dynamic> json) {
@@ -43,6 +47,7 @@ class Customer extends HiveObject {
     countryCode = json['country_code'];
     mobilePhone = json['mobile_phone'];
     phone = json['phone'];
+    pushNotificationsEnabled = json['push_notifications_enabled'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -54,6 +59,7 @@ class Customer extends HiveObject {
     data['country_code'] = this.countryCode;
     data['mobile_phone'] = this.mobilePhone;
     data['phone'] = this.phone;
+    data['push_notifications_enabled'] = this.pushNotificationsEnabled;
     return data;
   }
 }

@@ -6,6 +6,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
+import 'package:remessa_app/v2/core/errors/error_message.dart';
 
 class ErrorHelper {
   static const authStatus = [
@@ -61,7 +62,7 @@ class ErrorHelper {
   static throwFormattedErrorResponse(DioError error) =>
       hasListResponseData(error)
           ? throw parseAndFormatErrorResponse(error)
-          : throw error;
+          : throw ErrorMessage(error.message);
 
   static requestRetry(DioError dioError) async {
     final dio = GetIt.I<Dio>();

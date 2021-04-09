@@ -11,9 +11,9 @@ class InfoService {
     try {
       response = await GetIt.I<Dio>().get('/info');
 
-      return ViewModel.fromJson(response.data);
+      return ViewModel.fromJson(response?.data);
     } catch (_) {
-      if (response.data != null) {
+      if (response?.data != null) {
         return tryURLPattern(response);
       }
 
