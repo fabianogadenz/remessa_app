@@ -1,4 +1,5 @@
 abstract class HttpAdapter {
-  Future<dynamic> post(String path, {dynamic data});
-  Future<dynamic> put(String path, {dynamic data});
+  Future<T> get<T>(String path, {Map<String, dynamic> params});
+  Future<T> post<T>(String path, {dynamic data});
+  Future<T> put<T>(String path, {dynamic data});
 }

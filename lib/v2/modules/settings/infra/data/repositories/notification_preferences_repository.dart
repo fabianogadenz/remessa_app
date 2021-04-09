@@ -1,11 +1,11 @@
 import 'package:remessa_app/v2/core/adapters/http/http_adapter.dart';
 import 'package:remessa_app/v2/modules/settings/domain/repositories/notification_preferences_repository.dart';
 
-class NoticationPreferencesRepositoryImpl
-    implements NoticationPreferencesRepository {
+class NotificationPreferencesRepositoryImpl
+    implements NotificationPreferencesRepository {
   final HttpAdapter httpAdapter;
 
-  NoticationPreferencesRepositoryImpl(this.httpAdapter);
+  NotificationPreferencesRepositoryImpl(this.httpAdapter);
 
   _handleEnable() async {
     await httpAdapter.post('/customer/enable-push-notifications');

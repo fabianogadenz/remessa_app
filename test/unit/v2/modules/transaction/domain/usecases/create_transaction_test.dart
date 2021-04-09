@@ -7,7 +7,7 @@ import 'package:remessa_app/v2/modules/transaction/domain/entities/transaction.d
 import 'package:remessa_app/v2/modules/transaction/domain/repositories/transaction_repository.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/usecases/create_transaction.dart';
 
-import '../../../../../../mocks/modules/transaction/infra/data/repositories/transaction_repository_mock.dart';
+import '../../../../../../mocks/modules/settings/infra/data/repositories/repositories_mock.dart';
 
 main() {
   group('CreateTransaction', () {
