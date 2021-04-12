@@ -203,7 +203,11 @@ class SetUp {
           InterceptorsWrapper(
             onRequest: (requestOptions) => GetIt.I<AuthStore>().isLoggedIn
                 ? requestOptions.headers.addAll(
-                    {'Authorization': 'Bearer ${GetIt.I<AuthService>().token}'},
+                    {
+                      'Authorization': 'Bearer ${GetIt.I<AuthService>().token}',
+                      'x-app-version':
+                          GetIt.I<ConfigService>()?.packageInfo?.version,
+                    },
                   )
                 : null,
             onError: (DioError dioError) {

@@ -19,6 +19,7 @@ import 'package:remessa_app/screens/transaction_details/transaction_calculation_
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/stores/auth_store.dart';
+import 'package:remessa_app/v2/modules/settings/infra/factories/notification_preferences_presenter_factory.dart';
 import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen_args.dart';
@@ -51,7 +52,10 @@ class AppRouter {
 
   static Widget _handleDashboardRoute() {
     FlutterUxcam.tagScreenName(UxCamHelper.DASHBOARD);
-    return HomeScreen();
+    return HomeScreen(
+      notificationPreferencesPresenter:
+          NotificationPreferencesPresenterFactory().call(),
+    );
   }
 
   static Widget _handleLoginRoute() {
