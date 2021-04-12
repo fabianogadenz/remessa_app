@@ -1,18 +1,19 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/services/view_generator_service.dart';
-import 'package:remessa_app/v2/core/actions/action.dart';
+import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
-class ContentAction extends Action {
+class ContentAction extends ac.Action {
   final String name;
   final Object content;
   final String url;
   final bool isReplacement;
-  Function action;
+  Function(BuildContext context) action;
 
   ContentAction({
     @required this.name,

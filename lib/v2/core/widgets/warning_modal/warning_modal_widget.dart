@@ -79,14 +79,14 @@ class WarningModalWidget extends StatelessWidget {
                   primaryAction != null
                       ? GradientButtonWidget(
                           label: primaryAction.name,
-                          onPressed: primaryAction.action,
+                          onPressed: () => primaryAction.action(context),
                         )
                       : Container(),
                   SizedBox(height: 16),
                   secondaryAction != null
                       ? OutlineButtonWidget(
                           label: secondaryAction.name,
-                          onPressed: secondaryAction.action,
+                          onPressed: () => secondaryAction.action(context),
                         )
                       : Container(),
                 ],

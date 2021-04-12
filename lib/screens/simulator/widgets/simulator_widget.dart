@@ -536,7 +536,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
       final _linkAction = simulatorMissingFields.action.toAction();
 
       label = _linkAction.name;
-      action = _linkAction.action;
+      action = () => _linkAction.action(context);
     }
 
     return GradientButtonWidget(

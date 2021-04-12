@@ -44,7 +44,7 @@ class CheckoutConfirmationSectionWidget extends StatelessWidget {
         )
       : Container();
 
-  _handleLinkAction() => linkAction != null
+  _handleLinkAction(BuildContext context) => linkAction != null
       ? Column(
           children: [
             SizedBox(
@@ -52,7 +52,7 @@ class CheckoutConfirmationSectionWidget extends StatelessWidget {
             ),
             GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: linkAction.action,
+              onTap: () => linkAction.action(context),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -79,7 +79,7 @@ class CheckoutConfirmationSectionWidget extends StatelessWidget {
         )
       : Container();
 
-  _handleAction() => _hasAction
+  _handleAction(BuildContext context) => _hasAction
       ? Column(
           children: [
             SizedBox(
@@ -88,7 +88,7 @@ class CheckoutConfirmationSectionWidget extends StatelessWidget {
             GradientButtonWidget(
               label: action.name,
               hasShadow: true,
-              onPressed: action.action,
+              onPressed: () => action.action(context),
             ),
           ],
         )
@@ -148,13 +148,13 @@ class CheckoutConfirmationSectionWidget extends StatelessWidget {
                       ),
                     ),
                     _handleValue(),
-                    _handleLinkAction(),
+                    _handleLinkAction(context),
                   ],
                 ),
               ),
             ],
           ),
-          _handleAction(),
+          _handleAction(context),
         ],
       ),
     );

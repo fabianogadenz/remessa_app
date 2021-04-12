@@ -44,7 +44,7 @@ class WarningActionWidget extends StatelessWidget {
               linkAction != null
                   ? GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: linkAction.action,
+                      onTap: () => linkAction.action(context),
                       child: Container(
                         width: double.infinity,
                         child: Column(
