@@ -108,12 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    if (!(_authStore?.customer?.pushNotificationsEnabled ?? false)) {
-      _notificationPreferencesPresenter.updateNoficiationPreferences(
-        NotificationPreferencesViewModel(enablePushNotification: true),
-      );
-    }
-
     super.initState();
   }
 
@@ -133,6 +127,12 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 
       return;
+    }
+
+    if (!(_authStore?.customer?.pushNotificationsEnabled ?? false)) {
+      _notificationPreferencesPresenter.updateNoficiationPreferences(
+        NotificationPreferencesViewModel(enablePushNotification: true),
+      );
     }
 
     if (_appStore.transactionId != null) {
