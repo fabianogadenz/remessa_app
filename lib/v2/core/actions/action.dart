@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/v2/core/actions/error_action.dart';
 
 class Action {
   final String name;
-  Function action;
+  Function(BuildContext context) action;
 
   Action({
     @required this.name,

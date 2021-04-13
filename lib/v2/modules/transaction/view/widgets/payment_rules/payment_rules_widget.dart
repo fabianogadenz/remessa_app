@@ -37,13 +37,13 @@ class PaymentRulesWidget extends StatelessWidget {
         )
       : Container();
 
-  _handleAction() => action != null
+  _handleAction(BuildContext context) => action != null
       ? Column(
           children: [
             SizedBox(height: 8),
             GradientButtonWidget(
               label: action.name,
-              onPressed: action.action,
+              onPressed: () => action.action(context),
             ),
           ],
         )
@@ -74,7 +74,7 @@ class PaymentRulesWidget extends StatelessWidget {
               ),
             ),
           ),
-          _handleAction()
+          _handleAction(context)
         ],
       ),
     );

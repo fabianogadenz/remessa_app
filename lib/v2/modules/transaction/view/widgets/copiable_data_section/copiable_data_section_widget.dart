@@ -44,11 +44,11 @@ class CopyableDataSectionWidget extends StatelessWidget {
           SizedBox(
             height: 40,
           ),
-          buildGradientButtonWidget(),
+          buildGradientButtonWidget(context),
           SizedBox(
             height: 16,
           ),
-          buildOutlineButtonWidget(),
+          buildOutlineButtonWidget(context),
         ],
       ),
     );
@@ -68,20 +68,20 @@ class CopyableDataSectionWidget extends StatelessWidget {
         )
       : Container();
 
-  Widget buildGradientButtonWidget() {
+  Widget buildGradientButtonWidget(BuildContext context) {
     return action != null
         ? GradientButtonWidget(
             label: action.name,
-            onPressed: action.action,
+            onPressed: () => action.action(context),
           )
         : Container();
   }
 
-  Widget buildOutlineButtonWidget() {
+  Widget buildOutlineButtonWidget(BuildContext context) {
     return secondaryAction != null
         ? OutlineButtonWidget(
             label: secondaryAction.name,
-            onPressed: secondaryAction.action,
+            onPressed: () => secondaryAction.action(context),
           )
         : Container();
   }

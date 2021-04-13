@@ -201,15 +201,22 @@ class SetUp {
   _registerDioInterceptors() {
     GetIt.I<Dio>().interceptors.add(
           InterceptorsWrapper(
-            onRequest: (requestOptions) => GetIt.I<AuthStore>().isLoggedIn
-                ? requestOptions.headers.addAll(
-                    {
-                      'Authorization': 'Bearer ${GetIt.I<AuthService>().token}',
-                      'x-app-version':
-                          GetIt.I<ConfigService>()?.packageInfo?.version,
-                    },
-                  )
-                : null,
+            onRequest: (requestOptions) {
+              requestOptions.headers.addAll(
+                {
+                  'x-app-version':
+                      GetIt.I<ConfigService>()?.packageInfo?.version,
+                },
+              );
+
+              if (GetIt.I<AuthStore>().isLoggedIn) {
+                requestOptions.headers.addAll(
+                  {
+                    'Authorization': 'Bearer ${GetIt.I<AuthService>().token}',
+                  },
+                );
+              }
+            },
             onError: (DioError dioError) {
               if (configs.environment != Environment.PROD) print(dioError);
               return ErrorHelper.dioErrorInterceptor(dioError);
