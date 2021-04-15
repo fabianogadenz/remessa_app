@@ -11,48 +11,61 @@ import 'package:remessa_app/models/responses/login_response_model.dart';
 import 'package:remessa_app/setup.dart';
 
 class AuthService {
-  final Box _box;
   final _amplitude = GetIt.I<Amplitude>();
   final _snowplow = GetIt.I<SnowplowHelper>();
 
+  Future<Box> get _box async => await Hive.openBox('auth');
   Dio _dio;
 
-  AuthService(this._box) : assert(_box != null) {
+  AuthService() {
+    Hive.registerAdapter(CustomerAdapter());
     _dio = GetIt.I<Dio>();
   }
 
-  static Future<AuthService> init() async {
-    Hive.registerAdapter(CustomerAdapter());
+  Future<String> get token async {
+    final box = await _box;
+    final token = box.get('token');
 
-    final _box = await Hive.openBox('auth');
-
-    return AuthService(_box);
-  }
-
-  String get token {
-    final token = _box.get('token');
     return token;
   }
 
-  Customer get customer => _box.get('customer');
+  Future<Customer> get customer async {
+    final box = await _box;
 
-  void saveUser(String token, Customer customer) {
-    _box.put('token', token);
-    updateCustomer(customer);
+    return box.get('customer');
   }
 
-  void updateCustomer(Customer customer) {
-    _box.put('customer', customer);
+  Future<Customer> saveUser(String token, Customer customer) async {
+    final box = await _box;
+
+    await box.put('token', token);
+    await updateCustomer(customer);
+
+    return customer;
+  }
+
+  Future<Customer> updateCustomer(Customer customer) async {
+    final box = await _box;
+
+    await box.put('customer', customer);
+
+    return customer;
   }
 
   Future<void> logout() async {
-    _box.clear();
+    final box = await _box;
+
+    await box.deleteFromDisk();
+
     removeUserIdentity();
   }
 
-  bool get isLoggedIn {
-    print(customer?.id);
-    return (token != null);
+  Future<bool> get isLoggedIn async {
+    final _customer = await customer;
+    final _token = await token;
+
+    print(_customer?.id);
+    return (_token != null);
   }
 
   login(String cpf, String password) async {
@@ -66,11 +79,14 @@ class AuthService {
       );
 
       final loginResponse = LoginResponseModel.fromJson(response.data);
+      final _customer = await saveUser(
+        loginResponse.token,
+        loginResponse.customer,
+      );
 
-      saveUser(loginResponse.token, loginResponse.customer);
-      setUserIdentity(customer);
+      setUserIdentity(_customer);
       await SetUp.startOneSignal();
-      await OneSignal.shared.setExternalUserId(customer.id.toString());
+      await OneSignal.shared.setExternalUserId(_customer.id.toString());
     } on DioError catch (e) {
       logout();
       ErrorHelper.throwFormattedErrorResponse(e);

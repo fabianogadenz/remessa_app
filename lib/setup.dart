@@ -201,7 +201,7 @@ class SetUp {
   _registerDioInterceptors() {
     GetIt.I<Dio>().interceptors.add(
           InterceptorsWrapper(
-            onRequest: (requestOptions) {
+            onRequest: (requestOptions) async {
               requestOptions.headers.addAll(
                 {
                   'x-app-version':
@@ -209,10 +209,13 @@ class SetUp {
                 },
               );
 
-              if (GetIt.I<AuthStore>().isLoggedIn) {
+              final isLoggedIn = await GetIt.I<AuthService>().isLoggedIn;
+
+              if (isLoggedIn) {
                 requestOptions.headers.addAll(
                   {
-                    'Authorization': 'Bearer ${GetIt.I<AuthService>().token}',
+                    'Authorization':
+                        'Bearer ${await GetIt.I<AuthService>().token}',
                   },
                 );
               }

@@ -21,7 +21,7 @@ class NotificationPreferencesPresenterFactory
     return NotificationPreferencesPresenter(
       EnablePushNotification(
         _transactionRepository,
-        () => authService.customer,
+        () async => authService.customer,
         authService.updateCustomer,
       ),
     );

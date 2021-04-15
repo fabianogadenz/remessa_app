@@ -74,6 +74,7 @@ class AppRouter {
 
   static Map<String, Widget Function(BuildContext)> routes() {
     final _authStore = GetIt.I<AuthStore>();
+    _authStore.refreshUserIdentity();
 
     return {
       SPLASH_ROUTE: (context) {

@@ -6,7 +6,7 @@ import 'package:remessa_app/services/system_service.dart';
 
 class Services {
   static Future<void> register(Constants constants) async {
-    final authService = await AuthService.init();
+    final authService = AuthService();
     final systemService = await SystemService.init();
 
     GetIt.I.registerLazySingleton<AuthService>(

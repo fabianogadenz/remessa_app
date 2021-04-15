@@ -11,7 +11,7 @@ final i18n = GetIt.I<I18n>();
 class ChatHelper {
   static openChat() async {
     try {
-      final customer = GetIt.I<AuthService>().customer;
+      final customer = await GetIt.I<AuthService>().customer;
 
       await zendesk.setVisitorInfo(
         email: customer.email,

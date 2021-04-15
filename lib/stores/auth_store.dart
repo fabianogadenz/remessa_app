@@ -11,33 +11,34 @@ class AuthStore = _AuthStoreBase with _$AuthStore;
 abstract class _AuthStoreBase with Store {
   final _authService = GetIt.I<AuthService>();
 
-  _AuthStoreBase() {
-    isLoggedIn = _authService.isLoggedIn;
-  }
-
   @observable
   bool isLoggedIn;
 
-  @action
-  refreshIsLoggedIn() => isLoggedIn = _authService.isLoggedIn;
-
-  @computed
-  Customer get customer => _authService.customer;
+  @observable
+  Customer customer;
 
   @action
-  refreshUserIdentity() => _authService.setUserIdentity(customer);
+  refreshUserIdentity() async {
+    final _customer = await _authService.customer;
+    final _isLoggedIn = await _authService.isLoggedIn;
+
+    isLoggedIn = _isLoggedIn;
+    customer = _customer;
+
+    _authService.setUserIdentity(_customer);
+  }
 
   @action
   Future<void> logout() async {
-    isLoggedIn = false;
     await _authService.logout();
+    isLoggedIn = false;
   }
 
   @action
   Future<void> login(String cpf, String password) async {
     await GetIt.I<AuthService>().login(cpf, password);
 
-    refreshIsLoggedIn();
+    refreshUserIdentity();
 
     GetIt.I<SystemService>().setShowStepper(false);
   }

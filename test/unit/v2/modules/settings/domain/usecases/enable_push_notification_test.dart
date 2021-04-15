@@ -15,7 +15,7 @@ main() {
 
     Customer customer = Customer();
 
-    Customer _getCustomerMock() => customer;
+    Future<Customer> _getCustomerMock() async => customer;
 
     void _updateCustomer(Customer _customer) {
       customer = _customer;
