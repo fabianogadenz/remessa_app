@@ -4,7 +4,7 @@ import 'package:remessa_app/v2/modules/settings/domain/repositories/notification
 
 class EnablePushNotification implements CommandUseCase<bool, Future<void>> {
   final NotificationPreferencesRepository _notificationPreferencesRepository;
-  final Customer Function() _getCustomer;
+  final Future<Customer> Function() _getCustomer;
   final void Function(Customer) _updateCustomer;
 
   EnablePushNotification(
@@ -17,7 +17,7 @@ class EnablePushNotification implements CommandUseCase<bool, Future<void>> {
   Future<void> call(bool enabled) async {
     await _notificationPreferencesRepository.enablePush(enabled);
 
-    final customer = _getCustomer();
+    final customer = await _getCustomer();
 
     customer.pushNotificationsEnabled = enabled;
 

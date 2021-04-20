@@ -36,10 +36,13 @@ void main() async {
         'should set default userId',
         () async {
           final snowplow = SnowplowHelper();
+          final customer = await GetIt.I<AuthService>().customer;
 
           when(GetIt.I<MockDio>().fetch(any, any, any)).thenAnswer((i) async {
-            expect(i.positionalArguments[0].data['userId'],
-                GetIt.I<AuthService>().customer.id);
+            expect(
+              i.positionalArguments[0].data['userId'],
+              customer?.id,
+            );
             return Future.value(ResponseBody.fromString('', 200));
           });
 

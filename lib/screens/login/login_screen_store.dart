@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/stores/auth_store.dart';
+import 'package:remessa_app/v2/core/errors/error_message.dart';
 
 part 'login_screen_store.g.dart';
 
@@ -31,8 +32,10 @@ abstract class _LoginScreenStoreBase with Store {
       await _authStore.login(cpf, password);
     } on ErrorModel catch (e) {
       setErrorMessage(e?.mainError?.message);
+    } on ErrorMessage catch (e) {
+      setErrorMessage(e?.message);
     } catch (e) {
-      setErrorMessage(e?.error);
+      setErrorMessage(e?.error ?? e?.message);
     }
 
     setIsLoading(false);

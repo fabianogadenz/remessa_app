@@ -59,7 +59,9 @@ class Test {
       () {
         final mockAuthService = MockAuthService();
 
-        when(mockAuthService.customer).thenReturn(Customer(id: 123456));
+        when(mockAuthService.customer).thenAnswer(
+          (_) async => Customer(id: 123456),
+        );
 
         return mockAuthService;
       },

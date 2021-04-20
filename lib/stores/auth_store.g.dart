@@ -9,14 +9,6 @@ part of 'auth_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AuthStore on _AuthStoreBase, Store {
-  Computed<Customer> _$customerComputed;
-
-  @override
-  Customer get customer =>
-      (_$customerComputed ??= Computed<Customer>(() => super.customer,
-              name: '_AuthStoreBase.customer'))
-          .value;
-
   final _$isLoggedInAtom = Atom(name: '_AuthStoreBase.isLoggedIn');
 
   @override
@@ -32,6 +24,30 @@ mixin _$AuthStore on _AuthStoreBase, Store {
     });
   }
 
+  final _$customerAtom = Atom(name: '_AuthStoreBase.customer');
+
+  @override
+  Customer get customer {
+    _$customerAtom.reportRead();
+    return super.customer;
+  }
+
+  @override
+  set customer(Customer value) {
+    _$customerAtom.reportWrite(value, super.customer, () {
+      super.customer = value;
+    });
+  }
+
+  final _$refreshUserIdentityAsyncAction =
+      AsyncAction('_AuthStoreBase.refreshUserIdentity');
+
+  @override
+  Future refreshUserIdentity() {
+    return _$refreshUserIdentityAsyncAction
+        .run(() => super.refreshUserIdentity());
+  }
+
   final _$logoutAsyncAction = AsyncAction('_AuthStoreBase.logout');
 
   @override
@@ -44,31 +60,6 @@ mixin _$AuthStore on _AuthStoreBase, Store {
   @override
   Future<void> login(String cpf, String password) {
     return _$loginAsyncAction.run(() => super.login(cpf, password));
-  }
-
-  final _$_AuthStoreBaseActionController =
-      ActionController(name: '_AuthStoreBase');
-
-  @override
-  dynamic refreshIsLoggedIn() {
-    final _$actionInfo = _$_AuthStoreBaseActionController.startAction(
-        name: '_AuthStoreBase.refreshIsLoggedIn');
-    try {
-      return super.refreshIsLoggedIn();
-    } finally {
-      _$_AuthStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  dynamic refreshUserIdentity() {
-    final _$actionInfo = _$_AuthStoreBaseActionController.startAction(
-        name: '_AuthStoreBase.refreshUserIdentity');
-    try {
-      return super.refreshUserIdentity();
-    } finally {
-      _$_AuthStoreBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override

@@ -33,10 +33,15 @@ class SnowplowHelper {
   }) async {
     if (verbose) assert(category != null && action != null && label != null);
 
+    if (_userId == null) {
+      final customer = await GetIt.I<AuthService>()?.customer;
+      _userId = customer?.id;
+    }
+
     return GetIt.I<Dio>().post(
       '/snowplow',
       data: {
-        'userId': _userId ?? GetIt.I<AuthService>()?.customer?.id,
+        'userId': _userId,
         'category': category,
         'action': action,
         'label': label,
