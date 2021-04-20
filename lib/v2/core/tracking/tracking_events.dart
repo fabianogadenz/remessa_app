@@ -33,12 +33,10 @@ class TrackingEvents {
       'mobile_app.open.mobile_push_notification';
 
   // Dashboard
-  static const DASHBOARD_HELP_TAB_CLICK = 'mobile_app.click.help_button_menu';
   static const DASHBOARD_OPEN_TRANSACTION_CARD_CLICK =
       'mobile_app.click.operation_ongoing_card_widget';
   static const DASHBOARD_HISTORY_TRANSACTION_CARD_CLICK =
       'mobile_app.click.operation_history_card_widget';
-  static const DASHBOARD_LOGOUT_CLICK = 'mobile_app.click.logout_button';
   static const DASHBOARD_NEW_TRANSACTION_CLICK =
       'mobile_app.click.new_remittance_site';
   static const DASHBOARD_HOME_LOGO_CLICK =
@@ -100,8 +98,10 @@ class TrackingEvents {
       'mobile_app.click.beneficiary_status';
 
   // NavigationBar
-  static const NAVBAR_SEND_CLICK = 'mobile_app.click_menu_sendings';
-  static const NAVBAR_SIMULATOR_CLICK = 'mobile_app.click_menu_simulate';
+  static const NAVBAR_SEND_CLICK = 'mobile_app.click.menu_sendings';
+  static const NAVBAR_SIMULATOR_CLICK = 'mobile_app.click.menu_simulate';
+  static const NAVBAR_PROFILE_CLICK =
+      'mobile_app.click.menu_personal_information';
 
   // Splash Screen
   static const SPLASH_VIEW = 'mobile_app.view.splash_screen';
@@ -136,6 +136,10 @@ class TrackingEvents {
   static const CHECKOUT_QUOTE_EXPIRED_CLICK =
       'mobile_app.click.checkout_quote_expired_button';
   static const CHECKOUT_GO_BACK_CLICK = 'mobile_app.click.checkout_go_back';
+
+  // Profile
+  static const PROFILE_LOGOUT_CLICK = 'mobile_app.click.logout_button';
+  static const PROFILE_HELP_CLICK = 'mobile_app.click.help_button_menu';
 
   // Actions
   static logEvent(String name, [Map<String, dynamic> properties]) {

@@ -96,6 +96,9 @@ class _HomeScreenState extends State<HomeScreen> {
           isChatEnabled: _appStore?.configs?.isChatEnabled ?? true,
           openChat: ChatHelper.openChat,
         ),
+        action: () {
+          TrackingEvents.log(TrackingEvents.NAVBAR_PROFILE_CLICK);
+        },
       ),
     ];
 
