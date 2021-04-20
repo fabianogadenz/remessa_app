@@ -17,6 +17,7 @@ import 'package:remessa_app/screens/loader_screen.dart';
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen_args.dart';
 import 'package:remessa_app/stores/info_store.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/modules/profile/view/screens/profile/profile_screen.dart';
 import 'package:remessa_app/v2/modules/settings/application/presenters/notification_preferences_presenter.dart';
 import 'package:remessa_app/v2/modules/settings/application/viewmodels/notification_preferences_viewmodel.dart';
 import 'package:screens/screens.dart';
@@ -30,11 +31,10 @@ class TabContent {
   TabContent({
     @required this.label,
     @required this.iconData,
-    @required this.widget,
+    this.widget,
     this.action,
   })  : assert(label != null),
-        assert(iconData != null),
-        assert(widget != null);
+        assert(iconData != null);
 }
 
 class HomeScreen extends StatefulWidget {
@@ -81,32 +81,23 @@ class _HomeScreenState extends State<HomeScreen> {
       TabContent(
         label: i18n.trans('simulator'),
         iconData: RemessaIcons.send,
-        widget: Container(),
         action: () {
           TrackingEvents.log(TrackingEvents.NAVBAR_SIMULATOR_CLICK);
           navigator.pushNamed(AppRouter.SIMULATOR_ROUTE);
         },
       ),
-      // TabContent(
-      //   label: 'Perfil',
-      //   iconData: RemessaIcons.user_fill,
-      //   widget: DashboardScreen(),
-      // ),
-    ];
-
-    if (_appStore?.configs?.isChatEnabled ?? true) {
-      _tabs.add(
-        TabContent(
-          label: i18n.trans('help'),
-          iconData: RemessaIcons.chat,
-          widget: Container(),
-          action: () {
-            TrackingEvents.log(TrackingEvents.DASHBOARD_HELP_TAB_CLICK);
-            ChatHelper.openChat();
-          },
+      TabContent(
+        label: 'Perfil',
+        iconData: RemessaIcons.user_fill,
+        widget: ProfileScreen(
+          customer: _authStore.customer,
+          i18n: i18n,
+          logout: _authStore.logout,
+          isChatEnabled: _appStore?.configs?.isChatEnabled ?? true,
+          openChat: ChatHelper.openChat,
         ),
-      );
-    }
+      ),
+    ];
 
     super.initState();
   }
@@ -114,6 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     reactionDisposer();
+    _homeScreenStore.clean();
     super.dispose();
   }
 
@@ -198,9 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void onTabTapped(BuildContext context, int index) async {
     if (_tabs[index].action != null) {
-      return _tabs[index].action();
+      _tabs[index].action();
     }
 
-    _homeScreenStore.setCurrentTabIndex(index);
+    if (_tabs[index]?.widget != null) {
+      _homeScreenStore.setCurrentTabIndex(index);
+    }
   }
 }

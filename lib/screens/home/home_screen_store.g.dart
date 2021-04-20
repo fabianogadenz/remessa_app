@@ -92,6 +92,17 @@ mixin _$HomeScreenStore on _HomeScreenStoreBase, Store {
   }
 
   @override
+  dynamic clean() {
+    final _$actionInfo = _$_HomeScreenStoreBaseActionController.startAction(
+        name: '_HomeScreenStoreBase.clean');
+    try {
+      return super.clean();
+    } finally {
+      _$_HomeScreenStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentTabIndex: ${currentTabIndex},

@@ -400,7 +400,7 @@
     },
     {
       "uid": "f0998670a79d6e7bdc23ddc964a4b0e7",
-      "css": "icon_owner",
+      "css": "owner",
       "code": 59421,
       "src": "custom_icons",
       "selected": true,
@@ -409,12 +409,12 @@
         "width": 1000
       },
       "search": [
-        "icon_owner"
+        "owner"
       ]
     },
     {
       "uid": "a20ac4848b6308cce60b2bca1ae4bb16",
-      "css": "icon_attention_oval_outline",
+      "css": "attention_oval_outline",
       "code": 59423,
       "src": "custom_icons",
       "selected": true,
@@ -423,12 +423,12 @@
         "width": 1000
       },
       "search": [
-        "icon_attention_oval_outline"
+        "attention_oval_outline"
       ]
     },
     {
       "uid": "533ce421d783b0f3e9ae47f8a609b76f",
-      "css": "icon_copy",
+      "css": "copy",
       "code": 59422,
       "src": "custom_icons",
       "selected": true,
@@ -437,7 +437,21 @@
         "width": 1000
       },
       "search": [
-        "icon_copy"
+        "copy"
+      ]
+    },
+    {
+      "uid": "afd70cf325bb9c85b2981112ed0d9348",
+      "css": "logout",
+      "code": 59455,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M541.7 968.7C541.7 985.9 527.6 1000 510.4 1000H291.7C153.6 1000 41.7 888 41.7 750V250C41.7 112 153.6 0 291.7 0H510.4C527.6 0 541.7 14.1 541.7 31.3V135.4C541.7 152.6 527.6 166.7 510.4 166.7H291.7C245.6 166.7 208.3 203.9 208.3 250V750C208.3 796.1 245.6 833.3 291.7 833.3H510.4C527.6 833.3 541.7 847.4 541.7 864.6V968.7ZM1356.5 544.3L960.7 937C936.2 961.2 896.6 960.9 872.4 936.7L815.4 879.7C790.4 854.4 791.1 813.3 817.4 789.3L1019.5 604.2H520.8C486.2 604.2 458.3 576.3 458.3 541.7V458.3C458.3 423.7 486.2 395.8 520.8 395.8H1019.5L817.4 210.7C791.4 186.7 790.4 145.6 815.6 120.6L872.7 63.5C897.1 39.1 936.5 39.1 960.9 63.3L1356.5 455.5C1381.2 479.9 1381.2 519.8 1356.5 544.3Z",
+        "width": 1417
+      },
+      "search": [
+        "logout"
       ]
     }
   ]
