@@ -9,6 +9,7 @@ class UserAvatarWidget extends StatefulWidget {
     this.isDisabled = false,
     this.backgroundColor,
     this.lettersColor,
+    this.size = 40,
   })  : assert(userName != null),
         super(key: key);
 
@@ -17,6 +18,7 @@ class UserAvatarWidget extends StatefulWidget {
 
   final Color backgroundColor;
   final Color lettersColor;
+  final double size;
 
   @override
   _UserAvatarWidgetState createState() => _UserAvatarWidgetState();
@@ -46,8 +48,8 @@ class _UserAvatarWidgetState extends State<UserAvatarWidget> {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(100),
       ),
-      width: 40,
-      height: 40,
+      width: widget.size,
+      height: widget.size,
       child: Center(
         child: Text(
           NameHelper.abbreviation(widget.userName).toUpperCase(),

@@ -33,6 +33,8 @@
     "coupon": "Cupom",
     "edit": "Editar",
     "copied": "$label copiado com sucesso",
+    "profile": "Perfil",
+    "exit": "Sair",
     "error": {
         "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",

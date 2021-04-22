@@ -7,7 +7,6 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
-import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/dashboard/widgets/empty_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/historic_list_widget.dart';
@@ -15,7 +14,6 @@ import 'package:remessa_app/screens/dashboard/widgets/section_title_widget.dart'
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_card_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/skeleton_list_widget.dart';
 import 'package:remessa_app/screens/dashboard/widgets/transactions_carousel_widget.dart';
-import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/transactions_store.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/primary_button_widget.dart';
@@ -76,37 +74,6 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
   @override
   void didPopNext() {
     FlutterUxcam.tagScreenName(UxCamHelper.DASHBOARD);
-  }
-
-  SliverAppBar _sliverAppBar(ThemeData theme) {
-    return SliverAppBar(
-      actions: <Widget>[
-        Container(
-          margin: EdgeInsets.only(right: 10),
-          child: IconButton(
-            icon: Icon(RemessaIcons.exit),
-            iconSize: 22,
-            color: StyleColors.SUPPORT_NEUTRAL_10,
-            onPressed: _logout,
-          ),
-        ),
-      ],
-      title: GestureDetector(
-        onTap: () =>
-            TrackingEvents.log(TrackingEvents.DASHBOARD_HOME_LOGO_CLICK),
-        child: Icon(
-          RemessaIcons.logo,
-          size: 24,
-          color: StyleColors.SUPPORT_NEUTRAL_10,
-        ),
-      ),
-      titleSpacing: 22,
-      centerTitle: false,
-      pinned: false,
-      floating: true,
-      elevation: 0.5,
-      backgroundColor: theme.scaffoldBackgroundColor,
-    );
   }
 
   _buildOpenTransactionsList(ThemeData theme) => SliverToBoxAdapter(
@@ -179,7 +146,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
 
   _buildScreenEmptyState(ThemeData theme) => SliverToBoxAdapter(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.6,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -213,17 +180,11 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
         ),
       );
 
-  _logout() {
-    TrackingEvents.log(TrackingEvents.DASHBOARD_LOGOUT_CLICK);
-    GetIt.I<AuthStore>().logout();
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     final _baseSlivers = <Widget>[
-      _sliverAppBar(theme),
       SliverToBoxAdapter(
         child: Container(
           padding: EdgeInsets.only(left: 23, right: 23, top: 30, bottom: 40),

@@ -83,4 +83,6 @@ class RemessaIcons {
       IconData(0xe81e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData attention_oval_outline =
       IconData(0xe81f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData logout =
+      IconData(0xe83f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -25,4 +25,11 @@ abstract class _HomeScreenStoreBase with Store {
     isLoading = value;
     setErrorMessage('');
   }
+
+  @action
+  clean() {
+    isLoading = false;
+    errorMessage = '';
+    currentTabIndex = 0;
+  }
 }
