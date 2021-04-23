@@ -10,6 +10,7 @@ import 'package:remessa_app/models/actions/action_model.dart';
 import 'package:remessa_app/models/actions/content_action_model.dart';
 import 'package:remessa_app/models/actions/link_action_model.dart';
 import 'package:remessa_app/models/config_model.dart';
+import 'package:remessa_app/models/track_event_model.dart';
 import 'package:remessa_app/models/view_generators/info_model.dart';
 import 'package:remessa_app/models/view_generators/info_stepper_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
@@ -66,7 +67,7 @@ void main() async {
                   linkAction: LinkActionModel(
                     label: 'documento completo',
                     url: 'google.com',
-                    trackEvent: 'kdskds',
+                    trackEvent: TrackEvent(name: 'kdskds'),
                   ).toAction(),
                 ),
               ),
@@ -85,7 +86,7 @@ void main() async {
                   linkAction: LinkActionModel(
                     label: 'documento completo',
                     url: 'google.com',
-                    trackEvent: 'kdskds',
+                    trackEvent: TrackEvent(name: 'kdskds'),
                   ).toAction(),
                 ),
               ),

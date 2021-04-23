@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:remessa_app/models/track_event_model.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/screens/info/info_screen.dart';
@@ -9,6 +10,7 @@ class InfoModel implements ViewGenerator {
   String content;
   String imageURL;
   ac.Action action;
+  TrackEvent trackEvent;
 
   InfoModel({
     @required this.title,
@@ -20,7 +22,7 @@ class InfoModel implements ViewGenerator {
             imageURL != null &&
             action != null);
 
-  InfoModel.fromJson(Map<String, dynamic> json) {
+  InfoModel.fromJson(Map<String, dynamic> json, [this.trackEvent]) {
     title = json['title'];
     content = json['content'];
     imageURL = json['imageURL'];

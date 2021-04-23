@@ -1,10 +1,11 @@
+import 'package:remessa_app/models/track_event_model.dart';
 import 'package:remessa_app/v2/core/actions/link_action.dart';
 import 'package:remessa_app/v2/core/parsers/action_parser.dart';
 
 class LinkActionModel {
   String label;
   String url;
-  String trackEvent;
+  TrackEvent trackEvent;
   String action;
 
   LinkActionModel({
@@ -16,7 +17,9 @@ class LinkActionModel {
   LinkActionModel.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     url = json['url'];
-    trackEvent = json['trackEvent'];
+    trackEvent = json['trackEvent'] != null
+        ? TrackEvent.fromJson(json['trackEvent'])
+        : null;
     action = json['action'];
   }
 

@@ -1,3 +1,4 @@
+import 'package:remessa_app/models/track_event_model.dart';
 import 'package:remessa_app/v2/core/actions/content_action.dart';
 import 'package:remessa_app/v2/core/parsers/action_parser.dart';
 
@@ -6,7 +7,7 @@ class ContentActionModel {
   Object content;
   String url;
   bool isReplacement;
-  String trackEvent;
+  TrackEvent trackEvent;
   String action;
 
   ContentActionModel({
@@ -22,8 +23,11 @@ class ContentActionModel {
     content = json['content'];
     url = json['url'];
     isReplacement = json['isReplacement'];
-    trackEvent = json['trackEvent'];
     action = json['action'];
+
+    if (json['trackEvent'] != null) {
+      trackEvent = TrackEvent.fromJson(json['trackEvent']);
+    }
   }
 
   Map<String, dynamic> toJson() {

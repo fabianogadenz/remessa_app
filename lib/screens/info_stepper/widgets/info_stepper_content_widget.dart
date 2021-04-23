@@ -26,14 +26,14 @@ class InfoStepperContentWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          _buildHeader(),
+          _buildHeader(context),
           imageURL != null ? Expanded(child: _buildContent()) : _buildContent(),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     if (header != null) {
       final titleWidget = Text(
         header.title,
@@ -61,7 +61,7 @@ class InfoStepperContentWidget extends StatelessWidget {
                 ),
                 LinkWidget(
                   label: linkAction.name,
-                  onTap: linkAction.action,
+                  onTap: () => linkAction.action(context),
                 ),
               ],
             ),

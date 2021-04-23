@@ -1,3 +1,4 @@
+import 'package:remessa_app/models/track_event_model.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/v2/core/parsers/action_parser.dart';
 
@@ -5,7 +6,7 @@ class ActionModel {
   String type;
   String label;
   String action;
-  String trackEvent;
+  TrackEvent trackEvent;
 
   ActionModel({
     this.label,
@@ -16,7 +17,9 @@ class ActionModel {
   ActionModel.fromJson(Map<String, dynamic> json) {
     label = json['label'];
     action = json['action'];
-    trackEvent = json['trackEvent'];
+    trackEvent = json['trackEvent'] != null
+        ? TrackEvent.fromJson(json['trackEvent'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
