@@ -19,6 +19,7 @@ import 'package:remessa_app/screens/transaction_details/transaction_calculation_
 import 'package:remessa_app/screens/transaction_details/transaction_details_screen.dart';
 import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/stores/auth_store.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/settings/infra/factories/notification_preferences_presenter_factory.dart';
 import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
@@ -119,6 +120,14 @@ class AppRouter {
       },
       GENERATED_VIEW_ROUTE: (context) {
         final viewGenerator = NavigatorHelper.getArgs<ViewGenerator>(context);
+        final trackEvent = viewGenerator.trackEvent;
+
+        if (trackEvent != null && trackEvent.name != null) {
+          TrackingEvents.logEvent(
+            trackEvent.name,
+            trackEvent.properties,
+          );
+        }
 
         return viewGenerator.generate();
       },

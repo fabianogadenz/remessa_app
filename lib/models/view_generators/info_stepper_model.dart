@@ -1,3 +1,4 @@
+import 'package:remessa_app/models/track_event_model.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';
@@ -6,10 +7,11 @@ import 'package:remessa_app/v2/core/parsers/action_parser.dart';
 class InfoStepperModel implements ViewGenerator {
   List<InfoStepper> steppers;
   bool showAppBar = false;
+  TrackEvent trackEvent;
 
   InfoStepperModel({this.showAppBar, this.steppers});
 
-  InfoStepperModel.fromJson(Map<String, dynamic> json) {
+  InfoStepperModel.fromJson(Map<String, dynamic> json, [this.trackEvent]) {
     showAppBar = json['showAppBar'] ?? false;
     if (json['steppers'] != null) {
       steppers = List<InfoStepper>();

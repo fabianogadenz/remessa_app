@@ -1,3 +1,4 @@
+import 'package:remessa_app/models/track_event_model.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 import 'package:remessa_app/v2/core/actions/actions.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
@@ -39,15 +40,21 @@ class ActionParser {
     return action.toAction();
   }
 
-  static Function trackEventFunction(String trackEvent) =>
-      (trackEvent != null) ? () => TrackingEvents.logEvent(trackEvent) : () {};
+  static Function trackEventFunction(TrackEvent trackEvent) =>
+      (trackEvent != null && trackEvent.name != null)
+          ? () => TrackingEvents.logEvent(
+                trackEvent.name,
+                trackEvent.properties,
+              )
+          : () {};
 
   static Function actionFunction(String action) {
     final emptyFunc = () {};
     return (action != null) ? actions[action] ?? emptyFunc : emptyFunc;
   }
 
-  static Function eventAndActionFunction(String trackEvent, String action) =>
+  static Function eventAndActionFunction(
+          TrackEvent trackEvent, String action) =>
       () async {
         ActionParser.trackEventFunction(trackEvent)();
         await ActionParser.actionFunction(action)();

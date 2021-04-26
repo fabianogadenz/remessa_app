@@ -62,7 +62,7 @@ class PromotionalCardWidget extends StatelessWidget {
                 LinkWidget(
                   width: double.infinity,
                   label: action.name,
-                  onTap: action.action,
+                  onTap: () => action.action(context),
                   suffixIcon: Icon(
                     RemessaIcons.arrow_right,
                     color: StyleColors.BRAND_PRIMARY_40,
