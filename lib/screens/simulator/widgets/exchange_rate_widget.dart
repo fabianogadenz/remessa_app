@@ -114,7 +114,8 @@ class _ExchangeRateWidgetState extends State<ExchangeRateWidget> {
                         widget.simulatorStore?.simulatorResponse?.quote;
                     quoteStore.setQuote(quote);
 
-                    final vet = CurrencyHelper.format(
+                    final vet = CurrencyHelper.withPrefix(
+                        quote?.nationalCurrency,
                         quote?.vet?.toString() ?? '0',
                         CurrencyHelper.currencyFormat + '00');
 

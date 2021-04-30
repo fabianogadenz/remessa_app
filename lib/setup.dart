@@ -26,6 +26,8 @@ import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/stores/info_store.dart';
 import 'package:remessa_app/stores/timer_animation_store.dart';
 import 'package:remessa_app/v2/core/widgets/error_dialog/error_dialog_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
+import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
 import 'package:screens/screens.dart';
 import 'package:zendesk/zendesk.dart';
 
@@ -152,6 +154,10 @@ class SetUp {
 
     GetIt.I.registerLazySingleton<TimerAnimationStore>(
       () => TimerAnimationStore(),
+    );
+
+    GetIt.I.registerLazySingleton<TransactionPresenter>(
+      () => TransactionPresenterFactory().call(),
     );
   }
 

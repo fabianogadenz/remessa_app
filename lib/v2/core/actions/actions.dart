@@ -10,6 +10,7 @@ final Map<String, Function> actions = {
     GetIt.I<NavigatorHelper>()
         .pushNamedAndRemoveUntil(AppRouter.DASHBOARD_ROUTE);
   },
+  'go_back': () => GetIt.I<NavigatorHelper>().pop(),
   'accept_terms': () async {
     await GetIt.I<Dio>().post('/financial-institution/customer/registration');
   },

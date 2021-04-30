@@ -58,7 +58,10 @@ class WarningModalWidget extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  CachedNetworkImageWigdet(imageURL: imageURL),
+                  CachedNetworkImageWigdet(
+                    imageURL: imageURL,
+                    loaderColor: StyleColors.BRAND_PRIMARY_40,
+                  ),
                   SizedBox(height: 32),
                   Text(
                     title,

@@ -16,8 +16,8 @@ class CheckoutSuccessScreen extends StatelessWidget {
     return Scaffold(
       appBar: CheckoutAppBar(
         title: 'Remessa em andamento',
-        steps: 4,
-        currentStep: 4,
+        steps: 3,
+        currentStep: 3,
       ),
       body: SingleChildScrollView(
         child: Column(

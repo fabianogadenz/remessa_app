@@ -15,28 +15,22 @@ class CreateTransaction
 
   @override
   Future<TransactionEntity> call(CreateTransactionCommand command) async {
-    TransactionEntity createdTransaction;
-
-    try {
-      createdTransaction = await _transactionRepository.create(
-        TransactionCreationEntity(
-          operationType: command.operationType,
-          reverse: command.reverse,
-          quantity: command.quantity,
-          totalValue: command.totalValue,
-          voucher: command.voucher,
-          currency: CurrencyEntity(
-            id: command.currencyId,
-            abbreviation: command.currencyAbbreviation,
-          ),
-          beneficiary: BeneficiaryEntity(
-            id: command.beneficiaryId,
-          ),
+    final createdTransaction = await _transactionRepository.create(
+      TransactionCreationEntity(
+        operationType: command.operationType,
+        reverse: command.reverse,
+        quantity: command.quantity,
+        totalValue: command.totalValue,
+        voucher: command.voucher,
+        currency: CurrencyEntity(
+          id: command.currencyId,
+          abbreviation: command.currencyAbbreviation,
         ),
-      );
-    } catch (_) {
-      // TODO: Add error handler
-    }
+        beneficiary: BeneficiaryEntity(
+          id: command.beneficiaryId,
+        ),
+      ),
+    );
 
     return createdTransaction;
   }

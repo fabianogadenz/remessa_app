@@ -5,11 +5,10 @@ import 'package:remessa_app/v2/core/widgets/cached_network_image_widget.dart';
 class TransactionValueByCurrencyWidget extends StatelessWidget {
   const TransactionValueByCurrencyWidget({
     Key key,
-    @required this.imageUrl,
+    this.imageUrl,
     @required this.label,
     @required this.value,
-  })  : assert(imageUrl != null),
-        assert(label != null),
+  })  : assert(label != null),
         assert(value != null),
         super(key: key);
 
@@ -25,7 +24,9 @@ class TransactionValueByCurrencyWidget extends StatelessWidget {
           child: Container(
             width: 34,
             height: 34,
-            child: CachedNetworkImageWigdet(imageURL: imageUrl),
+            child: imageUrl != null
+                ? CachedNetworkImageWigdet(imageURL: imageUrl)
+                : Image.asset('images/flag_brazil.png'),
           ),
         ),
         SizedBox(width: 16),

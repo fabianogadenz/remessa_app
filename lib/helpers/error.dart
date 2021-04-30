@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/models/error_model.dart';
 import 'package:remessa_app/models/responses/error_response_model.dart';
+import 'package:remessa_app/models/view_model.dart';
 import 'package:remessa_app/services/auth_service.dart';
 import 'package:remessa_app/v2/core/errors/error_message.dart';
 
@@ -34,7 +35,7 @@ class ErrorHelper {
               .toList()
           : [];
 
-  static ErrorModel formatError(List<ErrorResponseModel> errors) {
+  static dynamic formatError(List<ErrorResponseModel> errors) {
     ErrorResponseModel mainError;
     List<ErrorResponseModel> fieldErrors = [];
 
@@ -46,6 +47,15 @@ class ErrorHelper {
 
       fieldErrors.add(error);
     });
+
+    final message = mainError?.message;
+
+    if (message != null &&
+        message is Map &&
+        message['name'] != null &&
+        message['params'] != null) {
+      return ViewModel.fromJson(message);
+    }
 
     return ErrorModel(
       mainError: mainError,

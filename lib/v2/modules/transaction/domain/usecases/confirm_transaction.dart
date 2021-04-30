@@ -11,14 +11,10 @@ class ConfirmTransaction
 
   @override
   Future<void> call(ConfirmTransactionCommand command) async {
-    try {
-      await _transactionRepository.confirm(
-        TransactionConfirmationEntity(
-          transactionId: command.transactionId,
-        ),
-      );
-    } catch (_) {
-      // TODO: Add error handler
-    }
+    await _transactionRepository.confirm(
+      TransactionConfirmationEntity(
+        transactionId: command.transactionId,
+      ),
+    );
   }
 }

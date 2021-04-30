@@ -9,6 +9,7 @@ import 'package:remessa_app/v2/modules/transaction/domain/commands/confirm_trans
 import 'package:remessa_app/v2/modules/transaction/domain/commands/create_transaction_command.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/entities/transaction.dart';
 
+import '../../../../../../mocks/core/ui/build_context_mock.dart';
 import '../../../../../../mocks/modules/transaction/domain/usecases/usecases_mock.dart';
 
 main() {
@@ -50,7 +51,10 @@ main() {
 
         expect(transactionPresenter.transaction, null);
 
-        await transactionPresenter.createTransaction(transactionCreation);
+        await transactionPresenter.createTransaction(
+          transactionCreation,
+          BuildContextMock(),
+        );
 
         expect(transactionPresenter.transaction.id, transactionId);
       });
@@ -67,7 +71,7 @@ main() {
           (_) async => TransactionEntity(id: transactionId),
         );
 
-        await transactionPresenter.confirmTransaction();
+        await transactionPresenter.confirmTransaction(BuildContextMock());
 
         expect(transactionPresenter.errorMessage, null);
       });

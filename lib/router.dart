@@ -21,7 +21,7 @@ import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/settings/infra/factories/notification_preferences_presenter_factory.dart';
-import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
+import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen_args.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_confirmation/checkout_confirmation_screen.dart';
@@ -133,7 +133,10 @@ class AppRouter {
       },
       CHECKOUT_CONFIRMATION: (context) {
         FlutterUxcam.tagScreenName(UxCamHelper.CHECKOUT);
-        return CheckoutConfirmationScreen();
+
+        return CheckoutConfirmationScreen(
+          transactionPresenter: GetIt.I<TransactionPresenter>(),
+        );
       },
       CHECKOUT_PAYMENT_RULES: (context) {
         final args =
@@ -141,6 +144,7 @@ class AppRouter {
 
         return CheckoutPaymentRulesScreen(
           isProgressive: args?.isProgressive ?? false,
+          paymentDeadLineDate: args?.paymentDeadLineDate,
         );
       },
       CHECKOUT_PAYMENT_DATA: (context) {
@@ -171,7 +175,7 @@ class AppRouter {
 
                 return SimulatorScreen(
                   preSelectedBeneficiaryId: args?.beneficiaryId,
-                  transactionPresenter: TransactionPresenterFactory().call(),
+                  transactionPresenter: GetIt.I<TransactionPresenter>(),
                 );
               },
               transitionsBuilder: _slideUpTB(),

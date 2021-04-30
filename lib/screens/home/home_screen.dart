@@ -83,6 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
         iconData: RemessaIcons.send,
         action: () {
           TrackingEvents.log(TrackingEvents.NAVBAR_SIMULATOR_CLICK);
+          _homeScreenStore.setCurrentTabIndex(
+              0); // Reset current tab when open the simulator
           navigator.pushNamed(AppRouter.SIMULATOR_ROUTE);
         },
       ),

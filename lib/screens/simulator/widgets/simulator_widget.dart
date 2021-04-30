@@ -8,7 +8,6 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/currency_helper.dart';
 import 'package:remessa_app/helpers/modal_helper.dart';
-import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/models/currency_model.dart';
@@ -196,9 +195,8 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
             simulatorStore.simulatorDefaultValuesResponseModel?.precification
                 ?.quote?.voucherCode,
       ),
+      context,
     );
-
-    // await transactionPresenter.confirmTransaction();
 
     // AppRouter.websiteRedirect(
     //   simulatorStore?.simulatorResponse?.redirectUrl,
@@ -220,13 +218,6 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
     //     campaign: UTM.SEND_OPERATION_CAMPAIGN,
     //   ),
     // );
-
-    GetIt.I<NavigatorHelper>().pushNamed(
-      AppRouter.CHECKOUT_CONFIRMATION,
-      // arguments: TransactionDetailsScreenArgs(
-      //   transactionId: transaction.id,
-      // ),
-    );
   }
 
   _onFollowUpClick() {
@@ -542,7 +533,7 @@ class _SimulatorWidgetState extends State<SimulatorWidget> {
     return GradientButtonWidget(
       height: 50,
       width: MediaQuery.of(context).size.width - 50,
-      isDisabled: widget.isLoading,
+      isDisabled: widget.isLoading || transactionPresenter.isLoading,
       label: label,
       onPressed: action,
     );
