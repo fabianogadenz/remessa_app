@@ -1,7 +1,9 @@
 # Remessa Online (APP)
 
 ### Install, Run and Test
-* [Installing flutter](https://flutter.dev/docs/get-started/install)
+* [Installing flutter with FVM (Recommended)](https://fvm.app/docs/getting_started/installation)
+> The project supports FVM, so after install (FVM), just run `fvm install`, to configure your IDE [check here](https://fvm.app/docs/getting_started/configuration)
+* [Installing flutter default (Not Recommended)](https://flutter.dev/docs/get-started/install)
 * [Running and Creating an App](https://flutter.dev/docs/get-started/test-drive?tab=terminal)
 * [Tests](https://flutter.dev/docs/testing)
 
