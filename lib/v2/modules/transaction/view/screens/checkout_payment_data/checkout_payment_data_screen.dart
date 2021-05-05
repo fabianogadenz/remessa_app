@@ -4,9 +4,10 @@ import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/style/colors.dart';
-import 'package:remessa_app/v2/core/handlers/show_warning_modal_handler.dart';
+import 'package:remessa_app/v2/core/handlers/show_modal_handler.dart';
 import 'package:remessa_app/v2/core/models/label_value_model.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
+import 'package:remessa_app/v2/core/widgets/warning_modal/warning_modal_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_appbar/checkout_appbar_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/copiable_data_section/copiable_data_section_widget.dart';
@@ -14,21 +15,25 @@ import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules_to
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
 class CheckoutPaymentDataScreen extends StatelessWidget {
-  final show = ShowWarningModalHandler(
-    title: 'Tudo bem! Enviamos um\ne-mail com as informações',
-    content:
-        'E não esqueça: o pagamento deve ser feito até as 16h30 do dia 13/06 para garantir o câmbio da sua remessa.',
-    imageURL:
-        'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
-    isDismissible: true,
-    primaryAction: ac.Action(
-      name: 'Ok, ir para Remessas',
-      prevAction: () => TrackingEvents.log(
-          TrackingEvents.CHECKOUT_OK_GO_TO_REMITTANCES_CLICK),
-      actionFunction: () => GetIt.I<NavigatorHelper>().pushNamedAndRemoveUntil(
-        AppRouter.DASHBOARD_ROUTE,
+  final show = ShowModalHandler(
+    modalWidget: WarningModalWidget(
+      title: 'Tudo bem! Enviamos um\ne-mail com as informações',
+      content:
+          'E não esqueça: o pagamento deve ser feito até as 16h30 do dia 13/06 para garantir o câmbio da sua remessa.',
+      imageURL:
+          'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+      primaryAction: ac.Action(
+        name: 'Ok, ir para Remessas',
+        prevAction: () => TrackingEvents.log(
+            TrackingEvents.CHECKOUT_OK_GO_TO_REMITTANCES_CLICK),
+        actionFunction: () =>
+            GetIt.I<NavigatorHelper>().pushNamedAndRemoveUntil(
+          AppRouter.DASHBOARD_ROUTE,
+        ),
       ),
+      hasCloseButton: true,
     ),
+    isDismissible: true,
   );
 
   @override
@@ -36,8 +41,8 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
     return Scaffold(
       appBar: CheckoutAppBar(
         title: 'Dados para pagamento',
-        steps: 4,
-        currentStep: 3,
+        steps: 3,
+        currentStep: 2,
       ),
       body: SingleChildScrollView(
         child: Column(

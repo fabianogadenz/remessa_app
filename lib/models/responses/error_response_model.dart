@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class ErrorResponseModel extends Equatable {
   String field;
-  String message;
+  dynamic message;
   String code;
 
   ErrorResponseModel({this.field, this.message, this.code});

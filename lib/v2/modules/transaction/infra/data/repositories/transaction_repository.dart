@@ -16,35 +16,26 @@ class TransactionRepositoryImpl implements TransactionRepository {
       TransactionCreationEntity transaction) async {
     TransactionEntity transactionEntity;
 
-    try {
-      final json = await httpAdapter.post(
-        '/transaction',
-        data: TransactionCreationModel(
-          beneficiary: transaction.beneficiary,
-          currency: transaction.currency,
-          operationType: transaction.operationType,
-          quantity: transaction.quantity,
-          reverse: transaction.reverse,
-          totalValue: transaction.totalValue,
-          voucher: transaction.voucher,
-        ).toJson(),
-      );
+    final json = await httpAdapter.post(
+      '/transaction',
+      data: TransactionCreationModel(
+        beneficiary: transaction.beneficiary,
+        currency: transaction.currency,
+        operationType: transaction.operationType,
+        quantity: transaction.quantity,
+        reverse: transaction.reverse,
+        totalValue: transaction.totalValue,
+        voucher: transaction.voucher,
+      ).toJson(),
+    );
 
-      transactionEntity = TransactionModel.fromJson(json);
-    } catch (_) {
-      // TODO: Implement error handler
-    }
+    transactionEntity = TransactionModel.fromJson(json);
 
     return transactionEntity;
   }
 
   @override
   Future<void> confirm(TransactionConfirmationEntity transaction) async {
-    try {
-      await httpAdapter
-          .put('/transaction/${transaction.transactionId}/confirm');
-    } catch (_) {
-      // TODO: Implement error handler
-    }
+    await httpAdapter.put('/transaction/${transaction.transactionId}/confirm');
   }
 }

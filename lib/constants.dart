@@ -43,7 +43,7 @@ final Map<Environment, Constants> constantsMap = {
   Environment.DEV: Constants(
     onesignal: onesignal,
     amplitude: dev_amplitude,
-    api: fns_api,
+    api: dev_api,
     zendesk: zendesk,
     uxcam: uxcam,
     url: dev_url,

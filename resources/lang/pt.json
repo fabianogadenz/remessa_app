@@ -27,6 +27,7 @@
     "forgot_my_password": "Esqueci minha senha",
     "send_again": "Enviar novamente",
     "fees": "Taxas",
+    "hide_fees": "Esconder Taxas",
     "simulator": "Enviar",
     "outbound": "Remessas",
     "beta": "BETA",
@@ -35,6 +36,8 @@
     "copied": "$label copiado com sucesso",
     "profile": "Perfil",
     "exit": "Sair",
+    "view_data": "Ver dados",
+    "view_rules": "Ver regras",
     "error": {
         "internal_server": "Falha de comunicação com o servidor. Estamos trabalhando para resolver o mais breve possível.",
         "network_connection": "Parece que você está sem internet. Por favor, verifique a sua conexão.",
@@ -193,7 +196,7 @@
             "most_useds": "Mais usadas",
             "others": "Outras moedas"
         },
-        "exchange_rate": "Seu câmbio: BRL $vet",
+        "exchange_rate": "Seu câmbio: $vet",
         "exchange_rate_with_coupon": "Seu câmbio:",
         "default_currency_abbr": "USD",
         "redirect_note": {
@@ -246,5 +249,28 @@
             "description": "Fique atento: você precisará adicionar o endereço deste beneficiário para poder continuar enviando remessas.",
             "action": "Adicionar endereço agora"
         }
+    },
+    "checkout": {
+        "transaction_confirmation": "Confirmação da remessa",
+        "beneficiary_data": "Dados do beneficiário",
+        "beneficiary_bank_account_country": "País da conta bancária",
+        "payment_rules": {
+            "title": "Regras de pagamento",
+            "subtitle": "Antes de fazer o pagamento, confira as regras",
+            "ted_deadline": {
+                "title": "Prazo do pagamento da TED",
+                "subtitle": "Até as $paymentDeadlineHour do dia $paymentDeadLineDate"
+            },
+            "rules": {
+                "1": "Você tem até as $paymentDeadlineHour do dia $paymentDeadLineDate para realizar o pagamento via TED.",
+                "2": "A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a href=\"https://google.com\">comprove sua titularidade no site.</a>",
+                "3": "Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada."
+            }
+        },
+        "arrival_estimate": {
+            "title": "Estimativa de chegada",
+            "subtitle": "Em até $arrivalEstimate após a identificação do pagamento"
+        },
+        "confirm_transaction": "Confirmar remessa"
     }
 }

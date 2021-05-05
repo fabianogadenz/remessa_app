@@ -1,4 +1,6 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:remessa_app/v2/core/models/label_value_model.dart';
 import 'package:remessa_app/v2/core/widgets/label_value_data_section_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
@@ -6,9 +8,11 @@ import 'package:remessa_app/v2/modules/transaction/application/viewmodels/benefi
 class BeneficiaryDataWidget extends StatelessWidget {
   final BeneficiaryViewModel beneficiary;
 
-  const BeneficiaryDataWidget({Key key, @required this.beneficiary})
+  BeneficiaryDataWidget({Key key, @required this.beneficiary})
       : assert(beneficiary != null),
         super(key: key);
+
+  final i18n = GetIt.I<I18n>();
 
   List get dynamicValues {
     final values = [];
@@ -29,19 +33,20 @@ class BeneficiaryDataWidget extends StatelessWidget {
           children: [
             LabelValueDataSectionWidget(
               data: LabelValueModel(
-                label: 'Titular da conta',
+                label: i18n.trans('account_owner'),
                 value: beneficiary.name,
               ),
             ),
             LabelValueDataSectionWidget(
               data: LabelValueModel(
-                label: 'Banco',
+                label: i18n.trans('bank'),
                 value: beneficiary.bankName,
               ),
             ),
             LabelValueDataSectionWidget(
               data: LabelValueModel(
-                label: 'País da conta bancária',
+                label: i18n
+                    .trans('checkout', ['beneficiary_bank_account_country']),
                 value: beneficiary.country,
                 hasDivider: dynamicValues.isEmpty ? false : true,
               ),

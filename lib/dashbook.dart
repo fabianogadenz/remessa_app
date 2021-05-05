@@ -18,13 +18,15 @@ import 'package:remessa_app/screens/info/info_screen.dart';
 import 'package:remessa_app/screens/info_stepper/info_stepper_screen.dart';
 import 'package:remessa_app/setup.dart';
 import 'package:remessa_app/theme.dart';
-import 'package:remessa_app/v2/core/handlers/show_warning_modal_handler.dart';
+import 'package:remessa_app/v2/core/handlers/show_modal_handler.dart';
+import 'package:remessa_app/v2/core/widgets/warning_modal/warning_modal_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/account_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/intermediary_bank_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/transaction_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_payment_data/checkout_payment_data_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_success/checkout_success_screen.dart';
@@ -142,7 +144,9 @@ void main() async {
           home: Scaffold(
             body: Container(
               margin: const EdgeInsets.all(20),
-              child: CheckoutTaxDetailsWidget(),
+              child: CheckoutTaxDetailsWidget(
+                transaction: TransactionViewModel(),
+              ),
             ),
           ),
         ),
@@ -159,7 +163,28 @@ void main() async {
           home: Scaffold(
             body: Container(
               margin: const EdgeInsets.all(20),
-              child: CheckoutConfirmationWidget(),
+              child: CheckoutConfirmationWidget(
+                transaction: TransactionViewModel(
+                  beneficiary: BeneficiaryViewModel(
+                    name: 'Reinaldo Antunes',
+                    bankName: 'Bank of New York',
+                    country: 'Estados Unidos',
+                    accountInfo: [
+                      AccountInfoViewModel(
+                        label: 'Campo dinâmico Account Info',
+                        value: '1',
+                      ),
+                    ],
+                    intermediaryBankInfo: [
+                      IntermediaryBankInfoViewModel(
+                        label: 'Campo dinâmico Intermediary Bank Info',
+                        value: '2',
+                      ),
+                    ],
+                  ),
+                ),
+                confirmTransaction: () {},
+              ),
             ),
           ),
         ),
@@ -174,22 +199,25 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              final show = ShowWarningModalHandler(
-                title: context.textProperty(
-                  'title',
-                  'O valor ultrapassa o limite de transferência de peso argentino',
-                ),
-                content: context.textProperty(
-                  'content',
-                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
-                ),
-                imageURL: context.textProperty(
-                  'imageURL',
-                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+              final show = ShowModalHandler(
+                modalWidget: WarningModalWidget(
+                  title: context.textProperty(
+                    'title',
+                    'O valor ultrapassa o limite de transferência de peso argentino',
+                  ),
+                  content: context.textProperty(
+                    'content',
+                    'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                  ),
+                  imageURL: context.textProperty(
+                    'imageURL',
+                    'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                  ),
+                  hasCloseButton: context.boolProperty('closeButton', true),
+                  primaryAction: ac.Action(name: 'Inserir um valor menor'),
+                  secondaryAction: ac.Action(name: 'Inserir um valor menor'),
                 ),
                 isDismissible: context.boolProperty('closeButton', true),
-                primaryAction: ac.Action(name: 'Inserir um valor menor'),
-                secondaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
 
               show(bContext);
@@ -209,21 +237,24 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              final show = ShowWarningModalHandler(
-                title: context.textProperty(
-                  'title',
-                  'O valor ultrapassa o limite de transferência de peso argentino',
-                ),
-                content: context.textProperty(
-                  'content',
-                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
-                ),
-                imageURL: context.textProperty(
-                  'imageURL',
-                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+              final show = ShowModalHandler(
+                modalWidget: WarningModalWidget(
+                  title: context.textProperty(
+                    'title',
+                    'O valor ultrapassa o limite de transferência de peso argentino',
+                  ),
+                  content: context.textProperty(
+                    'content',
+                    'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                  ),
+                  imageURL: context.textProperty(
+                    'imageURL',
+                    'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                  ),
+                  hasCloseButton: context.boolProperty('closeButton', true),
+                  primaryAction: ac.Action(name: 'Inserir um valor menor'),
                 ),
                 isDismissible: context.boolProperty('closeButton', true),
-                primaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
 
               show(bContext);
@@ -243,21 +274,24 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              final show = ShowWarningModalHandler(
-                title: context.textProperty(
-                  'title',
-                  'O valor ultrapassa o limite de transferência de peso argentino',
-                ),
-                content: context.textProperty(
-                  'content',
-                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
-                ),
-                imageURL: context.textProperty(
-                  'imageURL',
-                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+              final show = ShowModalHandler(
+                modalWidget: WarningModalWidget(
+                  title: context.textProperty(
+                    'title',
+                    'O valor ultrapassa o limite de transferência de peso argentino',
+                  ),
+                  content: context.textProperty(
+                    'content',
+                    'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                  ),
+                  imageURL: context.textProperty(
+                    'imageURL',
+                    'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                  ),
+                  hasCloseButton: context.boolProperty('closeButton', true),
+                  secondaryAction: ac.Action(name: 'Inserir um valor menor'),
                 ),
                 isDismissible: context.boolProperty('closeButton', true),
-                secondaryAction: ac.Action(name: 'Inserir um valor menor'),
               );
 
               show(bContext);
@@ -277,18 +311,21 @@ void main() async {
         home: Scaffold(
           body: Builder(builder: (bContext) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              final show = ShowWarningModalHandler(
-                title: context.textProperty(
-                  'title',
-                  'O valor ultrapassa o limite de transferência de peso argentino',
-                ),
-                content: context.textProperty(
-                  'content',
-                  'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
-                ),
-                imageURL: context.textProperty(
-                  'imageURL',
-                  'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+              final show = ShowModalHandler(
+                modalWidget: WarningModalWidget(
+                  title: context.textProperty(
+                    'title',
+                    'O valor ultrapassa o limite de transferência de peso argentino',
+                  ),
+                  content: context.textProperty(
+                    'content',
+                    'Só é possível enviar em ARS valores equivalentes a até USD 1.500,00 por transação. Na cotação atual, você pode enviar até ARS 10.459,78. Se desejar transferir valores maiores, crie um novo envio em dólar.',
+                  ),
+                  imageURL: context.textProperty(
+                    'imageURL',
+                    'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
+                  ),
+                  hasCloseButton: context.boolProperty('closeButton', true),
                 ),
                 isDismissible: context.boolProperty('closeButton', true),
               );

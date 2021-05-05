@@ -50,6 +50,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
   final simulatorScreenAnimationStore = SimulatorScreenAnimationStore();
 
   int get _preSelectedBeneficiaryId => widget.preSelectedBeneficiaryId;
+  TransactionPresenter get _transactionPresenter => widget.transactionPresenter;
 
   Widget emptyState;
 
@@ -89,6 +90,8 @@ class _SimulatorScreenState extends State<SimulatorScreen>
   void initState() {
     super.initState();
 
+    _transactionPresenter.setErrorMessage('');
+
     timerAnimationStore
       ..setController(
         AnimationController(
@@ -101,6 +104,9 @@ class _SimulatorScreenState extends State<SimulatorScreen>
 
     reactionDesposers.addAll(
       [
+        reaction((_) => _transactionPresenter.transaction, (_) {
+          GetIt.I<NavigatorHelper>().pushNamed(AppRouter.CHECKOUT_CONFIRMATION);
+        }),
         reaction(
           (_) => simulatorStore?.simulatorResponse,
           (_) {
@@ -169,6 +175,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
   @override
   void didPopNext() {
     FlutterUxcam.tagScreenName(UxCamHelper.SIMULATOR);
+    _transactionPresenter.setErrorMessage('');
   }
 
   @override
@@ -177,6 +184,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
     timerAnimationStore.dispose();
     simulatorScreenAnimationStore.dispose();
     simulatorStore.dispose();
+    _transactionPresenter.setErrorMessage('');
     super.dispose();
   }
 
@@ -243,7 +251,9 @@ class _SimulatorScreenState extends State<SimulatorScreen>
                 : Container(),
           ],
         ),
-      );
+      )
+        ..errorStreamController.add(_transactionPresenter.errorMessage)
+        ..loaderStreamController.add(_transactionPresenter.isLoading);
     });
   }
 
@@ -289,7 +299,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
             builder: (context, scrollCtrl) {
               return SimulatorWidget(
                 simulatorStore: simulatorStore,
-                transactionPresenter: widget.transactionPresenter,
+                transactionPresenter: _transactionPresenter,
                 simulatorScreenAnimationStore: simulatorScreenAnimationStore,
                 isScrollDisabled: true,
                 // simulatorScreenAnimationStore.isScrollDisabled,
