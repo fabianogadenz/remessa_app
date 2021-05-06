@@ -50,6 +50,7 @@ class LabelValueDataSectionWidget extends StatelessWidget {
                     data.value,
                     style: TextStyle(
                       color: StyleColors.BRAND_SECONDARY_50,
+                      fontSize: data.isSpotlight ? 18 : 14,
                     ),
                   ),
                 ),
@@ -76,7 +77,7 @@ class LabelValueDataSectionWidget extends StatelessWidget {
             child: Icon(
               RemessaIcons.copy,
               color: StyleColors.BRAND_PRIMARY_40,
-              size: 16,
+              size: 20,
             ),
           )
         : Container();

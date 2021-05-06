@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/router.dart';
@@ -100,7 +101,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                             bottom: 30,
                           ),
                           image: Image.asset(
-                            'images/wallet.png',
+                            ImageConstants.WALLET,
                             width: 100,
                           ),
                           text: GetIt.I<I18n>().trans(
@@ -132,7 +133,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                   : SliverToBoxAdapter(
                       child: EmptyCardWidget(
                         image: Image.asset(
-                          'images/historic.png',
+                          ImageConstants.HISTORIC,
                           width: 100,
                         ),
                         text: GetIt.I<I18n>().trans(
@@ -156,7 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> with RouteAware {
                 height: 20,
               ),
               Image.asset(
-                'images/wallet.png',
+                ImageConstants.WALLET,
                 width: 200,
               ),
               Container(

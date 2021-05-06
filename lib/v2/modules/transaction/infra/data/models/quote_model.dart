@@ -10,6 +10,8 @@ class QuoteModel extends QuoteEntity {
   String nationalCurrency;
   double nationalCurrencyTotalAmount;
   double nationalCurrencySubAmount;
+  String foreignCurrencyFlagURL;
+  String nationalCurrencyFlagURL;
   double exchangeRate;
   double vet;
   double originalVet;
@@ -30,6 +32,8 @@ class QuoteModel extends QuoteEntity {
     nationalCurrencyTotalAmount =
         json['nationalCurrencyTotalAmount'].toDouble();
     nationalCurrencySubAmount = json['nationalCurrencySubAmount'].toDouble();
+    foreignCurrencyFlagURL = json['foreignCurrencyFlagURL'];
+    nationalCurrencyFlagURL = json['nationalCurrencyFlagURL'];
     exchangeRate = json['exchangeRate'].toDouble();
     vet = json['vet'].toDouble();
     spread = json['spread'].toDouble();

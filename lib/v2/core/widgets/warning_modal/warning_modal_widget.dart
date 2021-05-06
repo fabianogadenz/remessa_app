@@ -10,6 +10,7 @@ class WarningModalWidget extends StatelessWidget {
   final String title;
   final String content;
   final String imageURL;
+  final String imagePath;
   final bool hasCloseButton;
   final ac.Action primaryAction;
   final ac.Action secondaryAction;
@@ -18,11 +19,15 @@ class WarningModalWidget extends StatelessWidget {
     Key key,
     @required this.title,
     @required this.content,
-    @required this.imageURL,
+    this.imageURL,
+    this.imagePath,
     this.hasCloseButton = true,
     this.primaryAction,
     this.secondaryAction,
-  }) : super(key: key);
+  })  : assert(title != null),
+        assert(content != null),
+        assert(imageURL != null || imagePath != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +63,14 @@ class WarningModalWidget extends StatelessWidget {
               padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  CachedNetworkImageWigdet(
-                    imageURL: imageURL,
-                    loaderColor: StyleColors.BRAND_PRIMARY_40,
+                  Container(
+                    height: 145,
+                    child: imageURL != null
+                        ? CachedNetworkImageWigdet(
+                            imageURL: imageURL,
+                            loaderColor: StyleColors.BRAND_PRIMARY_40,
+                          )
+                        : Image.asset(imagePath),
                   ),
                   SizedBox(height: 32),
                   Text(

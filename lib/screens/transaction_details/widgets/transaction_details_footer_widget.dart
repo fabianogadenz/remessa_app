@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_link_widget.dart';
 import 'package:remessa_app/screens/transaction_details/widgets/detail_section_title_widget.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 
 class TransactionDetailsFooterWidget extends StatelessWidget {
   const TransactionDetailsFooterWidget(
@@ -38,7 +39,7 @@ class TransactionDetailsFooterWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset(
-                'images/transaction_details_doubts.png',
+                ImageConstants.TRANSACTION_DETAILS_DOUBTS,
                 height: 63,
                 width: 54,
               ),

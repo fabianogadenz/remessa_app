@@ -9,6 +9,8 @@ class QuoteViewModel {
   final String nationalCurrency;
   final double nationalCurrencyTotalAmount;
   final double nationalCurrencySubAmount;
+  final String foreignCurrencyFlagURL;
+  final String nationalCurrencyFlagURL;
   final double exchangeRate;
   final double vet;
   final double originalVet;
@@ -28,6 +30,8 @@ class QuoteViewModel {
     this.nationalCurrency,
     this.nationalCurrencyTotalAmount,
     this.nationalCurrencySubAmount,
+    this.nationalCurrencyFlagURL,
+    this.foreignCurrencyFlagURL,
     this.exchangeRate,
     this.vet,
     this.originalVet,
@@ -48,6 +52,8 @@ class QuoteViewModel {
         nationalCurrency: quoteEntity.nationalCurrency,
         nationalCurrencyTotalAmount: quoteEntity.nationalCurrencyTotalAmount,
         nationalCurrencySubAmount: quoteEntity.nationalCurrencySubAmount,
+        foreignCurrencyFlagURL: quoteEntity.foreignCurrencyFlagURL,
+        nationalCurrencyFlagURL: quoteEntity.nationalCurrencyFlagURL,
         exchangeRate: quoteEntity.exchangeRate,
         vet: quoteEntity.vet,
         originalVet: quoteEntity.originalVet,

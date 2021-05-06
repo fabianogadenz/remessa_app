@@ -67,8 +67,12 @@ class RuleSectionWidget extends StatelessWidget {
             child: Html(
               data: value,
               onLinkTap: (url) {
-                // TODO: Replace specific tracking with a generic one
-                TrackingEvents.log(TrackingEvents.CHECKOUT_PROVE_ACCOUNT_CLICK);
+                final trackEvent = Uri.parse(url).queryParameters['trackEvent'];
+
+                if (trackEvent != null) {
+                  TrackingEvents.log(trackEvent);
+                }
+
                 AppRouter.websiteRedirect(url);
               },
               style: {

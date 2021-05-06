@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/helpers/string_helper.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 
 class TransactionNameWidget extends StatelessWidget {
   const TransactionNameWidget({
@@ -35,7 +36,7 @@ class TransactionNameWidget extends StatelessWidget {
           Container(
             width: 20,
             height: 20,
-            child: Image.asset('images/send_remittance.png'),
+            child: Image.asset(ImageConstants.SEND_REMITTANCE),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 4),

@@ -8,6 +8,7 @@ import 'package:mobx/mobx.dart';
 import 'package:remessa_app/app/app_store.dart';
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/services/config_service.dart';
@@ -129,9 +130,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Center(
               child: Container(
                 width: 200,
-                child: Image.asset(
-                  'images/full_icon.png',
-                ),
+                child: Image.asset(ImageConstants.REMESSA_FULL_ICON),
               ),
             ),
             Container(

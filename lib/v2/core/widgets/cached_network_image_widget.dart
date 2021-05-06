@@ -17,10 +17,11 @@ class CachedNetworkImageWigdet extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageURL,
-      progressIndicatorBuilder: (context, url, downloadProgress) =>
-          CircularProgressIndicator(
-        value: downloadProgress.progress,
-        valueColor: AlwaysStoppedAnimation<Color>(loaderColor),
+      progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+        child: CircularProgressIndicator(
+          value: downloadProgress.progress,
+          valueColor: AlwaysStoppedAnimation<Color>(loaderColor),
+        ),
       ),
       errorWidget: (context, url, error) => Center(
         child: Icon(

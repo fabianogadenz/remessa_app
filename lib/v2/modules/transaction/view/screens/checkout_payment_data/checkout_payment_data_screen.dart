@@ -1,48 +1,99 @@
+import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:remessa_app/app/app_store.dart';
+import 'package:remessa_app/helpers/currency_helper.dart';
+import 'package:remessa_app/helpers/date_helper.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 import 'package:remessa_app/v2/core/handlers/show_modal_handler.dart';
 import 'package:remessa_app/v2/core/models/label_value_model.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/core/widgets/warning_modal/warning_modal_widget.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/confirmated_transaction_viewmodel.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_account_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_appbar/checkout_appbar_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/copiable_data_section/copiable_data_section_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules_toggle/payment_rules_toggle_widget.dart';
 import 'package:remessa_app/v2/core/actions/action.dart' as ac;
 
-class CheckoutPaymentDataScreen extends StatelessWidget {
-  final show = ShowModalHandler(
-    modalWidget: WarningModalWidget(
-      title: 'Tudo bem! Enviamos um\ne-mail com as informações',
-      content:
-          'E não esqueça: o pagamento deve ser feito até as 16h30 do dia 13/06 para garantir o câmbio da sua remessa.',
-      imageURL:
-          'https://cdn.zeplin.io/5e43195007ed419040a52c48/assets/4e31f39b-566d-4c49-8b4c-51b0889f3a46.png',
-      primaryAction: ac.Action(
-        name: 'Ok, ir para Remessas',
-        prevAction: () => TrackingEvents.log(
-            TrackingEvents.CHECKOUT_OK_GO_TO_REMITTANCES_CLICK),
-        actionFunction: () =>
-            GetIt.I<NavigatorHelper>().pushNamedAndRemoveUntil(
-          AppRouter.DASHBOARD_ROUTE,
-        ),
+class CheckoutPaymentDataScreen extends StatefulWidget {
+  final ConfirmatedTransactionViewModel confirmatedTransaction;
+
+  const CheckoutPaymentDataScreen({
+    Key key,
+    @required this.confirmatedTransaction,
+  })  : assert(confirmatedTransaction != null),
+        super(key: key);
+
+  @override
+  _CheckoutPaymentDataScreenState createState() =>
+      _CheckoutPaymentDataScreenState();
+}
+
+class _CheckoutPaymentDataScreenState extends State<CheckoutPaymentDataScreen> {
+  final I18n i18n = GetIt.I<I18n>();
+
+  ConfirmatedTransactionViewModel get _confirmatedTransaction =>
+      widget.confirmatedTransaction;
+
+  PaymentAccountInfoViewModel get _paymentAccountInfo =>
+      _confirmatedTransaction.paymentAccountInfo;
+
+  ShowModalHandler show;
+
+  final paymentDeadlineHour = GetIt.I<AppStore>().configs.paymentDeadlineHour;
+  String paymentDeadLineDate;
+
+  @override
+  initState() {
+    paymentDeadLineDate = DateHelper.formatToBRShort(
+      DateHelper.stringToDate(
+        _confirmatedTransaction.transaction.paymentDeadline,
       ),
-      hasCloseButton: true,
-    ),
-    isDismissible: true,
-  );
+    );
+
+    show = ShowModalHandler(
+      modalWidget: WarningModalWidget(
+        title:
+            i18n.trans('checkout', ['payment_data_screen', 'modal', 'title']),
+        content: i18n.populate(
+          i18n.trans('checkout', ['payment_data_screen', 'modal', 'content']),
+          {
+            'paymentDeadlineHour': paymentDeadlineHour,
+            'paymentDeadLineDate': paymentDeadLineDate,
+          },
+        ),
+        imagePath: ImageConstants.PHONE_WARNING,
+        primaryAction: ac.Action(
+          name: i18n
+              .trans('checkout', ['payment_data_screen', 'modal', 'action']),
+          prevAction: () => TrackingEvents.log(
+              TrackingEvents.CHECKOUT_OK_GO_TO_REMITTANCES_CLICK),
+          actionFunction: () =>
+              GetIt.I<NavigatorHelper>().pushNamedAndRemoveUntil(
+            AppRouter.DASHBOARD_ROUTE,
+          ),
+        ),
+        hasCloseButton: true,
+      ),
+      isDismissible: true,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CheckoutAppBar(
-        title: 'Dados para pagamento',
+        title: i18n.trans('checkout', ['payment_data_screen', 'title']),
         steps: 3,
         currentStep: 2,
+        canGoBack: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -53,7 +104,8 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Faça uma TED para confirmar sua remessa',
+                    i18n.trans(
+                        'checkout', ['payment_data_screen', 'ted_message']),
                     style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 24,
@@ -65,20 +117,38 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
                     paymentRules: [
                       PaymentRulesViewModel(
                         icon: RemessaIcons.deadline,
-                        value:
-                            'Você tem até as 16h30 do dia 13/06 para realizar o pagamento via TED.',
+                        value: i18n.populate(
+                          i18n.trans(
+                              'checkout', ['payment_rules', 'rules', '1']),
+                          {
+                            'paymentDeadlineHour':
+                                GetIt.I<AppStore>().configs.paymentDeadlineHour,
+                            'paymentDeadLineDate': DateHelper.formatToBRShort(
+                              DateHelper.stringToDate(
+                                _confirmatedTransaction
+                                    .transaction.paymentDeadline,
+                              ),
+                            ),
+                          },
+                        ),
                         hasDivider: true,
                       ),
                       PaymentRulesViewModel(
                         icon: RemessaIcons.owner,
-                        value:
-                            'A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a>comprove sua titularidade no site.</a>',
+                        value: i18n.populate(
+                          i18n.trans(
+                              'checkout', ['payment_rules', 'rules', '2']),
+                          {
+                            'trackEvent':
+                                TrackingEvents.CHECKOUT_PROVE_ACCOUNT_CLICK,
+                          },
+                        ),
                         hasDivider: true,
                       ),
                       PaymentRulesViewModel(
                         icon: RemessaIcons.attention_oval_outline,
-                        value:
-                            'Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada.',
+                        value: i18n
+                            .trans('checkout', ['payment_rules', 'rules', '3']),
                         hasDivider: false,
                         isWarning: true,
                       ),
@@ -89,61 +159,70 @@ class CheckoutPaymentDataScreen extends StatelessWidget {
                     title: 'Dados bancários para enviar a TED',
                     data: [
                       LabelValueModel(
-                        label: 'Valor',
-                        value: 'R\$ 5.143,22',
+                        label: i18n.trans('value'),
+                        value: CurrencyHelper.withPrefix(
+                          'R\$',
+                          _confirmatedTransaction
+                              .transaction.quote.nationalCurrencyTotalAmount
+                              .toString(),
+                        ),
+                        isCopiable: true,
+                        isSpotlight: true,
+                      ),
+                      LabelValueModel(
+                        label: i18n.trans('bank'),
+                        value:
+                            '${_paymentAccountInfo.bankName} (${_paymentAccountInfo.bankCode})',
                         isCopiable: true,
                       ),
                       LabelValueModel(
-                        label: 'Banco',
-                        value: 'Banco Máxima (243)',
+                        label: i18n.trans('agency'),
+                        value: _paymentAccountInfo.branchCode,
                         isCopiable: true,
                       ),
                       LabelValueModel(
-                        label: 'Agência',
-                        value: '0001',
+                        label: i18n.trans('checking_account'),
+                        value: _paymentAccountInfo.accountNumber,
                         isCopiable: true,
                       ),
                       LabelValueModel(
-                        label: 'Conta corrente',
-                        value: '4990501-7',
+                        label: i18n.trans('beneficiary'),
+                        value: _paymentAccountInfo.accountHolderName,
                         isCopiable: true,
                       ),
                       LabelValueModel(
-                        label: 'Favorecido',
-                        value: 'Banco Maxima SA',
+                        label: i18n.trans('cnpj'),
+                        value: _paymentAccountInfo.accountHolderDocumentNumber,
                         isCopiable: true,
                       ),
                       LabelValueModel(
-                        label: 'CNPJ',
-                        value: '07.679.404/0001-00',
-                        isCopiable: true,
+                        label: i18n.trans(
+                            'transaction_details_screen', ['account_type']),
+                        value: i18n.trans('checking_account'),
                       ),
                       LabelValueModel(
-                        label: 'Tipo de conta',
-                        value: 'Conta Corrente',
-                      ),
-                      LabelValueModel(
-                        label: 'Finalidade da TED',
-                        value: 'Crédito em Conta Corrente',
+                        label: i18n.trans(
+                            'transaction_details_screen', ['ted_reason']),
+                        value: i18n.trans('transaction_details_screen',
+                            ['checking_account_credit']),
                         hasDivider: false,
                       ),
                     ],
                     action: ac.Action(
-                      name: 'Já fiz o pagamento',
+                      name: i18n
+                          .trans('checkout', ['payment_data_screen', 'action']),
                       actionFunction: () {
                         TrackingEvents.log(
                             TrackingEvents.CHECKOUT_ALREADY_PAID_CLICK);
 
                         GetIt.I<NavigatorHelper>().pushNamed(
                           AppRouter.CHECKOUT_SUCCESS,
-                          // arguments: TransactionDetailsScreenArgs(
-                          //   transactionId: transaction.id,
-                          // ),
                         );
                       },
                     ),
                     secondaryAction: ac.Action(
-                      name: 'Vou pagar depois',
+                      name: i18n.trans('checkout',
+                          ['payment_data_screen', 'secondaryAction']),
                       prevAction: () => TrackingEvents.log(
                           TrackingEvents.CHECKOUT_WILL_PAY_LATER_CLICK),
                       actionFunction: () => show(context),
