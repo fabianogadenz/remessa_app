@@ -5,10 +5,12 @@ import 'package:remessa_app/models/view_generators/warning_modal_model.dart';
 import 'package:remessa_app/v2/core/errors/error_message.dart';
 import 'package:remessa_app/v2/core/handlers/show_modal_handler.dart';
 import 'package:remessa_app/v2/core/usecase/usecase.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/confirmated_transaction_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/transaction_creation_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/transaction_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/commands/confirm_transaction_command.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/commands/create_transaction_command.dart';
+import 'package:remessa_app/v2/modules/transaction/domain/entities/payment_account_info.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/entities/transaction.dart';
 
 part 'transaction_presenter.g.dart';
@@ -19,8 +21,8 @@ class TransactionPresenter = _TransactionPresenterBase
 abstract class _TransactionPresenterBase with Store {
   final CommandUseCase<CreateTransactionCommand, Future<TransactionEntity>>
       _createTransaction;
-  final CommandUseCase<ConfirmTransactionCommand, Future<void>>
-      _confirmTransaction;
+  final CommandUseCase<ConfirmTransactionCommand,
+      Future<PaymentAccountInfoEntity>> _confirmTransaction;
 
   _TransactionPresenterBase(
     this._createTransaction,
@@ -80,16 +82,24 @@ abstract class _TransactionPresenterBase with Store {
   @observable
   bool confirmationSuccess = false;
 
+  @observable
+  ConfirmatedTransactionViewModel confirmatedTransaction;
+
   @action
   confirmTransaction(BuildContext context) async {
     try {
       setErrorMessage('');
       setIsLoading(true);
 
-      await _confirmTransaction(
+      final paymentAccountInfo = await _confirmTransaction(
         ConfirmTransactionCommand(
           transactionId: transaction.id,
         ),
+      );
+
+      confirmatedTransaction = ConfirmatedTransactionViewModel.parse(
+        paymentAccountInfo,
+        transaction,
       );
 
       confirmationSuccess = true;

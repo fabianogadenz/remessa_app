@@ -22,6 +22,7 @@ import 'package:remessa_app/v2/core/handlers/show_modal_handler.dart';
 import 'package:remessa_app/v2/core/widgets/warning_modal/warning_modal_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/account_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/beneficiary_viewmodel.dart';
+import 'package:remessa_app/v2/modules/transaction/application/viewmodels/confirmated_transaction_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/intermediary_bank_info_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 
@@ -604,7 +605,9 @@ void main() async {
             GetIt.I.reset();
             SetUp.registerI18n(context);
 
-            return CheckoutPaymentDataScreen();
+            return CheckoutPaymentDataScreen(
+              confirmatedTransaction: ConfirmatedTransactionViewModel(),
+            );
           },
         ),
       );

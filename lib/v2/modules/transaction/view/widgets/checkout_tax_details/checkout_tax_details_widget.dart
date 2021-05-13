@@ -51,11 +51,10 @@ class _CheckoutTaxDetailsWidgetState extends State<CheckoutTaxDetailsWidget> {
       );
 
   _onTapInfo(BuildContext context, String title, String description) {
-    // TODO: Corrigir tracking
-    // TrackingEvents.log(
-    //   TrackingEvents.TRANSACTION_CALCULATION_INFO_CLICK,
-    //   {'label': title},
-    // );
+    TrackingEvents.log(
+      TrackingEvents.CHECKOUT_CALCULATION_INFO_CLICK,
+      {'label': title},
+    );
 
     ModalHelper.showInfoBottomSheet(context, title, description, null);
   }
@@ -78,14 +77,16 @@ class _CheckoutTaxDetailsWidgetState extends State<CheckoutTaxDetailsWidget> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         TransactionValueByCurrencyWidget(
-          imageUrl:
-              'https://dev-use1-bee-bff-mobile.s3.amazonaws.com/currency-flags/${_quote.foreignCurrency}.png', // TODO: Change image url when it come from backend
+          imageUrl: _transaction.quote.foreignCurrencyFlagURL,
           label: i18n.populate(
             i18n.trans(
               'simulator_screen',
               ['foreign_currency_field', 'label'],
             ),
-            {'beneficiaryFirstName': _transaction.beneficiary.name},
+            {
+              'beneficiaryFirstName':
+                  (_transaction?.beneficiary?.name ?? '').split(' ')[0],
+            },
           ),
           value: CurrencyHelper.withPrefix(
             _quote.foreignCurrency,

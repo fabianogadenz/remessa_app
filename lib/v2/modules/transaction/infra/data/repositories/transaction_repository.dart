@@ -1,8 +1,10 @@
 import 'package:remessa_app/v2/core/adapters/http/http_adapter.dart';
+import 'package:remessa_app/v2/modules/transaction/domain/entities/payment_account_info.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/entities/transaction.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/entities/transaction_confirmation.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/entities/transaction_creation.dart';
 import 'package:remessa_app/v2/modules/transaction/domain/repositories/transaction_repository.dart';
+import 'package:remessa_app/v2/modules/transaction/infra/data/models/payment_account_info_model.dart';
 import 'package:remessa_app/v2/modules/transaction/infra/data/models/transaction_creation_model.dart';
 import 'package:remessa_app/v2/modules/transaction/infra/data/models/transaction_model.dart';
 
@@ -35,7 +37,15 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   @override
-  Future<void> confirm(TransactionConfirmationEntity transaction) async {
-    await httpAdapter.put('/transaction/${transaction.transactionId}/confirm');
+  Future<PaymentAccountInfoEntity> confirm(
+      TransactionConfirmationEntity transaction) async {
+    final json = await httpAdapter
+        .put('/transaction/${transaction.transactionId}/confirm');
+
+    if (json != null && json['paymentAccountInfo'] != null) {
+      return PaymentAccountInfoModel.fromJson(json['paymentAccountInfo']);
+    }
+
+    return null;
   }
 }

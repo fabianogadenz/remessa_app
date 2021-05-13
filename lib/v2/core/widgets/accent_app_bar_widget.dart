@@ -9,6 +9,7 @@ class AccentAppBarWidget extends StatelessWidget
   final int steps;
   final int currentStep;
   final bool isProgressive;
+  final bool canGoBack;
 
   bool get isProgressiveAppBar =>
       steps != null && currentStep != null && isProgressive;
@@ -20,6 +21,7 @@ class AccentAppBarWidget extends StatelessWidget
     this.steps,
     this.currentStep,
     this.isProgressive = true,
+    this.canGoBack = true,
   })  : assert(title != null),
         super(key: key);
 
@@ -33,7 +35,7 @@ class AccentAppBarWidget extends StatelessWidget
       ),
       elevation: 0,
       automaticallyImplyLeading: false,
-      leading: Navigator.canPop(context)
+      leading: Navigator.canPop(context) && canGoBack
           ? IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {

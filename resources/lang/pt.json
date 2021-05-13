@@ -13,7 +13,6 @@
     "bank": "Banco",
     "agency": "Agência",
     "checking_account": "Conta Corrente",
-    "recipient": "Favorecido",
     "cnpj": "CNPJ",
     "value": "Valor",
     "how_to_pay": "Como fazer o pagamento",
@@ -254,6 +253,28 @@
         "transaction_confirmation": "Confirmação da remessa",
         "beneficiary_data": "Dados do beneficiário",
         "beneficiary_bank_account_country": "País da conta bancária",
+        "payment_data_screen": {
+            "title": "Dados para pagamento",
+            "ted_message": "Faça uma TED para confirmar sua remessa",
+            "action": "Já fiz o pagamento",
+            "secondaryAction": "Vou pagar depois",
+            "modal": {
+                "title": "Tudo bem! Enviamos um\ne-mail com as informações",
+                "content": "E não esqueça: o pagamento deve ser feito até as $paymentDeadlineHour do dia $paymentDeadLineDate para garantir o câmbio da sua remessa.",
+                "action": "Ok, ir para Remessas"
+            }
+        },
+        "success_screen": {
+            "title": "Remessa em andamento",
+            "subtitle": "Tudo certo! Agora, aguarde a identificação do pagamento",
+            "content": "A maioria dos pagamentos via TED é identificada em aproximadamente 2 horas úteis. Em seguida, vamos enviar uma notificação pelo app com a confirmação do recebimento.",
+            "action": "Ir para Envios",
+            "mgm": {
+                "title": "Convide seus amigos e ganhe desconto",
+                "content": "Ganhe até 50% de desconto no custo das suas remessas",
+                "action": "Convidar no site"
+            }
+        },
         "payment_rules": {
             "title": "Regras de pagamento",
             "subtitle": "Antes de fazer o pagamento, confira as regras",
@@ -263,7 +284,7 @@
             },
             "rules": {
                 "1": "Você tem até as $paymentDeadlineHour do dia $paymentDeadLineDate para realizar o pagamento via TED.",
-                "2": "A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a href=\"https://google.com\">comprove sua titularidade no site.</a>",
+                "2": "A TED deve ser enviada de uma conta bancária de pessoa física em que você é o titular. Se for uma conta conjunta, <a href=\"https://www.remessaonline.com.br/ajuda/como-comprovar-a-titularidade-da-conta-conjunta/?trackEvent=\"$trackEvent\"\">comprove sua titularidade no site.</a>",
                 "3": "Caso o pagamento não seja identificado dentro do prazo ou seja feito por outro meio que não seja TED, sua remessa será cancelada."
             }
         },

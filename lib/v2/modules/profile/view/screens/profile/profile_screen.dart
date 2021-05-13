@@ -49,8 +49,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         label: i18n.trans('chat'),
                         action: () {
-                          TrackingEvents.log(
-                              TrackingEvents.PROFILE_LOGOUT_CLICK);
+                          TrackingEvents.log(TrackingEvents.PROFILE_HELP_CLICK);
                           openChat();
                         },
                       )
@@ -63,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                   label: i18n.trans('exit'),
                   hasSuffix: false,
                   action: () {
-                    TrackingEvents.log(TrackingEvents.PROFILE_HELP_CLICK);
+                    TrackingEvents.log(TrackingEvents.PROFILE_LOGOUT_CLICK);
                     logout();
                   },
                 ),

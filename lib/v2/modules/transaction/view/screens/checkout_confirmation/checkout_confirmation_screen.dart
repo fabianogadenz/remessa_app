@@ -35,12 +35,7 @@ class _CheckoutConfirmationScreenState
     reactionDisposer = reaction(
         (_) => _transactionPresenter.confirmationSuccess, (bool success) {
       if (success) {
-        GetIt.I<NavigatorHelper>().pushNamed(
-          AppRouter.CHECKOUT_PAYMENT_DATA,
-          // arguments: TransactionDetailsScreenArgs(
-          //   transactionId: transaction.id,
-          // ),
-        );
+        GetIt.I<NavigatorHelper>().pushNamed(AppRouter.CHECKOUT_PAYMENT_DATA);
       }
     });
 

@@ -28,10 +28,12 @@ class WarningModalModel implements ViewGenerator {
     content = json['content'];
     imageURL = json['imageURL'];
     hasCloseButton = json['hasCloseButton'] ?? true;
-    primaryAction =
-        json['action'] != null ? ActionParser.fromJson(json['action']) : null;
-    secondaryAction =
-        json['action'] != null ? ActionParser.fromJson(json['action']) : null;
+    primaryAction = json['primaryAction'] != null
+        ? ActionParser.fromJson(json['primaryAction'])
+        : null;
+    secondaryAction = json['secondaryAction'] != null
+        ? ActionParser.fromJson(json['secondaryAction'])
+        : null;
   }
 
   generate() => WarningModalWidget(

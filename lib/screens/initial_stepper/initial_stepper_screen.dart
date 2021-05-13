@@ -3,6 +3,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/router.dart';
 import 'package:remessa_app/screens/initial_stepper/widgets/initial_stepper_footer_widget.dart';
@@ -36,17 +37,17 @@ class _InitialStepperScreenState extends State<InitialStepperScreen> {
   void initState() {
     steppers = [
       InitialStepperModel(
-        'images/step1.png',
+        ImageConstants.INITIAL_STEPPERS[0],
         i18n.trans('stepper1', ['title']),
         i18n.trans('stepper1', ['description']),
       ),
       InitialStepperModel(
-        'images/step2.png',
+        ImageConstants.INITIAL_STEPPERS[1],
         i18n.trans('stepper2', ['title']),
         i18n.trans('stepper2', ['description']),
       ),
       InitialStepperModel(
-        'images/step3.png',
+        ImageConstants.INITIAL_STEPPERS[2],
         i18n.trans('stepper3', ['title']),
         i18n.trans('stepper3', ['description']),
       ),

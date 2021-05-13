@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/helpers/snowplow_helper.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/uxcam_helper.dart';
 import 'package:remessa_app/models/responses/beneficiary_response_model.dart';
@@ -60,7 +61,7 @@ class _SimulatorScreenState extends State<SimulatorScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset('images/simulator_empty.png'),
+          Image.asset(ImageConstants.SIMULATOR_EMPTY_STATE),
           SizedBox(
             height: 26,
           ),

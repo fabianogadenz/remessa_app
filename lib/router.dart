@@ -22,6 +22,7 @@ import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/settings/infra/factories/notification_preferences_presenter_factory.dart';
 import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
+import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen_args.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_confirmation/checkout_confirmation_screen.dart';
@@ -148,7 +149,10 @@ class AppRouter {
         );
       },
       CHECKOUT_PAYMENT_DATA: (context) {
-        return CheckoutPaymentDataScreen();
+        return CheckoutPaymentDataScreen(
+          confirmatedTransaction:
+              GetIt.I<TransactionPresenter>().confirmatedTransaction,
+        );
       },
       CHECKOUT_SUCCESS: (context) {
         return CheckoutSuccessScreen();
@@ -172,6 +176,14 @@ class AppRouter {
               pageBuilder: (_, __, ___) {
                 FlutterUxcam.tagScreenName(UxCamHelper.SIMULATOR);
                 final SimulatorScreenArgs args = settings?.arguments;
+
+                if (GetIt.I.isRegistered<TransactionPresenter>()) {
+                  GetIt.I.unregister<TransactionPresenter>();
+                }
+
+                GetIt.I.registerLazySingleton<TransactionPresenter>(
+                  () => TransactionPresenterFactory().call(),
+                );
 
                 return SimulatorScreen(
                   preSelectedBeneficiaryId: args?.beneficiaryId,

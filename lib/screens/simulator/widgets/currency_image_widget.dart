@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 import 'package:remessa_app/v2/core/widgets/cached_network_image_widget.dart';
 import 'package:remessa_app/v2/core/widgets/skeleton_line_widget.dart';
 
@@ -27,7 +28,7 @@ class CurrencyImageWidget extends StatelessWidget {
               height: 22,
               child: imageUrl != null && imageUrl.isNotEmpty
                   ? CachedNetworkImageWigdet(imageURL: imageUrl)
-                  : Image.asset('images/flag_brazil.png'),
+                  : Image.asset(ImageConstants.BRAZILIAN_FLAG),
             ),
           );
   }

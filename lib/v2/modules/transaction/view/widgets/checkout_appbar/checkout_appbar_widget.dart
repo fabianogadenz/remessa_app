@@ -7,13 +7,15 @@ class CheckoutAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int steps;
   final int currentStep;
   final bool isProgressive;
+  final bool canGoBack;
 
   const CheckoutAppBar({
     Key key,
     @required this.title,
     this.currentStep,
-    this.steps = 4,
+    this.steps = 3, // TODO: Make 4 be the default again
     this.isProgressive = true,
+    this.canGoBack = true,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class CheckoutAppBar extends StatelessWidget implements PreferredSizeWidget {
       prevAction: isProgressive
           ? () => TrackingEvents.log(TrackingEvents.CHECKOUT_GO_BACK_CLICK)
           : null,
+      canGoBack: canGoBack,
     );
   }
 

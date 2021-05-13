@@ -71,6 +71,23 @@ mixin _$TransactionPresenter on _TransactionPresenterBase, Store {
     });
   }
 
+  final _$confirmatedTransactionAtom =
+      Atom(name: '_TransactionPresenterBase.confirmatedTransaction');
+
+  @override
+  ConfirmatedTransactionViewModel get confirmatedTransaction {
+    _$confirmatedTransactionAtom.reportRead();
+    return super.confirmatedTransaction;
+  }
+
+  @override
+  set confirmatedTransaction(ConfirmatedTransactionViewModel value) {
+    _$confirmatedTransactionAtom
+        .reportWrite(value, super.confirmatedTransaction, () {
+      super.confirmatedTransaction = value;
+    });
+  }
+
   final _$createTransactionAsyncAction =
       AsyncAction('_TransactionPresenterBase.createTransaction');
 
@@ -121,7 +138,8 @@ mixin _$TransactionPresenter on _TransactionPresenterBase, Store {
 isLoading: ${isLoading},
 errorMessage: ${errorMessage},
 transaction: ${transaction},
-confirmationSuccess: ${confirmationSuccess}
+confirmationSuccess: ${confirmationSuccess},
+confirmatedTransaction: ${confirmatedTransaction}
     ''';
   }
 }

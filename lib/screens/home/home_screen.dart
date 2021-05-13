@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       TabContent(
-        label: 'Perfil',
+        label: i18n.trans('profile'),
         iconData: RemessaIcons.user_fill,
         widget: ProfileScreen(
           customer: _authStore.customer,

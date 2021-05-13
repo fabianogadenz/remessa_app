@@ -135,6 +135,8 @@ class TrackingEvents {
       'mobile_app.view.checkout_quote_expired_popup';
   static const CHECKOUT_QUOTE_EXPIRED_CLICK =
       'mobile_app.click.checkout_quote_expired_button';
+  static const CHECKOUT_CALCULATION_INFO_CLICK =
+      'mobile_app.click.checkout_calculation_rate_details_button';
   static const CHECKOUT_GO_BACK_CLICK = 'mobile_app.click.checkout_go_back';
 
   // Profile
@@ -178,6 +180,7 @@ class TrackingEvents {
         continue log;
       case TRANSACTION_CALCULATION_INFO_CLICK:
       case TRANSACTION_COPY_LOCAL_BANCK_INFO:
+      case CHECKOUT_CALCULATION_INFO_CLICK:
         assert(properties['label'] != null);
         continue log;
       case TRANSACTION_TOOLTIP_CLICK:

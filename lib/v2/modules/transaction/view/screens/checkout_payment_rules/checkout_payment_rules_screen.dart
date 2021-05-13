@@ -4,6 +4,7 @@ import 'package:remessa_app/app/app_store.dart';
 import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
 import 'package:remessa_app/style/colors.dart';
+import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/transaction/application/viewmodels/payment_rules_viewmodel.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/checkout_appbar/checkout_appbar_widget.dart';
 import 'package:remessa_app/v2/modules/transaction/view/widgets/payment_rules/payment_rules_widget.dart';
@@ -46,7 +47,12 @@ class CheckoutPaymentRulesScreen extends StatelessWidget {
           ),
           PaymentRulesViewModel(
             icon: RemessaIcons.owner,
-            value: i18n.trans('checkout', ['payment_rules', 'rules', '2']),
+            value: i18n.populate(
+              i18n.trans('checkout', ['payment_rules', 'rules', '2']),
+              {
+                'trackEvent': TrackingEvents.CHECKOUT_PROVE_ACCOUNT_CLICK,
+              },
+            ),
             hasDivider: true,
           ),
           PaymentRulesViewModel(
@@ -66,9 +72,6 @@ class CheckoutPaymentRulesScreen extends StatelessWidget {
 
         //           GetIt.I<NavigatorHelper>().pushNamed(
         //             AppRouter.CHECKOUT_PAYMENT_DATA,
-        //             // arguments: TransactionDetailsScreenArgs(
-        //             //   transactionId: transaction.id,
-        //             // ),
         //           );
         //         },
         //       )

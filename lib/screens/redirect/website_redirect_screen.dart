@@ -2,6 +2,7 @@ import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:remessa_app/helpers/navigator.dart';
+import 'package:remessa_app/v2/core/constants/image_contants.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/helpers/uri_helper.dart';
 import 'package:remessa_app/screens/redirect/website_redirect_screen_args.dart';
@@ -57,7 +58,7 @@ class _WebsiteRedirectScreenState extends State<WebsiteRedirectScreen> {
             SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Image.asset('images/website_redirect.png'),
+                  Image.asset(ImageConstants.WEBSITE_REDIRECT),
                   Text(
                     args.title ??
                         i18n.trans('website_redirect_screen', ['title']),
