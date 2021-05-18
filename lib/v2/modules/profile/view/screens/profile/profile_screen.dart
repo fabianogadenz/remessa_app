@@ -62,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                     Icons.notifications,
                     size: 22,
                   ),
-                  label: "Notificacões",
+                  label: i18n.trans('notifications'),
                   action: () {
                     GetIt.I<NavigatorHelper>().pushNamed(AppRouter.SETTINGS_NOTIFICATIONS);
                   },

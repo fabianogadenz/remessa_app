@@ -4,5 +4,7 @@
     "dashboard": "Dashboard",
     "chat": "Chat",
     "enter": "Enter",
+    "notifications": "Notifications",
+    "allow_notifications": "Allow notifications",
     "initial_page:title": "International transfers for everyone"
 }

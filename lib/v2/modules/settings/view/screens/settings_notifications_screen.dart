@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remessa_app/helpers/chat_helper.dart';
 import 'package:remessa_app/style/colors.dart';
 import 'package:remessa_app/v2/core/widgets/accent_app_bar_widget.dart';
 
@@ -9,7 +10,7 @@ class SettingsNotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AccentAppBarWidget(
-        title: "Notificacões",
+        title: i18n.trans('notifications'),
       ),
       body: Container(
         color: Colors.white,
@@ -30,7 +31,7 @@ class SettingsNotificationsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Permitir notificações",
+                      i18n.trans('allow_notifications'),
                       style: TextStyle(
                         color: StyleColors.BRAND_SECONDARY_50,
                         fontSize: 14,
