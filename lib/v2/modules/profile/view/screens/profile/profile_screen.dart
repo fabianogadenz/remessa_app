@@ -67,6 +67,7 @@ class ProfileScreen extends StatelessWidget {
                     GetIt.I<NavigatorHelper>().pushNamed(AppRouter.SETTINGS_NOTIFICATIONS);
                   },
                 ),
+
                 MenuItem(
                   icon: Icon(
                     RemessaIcons.logout,
