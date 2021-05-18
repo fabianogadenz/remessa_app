@@ -1,7 +1,10 @@
 import 'package:easy_i18n/easy_i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:remessa_app/helpers/navigator.dart';
 import 'package:remessa_app/models/hive/customer_model.dart';
 import 'package:remessa_app/presentation/remessa_icons_icons.dart';
+import 'package:remessa_app/router.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/core/widgets/list_menu_widget.dart';
 import 'package:remessa_app/v2/core/widgets/text_header_widget.dart';
@@ -54,6 +57,16 @@ class ProfileScreen extends StatelessWidget {
                         },
                       )
                     : null,
+                MenuItem(
+                  icon: Icon(
+                    Icons.notifications,
+                    size: 22,
+                  ),
+                  label: "Notificacões",
+                  action: () {
+                    GetIt.I<NavigatorHelper>().pushNamed(AppRouter.SETTINGS_NOTIFICATIONS);
+                  },
+                ),
                 MenuItem(
                   icon: Icon(
                     RemessaIcons.logout,

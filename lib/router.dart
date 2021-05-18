@@ -21,6 +21,7 @@ import 'package:remessa_app/services/system_service.dart';
 import 'package:remessa_app/stores/auth_store.dart';
 import 'package:remessa_app/v2/core/tracking/tracking_events.dart';
 import 'package:remessa_app/v2/modules/settings/infra/factories/notification_preferences_presenter_factory.dart';
+import 'package:remessa_app/v2/modules/settings/view/screens/settings_notifications_screen.dart';
 import 'package:remessa_app/v2/modules/transaction/application/presenters/transaction_presenter.dart';
 import 'package:remessa_app/v2/modules/transaction/infra/factories/transaction_presenter_factory.dart';
 import 'package:remessa_app/v2/modules/transaction/view/screens/checkout_beneficiary_data/checkout_beneficiary_data_screen.dart';
@@ -42,6 +43,7 @@ class AppRouter {
   static const SIMULATOR_ROUTE = 'simulator';
   static const TRANSACTION_DETAILS_ROUTE = 'transaction_details';
   static const GENERATED_VIEW_ROUTE = 'generated_view';
+  static const SETTINGS_NOTIFICATIONS = 'settings_notifications';
   static const TD_HOW_TO_PAY_ROUTE = 'transaction_details/how_to_pay';
   static const TD_CALCULATION_ROUTE = 'transaction_details/calculation';
   static const TD_BENEFICIARY_ROUTE = 'transaction_details/beneficiary_data';
@@ -131,6 +133,9 @@ class AppRouter {
         }
 
         return viewGenerator.generate();
+      },
+      SETTINGS_NOTIFICATIONS: (context) {
+        return SettingsNotificationsScreen();
       },
       CHECKOUT_CONFIRMATION: (context) {
         FlutterUxcam.tagScreenName(UxCamHelper.CHECKOUT);
